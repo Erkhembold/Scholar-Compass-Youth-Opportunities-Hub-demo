@@ -128,45 +128,139 @@ function PassageBody({ passage }) {
   );
 }
 
+function HeadingMatching({ group, answers, onAnswer }) {
+  const [draggedId, setDraggedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [overQuestion, setOverQuestion] = useState(null);
+
+  const usedIds = new Set(
+    group.questions.map((q) => answers[q.number]).filter(Boolean)
+  );
+  const headingById = Object.fromEntries(group.headings.map((h) => [h.id, h]));
+  const bankHeadings = group.headings.filter((h) => !usedIds.has(h.id));
+
+  function assign(questionNumber, headingId) {
+    if (!headingId) return;
+    onAnswer(questionNumber, headingId);
+    setSelectedId(null);
+    setDraggedId(null);
+  }
+
+  function unassign(questionNumber) {
+    onAnswer(questionNumber, "");
+  }
+
+  return (
+    <div className="heading-matching">
+      <p className="heading-matching__hint">
+        Drag a heading onto the paragraph it belongs to, or tap a heading
+        then tap a paragraph to place it.
+      </p>
+
+      <ul className="heading-bank" aria-label="Available headings">
+        {bankHeadings.length === 0 && (
+          <li className="heading-bank__empty">All headings placed.</li>
+        )}
+        {bankHeadings.map((h) => (
+          <li
+            key={h.id}
+            className={`heading-chip ${selectedId === h.id ? "heading-chip--selected" : ""} ${
+              draggedId === h.id ? "heading-chip--dragging" : ""
+            }`}
+            draggable
+            role="button"
+            tabIndex={0}
+            aria-pressed={selectedId === h.id}
+            onDragStart={(e) => {
+              e.dataTransfer.setData("text/plain", h.id);
+              e.dataTransfer.effectAllowed = "move";
+              setDraggedId(h.id);
+            }}
+            onDragEnd={() => setDraggedId(null)}
+            onClick={() => setSelectedId((prev) => (prev === h.id ? null : h.id))}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setSelectedId((prev) => (prev === h.id ? null : h.id));
+              }
+            }}
+          >
+            <span className="heading-chip__handle" aria-hidden="true">
+              ⠿
+            </span>
+            <span className="heading-chip__id">{h.id}</span>
+            <span className="heading-chip__text">{h.text}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="question-list">
+        {group.questions.map((q) => {
+          const assignedId = answers[q.number];
+          const assignedHeading = assignedId ? headingById[assignedId] : null;
+          const isOver = overQuestion === q.number;
+          return (
+            <div
+              className={`heading-dropzone ${isOver ? "heading-dropzone--over" : ""} ${
+                assignedHeading ? "heading-dropzone--filled" : ""
+              }`}
+              key={q.number}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "move";
+                setOverQuestion(q.number);
+              }}
+              onDragLeave={() => setOverQuestion((prev) => (prev === q.number ? null : prev))}
+              onDrop={(e) => {
+                e.preventDefault();
+                const id = e.dataTransfer.getData("text/plain") || draggedId;
+                assign(q.number, id);
+                setOverQuestion(null);
+              }}
+              onClick={() => {
+                if (selectedId) assign(q.number, selectedId);
+              }}
+            >
+              <span className="heading-dropzone__label">
+                {q.number}. Paragraph {q.paragraphId}
+              </span>
+              {assignedHeading ? (
+                <span className="heading-dropzone__answer">
+                  <span className="heading-chip__id">{assignedHeading.id}</span>
+                  <span className="heading-dropzone__answer-text">{assignedHeading.text}</span>
+                  <button
+                    type="button"
+                    className="heading-dropzone__remove"
+                    aria-label={`Remove heading from paragraph ${q.paragraphId}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      unassign(q.number);
+                    }}
+                  >
+                    ×
+                  </button>
+                </span>
+              ) : (
+                <span className="heading-dropzone__placeholder">Drop heading here</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function QuestionGroup({ group, answers, onAnswer }) {
   return (
     <div className="question-group">
       <p className="question-group__instruction">{group.instruction}</p>
 
-      {group.type === "matching" && (
-        <ul className="question-group__headings">
-          {group.headings.map((h) => (
-            <li key={h.id}>
-              <strong>{h.id}.</strong> {h.text}
-            </li>
-          ))}
-        </ul>
-      )}
-
+      {group.type === "matching" ? (
+        <HeadingMatching group={group} answers={answers} onAnswer={onAnswer} />
+      ) : (
       <div className="question-list">
         {group.questions.map((q) => {
-          if (group.type === "matching") {
-            return (
-              <div className="question-row" key={q.number}>
-                <label htmlFor={`q${q.number}`}>
-                  {q.number}. Paragraph {q.paragraphId}
-                </label>
-                <select
-                  id={`q${q.number}`}
-                  value={answers[q.number] || ""}
-                  onChange={(e) => onAnswer(q.number, e.target.value)}
-                >
-                  <option value="">Select a heading</option>
-                  {group.headings.map((h) => (
-                    <option key={h.id} value={h.id}>
-                      {h.id}. {h.text}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            );
-          }
-
           if (group.type === "mc") {
             return (
               <fieldset className="question-row question-row--mc" key={q.number}>
@@ -230,6 +324,7 @@ function QuestionGroup({ group, answers, onAnswer }) {
           );
         })}
       </div>
+      )}
     </div>
   );
 }
