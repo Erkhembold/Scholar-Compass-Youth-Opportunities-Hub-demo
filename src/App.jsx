@@ -1,0 +1,56 @@
+import { useEffect } from "react";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import CategoryPage from "./pages/CategoryPage.jsx";
+import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
+import IeltsTestPage from "./pages/IeltsTestPage.jsx";
+import { useRoute } from "./router.js";
+
+export default function App() {
+  const route = useRoute();
+
+  // Scroll to top on every route change, except when the URL still carries
+  // an in-page anchor (e.g. "#notify") meant for the homepage — that case
+  // is handled by the effect below instead.
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    const isInPageAnchor = hash && !hash.startsWith("/");
+    if (!isInPageAnchor) {
+      window.scrollTo({ top: 0 });
+    }
+  }, [route.name, route.category, route.id]);
+
+  // Plain anchors like "#notify" or "#opportunities" aren't routes (see
+  // router.js), so when they fire while a different page is mounted, scroll
+  // to the target manually once the homepage has re-rendered.
+  useEffect(() => {
+    if (route.name !== "home") return;
+    const hash = window.location.hash.replace(/^#/, "");
+    if (!hash || hash.startsWith("/")) return;
+    const el = document.getElementById(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [route]);
+
+  let page;
+  if (route.name === "category") {
+    page = <CategoryPage category={route.category} />;
+  } else if (route.name === "opportunity") {
+    page = <OpportunityDetailPage id={route.id} />;
+  } else if (route.name === "ielts-test") {
+    page = <IeltsTestPage id={route.id} />;
+  } else {
+    page = <HomePage />;
+  }
+
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">{page}</main>
+      <Footer />
+    </>
+  );
+}
