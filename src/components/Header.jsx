@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NAV_LINKS, SITE_NAME } from "../data/config.js";
 import { categoryHref, useRoute } from "../router.js";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -69,6 +70,7 @@ export default function Header() {
             <span />
             <span />
           </button>
+          <ThemeToggle />
         </div>
       </div>
 

@@ -1,36 +1,25 @@
-import PlaceholderArt from "./PlaceholderArt.jsx";
+import ReadArt from "./ReadArt.jsx";
+import { readHref } from "../router.js";
 
 export default function ReadCard({ read }) {
+  const href = readHref(read.id);
+
   return (
     <article className="read-card">
-      <a
-        className="read-card__media"
-        href={read.link}
-        aria-label={read.title}
-        target={read.external ? "_blank" : undefined}
-        rel={read.external ? "noopener noreferrer" : undefined}
-      >
+      <a className="read-card__media" href={href} aria-label={read.title}>
         {read.image ? (
           <img src={read.image} alt="" className="read-card__image" />
         ) : (
-          <PlaceholderArt pattern={read.pattern} />
+          <ReadArt category={read.category} pattern={read.pattern} />
         )}
       </a>
       <div className="read-card__body">
         <div className="read-card__meta">
           <span className="read-card__category">{read.category}</span>
-          {(read.source || read.date) && (
-            <span className="read-card__date">{read.source || read.date}</span>
-          )}
+          {read.source && <span className="read-card__date">{read.source}</span>}
         </div>
         <h3 className="read-card__title">
-          <a
-            href={read.link}
-            target={read.external ? "_blank" : undefined}
-            rel={read.external ? "noopener noreferrer" : undefined}
-          >
-            {read.title}
-          </a>
+          <a href={href}>{read.title}</a>
         </h3>
       </div>
     </article>

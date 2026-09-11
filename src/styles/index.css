@@ -38,6 +38,30 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ---------- Dark mode ---------- */
+[data-theme="dark"] {
+  --white: #101828;
+  --surface: #0a0e17;
+  --ink: #edf1f9;
+  --ink-soft: rgba(237, 241, 249, 0.7);
+  --ink-faint: rgba(237, 241, 249, 0.48);
+  --line: rgba(255, 255, 255, 0.14);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] img:not(.no-dim) {
+  filter: brightness(0.92);
+}
+
+body,
+.read-card,
+.opportunity-card,
+input,
+select,
+textarea {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
 /* ---------- Reset ---------- */
 *,
 *::before,
@@ -326,6 +350,26 @@ p {
   height: 1.6px;
   background: var(--white);
   border-radius: 2px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--line-dark);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(90, 200, 250, 0.4);
 }
 
 .mobile-nav {
@@ -747,6 +791,7 @@ p {
 }
 
 .placeholder-art,
+.read-art,
 .read-card__image {
   width: 100%;
   height: 100%;
@@ -755,6 +800,7 @@ p {
 }
 
 .read-card:hover .placeholder-art,
+.read-card:hover .read-art,
 .read-card:hover .read-card__image {
   transform: scale(1.04);
 }
@@ -832,6 +878,105 @@ p {
   color: var(--ink-soft);
   font-size: 0.94rem;
   line-height: 1.55;
+}
+
+/* =========================================================================
+   Submit an opportunity
+   ========================================================================= */
+.submit-opp {
+  background: var(--surface);
+}
+
+.submit-opp__inner {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.submit-opp__copy .section__lede {
+  color: var(--ink-soft);
+}
+
+.submit-opp__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.submit-opp__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.submit-opp__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.submit-opp__field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.submit-opp__field input,
+.submit-opp__field select,
+.submit-opp__field textarea {
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 0.94rem;
+  color: var(--ink);
+}
+
+.submit-opp__field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.submit-opp__field input:focus,
+.submit-opp__field select:focus,
+.submit-opp__field textarea:focus {
+  outline: none;
+  border-color: var(--blue-500);
+}
+
+.submit-opp__form .btn {
+  align-self: flex-start;
+}
+
+.submit-opp__status {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+.submit-opp__status--error {
+  color: #d64545;
+}
+
+.submit-opp__status--success {
+  color: #1a9c5c;
+}
+
+@media (max-width: 860px) {
+  .submit-opp__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-opp__row {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =========================================================================
@@ -1018,6 +1163,32 @@ p {
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--navy-900);
+}
+
+.read-detail__byline {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.read-detail__content p {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.read-detail__credit {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.read-detail__credit p {
+  margin: 0 0 14px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
 }
 
 .detail__columns {

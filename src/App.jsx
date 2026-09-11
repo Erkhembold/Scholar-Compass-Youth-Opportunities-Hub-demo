@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
 import IeltsTestPage from "./pages/IeltsTestPage.jsx";
+import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import { useRoute } from "./router.js";
 
 export default function App() {
@@ -39,6 +40,8 @@ export default function App() {
     page = <OpportunityDetailPage id={route.id} />;
   } else if (route.name === "ielts-test") {
     page = <IeltsTestPage id={route.id} />;
+  } else if (route.name === "read") {
+    page = <ReadDetailPage id={route.id} />;
   } else {
     page = <HomePage />;
   }

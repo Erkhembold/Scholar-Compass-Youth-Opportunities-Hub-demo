@@ -18,6 +18,9 @@ function parseHash(hash) {
   if (parts[0] === "ielts" && parts[1] === "test" && parts[2]) {
     return { name: "ielts-test", id: decodeURIComponent(parts[2]) };
   }
+  if (parts[0] === "reads" && parts[1]) {
+    return { name: "read", id: decodeURIComponent(parts[1]) };
+  }
   return { name: "home" };
 }
 
@@ -45,4 +48,8 @@ export function opportunityHref(id) {
 
 export function ieltsTestHref(id) {
   return `#/ielts/test/${encodeURIComponent(id)}`;
+}
+
+export function readHref(id) {
+  return `#/reads/${encodeURIComponent(id)}`;
 }
