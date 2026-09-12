@@ -46,11 +46,21 @@ export default function HoverText({ text, as: Tag = "span", className = "" }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {text.split("").map((char, i) => (
-        <span key={i} data-letter className="hover-text__letter">
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
+      {text.split(" ").flatMap((word, wi, words) => {
+        const wordSpan = (
+          <span key={`w-${wi}`} className="hover-text__word">
+            {word.split("").map((char, ci) => (
+              <span key={ci} data-letter className="hover-text__letter">
+                {char}
+              </span>
+            ))}
+          </span>
+        );
+        // The space between words is a plain sibling text node — kept
+        // outside the word's no-wrap box so the browser can only break
+        // the line *between* words, never in the middle of one.
+        return wi < words.length - 1 ? [wordSpan, " "] : [wordSpan];
+      })}
     </Tag>
   );
 }

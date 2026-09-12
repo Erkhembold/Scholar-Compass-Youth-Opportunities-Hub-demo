@@ -421,6 +421,11 @@ p {
   display: inline-block;
 }
 
+.hover-text__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .hover-text__letter {
   display: inline-block;
   transition: transform 0.15s ease-out;
