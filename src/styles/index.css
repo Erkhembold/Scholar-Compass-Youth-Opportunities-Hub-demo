@@ -1497,6 +1497,15 @@ p {
   border-bottom: none;
 }
 
+.passage-art {
+  display: block;
+  width: 100%;
+  height: 110px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
 .reading-passage__columns {
   display: grid;
   grid-template-columns: 1fr 1fr;

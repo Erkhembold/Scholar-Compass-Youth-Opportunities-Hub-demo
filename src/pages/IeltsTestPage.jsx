@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { TESTS } from "../data/ieltsTests.js";
 import { scoreToBand, isCorrect, correctAnswerLabel, TYPE_LABELS } from "../utils/ielts.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import PassageArt from "../components/PassageArt.jsx";
 
 const TEST_DURATION_SECONDS = 60 * 60;
 const WARNING_THRESHOLD_SECONDS = 5 * 60;
@@ -438,6 +439,7 @@ export default function IeltsTestPage({ id }) {
           <div className="section__inner">
             {test.passages.map((passage, i) => (
               <article className="reading-passage" key={passage.id}>
+                <PassageArt number={i + 1} image={passage.image} alt={passage.title} />
                 <h2 className="detail__section-title">
                   {t("Passage")} {i + 1}: {passage.title}
                 </h2>

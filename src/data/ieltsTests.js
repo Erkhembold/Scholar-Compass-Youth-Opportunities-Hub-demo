@@ -3,6 +3,14 @@
 // grouped by question type so the runner can render/score generically.
 // Only tests 1–2 are fully built; 3–10 are listed as "coming soon" using
 // the same card so nothing on the page looks broken or fabricated.
+//
+// Each passage renders a small numbered cover image at the top (see
+// PassageArt.jsx) — it's a placeholder showing just the ordinal number
+// (1, 2, 3) until a real image is chosen. To swap one in: import the image
+// at the top of this file and add `image: yourImportedImage` to that
+// passage's object, e.g.:
+//   import libraryPhoto from "../assets/ielts/t1p1-library.jpg";
+//   { id: "t1p1", title: "...", image: libraryPhoto, text: `...` }
 
 export const TESTS = [
   {
