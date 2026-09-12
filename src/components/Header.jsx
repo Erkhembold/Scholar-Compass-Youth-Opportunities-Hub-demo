@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NAV_LINKS, SITE_NAME } from "../data/config.js";
-import { categoryHref, useRoute } from "../router.js";
+import { categoryHref, signInHref, useRoute } from "../router.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function Header() {
@@ -71,6 +71,9 @@ export default function Header() {
             <span />
           </button>
           <ThemeToggle />
+          <a className="signin-btn" href={signInHref()}>
+            Sign In
+          </a>
         </div>
       </div>
 

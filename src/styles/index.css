@@ -379,6 +379,28 @@ p {
   border-color: rgba(90, 200, 250, 0.4);
 }
 
+.signin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 16px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--line-dark);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--on-dark);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.signin-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(90, 200, 250, 0.4);
+}
+
 .mobile-nav {
   display: none;
 }
@@ -2024,4 +2046,126 @@ p {
 
 body.nav-open {
   overflow: hidden;
+}
+
+/* =========================================================================
+   Sign in / create account
+   ========================================================================= */
+.signin {
+  min-height: calc(100vh - var(--header-h));
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+}
+
+.signin__inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.signin__card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+}
+
+.signin__tabs {
+  display: flex;
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.signin__tab {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.signin__tab--active {
+  background: var(--navy-900);
+  color: var(--on-dark);
+}
+
+.signin__title {
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+}
+
+.signin__lede {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.signin__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.signin__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signin__field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.signin__field input {
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 0.94rem;
+  color: var(--ink);
+}
+
+.signin__field input:focus {
+  outline: none;
+  border-color: var(--blue-500);
+}
+
+.signin__submit {
+  margin-top: 4px;
+  width: 100%;
+}
+
+.signin__status {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.signin__back {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blue-500);
 }

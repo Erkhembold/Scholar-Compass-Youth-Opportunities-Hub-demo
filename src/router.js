@@ -21,6 +21,9 @@ function parseHash(hash) {
   if (parts[0] === "reads" && parts[1]) {
     return { name: "read", id: decodeURIComponent(parts[1]) };
   }
+  if (parts[0] === "signin") {
+    return { name: "signin" };
+  }
   return { name: "home" };
 }
 
@@ -52,4 +55,8 @@ export function ieltsTestHref(id) {
 
 export function readHref(id) {
   return `#/reads/${encodeURIComponent(id)}`;
+}
+
+export function signInHref() {
+  return "#/signin";
 }
