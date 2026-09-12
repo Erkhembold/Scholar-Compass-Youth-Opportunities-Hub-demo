@@ -15,6 +15,7 @@ import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_LABELS } from "../data/categories.js";
 import { formatDeadline } from "../utils/deadline.js";
 import { categoryHref } from "../router.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const LANGUAGE_TABS = [
   { id: "mn", label: "Монгол" },
@@ -36,6 +37,7 @@ function EssentialRow({ icon, label, value }) {
 }
 
 export default function OpportunityDetailPage({ id }) {
+  const { t } = useLanguage();
   const opportunity = opportunities.find((op) => op.id === id);
   const isBilingual = opportunity && typeof opportunity.description === "object";
   const [lang, setLang] = useState("mn");
@@ -65,7 +67,7 @@ export default function OpportunityDetailPage({ id }) {
     contactNote,
   } = opportunity;
 
-  const categoryLabel = CATEGORY_LABELS[category] ?? category;
+  const categoryLabel = t(CATEGORY_LABELS[category] ?? category);
 
   return (
     <article className="section detail">
@@ -99,7 +101,7 @@ export default function OpportunityDetailPage({ id }) {
               <EssentialRow icon={<IconUsers />} label="Participants" value={essential.participants} />
               <EssentialRow
                 icon={<IconCalendar />}
-                label="Deadline"
+                label={t("Deadline")}
                 value={formatDeadline(deadline)}
               />
               <EssentialRow icon={<IconUser />} label="Who it's for" value={essential.whoFor} />
@@ -135,7 +137,7 @@ export default function OpportunityDetailPage({ id }) {
             {(links.length > 0 || contactNote) && (
               <section className="detail__contact" aria-labelledby="contact-heading">
                 <h2 id="contact-heading" className="detail__section-title">
-                  Contact
+                  {t("Contact")}
                 </h2>
                 {links.length > 0 && (
                   <div className="detail__links">
@@ -147,7 +149,7 @@ export default function OpportunityDetailPage({ id }) {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {link.label}
+                        {t(link.label)}
                       </a>
                     ))}
                   </div>

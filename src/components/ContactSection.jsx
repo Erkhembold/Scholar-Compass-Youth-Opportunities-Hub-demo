@@ -1,9 +1,12 @@
 import { CONTACT_EMAIL, INSTAGRAM_URL } from "../data/config.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function ContactSection() {
+  const { t } = useLanguage();
+
   return (
     <div className="contact">
-      <span className="contact__label">Contact</span>
+      <span className="contact__label">{t("Contact")}</span>
       <ul className="contact__list">
         <li>
           <a

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const STORAGE_KEY = "scholarcompass:notify-email";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,6 +19,7 @@ function saveEmail(email) {
 }
 
 export default function NotificationSection() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle"); // idle | error | success
   const [message, setMessage] = useState("");
@@ -49,7 +51,7 @@ export default function NotificationSection() {
       <div className="section__inner notify__inner">
         <div className="notify__copy">
           <h2 id="notify-heading" className="section__title">
-            Don&rsquo;t miss the deadline.
+            {t("Don\u2019t miss the deadline.")}
           </h2>
           <p className="section__lede">
             Get a short, occasional email when a new scholarship, competition,
@@ -59,7 +61,7 @@ export default function NotificationSection() {
 
         <form className="notify__form" onSubmit={handleSubmit} noValidate>
           <label className="notify__label" htmlFor="notify-email">
-            Email address
+            {t("Email address")}
           </label>
           <div className="notify__field">
             <input
@@ -78,7 +80,7 @@ export default function NotificationSection() {
               aria-describedby="notify-status"
             />
             <button type="submit" className="btn btn--accent">
-              Notify me
+              {t("Notify me")}
             </button>
           </div>
           <p

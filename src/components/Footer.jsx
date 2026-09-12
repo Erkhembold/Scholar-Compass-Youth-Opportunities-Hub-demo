@@ -2,9 +2,11 @@ import FollowBar from "./FollowBar.jsx";
 import ContactSection from "./ContactSection.jsx";
 import { FOOTER_CATEGORIES, SITE_NAME } from "../data/config.js";
 import { categoryHref } from "../router.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="site-footer">
@@ -21,11 +23,11 @@ export default function Footer() {
         </div>
 
         <nav className="site-footer__categories" aria-label="Categories">
-          <span className="contact__label">Categories</span>
+          <span className="contact__label">{t("Opportunities")}</span>
           <ul>
             {FOOTER_CATEGORIES.map((cat) => (
               <li key={cat.label}>
-                <a href={categoryHref(cat.category)}>{cat.label}</a>
+                <a href={categoryHref(cat.category)}>{t(cat.label)}</a>
               </li>
             ))}
           </ul>

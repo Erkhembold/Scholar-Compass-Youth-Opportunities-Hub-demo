@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function SignInPage() {
+  const { t } = useLanguage();
   const [mode, setMode] = useState("signin"); // signin | signup
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -29,7 +31,7 @@ export default function SignInPage() {
                 setSubmitted(false);
               }}
             >
-              Sign In
+              {t("Sign In")}
             </button>
             <button
               type="button"
@@ -41,7 +43,7 @@ export default function SignInPage() {
                 setSubmitted(false);
               }}
             >
-              Create Account
+              {t("Create Account")}
             </button>
           </div>
 
@@ -99,7 +101,7 @@ export default function SignInPage() {
               </div>
 
               <button type="submit" className="btn btn--accent signin__submit">
-                {mode === "signin" ? "Sign In" : "Create Account"}
+                {mode === "signin" ? t("Sign In") : t("Create Account")}
               </button>
             </form>
           )}

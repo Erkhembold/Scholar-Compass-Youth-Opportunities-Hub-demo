@@ -2,8 +2,11 @@ import PlaceholderArt from "./PlaceholderArt.jsx";
 import { CATEGORY_LABELS } from "../data/categories.js";
 import { formatDeadline } from "../utils/deadline.js";
 import { opportunityHref } from "../router.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function OpportunityCard({ opportunity }) {
+  const { t } = useLanguage();
+
   return (
     <a className="opp-card" href={opportunityHref(opportunity.id)}>
       <div className="opp-card__media">
@@ -16,7 +19,7 @@ export default function OpportunityCard({ opportunity }) {
       <div className="opp-card__body">
         <div className="opp-card__top">
           <span className="opp-card__category">
-            {CATEGORY_LABELS[opportunity.category] ?? opportunity.category}
+            {t(CATEGORY_LABELS[opportunity.category] ?? opportunity.category)}
           </span>
           <span className="opp-card__deadline">
             {formatDeadline(opportunity.deadline, { withPrefix: true })}

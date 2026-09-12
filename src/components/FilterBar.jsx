@@ -1,4 +1,8 @@
+import { useLanguage } from "../context/LanguageContext.jsx";
+
 export default function FilterBar({ filters, active, onChange }) {
+  const { t } = useLanguage();
+
   return (
     <div className="filter-bar" role="group" aria-label="Filter opportunities by category">
       {filters.map((filter) => (
@@ -9,7 +13,7 @@ export default function FilterBar({ filters, active, onChange }) {
           aria-pressed={active === filter.id}
           onClick={() => onChange(filter.id)}
         >
-          {filter.label}
+          {t(filter.label)}
         </button>
       ))}
     </div>

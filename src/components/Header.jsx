@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { NAV_LINKS, SITE_NAME } from "../data/config.js";
 import { categoryHref, signInHref, useRoute } from "../router.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
+import LanguageToggle from "./LanguageToggle.jsx";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const route = useRoute();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -40,6 +43,11 @@ export default function Header() {
 
         <nav className="primary-nav" aria-label="Primary">
           <ul>
+            <li>
+              <a href="#/" aria-current={route.name === "home" ? "page" : undefined}>
+                {t("Home")}
+              </a>
+            </li>
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
                 <a
@@ -47,7 +55,7 @@ export default function Header() {
                   aria-current={isActive(link.category) ? "page" : undefined}
                   className={isActive(link.category) ? "is-active" : ""}
                 >
-                  {link.label}
+                  {t(link.label)}
                 </a>
               </li>
             ))}
@@ -56,8 +64,9 @@ export default function Header() {
 
         <div className="site-header__actions">
           <a className="btn btn--accent btn--small" href="#notify">
-            Get notified
+            {t("Get notified")}
           </a>
+          <LanguageToggle />
           <button
             type="button"
             className="nav-toggle"
@@ -72,13 +81,18 @@ export default function Header() {
           </button>
           <ThemeToggle />
           <a className="signin-btn" href={signInHref()}>
-            Sign In
+            {t("Sign In")}
           </a>
         </div>
       </div>
 
       <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile" hidden={!open}>
         <ul>
+          <li>
+            <a href="#/" aria-current={route.name === "home" ? "page" : undefined}>
+              {t("Home")}
+            </a>
+          </li>
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <a
@@ -86,13 +100,13 @@ export default function Header() {
                 aria-current={isActive(link.category) ? "page" : undefined}
                 className={isActive(link.category) ? "is-active" : ""}
               >
-                {link.label}
+                {t(link.label)}
               </a>
             </li>
           ))}
           <li>
             <a className="btn btn--accent" href="#notify">
-              Get notified
+              {t("Get notified")}
             </a>
           </li>
         </ul>

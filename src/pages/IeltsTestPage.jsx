@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { TESTS } from "../data/ieltsTests.js";
 import { scoreToBand, isCorrect, correctAnswerLabel, TYPE_LABELS } from "../utils/ielts.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const TEST_DURATION_SECONDS = 60 * 60;
 const WARNING_THRESHOLD_SECONDS = 5 * 60;
@@ -330,7 +331,8 @@ function QuestionGroup({ group, answers, onAnswer }) {
 }
 
 export default function IeltsTestPage({ id }) {
-  const test = TESTS.find((t) => t.id === id);
+  const { t } = useLanguage();
+  const test = TESTS.find((test) => test.id === id);
   const [phase, setPhase] = useState("intro"); // intro | running | results
   const [answers, setAnswers] = useState({});
   const [secondsLeft, setSecondsLeft] = useState(TEST_DURATION_SECONDS);
@@ -374,7 +376,7 @@ export default function IeltsTestPage({ id }) {
         <div className="section__inner">
           <h1 className="section__title">Test not found</h1>
           <p className="section__lede">
-            <a href="#/category/ielts">Back to IELTS.</a>
+            <a href="#/category/ielts">{t("Back")} to IELTS.</a>
           </p>
         </div>
       </section>
@@ -388,7 +390,7 @@ export default function IeltsTestPage({ id }) {
           <h1 className="section__title">{test.title}</h1>
           <p className="section__lede">
             This test hasn't been built yet — check back soon.{" "}
-            <a href="#/category/ielts">Back to IELTS.</a>
+            <a href="#/category/ielts">{t("Back")} to IELTS.</a>
           </p>
         </div>
       </section>
@@ -400,7 +402,7 @@ export default function IeltsTestPage({ id }) {
       <section className="section test-intro">
         <div className="section__inner">
           <a className="detail__back" href="#/category/ielts">
-            ← Back to IELTS
+            ← {t("Back")} to IELTS
           </a>
           <h1 className="section__title">{test.title}</h1>
           <p className="section__lede">
@@ -413,7 +415,7 @@ export default function IeltsTestPage({ id }) {
             <li>Full band score and answer review immediately after submitting</li>
           </ul>
           <button type="button" className="btn btn--accent" onClick={() => setPhase("running")}>
-            Start test
+            {t("Start Test")}
           </button>
         </div>
       </section>
@@ -428,7 +430,7 @@ export default function IeltsTestPage({ id }) {
           <span className="test-timer__label">{test.title}</span>
           <span className="test-timer__clock">{formatTime(secondsLeft)}</span>
           <button type="button" className="btn btn--accent btn--small" onClick={handleSubmit}>
-            Submit test
+            {t("Submit Test")}
           </button>
         </div>
 
@@ -437,7 +439,7 @@ export default function IeltsTestPage({ id }) {
             {test.passages.map((passage, i) => (
               <article className="reading-passage" key={passage.id}>
                 <h2 className="detail__section-title">
-                  Passage {i + 1}: {passage.title}
+                  {t("Passage")} {i + 1}: {passage.title}
                 </h2>
                 <div className="reading-passage__columns">
                   <PassageBody passage={passage} />
@@ -452,7 +454,7 @@ export default function IeltsTestPage({ id }) {
 
             <div className="test-runner__submit">
               <button type="button" className="btn btn--accent" onClick={handleSubmit}>
-                Submit test
+                {t("Submit Test")}
               </button>
             </div>
           </div>
@@ -466,7 +468,7 @@ export default function IeltsTestPage({ id }) {
     <section className="section results">
       <div className="section__inner">
         <a className="detail__back" href="#/category/ielts">
-          ← Back to IELTS
+          ← {t("Back")} to IELTS
         </a>
 
         <div className="results__score">
@@ -515,8 +517,8 @@ export default function IeltsTestPage({ id }) {
                   {q.prompt || `Paragraph ${q.paragraphId}`}
                 </p>
                 <p className="review-item__answers">
-                  Your answer: <strong>{q.userValue || "No answer"}</strong>
-                  {" · "}Correct answer: <strong>{correctAnswerLabel(q)}</strong>
+                  {t("Your Answer")}: <strong>{q.userValue || "No answer"}</strong>
+                  {" · "}{t("Correct Answer")}: <strong>{correctAnswerLabel(q)}</strong>
                 </p>
               </div>
             </div>

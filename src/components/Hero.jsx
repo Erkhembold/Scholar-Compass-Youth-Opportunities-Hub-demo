@@ -1,5 +1,6 @@
 import TiltImage from "./TiltImage.jsx";
 import HoverText from "./HoverText.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import heroImage from "../assets/student-raising-hand.png";
 
 const CATEGORIES = [
@@ -12,6 +13,8 @@ const CATEGORIES = [
 ];
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="hero hero--home" aria-label="Introduction">
       <div className="hero__inner">
@@ -29,15 +32,15 @@ export default function Hero() {
           </p>
           <div className="hero__actions">
             <a className="btn btn--accent" href="#opportunities">
-              Browse the opportunity board
+              {t("Explore Opportunities")}
             </a>
             <a className="btn btn--ghost" href="#notify">
-              Get notified about deadlines
+              {t("Get Notified")}
             </a>
           </div>
           <ul className="hero__categories">
             {CATEGORIES.map((cat) => (
-              <li key={cat}>{cat}</li>
+              <li key={cat}>{t(cat)}</li>
             ))}
           </ul>
         </div>
