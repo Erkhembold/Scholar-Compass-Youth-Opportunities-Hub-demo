@@ -1,6 +1,6 @@
 import PlaceholderArt from "./PlaceholderArt.jsx";
 
-export default function CategoryHero({ label, intro, pattern }) {
+export default function CategoryHero({ label, intro, pattern, image }) {
   return (
     <section className="hero category-hero" aria-label={`${label} overview`}>
       <div className="hero__inner">
@@ -17,7 +17,15 @@ export default function CategoryHero({ label, intro, pattern }) {
 
         <div className="hero__visual">
           <div className="category-hero__frame">
-            <PlaceholderArt pattern={pattern} />
+            {image ? (
+              <img
+                src={image}
+                alt={`${label} category illustration`}
+                className="category-hero__image"
+              />
+            ) : (
+              <PlaceholderArt pattern={pattern} />
+            )}
           </div>
         </div>
       </div>

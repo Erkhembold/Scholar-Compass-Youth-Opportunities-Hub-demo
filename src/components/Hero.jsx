@@ -1,4 +1,5 @@
 import TiltImage from "./TiltImage.jsx";
+import HoverText from "./HoverText.jsx";
 import heroImage from "../assets/student-raising-hand.png";
 
 const CATEGORIES = [
@@ -12,14 +13,14 @@ const CATEGORIES = [
 
 export default function Hero() {
   return (
-    <section className="hero" aria-label="Introduction">
+    <section className="hero hero--home" aria-label="Introduction">
       <div className="hero__inner">
         <div className="hero__copy">
           <p className="hero__eyebrow">Student opportunity hub</p>
           <h1 className="hero__headline">
-            Opportunities don&rsquo;t just happen.
+            <HoverText text="Opportunities don’t just happen." className="hero__headline-line" />
             <br />
-            You build them.
+            <HoverText text="You build them." className="hero__headline-line" />
           </h1>
           <p className="hero__lede">
             ScholarCompass brings scholarships, competitions, volunteering,

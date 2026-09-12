@@ -7,6 +7,8 @@
 // visit and the credit. Entries without `sourceUrl` are original
 // ScholarCompass editorial placeholders pending a written article.
 
+import volunteerCleanupImg from "../assets/reads/volunteer-cleanup.jpg";
+
 export const reads = [
   {
     id: "r-01",
@@ -69,6 +71,7 @@ export const reads = [
     sourceUrl:
       "https://blogs.volunteermatch.org/8-ways-volunteering-helps-you-learn-and-grow-at-any-age",
     pattern: "grid",
+    image: volunteerCleanupImg,
     external: true,
     summary:
       "A look at what students actually get out of volunteering beyond a line on an application — new skills, a wider network, and a clearer sense of what kind of work you enjoy. A good reminder to pick something you'd stick with even if nobody was keeping score.",

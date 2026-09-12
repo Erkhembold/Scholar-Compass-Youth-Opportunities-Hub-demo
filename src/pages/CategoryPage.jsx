@@ -26,7 +26,7 @@ export default function CategoryPage({ category }) {
 
   return (
     <>
-      <CategoryHero label={meta.label} intro={meta.intro} pattern={meta.pattern} />
+      <CategoryHero label={meta.label} intro={meta.intro} pattern={meta.pattern} image={meta.image} />
 
       {category === "ielts" && (
         <section className="section board" aria-labelledby="mock-tests-heading">

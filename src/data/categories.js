@@ -15,6 +15,8 @@ export const CATEGORY_LABELS = {
 // Intro copy + a placeholder-art pattern for each of the six navbar
 // categories' dedicated pages. "events" is deliberately absent — it has
 // no nav entry and no standalone page.
+import satLogoImg from "../assets/categories/sat-logo.png";
+
 export const CATEGORY_META = {
   ielts: {
     label: "IELTS",
@@ -25,6 +27,7 @@ export const CATEGORY_META = {
   sat: {
     label: "SAT",
     pattern: "dots",
+    image: satLogoImg,
     intro:
       "SAT resources here focus on what actually moves a score: timed section practice, common mistake breakdowns, and a study calendar that fits around a normal school week. Expect guidance on when to sit the test relative to your application deadlines.",
   },

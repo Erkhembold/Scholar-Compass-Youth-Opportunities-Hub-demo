@@ -17,6 +17,10 @@ import esportsVolunteersImg from "../assets/opportunities/esports-volunteers.png
 import ssmOpenDayImg from "../assets/opportunities/ssm-open-day.png";
 import soundMeditationImg from "../assets/opportunities/sound-meditation.png";
 import japanStudyFairImg from "../assets/opportunities/japan-study-fair.png";
+import nightMarathonImg from "../assets/opportunities/night-marathon-volunteers.png";
+import lightlabHiringImg from "../assets/opportunities/lightlab-hiring.png";
+import goodwavesImg from "../assets/opportunities/goodwaves-volunteers.png";
+import microcreditZorigImg from "../assets/opportunities/microcredit-zorig-scholarship.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -306,5 +310,151 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
     links: [
       { label: "Facebook event page", href: "https://www.facebook.com/events/1600404958459625" },
     ],
+  },
+  {
+    id: "night-marathon-2026-volunteers",
+    title: "Night Marathon 2026 — сайн дурын ажилтны бүртгэл",
+    category: "volunteering",
+    image: nightMarathonImg,
+    pattern: "grid",
+    deadline: { label: "Event day — Sep 26, 2026" },
+    essential: {
+      duration: "One event day, Sep 26, 2026",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Volunteers aged 18+",
+      organizer: "Night Marathon 2026, Ulaanbaatar",
+    },
+    description: `"Night Marathon 2026" сайн дурын ажилтны бүртгэл эхэллээ ✨
+
+Хотын шөнийн хамгийн онцгой арга хэмжээний нэг хэсэг болж, мянга мянган гүйгчийн урам зориг, эрч хүчийг мэдэрч, мартагдашгүй туршлагыг хамтдаа бүтээхийг хүсэж байна уу? Тэгвэл "Night Marathon 2026" арга хэмжээнд сайн дурын ажилтнаар нэгдээрэй. 🏃‍♀️🏃‍♂️
+
+Та арга хэмжээний өдөр бидэнтэй ажиллаж, UB Night Marathon-ийг амжилттай зохион байгуулахад өөрийн хувь нэмрээ оруулах боломжтой.
+
+🤝 Шинэ хүмүүстэй танилцана
+✨ Томоохон эвент зохион байгуулалтыг амжилттай бүтээх чухал багийн нэг хэсэг болно
+💪 Багаар ажиллаж, харилцааны ур чадвараа хөгжүүлнэ
+🌙 Хотын шөнийн хамгийн онцгой мөчүүдийн нэгийг хамтдаа бүтээнэ
+
+Бүртгэлээ илгээсний дараа манай баг тантай холбогдож, ажлын чиг үүрэг, дэлгэрэнгүй мэдээлэл болон шаардлагатай сургалтыг танилцуулна.
+
+📌 Санамж: Сайн дурын ажилтнаар бүртгүүлэх оролцогч 18 нас хүрсэн байх шаардлагатай.
+
+📅 2026.09.26
+📍 Сүхбаатарын талбай
+
+Run the City. Light the Night. 🌙`,
+    links: [{ label: "Register", href: "https://www.nightmarathon.mn/volunteer" }],
+  },
+  {
+    id: "lightlab-sales-social-assistant",
+    title: "LightLab-д борлуулалт & сошиал медиа туслах ажилтан авна",
+    category: "internships",
+    image: lightlabHiringImg,
+    pattern: "dots",
+    deadline: { label: "Rolling — apply anytime" },
+    essential: {
+      duration: "3–4 weekdays 12:00–19:00, plus 1–2 weekend days 10:00–19:00",
+      cost: "Not specified",
+      participants: "Not specified",
+      whoFor: "Students with a flexible schedule, or gap-year students",
+      organizer: "LightLab",
+    },
+    description: `LightLab-д маань өдөр тутмын борлуулалт болон сошиал медиа хариуцаж ажиллах идэвхтэй, хариуцлагатай, сошиалд сонирхолтой хүн хайж байна. 💡✨
+
+👀 Бид хэнийг хайж байна вэ?
+🎓 Хичээлийн хуваарь уян хатан оюутан
+🌱 Эсвэл gap year авч байгаа хүн
+📱 Instagram, Facebook болон сошиал медиа маркетингт сонирхолтой /өмнө нь ажиллаж байсан эсвэл маркетингаар сурдаг бол давуу тал/
+💬 Хүмүүстэй зөв боловсон, найрсаг харилцаж чаддаг
+🧠 Хариуцлагатай, эмх цэгцтэй, бие даан ажиллах чадвартай
+🎨 Interior design, home decoration мөн decor гэрлүүдэд сонирхолтой
+🚗 Жолооны үнэмлэхтэй, өөрийн машинтай бол том давуу тал
+💻 Instagram/Facebook дээр ажиллаж байсан туршлагатай бол давуу тал
+
+⏰ Ажлын цаг:
+Ажлын 3-4 өдөр 12:00 – 19:00
+Мөн амралтын 1-2 өдөр 10:00-19:00
+Оюутан болон gap year-тэй байгаа хүмүүст тохиромжтой уян хатан цагийн хуваарь
+
+CV-гээ илгээнэ үү ☺️💡`,
+    links: [
+      { label: "Email: narniigereltord@gmail.com", href: "mailto:narniigereltord@gmail.com" },
+    ],
+    contactNote: "You can also call LightLab directly at 88886759.",
+  },
+  {
+    id: "goodwaves-ngo-volunteers-2026",
+    title: "GoodWaves NGO — шинэ элсэлт",
+    category: "volunteering",
+    image: goodwavesImg,
+    pattern: "radial",
+    deadline: { label: "Enrollment: Sep 1 – Oct 1, 2026" },
+    essential: {
+      duration: "Enrollment window Sep 1 – Oct 1, 2026",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Youth who want to be part of a change, not just a one-off volunteer",
+      organizer: "GoodWaves NGO",
+    },
+    description: `🌊 Чи зүгээр нэг volunteer биш, өөрчлөлтийн нэг хэсэг болохыг хүсэж байна уу? GoodWaves-ийн шинэ элсэлт явагдаж байна.
+
+Сайн дурын ажил гэдэг зөвхөн бусдад туслах тухай биш. Энэ бол өөрийгөө хөгжүүлэх, шинэ зүйл сурах, шинэ хүмүүстэй танилцах, өөрийн санаагаа бодит ажил болгох боломж юм. 🤝
+
+Тэгвэл чи volunteer болсноор юу авч болох вэ?
+
+Хэрвээ чи:
+🌱 Нийгэмдээ эерэг өөрчлөлт хийхийг хүсдэг
+💡 Шинэ зүйл туршиж үзэх дуртай
+🤝 Шинэ хүмүүстэй хамтран ажиллахыг хүсдэг
+🔥 Өөрийгөө хөгжүүлэхийг хүсдэг бол
+
+GoodWaves чамайг хүлээж байна. 🌊
+
+📅 Элсэлт: 09.01 – 10.01
+
+Жижиг үйлдэл. Том нөлөө.
+Чиний давалгаа хаанаас эхлэх вэ? 🌊`,
+    links: [],
+    contactNote:
+      "No direct enrollment link was shared for this one — check the GoodWaves NGO Instagram for the sign-up link.",
+  },
+  {
+    id: "microcredit-zorig-scholarship-2026",
+    title: "Микро Кредит ББСБ × Зориг сангийн тэтгэлэгт хөтөлбөр 2026",
+    category: "scholarships",
+    image: microcreditZorigImg,
+    pattern: "stripe",
+    deadline: { date: "2026-09-27", time: "23:59" },
+    essential: {
+      duration: "Application closes Sep 27, 2026, 23:59",
+      cost: "Free to apply",
+      participants: "Not specified",
+      whoFor:
+        "University students (year 2+) in health/medicine fields in Ulaanbaatar, cumulative GPA 3.2+",
+      organizer: "Microcredit NBFI & Zorig Foundation",
+    },
+    description: `🎓 Микро Кредит ББСБ × Зориг сангийн ТЭТГЭЛЭГТ ХӨТӨЛБӨР 2026 зарлагдлаа.
+
+Эрүүл мэндийн салбарын ирээдүйн боловсон хүчнийг дэмжих зорилгоор Микро Кредит ББСБ болон Зориг сан хамтран тэтгэлэгт хөтөлбөр хэрэгжүүлдэг билээ.
+
+📌 Хэн хамрагдах вэ?
+Улаанбаатар хотод байрлах эрүүл мэнд, анагаах ухааны чиглэлээр мэргэжилтэн бэлтгэдэг их, дээд сургуулийн 2 болон түүнээс дээш дамжаанд суралцаж буй, нийт суралцсан хугацааны голч дүн 3.2 ба түүнээс дээш оюутнууд хамрагдах боломжтой.
+
+🌱 Тэтгэлэгт хөтөлбөрт хамрагдсанаар:
+• Сургалтын төлбөрийн тэтгэлэг авах
+• Эрүүл мэнд, нийгмийн салбарт эерэг өөрчлөлт авчрах хүсэл эрмэлзэлтэй залуусын хүрээлэлд нэгдэх боломжтой.
+
+📝 Өргөдөл хүлээн авах эцсийн хугацаа:
+2026 оны 9 дүгээр сарын 27-ны 23:59 цаг
+
+📲 Өргөдлийн маягтыг цахимаар бөглөнө.`,
+    links: [
+      {
+        label: "Apply",
+        href: "https://form.jotform.com/zorigfoundation/microcredit2026",
+      },
+    ],
+    contactNote: "More information: 11-315444.",
   },
 ];
