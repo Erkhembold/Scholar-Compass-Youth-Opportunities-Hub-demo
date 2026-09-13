@@ -28,6 +28,7 @@ export const translations = {
   "Explore Opportunities": "Боломжуудыг үзэх",
   "Read the Guides": "Зөвлөмжүүдийг унших",
   "Start Now": "Эхлүүлэх",
+  "Show more": "Цааш үзэх",
   "Learn More": "Дэлгэрэнгүй",
   "Read More": "Дэлгэрэнгүй унших",
   "Read Guide": "Зөвлөмж унших",
