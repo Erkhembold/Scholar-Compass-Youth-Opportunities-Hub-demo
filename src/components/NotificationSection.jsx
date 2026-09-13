@@ -30,14 +30,14 @@ export default function NotificationSection() {
 
     if (!EMAIL_PATTERN.test(trimmed)) {
       setStatus("error");
-      setMessage("Enter a valid email address to continue.");
+      setMessage(t("Enter a valid email address to continue."));
       return;
     }
 
     const saved = saveEmail(trimmed);
     if (!saved) {
       setStatus("error");
-      setMessage("Something went wrong on this device. Try again.");
+      setMessage(t("Something went wrong on this device. Try again."));
       return;
     }
 
@@ -54,8 +54,9 @@ export default function NotificationSection() {
             {t("Don\u2019t miss the deadline.")}
           </h2>
           <p className="section__lede">
-            Get a short, occasional email when a new scholarship, competition,
-            or internship deadline is added to the board.
+            {t(
+              "Get a short, occasional email when a new scholarship, competition, or internship deadline is added to the board."
+            )}
           </p>
         </div>
 
@@ -89,7 +90,7 @@ export default function NotificationSection() {
             role="status"
           >
             {status === "idle"
-              ? "This is a prototype — your email is stored on this device only, for now."
+              ? t("This is a prototype — your email is stored on this device only, for now.")
               : message}
           </p>
         </form>

@@ -43,11 +43,6 @@ export default function Header() {
 
         <nav className="primary-nav" aria-label="Primary">
           <ul>
-            <li>
-              <a href="#/" aria-current={route.name === "home" ? "page" : undefined}>
-                {t("Home")}
-              </a>
-            </li>
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
                 <a
@@ -63,9 +58,6 @@ export default function Header() {
         </nav>
 
         <div className="site-header__actions">
-          <a className="btn btn--accent btn--small" href="#notify">
-            {t("Get notified")}
-          </a>
           <LanguageToggle />
           <button
             type="button"

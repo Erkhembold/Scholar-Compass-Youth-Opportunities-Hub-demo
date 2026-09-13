@@ -1,3 +1,5 @@
+import { useLanguage } from "../context/LanguageContext.jsx";
+
 const PILLARS = [
   {
     title: "Find it",
@@ -14,27 +16,29 @@ const PILLARS = [
 ];
 
 export default function AboutSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="section about" aria-labelledby="about-heading">
       <div className="section__inner about__inner">
         <div className="about__intro">
           <h2 id="about-heading" className="section__title">
-            ScholarCompass exists to make student opportunities easier to
-            find, understand, and act on.
+            {t(
+              "ScholarCompass exists to make student opportunities easier to find, understand, and act on."
+            )}
           </h2>
           <p className="section__lede">
-            We're centralizing the scattered world of scholarships,
-            competitions, volunteering, internships, and test-prep resources
-            into a single, current source that a high-school student can
-            actually keep up with.
+            {t(
+              "We're centralizing the scattered world of scholarships, competitions, volunteering, internships, and test-prep resources into a single, current source that a high-school student can actually keep up with."
+            )}
           </p>
         </div>
 
         <div className="about__pillars">
           {PILLARS.map((pillar) => (
             <div className="about__pillar" key={pillar.title}>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.body}</p>
+              <h3>{t(pillar.title)}</h3>
+              <p>{t(pillar.body)}</p>
             </div>
           ))}
         </div>

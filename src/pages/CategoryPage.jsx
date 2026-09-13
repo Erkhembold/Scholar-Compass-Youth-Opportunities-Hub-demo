@@ -4,8 +4,10 @@ import MockTestCard from "../components/MockTestCard.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
 import { TESTS } from "../data/ieltsTests.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function CategoryPage({ category }) {
+  const { t } = useLanguage();
   const meta = CATEGORY_META[category];
 
   if (!meta) {
@@ -33,12 +35,12 @@ export default function CategoryPage({ category }) {
           <div className="section__inner">
             <div className="section__head">
               <h2 id="mock-tests-heading" className="section__title">
-                IELTS Reading Mock Tests
+                {t("IELTS Reading Mock Tests")}
               </h2>
               <p className="section__lede">
-                Ten full-length practice tests, each timed at 60 minutes with
-                40 questions across 3 passages. Two are live now — the rest
-                are on the way.
+                {t(
+                  "Ten full-length practice tests, each timed at 60 minutes with 40 questions across 3 passages. Two are live now — the rest are on the way."
+                )}
               </p>
             </div>
             <div className="opp-grid" role="list">
@@ -63,8 +65,7 @@ export default function CategoryPage({ category }) {
               {meta.label} opportunities
             </h2>
             <p className="section__lede">
-              Every current listing in this category — new ones are added as
-              they come in.
+              {t("Every current listing in this category — new ones are added as they come in.")}
             </p>
           </div>
 

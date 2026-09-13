@@ -390,7 +390,7 @@ export default function IeltsTestPage({ id }) {
         <div className="section__inner">
           <h1 className="section__title">{test.title}</h1>
           <p className="section__lede">
-            This test hasn't been built yet — check back soon.{" "}
+            {t("This test hasn't been built yet — check back soon.")}{" "}
             <a href="#/category/ielts">{t("Back")} to IELTS.</a>
           </p>
         </div>
@@ -407,13 +407,18 @@ export default function IeltsTestPage({ id }) {
           </a>
           <h1 className="section__title">{test.title}</h1>
           <p className="section__lede">
-            3 passages, 40 questions, 60 minutes. The timer starts as soon as
-            you click Start, and the test auto-submits when time runs out.
+            {t(
+              "3 passages, 40 questions, 60 minutes. The timer starts as soon as you click Start, and the test auto-submits when time runs out."
+            )}
           </p>
           <ul className="test-intro__facts">
-            <li>60-minute countdown timer, always visible</li>
-            <li>Mix of True/False/Not Given, multiple choice, matching headings, and sentence completion</li>
-            <li>Full band score and answer review immediately after submitting</li>
+            <li>{t("60-minute countdown timer, always visible")}</li>
+            <li>
+              {t(
+                "Mix of True/False/Not Given, multiple choice, matching headings, and sentence completion"
+              )}
+            </li>
+            <li>{t("Full band score and answer review immediately after submitting")}</li>
           </ul>
           <button type="button" className="btn btn--accent" onClick={() => setPhase("running")}>
             {t("Start Test")}
@@ -474,14 +479,14 @@ export default function IeltsTestPage({ id }) {
         </a>
 
         <div className="results__score">
-          <span className="results__score-label">Your band score</span>
+          <span className="results__score-label">{t("Your band score")}</span>
           <span className="results__band">Band {report.band}</span>
-          <span className="results__raw">{report.raw}/40 correct</span>
+          <span className="results__raw">{report.raw}/40 {t("correct")}</span>
         </div>
 
         <div className="results__breakdown">
           <div className="results__breakdown-block">
-            <h3>By question type</h3>
+            <h3>{t("By question type")}</h3>
             <ul>
               {Object.entries(report.byType).map(([type, v]) => (
                 <li key={type}>
@@ -491,7 +496,7 @@ export default function IeltsTestPage({ id }) {
             </ul>
           </div>
           <div className="results__breakdown-block">
-            <h3>By passage</h3>
+            <h3>{t("By passage")}</h3>
             <ul>
               {Object.values(report.byPassage).map((v) => (
                 <li key={v.title}>
@@ -505,7 +510,7 @@ export default function IeltsTestPage({ id }) {
         <p className="results__suggestion">{report.suggestion}</p>
 
         <h3 className="detail__section-title" style={{ marginTop: 40 }}>
-          Full answer review
+          {t("Full answer review")}
         </h3>
         <div className="review-list">
           {report.perQuestion.map((q) => (
@@ -519,7 +524,7 @@ export default function IeltsTestPage({ id }) {
                   {q.prompt || `Paragraph ${q.paragraphId}`}
                 </p>
                 <p className="review-item__answers">
-                  {t("Your Answer")}: <strong>{q.userValue || "No answer"}</strong>
+                  {t("Your Answer")}: <strong>{q.userValue || t("No answer")}</strong>
                   {" · "}{t("Correct Answer")}: <strong>{correctAnswerLabel(q)}</strong>
                 </p>
               </div>

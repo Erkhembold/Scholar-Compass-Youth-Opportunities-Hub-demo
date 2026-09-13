@@ -16,9 +16,9 @@ export default function Footer() {
         <div className="site-footer__brand">
           <span className="site-footer__name">{SITE_NAME}</span>
           <p>
-            A student opportunity hub for scholarships, competitions,
-            volunteering, internships, and test-prep guidance — built so the
-            next opportunity is easier to find than the last one.
+            {t(
+              "A student opportunity hub for scholarships, competitions, volunteering, internships, and test-prep guidance — built so the next opportunity is easier to find than the last one."
+            )}
           </p>
         </div>
 

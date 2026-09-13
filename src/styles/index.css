@@ -661,6 +661,7 @@ p {
 }
 
 .opp-card__media .placeholder-art,
+.opp-card__media .ordinal-art,
 .opp-card__image {
   width: 100%;
   height: 100%;
@@ -669,6 +670,7 @@ p {
 }
 
 .opp-card:hover .opp-card__media .placeholder-art,
+.opp-card:hover .opp-card__media .ordinal-art,
 .opp-card:hover .opp-card__image {
   transform: scale(1.04);
 }

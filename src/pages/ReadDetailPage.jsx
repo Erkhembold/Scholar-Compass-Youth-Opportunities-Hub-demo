@@ -2,6 +2,7 @@ import ReadArt from "../components/ReadArt.jsx";
 import { IconArrowLeft } from "../components/icons.jsx";
 import { reads } from "../data/reads.js";
 import { CONTACT_EMAIL } from "../data/config.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 function sourceDomain(url) {
   try {
@@ -12,6 +13,7 @@ function sourceDomain(url) {
 }
 
 export default function ReadDetailPage({ id }) {
+  const { t } = useLanguage();
   const read = reads.find((r) => r.id === id);
 
   if (!read) {
@@ -33,7 +35,7 @@ export default function ReadDetailPage({ id }) {
     <article className="section detail">
       <div className="section__inner detail__inner">
         <a className="detail__back" href="#/">
-          <IconArrowLeft /> Back to Suggested Reads
+          <IconArrowLeft /> {t("Back to Suggested Reads")}
         </a>
 
         <div className="detail__banner">
@@ -45,11 +47,11 @@ export default function ReadDetailPage({ id }) {
         </div>
 
         <header className="detail__header">
-          <span className="opp-card__category">{category}</span>
+          <span className="opp-card__category">{t(category)}</span>
           <h1 className="detail__title">{title}</h1>
           {external && source && (
             <p className="read-detail__byline">
-              Originally published by <strong>{source}</strong>
+              {t("Originally published by")} <strong>{source}</strong>
               {sourceUrl && <> — {sourceDomain(sourceUrl)}</>}
             </p>
           )}
@@ -61,9 +63,10 @@ export default function ReadDetailPage({ id }) {
               <p>{summary}</p>
               <div className="read-detail__credit">
                 <p>
-                  All credit for this article belongs to <strong>{source}</strong>. We're
-                  summarizing it here so it's easy to find alongside the rest of ScholarCompass
-                  — the full piece, in the authors' own words, is on their site.
+                  {t("All credit for this article belongs to")} <strong>{source}</strong>.{" "}
+                  {t(
+                    "We're summarizing it here so it's easy to find alongside the rest of ScholarCompass — the full piece, in the authors' own words, is on their site."
+                  )}
                 </p>
                 <a
                   className="btn btn--accent"
@@ -71,16 +74,17 @@ export default function ReadDetailPage({ id }) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Read the full article on {source} ↗
+                  {t("Read the full article on")} {source} ↗
                 </a>
               </div>
             </>
           ) : (
             <p>
-              This read is on our editorial list but hasn't been written up yet. Check back
-              soon, or{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`}>let us know</a> if you've got a great free
-              resource for this topic.
+              {t(
+                "This read is on our editorial list but hasn't been written up yet. Check back soon, or"
+              )}{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{t("let us know")}</a>{" "}
+              {t("if you've got a great free resource for this topic.")}
             </p>
           )}
         </div>

@@ -2,8 +2,10 @@ import { useMemo, useState } from "react";
 import FilterBar from "./FilterBar.jsx";
 import OpportunityGrid from "./OpportunityGrid.jsx";
 import { FILTERS, opportunities } from "../data/opportunities.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function OpportunityBoard() {
+  const { t } = useLanguage();
   const [active, setActive] = useState("all");
 
   const visible = useMemo(() => {
@@ -16,11 +18,12 @@ export default function OpportunityBoard() {
       <div className="section__inner">
         <div className="section__head">
           <h2 id="board-heading" className="section__title">
-            The Opportunity Board
+            {t("The Opportunity Board")}
           </h2>
           <p className="section__lede">
-            A running list of scholarships, competitions, volunteer roles, and
-            internships worth your time — filter to what applies to you.
+            {t(
+              "A running list of scholarships, competitions, volunteer roles, and internships worth your time — filter to what applies to you."
+            )}
           </p>
         </div>
 

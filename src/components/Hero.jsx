@@ -26,9 +26,9 @@ export default function Hero() {
             <HoverText text="You build them." className="hero__headline-line" />
           </h1>
           <p className="hero__lede">
-            ScholarCompass brings scholarships, competitions, volunteering,
-            internships, and test-prep guidance into one place, so finding
-            your next step takes minutes instead of a dozen open tabs.
+            {t(
+              "ScholarCompass brings scholarships, competitions, volunteering, internships, and test-prep guidance into one place, so finding your next step takes minutes instead of a dozen open tabs."
+            )}
           </p>
           <div className="hero__actions">
             <a className="btn btn--accent" href="#opportunities">

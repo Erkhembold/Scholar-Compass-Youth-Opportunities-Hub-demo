@@ -1,9 +1,12 @@
 import { INSTAGRAM_URL, SITE_NAME } from "../data/config.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function FollowBar() {
+  const { t } = useLanguage();
+
   return (
     <div className="follow-bar">
-      <span className="follow-bar__label">Follow {SITE_NAME}</span>
+      <span className="follow-bar__label">{t(`Follow ${SITE_NAME}`)}</span>
       <a
         className="follow-bar__link"
         href={INSTAGRAM_URL}

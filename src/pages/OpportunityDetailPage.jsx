@@ -92,20 +92,20 @@ export default function OpportunityDetailPage({ id }) {
         <div className="detail__columns">
           <aside className="detail__essential" aria-labelledby="essential-heading">
             <h2 id="essential-heading" className="detail__section-title">
-              Essential Information
+              {t("Essential Information")}
             </h2>
             <dl className="essential-list">
-              <EssentialRow icon={<IconTag />} label="Category" value={categoryLabel} />
-              <EssentialRow icon={<IconClock />} label="Duration" value={essential.duration} />
-              <EssentialRow icon={<IconCoin />} label="Cost" value={essential.cost} />
-              <EssentialRow icon={<IconUsers />} label="Participants" value={essential.participants} />
+              <EssentialRow icon={<IconTag />} label={t("Category")} value={categoryLabel} />
+              <EssentialRow icon={<IconClock />} label={t("Duration")} value={essential.duration} />
+              <EssentialRow icon={<IconCoin />} label={t("Cost")} value={essential.cost} />
+              <EssentialRow icon={<IconUsers />} label={t("Participants")} value={essential.participants} />
               <EssentialRow
                 icon={<IconCalendar />}
                 label={t("Deadline")}
                 value={formatDeadline(deadline)}
               />
-              <EssentialRow icon={<IconUser />} label="Who it's for" value={essential.whoFor} />
-              <EssentialRow icon={<IconBuilding />} label="Organizer" value={essential.organizer} />
+              <EssentialRow icon={<IconUser />} label={t("Who it's for")} value={essential.whoFor} />
+              <EssentialRow icon={<IconBuilding />} label={t("Organizer")} value={essential.organizer} />
             </dl>
           </aside>
 
@@ -113,7 +113,7 @@ export default function OpportunityDetailPage({ id }) {
             <section aria-labelledby="general-info-heading">
               <div className="detail__content-head">
                 <h2 id="general-info-heading" className="detail__section-title">
-                  General Info
+                  {t("General Info")}
                 </h2>
                 {isBilingual && (
                   <div className="lang-toggle" role="group" aria-label="Language">

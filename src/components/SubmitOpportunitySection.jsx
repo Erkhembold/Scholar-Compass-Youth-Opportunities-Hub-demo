@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CONTACT_EMAIL } from "../data/config.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -34,6 +35,7 @@ function buildMailto(form) {
 }
 
 export default function SubmitOpportunitySection() {
+  const { t } = useLanguage();
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState("idle"); // idle | error | success
   const [message, setMessage] = useState("");
@@ -50,19 +52,19 @@ export default function SubmitOpportunitySection() {
 
     if (!form.name.trim() || !form.title.trim() || !form.description.trim()) {
       setStatus("error");
-      setMessage("Fill in your name, the opportunity title, and a short description.");
+      setMessage(t("Fill in your name, the opportunity title, and a short description."));
       return;
     }
     if (!EMAIL_PATTERN.test(form.email.trim())) {
       setStatus("error");
-      setMessage("Enter a valid email address so we can follow up.");
+      setMessage(t("Enter a valid email address so we can follow up."));
       return;
     }
 
     window.location.href = buildMailto(form);
     setStatus("success");
     setMessage(
-      "Opening your email app with everything filled in — just hit send and we'll review it."
+      t("Opening your email app with everything filled in — just hit send and we'll review it.")
     );
   }
 
@@ -71,19 +73,19 @@ export default function SubmitOpportunitySection() {
       <div className="section__inner submit-opp__inner">
         <div className="submit-opp__copy">
           <h2 id="submit-opp-heading" className="section__title">
-            Know an opportunity we're missing?
+            {t("Know an opportunity we're missing?")}
           </h2>
           <p className="section__lede">
-            Teachers and students can send in scholarships, competitions, clubs, or internships
-            for other students to find. Every submission is reviewed by hand before it goes on
-            the board — no fake or paid listings.
+            {t(
+              "Teachers and students can send in scholarships, competitions, clubs, or internships for other students to find. Every submission is reviewed by hand before it goes on the board — no fake or paid listings."
+            )}
           </p>
         </div>
 
         <form className="submit-opp__form" onSubmit={handleSubmit} noValidate>
           <div className="submit-opp__row">
             <div className="submit-opp__field">
-              <label htmlFor="submit-name">Your name</label>
+              <label htmlFor="submit-name">{t("Your name")}</label>
               <input
                 id="submit-name"
                 type="text"
@@ -94,17 +96,17 @@ export default function SubmitOpportunitySection() {
             </div>
 
             <div className="submit-opp__field">
-              <label htmlFor="submit-role">I am a</label>
+              <label htmlFor="submit-role">{t("I am a")}</label>
               <select id="submit-role" value={form.role} onChange={update("role")}>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="other">Other</option>
+                <option value="student">{t("Student")}</option>
+                <option value="teacher">{t("Teacher")}</option>
+                <option value="other">{t("Other")}</option>
               </select>
             </div>
           </div>
 
           <div className="submit-opp__field">
-            <label htmlFor="submit-email">Your email</label>
+            <label htmlFor="submit-email">{t("Your email")}</label>
             <input
               id="submit-email"
               type="email"
@@ -117,7 +119,7 @@ export default function SubmitOpportunitySection() {
           </div>
 
           <div className="submit-opp__field">
-            <label htmlFor="submit-title">Opportunity title</label>
+            <label htmlFor="submit-title">{t("Opportunity title")}</label>
             <input
               id="submit-title"
               type="text"
@@ -129,7 +131,7 @@ export default function SubmitOpportunitySection() {
 
           <div className="submit-opp__row">
             <div className="submit-opp__field">
-              <label htmlFor="submit-link">Link (if there is one)</label>
+              <label htmlFor="submit-link">{t("Link (if there is one)")}</label>
               <input
                 id="submit-link"
                 type="url"
@@ -140,7 +142,7 @@ export default function SubmitOpportunitySection() {
             </div>
 
             <div className="submit-opp__field">
-              <label htmlFor="submit-deadline">Deadline (if known)</label>
+              <label htmlFor="submit-deadline">{t("Deadline (if known)")}</label>
               <input
                 id="submit-deadline"
                 type="text"
@@ -152,7 +154,7 @@ export default function SubmitOpportunitySection() {
           </div>
 
           <div className="submit-opp__field">
-            <label htmlFor="submit-description">Short description</label>
+            <label htmlFor="submit-description">{t("Short description")}</label>
             <textarea
               id="submit-description"
               rows={4}
@@ -163,7 +165,7 @@ export default function SubmitOpportunitySection() {
           </div>
 
           <button type="submit" className="btn btn--accent">
-            Send this opportunity
+            {t("Send this opportunity")}
           </button>
 
           <p
@@ -172,7 +174,7 @@ export default function SubmitOpportunitySection() {
             role="status"
           >
             {status === "idle"
-              ? "This opens your email app with the details pre-filled — nothing is sent automatically."
+              ? t("This opens your email app with the details pre-filled — nothing is sent automatically.")
               : message}
           </p>
         </form>

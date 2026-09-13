@@ -48,25 +48,25 @@ export default function SignInPage() {
           </div>
 
           <h1 className="signin__title">
-            {mode === "signin" ? "Welcome back" : "Create your ScholarCompass account"}
+            {mode === "signin" ? t("Welcome back") : t("Create your ScholarCompass account")}
           </h1>
           <p className="signin__lede">
             {mode === "signin"
-              ? "Sign in to track saved opportunities and your IELTS practice scores."
-              : "Create an account to save opportunities, track test scores, and earn points."}
+              ? t("Sign in to track saved opportunities and your IELTS practice scores.")
+              : t("Create an account to save opportunities, track test scores, and earn points.")}
           </p>
 
           {submitted ? (
             <div className="signin__status" role="status">
-              Accounts aren't connected to a database yet, so this is a preview of the sign-in
-              flow rather than a working login. Once accounts are live, this is exactly what
-              you'll see.
+              {t(
+                "Accounts aren't connected to a database yet, so this is a preview of the sign-in flow rather than a working login. Once accounts are live, this is exactly what you'll see."
+              )}
             </div>
           ) : (
             <form className="signin__form" onSubmit={handleSubmit} noValidate>
               {mode === "signup" && (
                 <div className="signin__field">
-                  <label htmlFor="signin-name">Full name</label>
+                  <label htmlFor="signin-name">{t("Full name")}</label>
                   <input
                     id="signin-name"
                     type="text"
@@ -78,7 +78,7 @@ export default function SignInPage() {
               )}
 
               <div className="signin__field">
-                <label htmlFor="signin-email">Email</label>
+                <label htmlFor="signin-email">{t("Email")}</label>
                 <input
                   id="signin-email"
                   type="email"
@@ -90,7 +90,7 @@ export default function SignInPage() {
               </div>
 
               <div className="signin__field">
-                <label htmlFor="signin-password">Password</label>
+                <label htmlFor="signin-password">{t("Password")}</label>
                 <input
                   id="signin-password"
                   type="password"
@@ -107,7 +107,7 @@ export default function SignInPage() {
           )}
 
           <a className="signin__back" href="#/">
-            ← Back to ScholarCompass
+            {t("← Back to ScholarCompass")}
           </a>
         </div>
       </div>
