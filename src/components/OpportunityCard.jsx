@@ -1,5 +1,6 @@
 import PlaceholderArt from "./PlaceholderArt.jsx";
 import BookmarkButton from "./BookmarkButton.jsx";
+import DeadlineStatus from "./DeadlineStatus.jsx";
 import { CATEGORY_LABELS } from "../data/categories.js";
 import { formatDeadline } from "../utils/deadline.js";
 import { opportunityHref } from "../router.js";
@@ -34,6 +35,7 @@ export default function OpportunityCard({ opportunity }) {
           </span>
         </div>
         <h3 className="opp-card__title">{opportunity.title}</h3>
+        <DeadlineStatus deadline={opportunity.deadline} />
       </div>
     </a>
   );

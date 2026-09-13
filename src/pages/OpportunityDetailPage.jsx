@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PlaceholderArt from "../components/PlaceholderArt.jsx";
 import BookmarkButton from "../components/BookmarkButton.jsx";
+import DeadlineStatus from "../components/DeadlineStatus.jsx";
 import { RichText } from "../components/RichText.jsx";
 import {
   IconArrowLeft,
@@ -112,7 +113,12 @@ export default function OpportunityDetailPage({ id }) {
               <EssentialRow
                 icon={<IconCalendar />}
                 label={t("Deadline")}
-                value={formatDeadline(deadline)}
+                value={
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                    {formatDeadline(deadline)}
+                    <DeadlineStatus deadline={deadline} size="lg" />
+                  </span>
+                }
               />
               <EssentialRow icon={<IconUser />} label={t("Who it's for")} value={essential.whoFor} />
               <EssentialRow icon={<IconBuilding />} label={t("Organizer")} value={essential.organizer} />
