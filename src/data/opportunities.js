@@ -21,6 +21,9 @@ import nightMarathonImg from "../assets/opportunities/night-marathon-volunteers.
 import lightlabHiringImg from "../assets/opportunities/lightlab-hiring.png";
 import goodwavesImg from "../assets/opportunities/goodwaves-volunteers.png";
 import microcreditZorigImg from "../assets/opportunities/microcredit-zorig-scholarship.png";
+import manuulHackClubImg from "../assets/opportunities/manuul-hack-club.png";
+import berkeleyClubImg from "../assets/opportunities/berkeley-club-autumn-intake.png";
+import feltCityTourImg from "../assets/opportunities/felt-city-walking-tour.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -456,5 +459,92 @@ GoodWaves чамайг хүлээж байна. 🌊
       },
     ],
     contactNote: "More information: 11-315444.",
+  },
+  {
+    id: "manuul-hack-club-2026",
+    title: "Manuul Hack Club — Weekly Coding Meetups",
+    category: "events",
+    image: manuulHackClubImg,
+    pattern: "dots",
+    deadline: { label: "Ongoing — Mondays & Wednesdays, 16:30–18:30" },
+    essential: {
+      duration: "Recurring, Mon & Wed, 16:30–18:30",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "High school students in Ulaanbaatar",
+      organizer: "Manuul Hack Club (Hack Club global network)",
+    },
+    description: {
+      mn: `Hack Club бол дэлхийн 100 гаруй орны 140,000 гаруй өсвөр насны залуусыг холбосон олон улсын ашгийн бус нийгэмлэг юм. Бид сурагчдад зориулсан орчныг бүрдүүлж, өөрсдийн санаагаа бодит төсөл болгон хөгжүүлэхэд тусалдаг. Manuul Hack Club нь энэхүү дэлхийн сүлжээний албан ёсны салбар бөгөөд долоо хоног бүр цуглаж хамтдаа суралцаж, код бичиж байна.
+
+📌 Хэзээ: Даваа, Лхагва гараг бүр | 16:30 – 18:30
+📍 Хаана: American Corner Ulaanbaatar
+🔗 Бүртгүүлэх: Профиль дээрх линкээр нэвтрээрэй.`,
+      en: `Hack Club is a global non-profit community of over 140,000 teenagers across 100+ countries who code and build projects together. It gives high schoolers total freedom to build real apps, hardware, and websites with direct backing from major tech organizations. Manuul Hack Club is the local chapter right here in Ulaanbaatar.
+
+📌 When: Mondays & Wednesdays | 16:30 – 18:30
+📍 Where: American Corner Ulaanbaatar
+🔗 Register: Link in bio.`,
+    },
+    links: [],
+    contactNote: "Registration link is in the Manuul Hack Club Instagram bio.",
+  },
+  {
+    id: "berkeley-club-autumn-intake-2026",
+    title: "Berkeley Club Autumn Admissions — 7 Days Left",
+    category: "competitions",
+    image: berkeleyClubImg,
+    pattern: "diagonal",
+    deadline: { date: "2026-09-20" },
+    essential: {
+      duration: "Applications close Sep 20, 2026",
+      cost: "Not specified",
+      participants: "Not specified",
+      whoFor: "University students (National University of Mongolia)",
+      organizer: "Berkeley Club (МУИС)",
+    },
+    description: `Шинэ хичээлийн жилээ өөртөө шинэ боломж нээж эхлүүлээрэй✨🌅
+• Илтгэх урлаг
+• Парламентын болон шүүхийн мэтгэлцээн
+• Академик сургалт
+• Халуун дулаан хамт олон
+• Өөрийгөө хөгжүүлэх олон боломж
+
+Өөрийгөө сорьж, илтгэх урлаг, мэтгэлцээнээр ур чадвараа хөгжүүлэхийг хүсэж байвал яг одоо бүртгүүлээрэй📝
+
+📌 Бүртгэл: 2026.09.20 хүртэл
+🔗 Online бүртгэлийн LINK IN BIO
+🔗 МУИС-ийн 2 байрны хоёр давхарт элсэлт явагдаж байна.`,
+    links: [],
+    contactNote:
+      "In-person registration is open at MUIS Building 2, 2nd floor. Online registration link is in the Berkeley Club Instagram bio.",
+  },
+  {
+    id: "felt-city-walking-tour-2026-09-20",
+    title: "\"Felt City\" Walking Tour",
+    category: "events",
+    image: feltCityTourImg,
+    pattern: "stripe",
+    deadline: { date: "2026-09-20", time: "11:00" },
+    essential: {
+      duration: "2–3 hours",
+      cost: "50,000₮ per person",
+      participants: "Not specified",
+      whoFor: "General public",
+      organizer: "\"Гэр өргөө\" ТББ (NGO) — curators A. Darisuren, S. Uurtsaikh",
+    },
+    description: `"Гэр өргөө" ТББ судалгааны төслийн хүрээнд судлаач, фото зурагчдын хамтаар Германы Мюнхен хотод болсон олон улсын архитектурын үзэсгэлэнд Зөвлөлтийн үед бэлэглэсэн орон сууцны хороолол, бүтээн байгуулалтыг тэнд амьдарч буй гурван үеийн өнцгөөс судалсан юм. Үзэсгэлэнгийн сэдвээр "The Gift: Spaces of Global Socialism and Their Afterlives" ном хэвлэгдсэн.
+
+Улаанбаатар хотод бэлэглэсэн, олон улсын тусламжаар барьсан ямар барилга, байгууламжийг Та мэдэх вэ? "Тусламж", "бэлэг" гэдэг үгсийн цаана ямар утга агуулагддаг талаар Та юу гэж боддог вэ? Нийгэм, эдийн засгийн хөгжлийн явцад бэлэг, тусламжийг үе, үеийнхэн хэрхэн ойлгож, тайлбарладаг вэ?
+
+Куратор: А. Дарьсүрэн, С. Үүрцайх
+Цуглах цэг: Барилгачдын талбай
+Огноо: 9-р сарын 20-ны Ням гараг
+Эхлэх цаг: 11 цаг
+Хугацаа: 2-3 цаг
+Тайлбар: Монгол хэл дээр
+Нэг хүний төлбөр: 50'000`,
+    links: [],
+    contactNote: "Meeting point: Барилгачдын талбай. Registration form is in the organizer's Instagram bio.",
   },
 ];
