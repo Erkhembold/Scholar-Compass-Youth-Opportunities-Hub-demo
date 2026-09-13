@@ -7,6 +7,7 @@ import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
 import IeltsTestPage from "./pages/IeltsTestPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 import { useRoute } from "./router.js";
 
 export default function App() {
@@ -45,6 +46,8 @@ export default function App() {
     page = <ReadDetailPage id={route.id} />;
   } else if (route.name === "signin") {
     page = <SignInPage />;
+  } else if (route.name === "profile") {
+    page = <ProfilePage />;
   } else {
     page = <HomePage />;
   }

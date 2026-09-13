@@ -22,6 +22,7 @@ export const translations = {
   "Get notified": "Мэдэгдэл авах",
   "Get Notified": "Мэдэгдэл авах",
   "Notify me": "Мэдэгдэл авах",
+  Profile: "Профайл",
 
   // Generic call-to-actions
   "Explore Opportunities": "Боломжуудыг үзэх",

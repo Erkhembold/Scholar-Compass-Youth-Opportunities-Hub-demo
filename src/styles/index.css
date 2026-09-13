@@ -401,6 +401,62 @@ p {
   border-color: rgba(90, 200, 250, 0.4);
 }
 
+.profile-menu {
+  position: relative;
+}
+
+.profile-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 220px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 120;
+}
+
+.profile-menu__name {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--heading);
+}
+
+.profile-menu__email {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  word-break: break-all;
+}
+
+.profile-menu__link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 8px 6px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.profile-menu__link:hover {
+  background: var(--surface);
+}
+
+.profile-menu__signout {
+  color: #d64545;
+}
+
 .lang-switch {
   display: inline-flex;
   align-items: center;
@@ -2211,4 +2267,10 @@ body.nav-open {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--blue-500);
+}
+
+.signin__optional-label {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  margin: 4px 0 -4px;
 }

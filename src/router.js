@@ -24,6 +24,9 @@ function parseHash(hash) {
   if (parts[0] === "signin") {
     return { name: "signin" };
   }
+  if (parts[0] === "profile") {
+    return { name: "profile" };
+  }
   return { name: "home" };
 }
 
@@ -59,4 +62,8 @@ export function readHref(id) {
 
 export function signInHref() {
   return "#/signin";
+}
+
+export function profileHref() {
+  return "#/profile";
 }
