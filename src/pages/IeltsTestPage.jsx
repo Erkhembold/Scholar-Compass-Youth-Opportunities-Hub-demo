@@ -4,6 +4,7 @@ import { scoreToBand, isCorrect, correctAnswerLabel, TYPE_LABELS } from "../util
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
+import { awardXp } from "../utils/xp.js";
 import PassageArt from "../components/PassageArt.jsx";
 
 const TEST_DURATION_SECONDS = 60 * 60;
@@ -373,6 +374,7 @@ export default function IeltsTestPage({ id }) {
     const r = buildReport(test, answers);
     saveAttemptLocally(test, r);
     saveAttemptToAccount(supabase, user?.id, test, r);
+    if (user?.id) awardXp(supabase, user.id, "ieltsPractice");
     setReport(r);
     setPhase("results");
   }
@@ -508,10 +510,11 @@ export default function IeltsTestPage({ id }) {
 
         <p className="results__save-status">
           {user ? (
-            "Saved to your ScholarCompass profile."
+            "Saved to your ScholarCompass profile — +60 XP toward this week's leaderboard."
           ) : (
             <>
-              <a href="#/signin">Sign in</a> to save your results and track progress over time.
+              <a href="#/signin">Sign in</a> to save your results and earn XP toward the
+              leaderboard.
             </>
           )}
         </p>

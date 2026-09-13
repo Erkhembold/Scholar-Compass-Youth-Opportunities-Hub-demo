@@ -8,6 +8,7 @@ import IeltsTestPage from "./pages/IeltsTestPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import { useRoute } from "./router.js";
 
 export default function App() {
@@ -48,6 +49,8 @@ export default function App() {
     page = <SignInPage />;
   } else if (route.name === "profile") {
     page = <ProfilePage />;
+  } else if (route.name === "leaderboard") {
+    page = <LeaderboardPage />;
   } else {
     page = <HomePage />;
   }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NAV_LINKS, SITE_NAME } from "../data/config.js";
-import { categoryHref, profileHref, signInHref, useRoute } from "../router.js";
+import { categoryHref, leaderboardHref, profileHref, signInHref, useRoute } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
@@ -69,6 +69,15 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href={leaderboardHref()}
+                aria-current={route.name === "leaderboard" ? "page" : undefined}
+                className={route.name === "leaderboard" ? "is-active" : ""}
+              >
+                Leaderboard
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -146,6 +155,15 @@ export default function Header() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href={leaderboardHref()}
+              aria-current={route.name === "leaderboard" ? "page" : undefined}
+              className={route.name === "leaderboard" ? "is-active" : ""}
+            >
+              Leaderboard
+            </a>
+          </li>
           <li>
             <a className="btn btn--accent" href="#notify">
               {t("Get notified")}

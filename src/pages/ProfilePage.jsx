@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
-import { ieltsTestHref } from "../router.js";
+import { ieltsTestHref, leaderboardHref } from "../router.js";
 import { useSavedOpportunities } from "../hooks/useSavedOpportunities.js";
 import { opportunities } from "../data/opportunities.js";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
+import LeagueBadge from "../components/LeagueBadge.jsx";
+import { LEAGUE_BY_ID } from "../data/leagues.js";
+import { getWeekInfo, buildLeaderboard, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
 
 const FIELD_DEFS = [
   { key: "school", label: "School" },
@@ -26,6 +29,22 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [attempts, setAttempts] = useState([]);
   const [attemptsLoading, setAttemptsLoading] = useState(true);
+  const [leagueProfile, setLeagueProfile] = useState(profile);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!user || !profile || !supabase) {
+      setLeagueProfile(profile);
+      return;
+    }
+    processWeeklyReset(supabase, { id: user.id, ...profile }).then((updated) => {
+      if (!cancelled) setLeagueProfile(updated);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, profile?.last_processed_week]);
 
   useEffect(() => {
     if (!user || !supabase) {
@@ -73,6 +92,26 @@ export default function ProfilePage() {
     setSaving(false);
     setEditing(false);
   }
+
+  const myLeagueId = leagueProfile?.current_league || "bronze";
+  const league = LEAGUE_BY_ID[myLeagueId];
+  const { weekNumber } = getWeekInfo();
+  const board = buildLeaderboard(myLeagueId, weekNumber, {
+    id: "me",
+    name: leagueProfile?.name || "You",
+    xp: leagueProfile?.weekly_xp || 0,
+  });
+  const myRow = board.find((p) => p.id === "me");
+  const zone = myRow ? zoneForRank(myRow.rank, board.length) : "stay";
+  const statusLabel =
+    zone === "promotion"
+      ? "Promotion zone"
+      : zone === "relegation"
+      ? league.id === "bronze"
+        ? "Stays in Bronze"
+        : "Relegation zone"
+      : "Safe zone";
+  const badges = leagueProfile?.badges || [];
 
   return (
     <section className="section signin">
@@ -130,6 +169,58 @@ export default function ProfilePage() {
           >
             Sign out
           </button>
+        </div>
+
+        <div
+          className="league-header"
+          style={{ "--league-color": league.primary, "--league-soft": league.soft, marginTop: 24 }}
+        >
+          <div className="league-header__badge">{league.name}</div>
+          <h2 className="league-header__title">League &amp; Achievements</h2>
+          <div className="league-header__stats">
+            <div>
+              <span className="league-header__stat-value">{league.name}</span>
+              <span className="league-header__stat-label">Current league</span>
+            </div>
+            <div>
+              <span className="league-header__stat-value">
+                #{myRow ? myRow.rank : "—"} / {board.length}
+              </span>
+              <span className="league-header__stat-label">Rank</span>
+            </div>
+            <div>
+              <span className="league-header__stat-value">
+                {(leagueProfile?.weekly_xp || 0).toLocaleString()}
+              </span>
+              <span className="league-header__stat-label">Weekly XP</span>
+            </div>
+            <div>
+              <span className="league-header__stat-value">{statusLabel}</span>
+              <span className="league-header__stat-label">Status</span>
+            </div>
+          </div>
+          <a className="btn btn--ghost" style={{ marginTop: 18 }} href={leaderboardHref()}>
+            View full leaderboard
+          </a>
+
+          {badges.length > 0 && (
+            <>
+              <h3 style={{ marginTop: 24, fontSize: "0.95rem", color: "var(--heading)" }}>
+                Weekly Achievements
+              </h3>
+              <div className="achievements-list">
+                {badges.map((b, i) => (
+                  <LeagueBadge
+                    key={i}
+                    placement={b.placement}
+                    badge={b.badge}
+                    leagueId={b.league}
+                    week={b.week}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <div className="signin__card" style={{ marginTop: 24 }}>

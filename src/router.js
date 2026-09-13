@@ -27,6 +27,9 @@ function parseHash(hash) {
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
+  if (parts[0] === "leaderboard") {
+    return { name: "leaderboard" };
+  }
   return { name: "home" };
 }
 
@@ -66,4 +69,8 @@ export function signInHref() {
 
 export function profileHref() {
   return "#/profile";
+}
+
+export function leaderboardHref() {
+  return "#/leaderboard";
 }
