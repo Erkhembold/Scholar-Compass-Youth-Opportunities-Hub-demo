@@ -457,6 +457,69 @@ p {
   color: #d64545;
 }
 
+.bookmark-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: rgba(6, 26, 58, 0.55);
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.bookmark-btn:hover {
+  background: rgba(6, 26, 58, 0.75);
+  transform: scale(1.06);
+}
+
+.bookmark-btn:active {
+  transform: scale(0.94);
+}
+
+.bookmark-btn--saved {
+  color: var(--blue-300, #7cc2ff);
+}
+
+.bookmark-btn--md {
+  width: 34px;
+  height: 34px;
+}
+
+.bookmark-btn--lg {
+  width: 40px;
+  height: 40px;
+  background: var(--white);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  backdrop-filter: none;
+}
+
+.bookmark-btn--lg:hover {
+  background: var(--surface);
+}
+
+.bookmark-btn--lg.bookmark-btn--saved {
+  color: var(--blue-500);
+  border-color: var(--blue-500);
+}
+
+.opp-card__bookmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+}
+
+.detail__header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .lang-switch {
   display: inline-flex;
   align-items: center;

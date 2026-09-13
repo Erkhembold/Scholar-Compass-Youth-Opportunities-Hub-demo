@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PlaceholderArt from "../components/PlaceholderArt.jsx";
+import BookmarkButton from "../components/BookmarkButton.jsx";
 import { RichText } from "../components/RichText.jsx";
 import {
   IconArrowLeft,
@@ -16,6 +17,7 @@ import { CATEGORY_LABELS } from "../data/categories.js";
 import { formatDeadline } from "../utils/deadline.js";
 import { categoryHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { useSavedOpportunities } from "../hooks/useSavedOpportunities.js";
 
 const LANGUAGE_TABS = [
   { id: "mn", label: "Монгол" },
@@ -38,6 +40,7 @@ function EssentialRow({ icon, label, value }) {
 
 export default function OpportunityDetailPage({ id }) {
   const { t } = useLanguage();
+  const { isSaved, toggleSave } = useSavedOpportunities();
   const opportunity = opportunities.find((op) => op.id === id);
   const isBilingual = opportunity && typeof opportunity.description === "object";
   const [lang, setLang] = useState("mn");
@@ -85,7 +88,14 @@ export default function OpportunityDetailPage({ id }) {
         </div>
 
         <header className="detail__header">
-          <span className="opp-card__category">{categoryLabel}</span>
+          <div className="detail__header-top">
+            <span className="opp-card__category">{categoryLabel}</span>
+            <BookmarkButton
+              size="lg"
+              saved={isSaved(opportunity.id)}
+              onToggle={() => toggleSave(opportunity.id)}
+            />
+          </div>
           <h1 className="detail__title">{title}</h1>
         </header>
 

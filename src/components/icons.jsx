@@ -109,3 +109,14 @@ export function IconArrowLeft(props) {
     </svg>
   );
 }
+
+// Bookmark toggle icon — outline when unsaved, filled when saved. Kept as
+// one component with a `filled` prop rather than two, so BookmarkButton
+// can swap the visual state without swapping components.
+export function IconBookmark({ filled = false, ...props }) {
+  return (
+    <svg {...common} fill={filled ? "currentColor" : "none"} {...props}>
+      <path d="M6.5 4A1.5 1.5 0 0 1 8 2.5h8A1.5 1.5 0 0 1 17.5 4v17l-5.5-4-5.5 4Z" />
+    </svg>
+  );
+}

@@ -1,11 +1,14 @@
 import PlaceholderArt from "./PlaceholderArt.jsx";
+import BookmarkButton from "./BookmarkButton.jsx";
 import { CATEGORY_LABELS } from "../data/categories.js";
 import { formatDeadline } from "../utils/deadline.js";
 import { opportunityHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { useSavedOpportunities } from "../hooks/useSavedOpportunities.js";
 
 export default function OpportunityCard({ opportunity }) {
   const { t } = useLanguage();
+  const { isSaved, toggleSave } = useSavedOpportunities();
 
   return (
     <a className="opp-card" href={opportunityHref(opportunity.id)}>
@@ -15,6 +18,11 @@ export default function OpportunityCard({ opportunity }) {
         ) : (
           <PlaceholderArt pattern={opportunity.pattern} />
         )}
+        <BookmarkButton
+          className="opp-card__bookmark"
+          saved={isSaved(opportunity.id)}
+          onToggle={() => toggleSave(opportunity.id)}
+        />
       </div>
       <div className="opp-card__body">
         <div className="opp-card__top">

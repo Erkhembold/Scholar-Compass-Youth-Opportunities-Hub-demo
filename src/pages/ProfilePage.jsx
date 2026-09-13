@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { ieltsTestHref } from "../router.js";
+import { useSavedOpportunities } from "../hooks/useSavedOpportunities.js";
+import { opportunities } from "../data/opportunities.js";
+import OpportunityGrid from "../components/OpportunityGrid.jsx";
 
 const FIELD_DEFS = [
   { key: "school", label: "School" },
@@ -12,6 +15,7 @@ const FIELD_DEFS = [
 
 export default function ProfilePage() {
   const { user, profile, signOut, updateProfile, loading } = useAuth();
+  const { savedIds, loading: savedLoading } = useSavedOpportunities();
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState(() => ({
     school: profile?.school || "",
@@ -160,6 +164,26 @@ export default function ProfilePage() {
             </ul>
           )}
         </div>
+      </div>
+
+      <div className="section__inner" style={{ marginTop: 48 }}>
+        <div className="section__head">
+          <h2 className="section__title" style={{ fontSize: "1.4rem" }}>
+            Saved Opportunities
+          </h2>
+          <p className="section__lede">
+            Everything you've bookmarked from the opportunity board, in one place.
+          </p>
+        </div>
+
+        {savedLoading ? (
+          <p className="section__lede">Loading…</p>
+        ) : (
+          <OpportunityGrid
+            opportunities={opportunities.filter((op) => savedIds.has(op.id))}
+            emptyMessage="Nothing saved yet — tap the bookmark icon on any opportunity to add it here."
+          />
+        )}
       </div>
     </section>
   );
