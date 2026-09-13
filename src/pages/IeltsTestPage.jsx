@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { TESTS } from "../data/ieltsTests.js";
 import { scoreToBand, isCorrect, correctAnswerLabel, TYPE_LABELS } from "../utils/ielts.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+import { supabase } from "../lib/supabaseClient.js";
 import PassageArt from "../components/PassageArt.jsx";
 
 const TEST_DURATION_SECONDS = 60 * 60;
@@ -86,7 +88,7 @@ function buildReport(test, answers) {
   return { raw, band, byType, byPassage, perQuestion, suggestion };
 }
 
-function saveAttempt(test, report) {
+function saveAttemptLocally(test, report) {
   try {
     const history = JSON.parse(window.localStorage.getItem(HISTORY_KEY) || "[]");
     history.push({
@@ -100,8 +102,26 @@ function saveAttempt(test, report) {
     });
     window.localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
   } catch {
-    // Prototype-only persistence — if storage is unavailable, the result
-    // still renders on screen, it just won't carry over between visits.
+    // Local fallback only — if storage is unavailable, the result still
+    // renders on screen, it just won't carry over between visits.
+  }
+}
+
+async function saveAttemptToAccount(supabase, userId, test, report) {
+  if (!supabase || !userId) return;
+  try {
+    await supabase.from("ielts_attempts").insert({
+      user_id: userId,
+      test_id: test.id,
+      test_title: test.title,
+      raw_score: report.raw,
+      band: report.band,
+      by_type: report.byType,
+      by_passage: report.byPassage,
+    });
+  } catch {
+    // Signed-in save failed silently — the result is still shown on
+    // screen and saved locally, it just won't sync to their account.
   }
 }
 
@@ -333,6 +353,7 @@ function QuestionGroup({ group, answers, onAnswer }) {
 
 export default function IeltsTestPage({ id }) {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const test = TESTS.find((test) => test.id === id);
   const [phase, setPhase] = useState("intro"); // intro | running | results
   const [answers, setAnswers] = useState({});
@@ -350,7 +371,8 @@ export default function IeltsTestPage({ id }) {
     submittedRef.current = true;
     if (intervalRef.current) clearInterval(intervalRef.current);
     const r = buildReport(test, answers);
-    saveAttempt(test, r);
+    saveAttemptLocally(test, r);
+    saveAttemptToAccount(supabase, user?.id, test, r);
     setReport(r);
     setPhase("results");
   }
@@ -483,6 +505,16 @@ export default function IeltsTestPage({ id }) {
           <span className="results__band">Band {report.band}</span>
           <span className="results__raw">{report.raw}/40 {t("correct")}</span>
         </div>
+
+        <p className="results__save-status">
+          {user ? (
+            "Saved to your ScholarCompass profile."
+          ) : (
+            <>
+              <a href="#/signin">Sign in</a> to save your results and track progress over time.
+            </>
+          )}
+        </p>
 
         <div className="results__breakdown">
           <div className="results__breakdown-block">

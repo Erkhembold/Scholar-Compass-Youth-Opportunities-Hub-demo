@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
+import { supabase } from "../lib/supabaseClient.js";
+import { ieltsTestHref } from "../router.js";
 
 const FIELD_DEFS = [
   { key: "school", label: "School" },
@@ -18,6 +20,24 @@ export default function ProfilePage() {
     target_test: profile?.target_test || "",
   }));
   const [saving, setSaving] = useState(false);
+  const [attempts, setAttempts] = useState([]);
+  const [attemptsLoading, setAttemptsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user || !supabase) {
+      setAttemptsLoading(false);
+      return;
+    }
+    supabase
+      .from("ielts_attempts")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("completed_at", { ascending: false })
+      .then(({ data }) => {
+        setAttempts(data || []);
+        setAttemptsLoading(false);
+      });
+  }, [user]);
 
   if (loading) {
     return (
@@ -106,6 +126,39 @@ export default function ProfilePage() {
           >
             Sign out
           </button>
+        </div>
+
+        <div className="signin__card" style={{ marginTop: 24 }}>
+          <h2 className="signin__title" style={{ fontSize: "1.2rem" }}>
+            IELTS Reading history
+          </h2>
+
+          {attemptsLoading ? (
+            <p className="signin__lede">Loading…</p>
+          ) : attempts.length === 0 ? (
+            <p className="signin__lede">
+              No attempts yet. <a href="#/category/ielts">Take a mock test</a> and your results
+              will show up here.
+            </p>
+          ) : (
+            <ul className="test-history">
+              {attempts.map((a) => (
+                <li className="test-history__row" key={a.id}>
+                  <div>
+                    <a className="test-history__title" href={ieltsTestHref(a.test_id)}>
+                      {a.test_title}
+                    </a>
+                    <span className="test-history__date">
+                      {new Date(a.completed_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="test-history__score">
+                    Band {a.band} · {a.raw_score}/40
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 -- ScholarCompass user profiles
--- Run this once in Supabase: Dashboard -> SQL Editor -> New query -> paste -> Run
+-- Safe to run more than once — each step only creates what's missing.
 
-create table public.profiles (
+create table if not exists public.profiles (
   id uuid references auth.users on delete cascade primary key,
   name text,
   email text,
@@ -13,20 +13,19 @@ create table public.profiles (
   created_at timestamp with time zone default now()
 );
 
--- Row Level Security: each person can only read/edit their own profile
 alter table public.profiles enable row level security;
 
+drop policy if exists "Users can view their own profile" on public.profiles;
 create policy "Users can view their own profile"
   on public.profiles for select
   using (auth.uid() = id);
 
+drop policy if exists "Users can update their own profile" on public.profiles;
 create policy "Users can update their own profile"
   on public.profiles for update
   using (auth.uid() = id);
 
--- Auto-create a profile row the moment someone signs up, pulling their
--- name out of the sign-up form (passed in as metadata) and their email.
-create function public.handle_new_user()
+create or replace function public.handle_new_user()
 returns trigger as $$
 begin
   insert into public.profiles (id, name, email)
@@ -35,6 +34,7 @@ begin
 end;
 $$ language plpgsql security definer;
 
+drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
