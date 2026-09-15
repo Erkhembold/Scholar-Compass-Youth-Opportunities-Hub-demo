@@ -2820,3 +2820,66 @@ body.nav-open {
   gap: 8px;
   margin-top: 12px;
 }
+
+/* =========================================================================
+   IELTS practice picker (College Board Question Bank-style chooser)
+   ========================================================================= */
+.practice-picker__card {
+  max-width: 560px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--blue-500);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+}
+
+.practice-picker__eyebrow {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--blue-500);
+  margin-bottom: 20px;
+}
+
+.practice-picker__label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+.practice-picker__select {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--blue-500);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 0.96rem;
+  color: var(--ink);
+}
+
+.practice-picker__select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.practice-picker__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.practice-picker__cancel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.practice-picker__cancel:hover {
+  color: var(--ink);
+}

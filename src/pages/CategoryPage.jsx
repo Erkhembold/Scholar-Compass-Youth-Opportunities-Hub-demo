@@ -1,9 +1,8 @@
 import CategoryHero from "../components/CategoryHero.jsx";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
-import MockTestCard from "../components/MockTestCard.jsx";
+import IeltsPracticePicker from "../components/IeltsPracticePicker.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
-import { TESTS } from "../data/ieltsTests.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function CategoryPage({ category }) {
@@ -30,29 +29,7 @@ export default function CategoryPage({ category }) {
     <>
       <CategoryHero label={meta.label} intro={meta.intro} pattern={meta.pattern} image={meta.image} />
 
-      {category === "ielts" && (
-        <section className="section board" aria-labelledby="mock-tests-heading">
-          <div className="section__inner">
-            <div className="section__head">
-              <h2 id="mock-tests-heading" className="section__title">
-                {t("IELTS Reading Mock Tests")}
-              </h2>
-              <p className="section__lede">
-                {t(
-                  "Ten full-length practice tests, each timed at 60 minutes with 40 questions across 3 passages."
-                )}
-              </p>
-            </div>
-            <div className="opp-grid" role="list">
-              {TESTS.map((test, i) => (
-                <div role="listitem" key={test.id}>
-                  <MockTestCard test={test} index={i} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {category === "ielts" && <IeltsPracticePicker />}
 
       <section
         id="category-board"

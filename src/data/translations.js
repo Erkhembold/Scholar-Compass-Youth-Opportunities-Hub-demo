@@ -23,6 +23,9 @@ export const translations = {
   "Get Notified": "Мэдэгдэл авах",
   "Notify me": "Мэдэгдэл авах",
   Profile: "Профайл",
+  "Choose a skill": "Чадвараа сонгоно уу",
+  Cancel: "Цуцлах",
+  Practice: "Дадлага",
 
   // Generic call-to-actions
   "Explore Opportunities": "Боломжуудыг үзэх",

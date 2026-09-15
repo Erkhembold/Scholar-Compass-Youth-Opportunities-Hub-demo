@@ -27,6 +27,9 @@ function parseHash(hash) {
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
+  if (parts[0] === "ielts" && parts[1] === "practice" && parts[2]) {
+    return { name: "ielts-practice", skill: decodeURIComponent(parts[2]) };
+  }
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
@@ -69,6 +72,10 @@ export function signInHref() {
 
 export function profileHref() {
   return "#/profile";
+}
+
+export function ieltsPracticeHref(skill) {
+  return `#/ielts/practice/${encodeURIComponent(skill)}`;
 }
 
 export function leaderboardHref() {
