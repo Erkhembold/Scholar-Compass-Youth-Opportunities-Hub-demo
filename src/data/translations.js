@@ -144,8 +144,8 @@ export const translations = {
 
   // IELTS mock test list
   "IELTS Reading Mock Tests": "IELTS Reading дадлага шалгалтууд",
-  "Ten full-length practice tests, each timed at 60 minutes with 40 questions across 3 passages. Two are live now — the rest are on the way.":
-    "Тус бүр 60 минут хугацаатай, 3 хэсэгт 40 асуулттай, нийт арван бүрэн дадлага шалгалт. Хоёр нь одоогоор бэлэн, үлдсэн нь удахгүй нэмэгдэнэ.",
+  "Ten full-length practice tests, each timed at 60 minutes with 40 questions across 3 passages.":
+    "Тус бүр 60 минут хугацаатай, 3 хэсэгт 40 асуулттай, нийт арван бүрэн дадлага шалгалт.",
   "60 min · 40 questions": "60 мин · 40 асуулт",
   "Coming soon": "Тун удахгүй",
 

@@ -39,7 +39,7 @@ export default function CategoryPage({ category }) {
               </h2>
               <p className="section__lede">
                 {t(
-                  "Ten full-length practice tests, each timed at 60 minutes with 40 questions across 3 passages. Two are live now — the rest are on the way."
+                  "Ten full-length practice tests, each timed at 60 minutes with 40 questions across 3 passages."
                 )}
               </p>
             </div>
