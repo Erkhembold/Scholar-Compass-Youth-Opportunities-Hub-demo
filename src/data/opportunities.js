@@ -24,6 +24,9 @@ import microcreditZorigImg from "../assets/opportunities/microcredit-zorig-schol
 import manuulHackClubImg from "../assets/opportunities/manuul-hack-club.png";
 import berkeleyClubImg from "../assets/opportunities/berkeley-club-autumn-intake.png";
 import feltCityTourImg from "../assets/opportunities/felt-city-walking-tour.png";
+import aoMockTrialImg from "../assets/opportunities/ao-mock-trial.png";
+import recycleRallyImg from "../assets/opportunities/recycle-rally-2026.png";
+import yscBookFairImg from "../assets/opportunities/ysc-book-fair.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -546,5 +549,84 @@ GoodWaves чамайг хүлээж байна. 🌊
 Нэг хүний төлбөр: 50'000`,
     links: [],
     contactNote: "Meeting point: Барилгачдын талбай. Registration form is in the organizer's Instagram bio.",
+  },
+  {
+    id: "ao-mock-trial-volunteers",
+    title: "AO Mock Trial — сайн дурын ажилтны бүртгэл",
+    category: "volunteering",
+    image: aoMockTrialImg,
+    pattern: "stripe",
+    deadline: { label: "Rolling — register via the form" },
+    essential: {
+      duration: "Not specified",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Students interested in law and court procedure",
+      organizer: "AO Academy",
+    },
+    description: `AO MOCK TRIAL — Сайн дурын ажилтнаар бүртгүүлээрэй!
+
+Хууль, шүүх процесстой ойрхон ажиллах сонирхолтой юу? AO Mock Trial-ийн зохион байгуулалтад нэгдэж, туршлага хуримтлуулаарай.`,
+    links: [
+      {
+        label: "Register",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSeqR38oS6CYaGv3PcnmzcmvDbUh8m4Iw8TSth0CH4N449F3Rw/viewform",
+      },
+    ],
+  },
+  {
+    id: "recycle-rally-2026",
+    title: "Recycle Rally 2026 — хуванцар цуглуулах аян",
+    category: "competitions",
+    image: recycleRallyImg,
+    pattern: "grid",
+    deadline: { date: "2026-12-04" },
+    essential: {
+      duration: "Sep 7 – Dec 4, 2026",
+      cost: "Free",
+      participants: "School teams",
+      whoFor: "All public and private schools in Ulaanbaatar",
+      organizer: "Mongolia Without Waste, CFLI/FCIL, TML Plastic, Save",
+    },
+    description: `📢 RECYCLE RALLY 2026 is here!
+
+UB schools — collect PET-1 plastic bottles and compete for cash prizes + recycling bins 🏆
+
+📅 Sep 7 – Dec 4, 2026
+🌱 Open to all public & private schools in Ulaanbaatar
+
+Нийслэлийн ЕБС-уудыг хуванцар цуглуулах аянд нэгдэхийг урьж байна. ЕБС-ийн сурагчдад байгаль орчныг хамгаалах, хог хаягдлыг эх үүсвэр дээр нь ангилах дадал хэвшүүлэх, хуванцар хог хаягдлын хор хөнөөл болон дахин боловсруулах боломжийн талаар мэдлэг олгох зорилготой аян.
+
+🏆 I байр: Сертификат, 2,500,000 төгрөгийн үнийн бүхий шагнал, 850,000 төгрөгийн үнийн бүхий хуванцар ангилах сав.
+
+From Waste to Wonder ♻️`,
+    links: [{ label: "Full guidelines", href: "https://shorturl.at/6HwAL" }],
+  },
+  {
+    id: "ysc-book-fair-2026-volunteers",
+    title: "YSC × Номын баяр 2026 — сайн дурын ажилтны бүртгэл",
+    category: "volunteering",
+    image: yscBookFairImg,
+    pattern: "radial",
+    deadline: { label: "Event days: Sep 18–20, 2026" },
+    essential: {
+      duration: "Sep 18, 19, 20 — 10:00–18:00 (full day or shift)",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Punctual youth with good communication skills; prior YSC/YP experience an advantage",
+      organizer: "Mongol Ecology Center, Youth Sustainability Corps",
+    },
+    description: `📖 YSCхНомын баяр 2026 📖
+
+40 дэхь удаагийн номын баярын арга хэмжээнд Монгол Экологи Төвийн асар дээр хөтөлбөрүүдийг танилцуулах, мэдээлэл өгөх, судалгаа авах зэрэг ажилд оролцох сайн дурын залуусыг бүртгэж байна.
+
+Хэнийг сонгох вэ?
+✅ 9-р сарын 18, 19, 20-ны өдрүүдэд өглөө 10:00-18:00 цаг хүртэл бүтэн эсвэл цагаа тохироод ээлжлээд гарах боломжтой
+✅ Цаг сайн баримталдаг, харилцааны соёлтой
+✅ YSC хөтөлбөрт оролцож байсан болон YP-ийн ЗБ эсвэл сайн дурын ажилтнаар оролцож байсан бол давуу талтай
+
+🎁 Шалгараад амжилттай ажилласан оролцогчдод YSC оноо болон мерч өгөх болно.`,
+    links: [],
+    contactNote: "Registration link is in the Mongol Ecology Center Instagram bio (@mongolecologycenter).",
   },
 ];
