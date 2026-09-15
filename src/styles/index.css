@@ -2883,3 +2883,33 @@ body.nav-open {
 .practice-picker__cancel:hover {
   color: var(--ink);
 }
+
+/* Empty (unoccupied) leaderboard seats — deliberately dim/dashed so they
+   read as "nobody here yet", never as a real competitor. */
+.leaderboard-row--empty {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--surface),
+    var(--surface) 8px,
+    var(--white) 8px,
+    var(--white) 16px
+  );
+  color: var(--ink-faint);
+  opacity: 0.75;
+}
+
+.leaderboard-row__rank--empty,
+.leaderboard-row__xp--empty {
+  color: var(--ink-faint);
+}
+
+.leaderboard-row__avatar--empty {
+  background: none;
+  border: 1.5px dashed var(--line);
+  color: var(--ink-faint);
+}
+
+.leaderboard-row__name--empty {
+  font-style: italic;
+  color: var(--ink-faint);
+}

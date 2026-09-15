@@ -69,10 +69,13 @@ function xpCurve(rank, leagueOrder, rand) {
   return Math.max(10, Math.round(base + jitter));
 }
 
-// Generates the 39 demo opponents for a league in a given week (the 40th
-// seat is the signed-in user, merged in by the caller). Deterministic per
-// (league, week) so the board doesn't reshuffle on every render/reload
-// within the same week.
+// Generates synthetic opponents used ONLY for the internal weekly-replay
+// math in processWeeklyReset below, to estimate roughly where a returning
+// user's XP would have landed in a week they missed (there's no stored
+// per-week snapshot of every real user's historical XP in this
+// prototype, so an exact historical rank isn't recoverable). These
+// players are NEVER rendered in the UI as a roster of named people —
+// only their count and XP distribution feed a rank number.
 export function generateDemoPlayers(leagueId, weekNumber, count = 39) {
   const league = LEAGUES.find((l) => l.id === leagueId) || LEAGUES[0];
   const seed = hashString(`${leagueId}:${weekNumber}`);
@@ -92,11 +95,15 @@ export function generateDemoPlayers(leagueId, weekNumber, count = 39) {
 }
 
 // Fetches every real ScholarCompass user currently placed in `leagueId`
-// from the leaderboard_entries view (see
-// supabase/leaderboard_public_view.sql) — name, league, and weekly XP
-// only, never email or other private profile fields. Returns [] if
+// from public.leaderboard_entries (see supabase/leaderboard_secure.sql).
+// That table only ever contains safe, public columns (id, name,
+// current_league, weekly_xp, badges) — never email, school, grade, or
+// any other private profile field — and its row-level security only
+// returns rows in the CALLER's own current league, enforced by Postgres
+// itself, not by this client-side filter (the .eq below is defense in
+// depth / clarity, not the actual security boundary). Returns [] if
 // Supabase isn't configured or the query fails, so the board still
-// renders (as all-demo) rather than crashing.
+// renders (as real-only, possibly with empty seats) rather than crashing.
 export async function fetchLeaguePlayers(supabase, leagueId) {
   if (!supabase) return [];
   const { data, error } = await supabase
@@ -131,32 +138,49 @@ export function buildLeaderboard(leagueId, weekNumber, user) {
 }
 
 // Builds the board actually shown on the Leaderboard and Profile pages:
-// every real signed-up user currently in this league (from
-// fetchLeaguePlayers) ranked together, with demo players padding only
-// whatever seats are left over up to 40 total. As more real students join
-// a league, fewer demo seats remain — real users never get hidden behind
-// filler names the way the old all-demo-except-you board did.
-export function buildLiveLeaderboard(leagueId, weekNumber, realPlayers, meEntry) {
+// ONLY real, currently-registered ScholarCompass users in this league,
+// ranked by weekly XP. No synthetic/demo players are mixed in here —
+// generateDemoPlayers above exists solely for the internal weekly-replay
+// math in processWeeklyReset further down (never rendered as a roster of
+// named people), which is documented at its own definition.
+//
+// If fewer than 40 real users occupy a league, the returned array is
+// simply shorter than 40 — callers render the remaining seats as empty
+// slots rather than this function inventing anyone to fill them.
+export function buildLiveLeaderboard(leagueId, realPlayers, meEntry) {
   const real = [...realPlayers];
 
   // The signed-in viewer's own row uses their freshest locally-known XP
   // (there can be a brief lag before a just-earned point shows up in the
-  // leaderboard_entries view for other visitors' next fetch).
+  // leaderboard_entries table for other visitors' next fetch).
   if (meEntry) {
     const idx = real.findIndex((p) => p.id === meEntry.id);
     if (idx >= 0) real[idx] = { ...real[idx], ...meEntry, isDemo: false };
     else real.push({ ...meEntry, isDemo: false });
   }
 
-  const seatsToFill = Math.max(0, 40 - real.length);
-  const demo = generateDemoPlayers(leagueId, weekNumber, seatsToFill);
-
-  const all = [...real, ...demo];
-  all.sort((a, b) => b.xp - a.xp);
-  return all.map((p, i) => ({ ...p, rank: i + 1 }));
+  real.sort((a, b) => b.xp - a.xp);
+  return real.map((p, i) => ({ ...p, rank: i + 1 }));
 }
 
+export const LEAGUE_CAPACITY = 40;
+
 // --- promotion / stay / relegation rules -------------------------------
+//
+// `totalPlayers` here must be the ACTUAL number of real users in the
+// league, not the fixed 40-seat capacity — empty seats are not
+// competitors and never affect anyone's zone. This means:
+//   - A league with fewer than 20 real players will never produce a
+//     relegation zone at all (rank <= totalPlayers - 5 covers everyone
+//     once totalPlayers <= 20, since the promotion check at rank <= 15
+//     already catches the rest) — there's nobody to be "the bottom 5"
+//     relative to, since 5 people can't sensibly be relegated out of a
+//     league of, say, 6.
+//   - A league with 10 real players: every one of them has rank <= 15,
+//     so everyone lands in the promotion zone. This is intentional and
+//     honest — there weren't enough real competitors to fill lower
+//     tiers, so nobody is arbitrarily held back to simulate a full
+//     league that doesn't exist.
 
 export function zoneForRank(rank, totalPlayers = 40) {
   if (rank <= 15) return "promotion";

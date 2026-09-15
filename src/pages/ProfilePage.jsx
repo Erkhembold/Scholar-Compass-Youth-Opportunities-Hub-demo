@@ -66,7 +66,7 @@ export default function ProfilePage() {
   const { weekNumber } = getWeekInfo();
   const myLeagueId = leagueProfile?.current_league || "bronze";
   const meEntry = user ? { id: user.id, name: leagueProfile?.name || "You", xp: leagueProfile?.weekly_xp || 0 } : null;
-  const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, weekNumber, meEntry);
+  const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, meEntry);
 
   if (loading) {
     return (
