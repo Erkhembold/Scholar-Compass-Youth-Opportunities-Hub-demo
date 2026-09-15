@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { LEAGUES, LEAGUE_BY_ID } from "../data/leagues.js";
-import { getWeekInfo, buildLeaderboard, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
+import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
+import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
 import LeagueCountdown from "../components/LeagueCountdown.jsx";
 import LeaderboardRow from "../components/LeaderboardRow.jsx";
 
@@ -37,16 +38,12 @@ export default function LeaderboardPage() {
 
   const meEntry =
     user && isOwnLeagueView
-      ? { id: "me", name: resolvedProfile?.name || "You", xp: resolvedProfile?.weekly_xp || 0 }
+      ? { id: user.id, name: resolvedProfile?.name || "You", xp: resolvedProfile?.weekly_xp || 0 }
       : null;
 
-  const board = useMemo(
-    () => buildLeaderboard(activeLeagueId, weekNumber, meEntry),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeLeagueId, weekNumber, meEntry?.xp]
-  );
+  const { board, loading: boardLoading } = useLeagueBoard(activeLeagueId, weekNumber, meEntry);
 
-  const myRow = board.find((p) => p.id === "me");
+  const myRow = user ? board.find((p) => p.id === user.id) : null;
 
   if (loading) {
     return (
@@ -140,15 +137,19 @@ export default function LeaderboardPage() {
           </span>
         </div>
 
-        <div className="leaderboard-list" role="list">
-          {board.map((player) => (
-            <LeaderboardRow
-              key={player.id}
-              player={player}
-              zone={zoneForRank(player.rank, board.length)}
-              isBronzeFloor={league.id === "bronze" && zoneForRank(player.rank, board.length) === "relegation"}
-            />
-          ))}
+        <div className="leaderboard-list" role="list" aria-busy={boardLoading}>
+          {boardLoading ? (
+            <p className="section__lede">Loading real ScholarCompass students in this league…</p>
+          ) : (
+            board.map((player) => (
+              <LeaderboardRow
+                key={player.id}
+                player={player}
+                zone={zoneForRank(player.rank, board.length)}
+                isBronzeFloor={league.id === "bronze" && zoneForRank(player.rank, board.length) === "relegation"}
+              />
+            ))
+          )}
         </div>
       </div>
     </section>

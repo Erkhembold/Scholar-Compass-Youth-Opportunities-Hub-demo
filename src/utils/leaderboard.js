@@ -91,11 +91,67 @@ export function generateDemoPlayers(leagueId, weekNumber, count = 39) {
   return players;
 }
 
+// Fetches every real ScholarCompass user currently placed in `leagueId`
+// from the leaderboard_entries view (see
+// supabase/leaderboard_public_view.sql) — name, league, and weekly XP
+// only, never email or other private profile fields. Returns [] if
+// Supabase isn't configured or the query fails, so the board still
+// renders (as all-demo) rather than crashing.
+export async function fetchLeaguePlayers(supabase, leagueId) {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("leaderboard_entries")
+    .select("id, name, weekly_xp")
+    .eq("current_league", leagueId);
+
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    id: row.id,
+    name: row.name?.trim() || "ScholarCompass student",
+    xp: row.weekly_xp || 0,
+    isDemo: false,
+  }));
+}
+
 // Merges the signed-in user into the demo roster, sorts by XP, and
 // assigns ranks 1..N. `user` is { id, name, xp } or null.
+//
+// Used only by processWeeklyReset's historical replay below — simulating
+// what would have happened in a past week you weren't around to see is
+// necessarily approximate in a client-only prototype (there's no stored
+// per-week snapshot of every real user's XP), so that replay stays
+// demo-only. The *live*, currently-displayed board uses
+// buildLiveLeaderboard instead, which pulls in real signed-up users.
 export function buildLeaderboard(leagueId, weekNumber, user) {
   const demo = generateDemoPlayers(leagueId, weekNumber, user ? 39 : 40);
   const all = user ? [...demo, { ...user, isDemo: false }] : demo;
+  all.sort((a, b) => b.xp - a.xp);
+  return all.map((p, i) => ({ ...p, rank: i + 1 }));
+}
+
+// Builds the board actually shown on the Leaderboard and Profile pages:
+// every real signed-up user currently in this league (from
+// fetchLeaguePlayers) ranked together, with demo players padding only
+// whatever seats are left over up to 40 total. As more real students join
+// a league, fewer demo seats remain — real users never get hidden behind
+// filler names the way the old all-demo-except-you board did.
+export function buildLiveLeaderboard(leagueId, weekNumber, realPlayers, meEntry) {
+  const real = [...realPlayers];
+
+  // The signed-in viewer's own row uses their freshest locally-known XP
+  // (there can be a brief lag before a just-earned point shows up in the
+  // leaderboard_entries view for other visitors' next fetch).
+  if (meEntry) {
+    const idx = real.findIndex((p) => p.id === meEntry.id);
+    if (idx >= 0) real[idx] = { ...real[idx], ...meEntry, isDemo: false };
+    else real.push({ ...meEntry, isDemo: false });
+  }
+
+  const seatsToFill = Math.max(0, 40 - real.length);
+  const demo = generateDemoPlayers(leagueId, weekNumber, seatsToFill);
+
+  const all = [...real, ...demo];
   all.sort((a, b) => b.xp - a.xp);
   return all.map((p, i) => ({ ...p, rank: i + 1 }));
 }

@@ -7,7 +7,8 @@ import { opportunities } from "../data/opportunities.js";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import LeagueBadge from "../components/LeagueBadge.jsx";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
-import { getWeekInfo, buildLeaderboard, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
+import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
+import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
 
 const FIELD_DEFS = [
   { key: "school", label: "School" },
@@ -62,6 +63,11 @@ export default function ProfilePage() {
       });
   }, [user]);
 
+  const { weekNumber } = getWeekInfo();
+  const myLeagueId = leagueProfile?.current_league || "bronze";
+  const meEntry = user ? { id: user.id, name: leagueProfile?.name || "You", xp: leagueProfile?.weekly_xp || 0 } : null;
+  const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, weekNumber, meEntry);
+
   if (loading) {
     return (
       <section className="section">
@@ -93,15 +99,8 @@ export default function ProfilePage() {
     setEditing(false);
   }
 
-  const myLeagueId = leagueProfile?.current_league || "bronze";
   const league = LEAGUE_BY_ID[myLeagueId];
-  const { weekNumber } = getWeekInfo();
-  const board = buildLeaderboard(myLeagueId, weekNumber, {
-    id: "me",
-    name: leagueProfile?.name || "You",
-    xp: leagueProfile?.weekly_xp || 0,
-  });
-  const myRow = board.find((p) => p.id === "me");
+  const myRow = board.find((p) => p.id === user.id);
   const zone = myRow ? zoneForRank(myRow.rank, board.length) : "stay";
   const statusLabel =
     zone === "promotion"
