@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
 import IeltsTestPage from "./pages/IeltsTestPage.jsx";
+import WritingTaskPage from "./pages/WritingTaskPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
@@ -44,6 +45,8 @@ export default function App() {
     page = <OpportunityDetailPage id={route.id} />;
   } else if (route.name === "ielts-test") {
     page = <IeltsTestPage id={route.id} />;
+  } else if (route.name === "ielts-writing") {
+    page = <WritingTaskPage id={route.id} />;
   } else if (route.name === "read") {
     page = <ReadDetailPage id={route.id} />;
   } else if (route.name === "signin") {

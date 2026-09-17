@@ -38,3 +38,8 @@ export const DEADLINE_STATUS_RULES = {
   yellowMaxDays: 7, // 3–7 days remaining
   // anything beyond yellowMaxDays is "green"
 };
+
+// Each essay evaluation costs a real API call (real money), unlike the
+// reading mock tests which are static. Cap submissions per signed-in user
+// per calendar day so cost stays predictable while usage is still small.
+export const WRITING_DAILY_LIMIT = 3;

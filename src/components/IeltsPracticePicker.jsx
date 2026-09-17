@@ -6,7 +6,7 @@ const SKILLS = [
   { id: "reading", label: "Reading", ready: true },
   { id: "listening", label: "Listening", ready: false },
   { id: "speaking", label: "Speaking", ready: false },
-  { id: "writing", label: "Writing", ready: false },
+  { id: "writing", label: "Writing", ready: true },
 ];
 
 // College Board "Question Bank"-style entry point: pick a skill, hit

@@ -1,5 +1,7 @@
 import MockTestCard from "../components/MockTestCard.jsx";
+import WritingTaskCard from "../components/WritingTaskCard.jsx";
 import { TESTS } from "../data/ieltsTests.js";
+import { WRITING_TASKS } from "../data/writingTasks.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 const SKILL_META = {
@@ -11,7 +13,12 @@ const SKILL_META = {
   },
   listening: { label: "Listening", ready: false },
   speaking: { label: "Speaking", ready: false },
-  writing: { label: "Writing", ready: false },
+  writing: {
+    label: "Writing",
+    ready: true,
+    lede:
+      "Write a full Task 2 essay and get an AI-evaluated band score across all four official criteria, with specific feedback.",
+  },
 };
 
 export default function IeltsPracticePage({ skill }) {
@@ -52,11 +59,21 @@ export default function IeltsPracticePage({ skill }) {
           )}
         </div>
 
-        {meta.ready && (
+        {meta.ready && skill === "reading" && (
           <div className="opp-grid" role="list">
             {TESTS.map((test, i) => (
               <div role="listitem" key={test.id}>
                 <MockTestCard test={test} index={i} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {meta.ready && skill === "writing" && (
+          <div className="opp-grid" role="list">
+            {WRITING_TASKS.map((task) => (
+              <div role="listitem" key={task.id}>
+                <WritingTaskCard task={task} />
               </div>
             ))}
           </div>
