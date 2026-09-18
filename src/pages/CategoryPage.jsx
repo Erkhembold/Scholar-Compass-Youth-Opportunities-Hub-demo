@@ -1,6 +1,7 @@
 import CategoryHero from "../components/CategoryHero.jsx";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import IeltsPracticePicker from "../components/IeltsPracticePicker.jsx";
+import SatCategoryOverview from "../components/SatCategoryOverview.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -30,6 +31,8 @@ export default function CategoryPage({ category }) {
       <CategoryHero label={meta.label} intro={meta.intro} pattern={meta.pattern} image={meta.image} />
 
       {category === "ielts" && <IeltsPracticePicker />}
+
+      {category === "sat" && <SatCategoryOverview />}
 
       <section
         id="category-board"

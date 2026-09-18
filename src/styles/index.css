@@ -2913,3 +2913,294 @@ body.nav-open {
   font-style: italic;
   color: var(--ink-faint);
 }
+
+/* =========================================================================
+   SAT English practice: category overview + question workspace
+   ========================================================================= */
+.sat-overview__card {
+  max-width: 720px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--blue-500);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+}
+
+.sat-overview__signin-note {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: -8px 0 16px;
+}
+
+.sat-overview__signin-note a {
+  color: var(--blue-500);
+  font-weight: 600;
+}
+
+.sat-overview__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.sat-overview__total-label {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.sat-overview__total-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.sat-overview__bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.sat-overview__bar-fill {
+  height: 100%;
+  background: var(--blue-500);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.sat-overview__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sat-overview__row-link {
+  display: block;
+  padding: 14px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.sat-overview__row-link:hover {
+  background: var(--surface);
+}
+
+.sat-overview__row-label {
+  font-weight: 700;
+  color: var(--heading);
+  font-size: 0.98rem;
+}
+
+.sat-overview__row-count {
+  float: right;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.sat-overview__row-bar {
+  clear: both;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.sat-overview__row-bar-fill {
+  height: 100%;
+  background: var(--blue-500);
+  border-radius: 999px;
+}
+
+/* Workspace */
+.sat-workspace__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 24px;
+}
+
+.sat-workspace__progress-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--blue-500);
+}
+
+.sat-workspace__layout {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 28px;
+  align-items: start;
+}
+
+.sat-question-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+}
+
+.sat-question-card__number {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  margin-bottom: 16px;
+}
+
+.sat-question-card__passage {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.sat-question-card__prompt {
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 18px;
+}
+
+.sat-question-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sat-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+}
+
+.sat-option:hover:not(:disabled) {
+  border-color: var(--blue-500);
+}
+
+.sat-option--selected {
+  border-color: var(--blue-500);
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.sat-option--correct {
+  border-color: #1a9c5c;
+  background: rgba(26, 156, 92, 0.08);
+}
+
+.sat-option--wrong {
+  border-color: #d64545;
+  background: rgba(214, 69, 69, 0.08);
+}
+
+.sat-option:disabled {
+  cursor: default;
+}
+
+.sat-option__id {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.sat-question-card__feedback {
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  background: var(--surface);
+}
+
+.sat-question-card__feedback--correct {
+  background: rgba(26, 156, 92, 0.08);
+}
+
+.sat-question-card__feedback--wrong {
+  background: rgba(214, 69, 69, 0.08);
+}
+
+.sat-question-card__verdict {
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 6px;
+}
+
+.sat-question-card__explanation {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.sat-question-card__done {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.sat-question-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.sat-question-chip {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sat-question-chip--active {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
+}
+
+.sat-question-chip--correct {
+  background: #1a9c5c;
+  border-color: #1a9c5c;
+  color: #fff;
+}
+
+.sat-question-chip--attempted {
+  border-color: #d6a419;
+  color: #8a6a10;
+}
+
+@media (max-width: 780px) {
+  .sat-workspace__layout {
+    grid-template-columns: 1fr;
+  }
+  .sat-question-grid {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}

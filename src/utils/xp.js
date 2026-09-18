@@ -3,7 +3,7 @@
 // automatically — nothing else should hard-code a point value.
 export const XP_REWARDS = {
   ieltsPractice: 60,
-  satPractice: 60,
+  satQuestion: 5,
   quiz: 25,
   learningModule: 35,
   opportunityTask: 15,
