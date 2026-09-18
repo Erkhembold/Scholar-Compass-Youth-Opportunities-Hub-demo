@@ -140,6 +140,7 @@ export default function LeaderboardPage() {
                       key={player.id}
                       player={player}
                       zone={zoneForRank(player.rank, board.length)}
+                      isMe={!!user && player.id === user.id}
                       isBronzeFloor={
                         league.id === "bronze" &&
                         zoneForRank(player.rank, board.length) === "relegation"
