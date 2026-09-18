@@ -23,8 +23,6 @@
 -- It's kept in sync with `profiles` automatically by a trigger — no
 -- app code needs to write to it directly.
 
-drop view if exists public.leaderboard_entries cascade;
-
 create table if not exists public.leaderboard_entries (
   id uuid primary key references auth.users on delete cascade,
   name text,
@@ -42,17 +40,34 @@ create policy "Users can view their own leaderboard entry"
   to authenticated
   using (id = auth.uid());
 
+-- The "peers in my league" policy needs to know the caller's own
+-- current_league — but looking that up with a plain subquery on this
+-- same table triggers Postgres's RLS recursion guard: that inner
+-- lookup is itself subject to this table's policies, which requires
+-- evaluating this same policy again, and so on, until Postgres aborts
+-- with "infinite recursion detected in policy" (a 500 to the client).
+--
+-- The standard fix is to do that inner lookup inside a SECURITY
+-- DEFINER function, which runs with the function owner's privileges
+-- and therefore bypasses RLS internally for just this one narrow,
+-- single-column read — breaking the loop.
+create or replace function public.my_leaderboard_league()
+returns text
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select current_league
+  from public.leaderboard_entries
+  where id = auth.uid();
+$$;
+
 drop policy if exists "Users can view leaderboard peers in their own league" on public.leaderboard_entries;
 create policy "Users can view leaderboard peers in their own league"
   on public.leaderboard_entries for select
   to authenticated
-  using (
-    current_league = (
-      select le.current_league
-      from public.leaderboard_entries le
-      where le.id = auth.uid()
-    )
-  );
+  using (current_league = public.my_leaderboard_league());
 
 -- No insert/update/delete policies for regular users on purpose — the
 -- client never writes to this table directly. All writes happen here,
