@@ -1,37 +1,33 @@
 import { useState } from "react";
-import { ieltsPracticeHref } from "../router.js";
+import { ieltsExercisesHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 const SKILLS = [
   { id: "reading", label: "Reading", ready: true },
   { id: "listening", label: "Listening", ready: false },
   { id: "speaking", label: "Speaking", ready: false },
-  { id: "writing", label: "Writing", ready: true },
+  { id: "writing", label: "Writing", ready: false },
 ];
 
-// College Board "Question Bank"-style entry point: pick a skill, hit
-// Search, and you're taken to a dedicated practice page for just that
-// skill. Keeps the IELTS landing page a chooser rather than dumping every
-// skill's material onto one screen.
-export default function IeltsPracticePicker() {
+// Same College Board "Question Bank"-style picker as IeltsPracticePicker,
+// but for short, targeted exercises rather than full timed mock tests.
+export default function IeltsExercisesPicker() {
   const { t } = useLanguage();
   const [skill, setSkill] = useState("reading");
 
   function handleSearch() {
-    window.location.hash = ieltsPracticeHref(skill);
+    window.location.hash = ieltsExercisesHref(skill);
   }
 
   return (
     <div className="practice-picker__card">
-      <h2 id="practice-picker-heading" className="practice-picker__eyebrow">
-        IELTS PRACTICE
-      </h2>
+      <h2 className="practice-picker__eyebrow">IELTS EXERCISES</h2>
 
-      <label className="practice-picker__label" htmlFor="practice-skill">
+      <label className="practice-picker__label" htmlFor="exercises-skill">
         {t("Choose a skill")}
       </label>
       <select
-        id="practice-skill"
+        id="exercises-skill"
         className="practice-picker__select"
         value={skill}
         onChange={(e) => setSkill(e.target.value)}

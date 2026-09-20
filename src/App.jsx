@@ -11,6 +11,7 @@ import SignInPage from "./pages/SignInPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import IeltsPracticePage from "./pages/IeltsPracticePage.jsx";
+import IeltsExercisesPage from "./pages/IeltsExercisesPage.jsx";
 import SatPracticePage from "./pages/SatPracticePage.jsx";
 import { useRoute } from "./router.js";
 
@@ -56,6 +57,8 @@ export default function App() {
     page = <ProfilePage />;
   } else if (route.name === "ielts-practice") {
     page = <IeltsPracticePage skill={route.skill} />;
+  } else if (route.name === "ielts-exercises") {
+    page = <IeltsExercisesPage skill={route.skill} />;
   } else if (route.name === "sat-practice") {
     page = <SatPracticePage categoryId={route.categoryId} />;
   } else if (route.name === "leaderboard") {

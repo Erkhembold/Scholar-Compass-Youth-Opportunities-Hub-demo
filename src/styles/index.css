@@ -2849,6 +2849,187 @@ body.nav-open {
   padding: 28px;
 }
 
+.practice-picker__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.practice-picker__row .practice-picker__card {
+  flex: 1 1 320px;
+}
+
+@media (max-width: 720px) {
+  .practice-picker__row {
+    flex-direction: column;
+  }
+
+  .practice-picker__row .practice-picker__card {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* =========================================================================
+   IELTS short-exercise runner
+   ========================================================================= */
+.exercise-runner {
+  max-width: 720px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+}
+
+.exercise-runner__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+
+.exercise-runner__difficulty {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--surface-alt, #eef2f7);
+  color: var(--ink-soft);
+}
+
+.exercise-runner__difficulty--easy {
+  background: rgba(26, 156, 91, 0.12);
+  color: var(--status-green, #1a9c5b);
+}
+
+.exercise-runner__difficulty--medium {
+  background: rgba(214, 154, 0, 0.14);
+  color: var(--status-yellow, #d69a00);
+}
+
+.exercise-runner__difficulty--hard {
+  background: rgba(215, 55, 63, 0.12);
+  color: var(--status-red, #d7373f);
+}
+
+.exercise-runner__score {
+  margin-left: auto;
+  color: var(--ink);
+}
+
+.exercise-runner__passage {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--surface-alt, #f7f9fc);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+
+.exercise-runner__question {
+  margin-bottom: 20px;
+}
+
+.exercise-runner__prompt {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.exercise-runner__options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.exercise-runner__options--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+.exercise-runner__tfng-row {
+  margin-bottom: 18px;
+}
+
+.exercise-runner__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.exercise-runner__option:hover {
+  border-color: var(--blue-500);
+}
+
+.exercise-runner__option.is-selected {
+  border-color: var(--blue-500);
+  background: rgba(10, 132, 255, 0.06);
+}
+
+.exercise-runner__option.is-correct-answer {
+  border-color: var(--status-green, #1a9c5b);
+  background: rgba(26, 156, 91, 0.08);
+}
+
+.exercise-runner__option.is-wrong-answer {
+  border-color: var(--status-red, #d7373f);
+  background: rgba(215, 55, 63, 0.08);
+}
+
+.exercise-runner__text-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.exercise-runner__feedback {
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.exercise-runner__feedback--correct {
+  background: rgba(26, 156, 91, 0.08);
+  color: var(--status-green, #1a9c5b);
+}
+
+.exercise-runner__feedback--incorrect {
+  background: rgba(215, 55, 63, 0.08);
+  color: var(--status-red, #d7373f);
+}
+
+.exercise-runner__feedback p {
+  margin-top: 6px;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.exercise-runner__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .practice-picker__eyebrow {
   font-size: 0.95rem;
   font-weight: 800;
