@@ -46,6 +46,26 @@ rejects `VITE_`-prefixed vars marked Secret since they're bundled into
 client JS anyway). `src/lib/supabaseClient.js` exports `null` if these
 are missing, and every consumer checks for that before using it.
 
+**Profile page (mobile)** — `src/pages/ProfilePage.jsx` renders four
+stacked blocks (basic info, League & Achievements, IELTS Reading
+history, Saved Opportunities). The last two collapse into an accordion
+on mobile only via `CollapsibleSection.jsx` + `useIsMobile.js` (720px
+breakpoint, matches CSS). **Layout gotcha already hit once**: the outer
+wrapper classes (`.signin`, `.signin__inner`) are shared with
+`SignInPage.jsx` and were originally written assuming exactly one
+child card, using `display:flex` in row direction with
+centering tricks (`justify-content`/`align-items`) that only work for
+a single item. Adding more sibling blocks under those same classes
+made them lay out horizontally/overlap instead of stacking — fixed by
+(1) making `.signin__inner` `flex-direction: column` with
+`align-items: center` instead of row + `justify-content: center`, and
+(2) making sure ProfilePage only ever nests ONE direct child under
+the `.signin`-classed `<section>` (merge any new sections into the
+existing `.signin__inner` div rather than adding a sibling
+`.section__inner`). If you add a fifth block to this page, put it
+inside the same `signin__inner` div, not a new top-level sibling — the
+same class is used by two things that fought each other before.
+
 ## Key systems and where they live
 
 **Auth & profiles** — `src/context/AuthContext.jsx` wraps the app,
@@ -120,6 +140,21 @@ English by design.
   break-word` safety net on text elements. If overflow reappears after
   adding new header controls or wide fixed-width elements, check those
   two things first.
+- Profile page mobile layout: the four blocks (basic info, League &
+  Achievements, IELTS history, Saved Opportunities) were severely
+  overlapping/garbled on mobile due to a shared-class flex layout bug
+  (see "Key systems" above for the fix). Fixed and verified on both
+  mobile (390px) and desktop (1280px) via a temporary local auth stub
+  (never committed) since a real Supabase session isn't available in
+  a sandboxed dev environment — screenshot-diff this page again with
+  the same technique if you touch this layout. **Still open**: the
+  person who requested this wanted the mobile layout to be
+  "horizontal" rather than a plain vertical stack, but it was
+  genuinely ambiguous what that means (two-cards-per-row grid? a
+  horizontally swipeable row of all four?) — the vertical stack
+  shipped here is a correct, non-broken baseline, but confirm with the
+  user whether a more specific horizontal arrangement is still wanted
+  on top of it before assuming this is fully done.
 
 ## House rules for continuing work
 - Build (`npm run build`) before every commit — don't push unverified.

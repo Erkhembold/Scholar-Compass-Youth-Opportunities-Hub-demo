@@ -2348,7 +2348,8 @@ body.nav-open {
 
 .signin__inner {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 

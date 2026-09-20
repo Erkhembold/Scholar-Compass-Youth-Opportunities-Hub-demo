@@ -251,22 +251,22 @@ export default function ProfilePage() {
             </ul>
           )}
         </CollapsibleSection>
-      </div>
 
-      <div className="section__inner" style={{ marginTop: 48 }}>
-        <CollapsibleSection
-          title="Saved Opportunities"
-          lede="Everything you've bookmarked from the opportunity board, in one place."
-        >
-          {savedLoading ? (
-            <p className="section__lede">Loading…</p>
-          ) : (
-            <OpportunityGrid
-              opportunities={opportunities.filter((op) => savedIds.has(op.id))}
-              emptyMessage="Nothing saved yet — tap the bookmark icon on any opportunity to add it here."
-            />
-          )}
-        </CollapsibleSection>
+        <div style={{ marginTop: 48 }}>
+          <CollapsibleSection
+            title="Saved Opportunities"
+            lede="Everything you've bookmarked from the opportunity board, in one place."
+          >
+            {savedLoading ? (
+              <p className="section__lede">Loading…</p>
+            ) : (
+              <OpportunityGrid
+                opportunities={opportunities.filter((op) => savedIds.has(op.id))}
+                emptyMessage="Nothing saved yet — tap the bookmark icon on any opportunity to add it here."
+              />
+            )}
+          </CollapsibleSection>
+        </div>
       </div>
     </section>
   );
