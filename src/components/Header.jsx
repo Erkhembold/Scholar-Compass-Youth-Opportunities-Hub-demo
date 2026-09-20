@@ -80,7 +80,7 @@ export default function Header() {
         </nav>
 
         <div className="site-header__actions">
-          <LanguageToggle />
+          <LanguageToggle className="header-only-control" />
           <button
             type="button"
             className="nav-toggle"
@@ -93,7 +93,7 @@ export default function Header() {
             <span />
             <span />
           </button>
-          <ThemeToggle />
+          <ThemeToggle className="header-only-control" />
           {user ? (
             <div className="profile-menu" ref={profileRef}>
               <button
@@ -136,6 +136,10 @@ export default function Header() {
       </div>
 
       <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile" hidden={!open}>
+        <div className="mobile-nav__toggles">
+          <LanguageToggle />
+          <ThemeToggle />
+        </div>
         <ul>
           <li>
             <a href="#/" aria-current={route.name === "home" ? "page" : undefined}>

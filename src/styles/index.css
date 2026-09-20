@@ -85,6 +85,8 @@ textarea {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -100,6 +102,18 @@ body {
 img {
   max-width: 100%;
   display: block;
+}
+
+p,
+a,
+span,
+li,
+dd,
+dt,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
 }
 
 a {
@@ -2213,6 +2227,14 @@ p {
     display: inline-flex;
   }
 
+  .header-only-control {
+    display: none;
+  }
+
+  .site-header__actions {
+    gap: 10px;
+  }
+
   .mobile-nav[hidden] {
     display: none;
   }
@@ -2222,6 +2244,13 @@ p {
     background: var(--navy-900);
     border-top: 1px solid var(--line-dark);
     padding: 20px 32px 28px;
+  }
+
+  .mobile-nav__toggles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   .mobile-nav ul {
