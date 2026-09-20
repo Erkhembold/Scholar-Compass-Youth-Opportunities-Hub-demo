@@ -5,6 +5,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import LanguageToggle from "./LanguageToggle.jsx";
+import logoIcon from "../assets/brand/scholarcompass-icon.png";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -48,10 +49,7 @@ export default function Header() {
       <div className="site-header__inner">
         <a className="wordmark" href="#/" onClick={() => setOpen(false)}>
           <span className="wordmark__mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" width="26" height="26">
-              <circle cx="16" cy="16" r="11" fill="none" stroke="#0A84FF" strokeWidth="1.8" />
-              <path d="M20.5 11.5 L14.4 14.4 L11.5 20.5 L17.6 17.6 Z" fill="#5AC8FA" />
-            </svg>
+            <img src={logoIcon} alt="" className="wordmark__mark-img" />
           </span>
           <span className="wordmark__text">{SITE_NAME}</span>
         </a>
