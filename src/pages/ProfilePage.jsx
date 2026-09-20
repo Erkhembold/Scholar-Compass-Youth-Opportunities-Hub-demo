@@ -6,6 +6,7 @@ import { useSavedOpportunities } from "../hooks/useSavedOpportunities.js";
 import { opportunities } from "../data/opportunities.js";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import LeagueBadge from "../components/LeagueBadge.jsx";
+import CollapsibleSection from "../components/CollapsibleSection.jsx";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
@@ -222,11 +223,7 @@ export default function ProfilePage() {
           )}
         </div>
 
-        <div className="signin__card" style={{ marginTop: 24 }}>
-          <h2 className="signin__title" style={{ fontSize: "1.2rem" }}>
-            IELTS Reading history
-          </h2>
-
+        <CollapsibleSection title="IELTS Reading history">
           {attemptsLoading ? (
             <p className="signin__lede">Loading…</p>
           ) : attempts.length === 0 ? (
@@ -253,27 +250,23 @@ export default function ProfilePage() {
               ))}
             </ul>
           )}
-        </div>
+        </CollapsibleSection>
       </div>
 
       <div className="section__inner" style={{ marginTop: 48 }}>
-        <div className="section__head">
-          <h2 className="section__title" style={{ fontSize: "1.4rem" }}>
-            Saved Opportunities
-          </h2>
-          <p className="section__lede">
-            Everything you've bookmarked from the opportunity board, in one place.
-          </p>
-        </div>
-
-        {savedLoading ? (
-          <p className="section__lede">Loading…</p>
-        ) : (
-          <OpportunityGrid
-            opportunities={opportunities.filter((op) => savedIds.has(op.id))}
-            emptyMessage="Nothing saved yet — tap the bookmark icon on any opportunity to add it here."
-          />
-        )}
+        <CollapsibleSection
+          title="Saved Opportunities"
+          lede="Everything you've bookmarked from the opportunity board, in one place."
+        >
+          {savedLoading ? (
+            <p className="section__lede">Loading…</p>
+          ) : (
+            <OpportunityGrid
+              opportunities={opportunities.filter((op) => savedIds.has(op.id))}
+              emptyMessage="Nothing saved yet — tap the bookmark icon on any opportunity to add it here."
+            />
+          )}
+        </CollapsibleSection>
       </div>
     </section>
   );

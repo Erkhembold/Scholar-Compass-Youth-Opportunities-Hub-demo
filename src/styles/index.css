@@ -3429,3 +3429,70 @@ body.nav-open {
     grid-template-columns: repeat(10, 1fr);
   }
 }
+
+/* =========================================================================
+   Profile page: IELTS history / Saved Opportunities accordion (mobile only)
+   ========================================================================= */
+.profile-accordion__item {
+  margin-top: 24px;
+}
+
+.profile-accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.profile-accordion__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+}
+
+.profile-accordion__chevron {
+  display: none;
+}
+
+.profile-accordion__lede {
+  margin-top: 8px;
+}
+
+.profile-accordion__panel {
+  margin-top: 16px;
+}
+
+@media (max-width: 720px) {
+  .profile-accordion__item {
+    border-top: 1px solid var(--line);
+    padding: 18px 4px;
+  }
+
+  .profile-accordion__header {
+    padding: 0;
+  }
+
+  .profile-accordion__chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--blue-500);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+}
