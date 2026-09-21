@@ -147,14 +147,9 @@ English by design.
   mobile (390px) and desktop (1280px) via a temporary local auth stub
   (never committed) since a real Supabase session isn't available in
   a sandboxed dev environment — screenshot-diff this page again with
-  the same technique if you touch this layout. **Still open**: the
-  person who requested this wanted the mobile layout to be
-  "horizontal" rather than a plain vertical stack, but it was
-  genuinely ambiguous what that means (two-cards-per-row grid? a
-  horizontally swipeable row of all four?) — the vertical stack
-  shipped here is a correct, non-broken baseline, but confirm with the
-  user whether a more specific horizontal arrangement is still wanted
-  on top of it before assuming this is fully done.
+  the same technique if you touch this layout. **Resolved**: the user
+  confirmed the vertical stack is the intended final design — no
+  horizontal/grid/swipe arrangement is wanted. Don't revisit this.
 
 ## House rules for continuing work
 - Build (`npm run build`) before every commit — don't push unverified.
