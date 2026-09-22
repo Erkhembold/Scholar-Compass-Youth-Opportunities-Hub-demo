@@ -13,6 +13,7 @@ import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import IeltsPracticePage from "./pages/IeltsPracticePage.jsx";
 import IeltsExercisesPage from "./pages/IeltsExercisesPage.jsx";
 import SatPracticePage from "./pages/SatPracticePage.jsx";
+import SatBeginnerGuidePage from "./pages/SatBeginnerGuidePage.jsx";
 import { useRoute } from "./router.js";
 
 export default function App() {
@@ -61,6 +62,8 @@ export default function App() {
     page = <IeltsExercisesPage skill={route.skill} />;
   } else if (route.name === "sat-practice") {
     page = <SatPracticePage categoryId={route.categoryId} />;
+  } else if (route.name === "sat-lessons-beginner-guide") {
+    page = <SatBeginnerGuidePage />;
   } else if (route.name === "leaderboard") {
     page = <LeaderboardPage />;
   } else {

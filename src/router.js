@@ -39,6 +39,21 @@ function parseHash(hash) {
   if (parts[0] === "sat" && parts[1] === "practice" && parts[2]) {
     return { name: "sat-practice", categoryId: decodeURIComponent(parts[2]) };
   }
+  if (parts[0] === "sat" && parts[1] === "lessons" && parts[2] === "beginner-guide") {
+    return { name: "sat-lessons-beginner-guide" };
+  }
+  if (parts[0] === "ielts" && parts[1] === "lessons" && parts[2] === "beginner-guide") {
+    return { name: "ielts-lessons-beginner-guide" };
+  }
+  if (parts[0] === "sat" && parts[1] === "lessons" && parts[2] === "reading" && parts[3] === "evidence-based-inference") {
+    return { name: "sat-lessons-reading-evidence" };
+  }
+  if (parts[0] === "sat" && parts[1] === "lessons" && parts[2] === "writing" && parts[3] === "complete-sentences") {
+    return { name: "sat-lessons-writing-sentences" };
+  }
+  if (parts[0] === "sat" && parts[1] === "lessons" && parts[2] === "writing" && parts[3] === "transitions") {
+    return { name: "sat-lessons-writing-transitions" };
+  }
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
@@ -101,4 +116,24 @@ export function satPracticeHref(categoryId) {
 
 export function leaderboardHref() {
   return "#/leaderboard";
+}
+
+export function satBeginnerGuideHref() {
+  return "#/sat/lessons/beginner-guide";
+}
+
+export function ieltsBeginnerGuideHref() {
+  return "#/ielts/lessons/beginner-guide";
+}
+
+export function satReadingEvidenceHref() {
+  return "#/sat/lessons/reading/evidence-based-inference";
+}
+
+export function satWritingSentencesHref() {
+  return "#/sat/lessons/writing/complete-sentences";
+}
+
+export function satWritingTransitionsHref() {
+  return "#/sat/lessons/writing/transitions";
 }

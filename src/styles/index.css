@@ -3993,3 +3993,139 @@ body.nav-open {
     max-width: 46%;
   }
 }
+
+/* Reusable N-up card grid for lesson content (side-by-side info cards,
+   2x2 skill grids, trap-type cards, etc.) — collapses to 1 column on
+   mobile regardless of N, per the "no horizontal overflow" requirement. */
+.lesson-grid {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.lesson-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.lesson-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.lesson-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 720px) {
+  .lesson-grid--2,
+  .lesson-grid--3,
+  .lesson-grid--4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Compact info card used inside .lesson-grid (duration/stat cards,
+   trap-type cards, skill cards) — lighter weight than the full
+   ConceptCard/ExampleCard family since these are short label+value
+   pairs, not prose. */
+.lesson-mini-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+}
+
+.lesson-mini-card__label {
+  display: block;
+  font-weight: 700;
+  color: var(--navy-950);
+  margin-bottom: 6px;
+}
+
+.lesson-mini-card__value {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* Compact horizontal flow (error -> cause -> fix style 3-stage visuals) */
+.lesson-flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.lesson-flow__step {
+  background: var(--surface-alt, #f7f9fc);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  font-weight: 700;
+  color: var(--navy-950);
+}
+
+.lesson-flow__arrow {
+  color: var(--blue-500);
+  font-weight: 700;
+}
+
+/* Timeline-style row (IELTS four-section overview) */
+.lesson-timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.lesson-timeline__item {
+  flex: 1 1 160px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--blue-500);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.lesson-timeline__item-label {
+  display: block;
+  font-weight: 700;
+  color: var(--navy-950);
+  margin-bottom: 4px;
+}
+
+.lesson-timeline__item-value {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+/* Answer-elimination row (worked-example walkthrough) */
+.lesson-elimination {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.lesson-elimination__item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  font-size: 0.88rem;
+}
+
+.lesson-elimination__item--correct {
+  border-color: var(--status-green, #1a9c5b);
+  background: rgba(26, 156, 91, 0.06);
+}
+
+.lesson-elimination__letter {
+  font-weight: 800;
+  color: var(--navy-950);
+  flex-shrink: 0;
+}
