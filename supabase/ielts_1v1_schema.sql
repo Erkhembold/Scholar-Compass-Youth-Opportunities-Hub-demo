@@ -98,7 +98,7 @@ begin
   insert into ielts_challenge_questions(challenge_id, position, kind, payload)
     select v_id, ordinality - 1, p_skill, value from jsonb_array_elements(p_questions) with ordinality;
   insert into ielts_challenge_answer_keys(challenge_id, position, answer)
-    select v_id, ordinality - 1, value from jsonb_array_elements(p_answers) with ordinality;
+    select v_id, ordinality - 1, case when value = 'null'::jsonb then null else value end from jsonb_array_elements(p_answers) with ordinality;
   return v_id;
 end $$;
 
