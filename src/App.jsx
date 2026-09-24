@@ -12,6 +12,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import IeltsPracticePage from "./pages/IeltsPracticePage.jsx";
 import IeltsExercisesPage from "./pages/IeltsExercisesPage.jsx";
+import IeltsChallengePage from "./pages/IeltsChallengePage.jsx";
 import SatPracticePage from "./pages/SatPracticePage.jsx";
 import SatBeginnerGuidePage from "./pages/SatBeginnerGuidePage.jsx";
 import IeltsBeginnerGuidePage from "./pages/IeltsBeginnerGuidePage.jsx";
@@ -62,6 +63,8 @@ export default function App() {
     page = <IeltsPracticePage skill={route.skill} />;
   } else if (route.name === "ielts-exercises") {
     page = <IeltsExercisesPage skill={route.skill} />;
+  } else if (route.name === "ielts-1v1") {
+    page = <IeltsChallengePage challengeId={route.id} />;
   } else if (route.name === "sat-practice") {
     page = <SatPracticePage categoryId={route.categoryId} />;
   } else if (route.name === "sat-lessons-beginner-guide") {
