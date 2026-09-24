@@ -59,6 +59,10 @@ export default function IeltsPracticePage({ skill }) {
           )}
         </div>
 
+        <a className="btn btn--accent" href="#/ielts/1v1" style={{ marginBottom: 28 }}>
+          Challenge a friend 1v1
+        </a>
+
         {meta.ready && skill === "reading" && (
           <div className="opp-grid" role="list">
             {TESTS.map((test, i) => (
