@@ -4141,3 +4141,8 @@ body.nav-open {
   font-weight: 600;
   color: var(--navy-950);
 }
+
+.lesson-elimination__item--warning {
+  border-color: var(--status-yellow, #d69a00);
+  background: rgba(214, 154, 0, 0.07);
+}
