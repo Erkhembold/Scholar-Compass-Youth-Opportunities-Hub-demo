@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { IELTS_READING_EXERCISES } from "../data/ieltsReadingExercises.js";
@@ -109,7 +109,7 @@ function Match({ match, players, questions, answers, onError, onDone }) {
  return <Shell><div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center",marginBottom:24}}><div><span style={eyebrow}>IELTS {match.skill} · {pos+1}/{match.exercise_count}</span><h1 className="section__title">Your challenge</h1></div><strong style={{fontSize:28,color:remaining<15?"var(--status-red)":"var(--heading)"}}>{Math.floor(remaining/60)}:{String(remaining%60).padStart(2,"0")}</strong></div><Card>{question.passage && <p style={{whiteSpace:"pre-wrap",lineHeight:1.65,marginBottom:24}}>{question.passage}</p>}<Question q={question} value={value} setValue={setValue}/><button className="btn btn--accent" disabled={busy || !answered(question,value)} onClick={()=>submit()}>{busy?"Submitting…":"Lock in answer"}</button><p style={{marginTop:12,color:"var(--ink-soft)",fontSize:13}}>Your answer is submitted once and scored on the server. The timer does not reset on refresh.</p></Card></Shell>;
 }
 function Question({q,value,setValue}) {
- if(q.type==="mc"||q.type==="matching") return <><p style={{fontWeight:700,marginBottom:16}}>{q.question || "Choose the best heading."}</p>{q.options||q.headings?.map(h=>({id:h.id,text:h.text})).map(opt=><label key={opt.id} style={option}><input type="radio" checked={value===opt.id} onChange={()=>setValue(opt.id)}/>{opt.id}. {opt.text}</label>)}</>;
+ if(q.type==="mc"||q.type==="matching") return <><p style={{fontWeight:700,marginBottom:16}}>{q.question || "Choose the best heading."}</p>{(q.options || q.headings?.map(h => ({ id: h.id, text: h.text })) || []).map(opt => <label key={opt.id} style={option}><input type="radio" checked={value===opt.id} onChange={()=>setValue(opt.id)}/>{opt.id}. {opt.text}</label>)}</>;
  if(q.type==="tfng") return <>{q.statements.map((s,i)=><div key={i} style={{marginBottom:16}}><p>{i+1}. {s.text}</p>{["TRUE","FALSE","NOT GIVEN"].map(v=><label key={v} style={{...option,display:"inline-flex",width:"auto",marginRight:8}}><input type="radio" checked={value?.[i]===v} onChange={()=>{const n=[...value];n[i]=v;setValue(n)}}/>{v}</label>)}</div>)}</>;
  if(q.type==="completion") return <><p style={{fontWeight:700,marginBottom:16}}>{q.prompt}</p><input value={value} onChange={e=>setValue(e.target.value)} placeholder="Your answer" /></>;
  return <><h2>{q.title}</h2><p style={{lineHeight:1.65,margin:"16px 0"}}>{q.prompt}</p><textarea rows="12" value={value} onChange={e=>setValue(e.target.value)} placeholder="Write your response…" /></>;
