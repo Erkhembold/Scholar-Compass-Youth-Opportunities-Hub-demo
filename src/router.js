@@ -30,6 +30,9 @@ function parseHash(hash) {
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
+  if (parts[0] === "ielts" && parts[1] === "1v1") {
+    return { name: "ielts-1v1", id: parts[2] ? decodeURIComponent(parts[2]) : null };
+  }
   if (parts[0] === "ielts" && parts[1] === "practice" && parts[2]) {
     return { name: "ielts-practice", skill: decodeURIComponent(parts[2]) };
   }
@@ -100,6 +103,10 @@ export function signInHref() {
 
 export function profileHref() {
   return "#/profile";
+}
+
+export function ieltsChallengeHref(id) {
+  return id ? `#/ielts/1v1/${encodeURIComponent(id)}` : "#/ielts/1v1";
 }
 
 export function ieltsPracticeHref(skill) {
