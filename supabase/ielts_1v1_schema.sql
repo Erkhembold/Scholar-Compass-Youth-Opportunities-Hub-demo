@@ -62,9 +62,9 @@ alter table public.ielts_challenge_answer_keys enable row level security;
 alter table public.ielts_challenge_answers enable row level security;
 
 create or replace function public.is_ielts_challenge_player(p_challenge_id uuid)
-returns boolean language sql stable security definer set search_path = public as $
+returns boolean language sql stable security definer set search_path = public as $member$
   select exists (select 1 from public.ielts_challenge_players where challenge_id = p_challenge_id and user_id = auth.uid());
-$;
+$member$;
 
 drop policy if exists "Challenge members read challenges" on public.ielts_challenges;
 create policy "Challenge members read challenges" on public.ielts_challenges for select
