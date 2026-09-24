@@ -4129,3 +4129,15 @@ body.nav-open {
   color: var(--navy-950);
   flex-shrink: 0;
 }
+
+/* Mid-lesson highlighted quote/question — lighter than TakeawayCard,
+   which is reserved for the one closing card per lesson. */
+.lesson-callout {
+  background: rgba(10, 132, 255, 0.06);
+  border-left: 3px solid var(--blue-500);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-weight: 600;
+  color: var(--navy-950);
+}
