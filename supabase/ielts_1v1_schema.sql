@@ -128,10 +128,13 @@ declare v_challenge ielts_challenges%rowtype; v_expected jsonb; v_correct boolea
 begin
   select * into v_challenge from ielts_challenges where id = p_challenge_id;
   if auth.uid() is null or not exists(select 1 from ielts_challenge_players where challenge_id = p_challenge_id and user_id = auth.uid()) then raise exception 'Not a player'; end if;
-  if v_challenge.status <> 'active' or p_position < 0 or p_position >= v_challenge.exercise_count
-    or now() > v_challenge.started_at + ((p_position + 1) * v_challenge.seconds_per_exercise) * interval '1 second' then
+  if v_challenge.status <> 'active' or p_position < 0 or p_position >= v_challenge.exercise_count then
     raise exception 'This answer is no longer accepted';
   end if;
+  -- Late non-blank answers are rejected. A null timeout submission is accepted
+  -- as an incorrect/unfinished answer so a disconnected player cannot trap a match.
+  if now() > v_challenge.started_at + ((p_position + 1) * v_challenge.seconds_per_exercise) * interval '1 second'
+    and p_answer is not null then raise exception 'This answer is no longer accepted'; end if;
   if exists(select 1 from ielts_challenge_answers where challenge_id=p_challenge_id and user_id=auth.uid() and position=p_position) then raise exception 'Already submitted'; end if;
   select answer into v_expected from ielts_challenge_answer_keys where challenge_id=p_challenge_id and position=p_position;
   v_correct := case when v_expected is null then null else v_expected = p_answer end;
