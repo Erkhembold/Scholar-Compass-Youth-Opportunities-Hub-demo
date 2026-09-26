@@ -27,6 +27,9 @@ import feltCityTourImg from "../assets/opportunities/felt-city-walking-tour.png"
 import aoMockTrialImg from "../assets/opportunities/ao-mock-trial.png";
 import recycleRallyImg from "../assets/opportunities/recycle-rally-2026.png";
 import yscBookFairImg from "../assets/opportunities/ysc-book-fair.png";
+import wingsOfHopeImg from "../assets/opportunities/wings-of-hope-volunteers.png";
+import openParliamentImg from "../assets/opportunities/open-parliament-hackathon.png";
+import wcsFieldAssistantImg from "../assets/opportunities/wcs-field-assistant.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -628,5 +631,99 @@ From Waste to Wonder ♻️`,
 🎁 Шалгараад амжилттай ажилласан оролцогчдод YSC оноо болон мерч өгөх болно.`,
     links: [],
     contactNote: "Registration link is in the Mongol Ecology Center Instagram bio (@mongolecologycenter).",
+  },
+  {
+    id: "wings-of-hope-online-volunteers",
+    title: "Итгэлийн Далавч ТББ — онлайн сайн дурын баг",
+    category: "volunteering",
+    image: wingsOfHopeImg,
+    pattern: "diagonal",
+    deadline: { date: "2026-10-01" },
+    essential: {
+      duration: "Fully online, ongoing",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Youth aged 15+",
+      organizer: "Итгэлийн Далавч ТББ (Wings of Hope NGO)",
+    },
+    description: `Итгэлийн Далавч ТББ-ын сайн дурын багт урьж байна!
+
+Та өөрийн амьдарч буй хороо, дүүрэг, аймаг, сумандаа хүүхдийн эрх хэрхэн зөрчигдөж, боловсролын салбарт ямар тэгш бус байдал үүсэж байгааг анзаардаг уу?
+
+"Итгэлийн Далавч" ТББ нь 15 болон түүнээс дээш насны залуусыг онлайн сайн дурын багийн бүрэлдэхүүндээ урьж байна.
+
+Бид хамтдаа юу хийх вэ?
+• Асуудлыг тодорхойлж, дуу хоолой нь болох
+• Бодит шийдэл боловсруулах
+• Шийдвэр гаргагчдад нөлөөлөх
+
+Танд ямар боломжууд нээгдэх вэ?
+🌐 Бүрэн онлайн
+🏛️ Хүсэлт хүргүүлэх туршлага
+📜 Сертификат
+🤝 Байгууллагын гишүүнчлэл`,
+    links: [{ label: "Register", href: "https://forms.gle/zWrEgEwG2DJPmcgX7" }],
+    contactNote: "Contact: itgeliindalavch@gmail.com",
+  },
+  {
+    id: "open-parliament-hackathon-2026",
+    title: "Open Parliament Hackathon — бүртгэл",
+    category: "competitions",
+    image: openParliamentImg,
+    pattern: "grid",
+    deadline: { date: "2026-09-24", time: "12:00" },
+    essential: {
+      duration: "24-hour hackathon",
+      cost: "Free",
+      participants: "Teams of 3 (must include one developer)",
+      whoFor: "Youth interested in civic tech and AI",
+      organizer: "Монгол Улсын Их Хурлын Тамгын газар, The Asia Foundation, Unread Media",
+    },
+    description: `"Open Parliament Hackathon" бүртгэл эхэллээ! 🚀
+
+Парламентын үйл ажиллагааг иргэдэд илүү нээлттэй, ойлгомжтой, хүртээмжтэй болгох технологийн шийдэл танд байна уу?
+
+Оролцогчид парламентын үйл ажиллагаатай холбоотой бодит асуудлууд дээр ажиллаж, технологи болон хиймэл оюуны боломжийг ашигласан шийдлийг 24 цагийн дотор хөгжүүлнэ.
+
+Баг бүр 3 гишүүнтэй байх бөгөөд нэг гишүүн нь заавал хөгжүүлэгч байх ёстой. Бүртгүүлсэн багуудаас 10 багийг эцсийн шатанд сонгон шалгаруулна.
+
+Санаагаа бодит шийдэл болгоорой.`,
+    links: [
+      {
+        label: "Register",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSdEwQmTIrDjO-s-A7kpsg_0gZlyoc8S4tpVGsrYTk9E3cG4bw/viewform",
+      },
+    ],
+  },
+  {
+    id: "wcs-mongolia-field-assistant",
+    title: "WCS Монгол — Хээрийн судалгаанд туслах ажилтан",
+    category: "internships",
+    image: wcsFieldAssistantImg,
+    pattern: "radial",
+    deadline: { date: "2026-09-25", time: "17:00" },
+    essential: {
+      duration: "2026.10.01 – 2026.10.11",
+      cost: "Not specified",
+      participants: "1",
+      whoFor: "Students/graduates in biology, ecology, or conservation, able to work in field conditions",
+      organizer: "Wildlife Conservation Society (WCS) Mongolia",
+    },
+    description: `📢 НЭЭЛТТЭЙ АЖЛЫН БАЙР: Хээрийн судалгаанд оролцох туслах ажилтан 🐾
+
+WCS Монгол Өмнөговь аймагт цоохор ирвэсийн судалгааны ажилд туслах оюутан эсвэл төгсөгчийг урьж байна!
+
+📍 Байршил: Өмнөговь аймаг (Номгон, Баян-Овоо сум)
+🗓 Ажиллах хугацаа: 2026.10.01 – 2026.10.11
+
+📋 Гүйцэтгэх үүрэг: Автомат камерын шалгалт, батарей/SD карт солих, мэдээлэл хуулах болон хээрийн тэмдэглэл хөтлөх
+
+🎯 Тавигдах шаардлага: Биологи, экологи, байгаль хамгааллын чиглэлээр суралцдаг/төгссөн, хээрийн нөхцөлд ажиллах боломжтой
+
+Өөрийн туршлага, CV-гээ "Цоохор ирвэс-Хээрийн туслах ажилтан - Овог нэр" гэсэн гарчигтайгаар илгээнэ үү.`,
+    links: [
+      { label: "Email application", href: "mailto:procurementmongolia@wcs.org" },
+    ],
+    contactNote: "Phone: 323719 · mongolia.wcs.org",
   },
 ];
