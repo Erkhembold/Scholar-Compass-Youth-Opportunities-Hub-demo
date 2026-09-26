@@ -17,6 +17,7 @@ import SatBeginnerGuidePage from "./pages/SatBeginnerGuidePage.jsx";
 import IeltsBeginnerGuidePage from "./pages/IeltsBeginnerGuidePage.jsx";
 import SatReadingLesson01Page from "./pages/SatReadingLesson01Page.jsx";
 import SatWritingLesson01Page from "./pages/SatWritingLesson01Page.jsx";
+import SatWritingLesson02Page from "./pages/SatWritingLesson02Page.jsx";
 import { useRoute } from "./router.js";
 
 export default function App() {
@@ -73,6 +74,8 @@ export default function App() {
     page = <SatReadingLesson01Page />;
   } else if (route.name === "sat-lessons-writing-sentences") {
     page = <SatWritingLesson01Page />;
+  } else if (route.name === "sat-lessons-writing-transitions") {
+    page = <SatWritingLesson02Page />;
   } else if (route.name === "leaderboard") {
     page = <LeaderboardPage />;
   } else {
