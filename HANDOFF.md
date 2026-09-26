@@ -90,16 +90,47 @@ values (`XP_REWARDS`). Currently wired: IELTS mock test completion
 question, first-correct-only — deliberately NOT a lump sum per test,
 per explicit user preference).
 
-**IELTS practice** — `src/data/ieltsTests.js` (10 mock tests; only 1–2
-are fully built, 3–10 currently marked `comingSoon: true` — **writing
-the remaining reading tests was started in an earlier session and never
-finished/pushed; check with the user whether this is still wanted**).
-Entry point is `IeltsPracticePicker.jsx` → skill chooser →
-`/ielts/practice/:skill`. Note: another session added a *second*,
-possibly overlapping IELTS entry point (`IeltsExercisesPicker.jsx` /
-`ieltsReadingExercises.js` / `IeltsExercisesPage.jsx`) — reconcile or
-clarify with the user which one is meant to be canonical before adding
-more IELTS content, to avoid two parallel systems.
+**IELTS practice** — `src/data/ieltsTests.js`. **All 10 mock tests are
+fully built** (verified: `grep -c "comingSoon: true"` returns 0, `grep -c
+"id: \"reading-mock"` returns 10) — an earlier handoff note here claimed
+tests 3–10 were still unfinished; that was stale, corrected now. Entry
+point is `IeltsPracticePicker.jsx` → skill chooser → `/ielts/practice/:skill`.
+Note: another session added a *second*, possibly overlapping IELTS entry
+point (`IeltsExercisesPicker.jsx` / `ieltsReadingExercises.js` /
+`IeltsExercisesPage.jsx`) — reconcile or clarify with the user which one
+is meant to be canonical before adding more IELTS content, to avoid two
+parallel systems. (This one is still genuinely unresolved, unlike the
+mock-test note above.)
+
+**Beginner Lessons** — `src/components/lessons/` (10 reusable atomic
+components: `LessonLayout`, `LessonHeader`, `ConceptCard`, `ExampleCard`,
+`QuestionCard`, `AnswerChoice`, `AnswerExplanation`, `TakeawayCard`,
+`LessonProgress`, `LessonNavigation`, `Breadcrumb`, plus the
+`useActiveSection` scroll-spy hook). 5 pages built on top of this
+library, each its own file under `src/pages/` (not a generic
+JSON-driven renderer — the section layouts vary too much lesson to
+lesson for that to be worth building yet):
+- `/sat/lessons/beginner-guide`
+- `/ielts/lessons/beginner-guide`
+- `/sat/lessons/reading/evidence-based-inference`
+- `/sat/lessons/writing/complete-sentences`
+- `/sat/lessons/writing/transitions`
+
+All content in these 5 pages was supplied verbatim by the user, not
+generated. `.lesson-grid`/`.lesson-mini-card`/`.lesson-flow`/
+`.lesson-timeline`/`.lesson-elimination`/`.lesson-callout` are shared
+utility CSS classes added alongside these pages for patterns the
+original component library didn't cover (N-up card grids, compact
+stat cards, etc.) — reuse these before adding new ones-off classes for
+a 6th lesson. The SAT Reading lesson's "worked example" section needed
+richer post-answer content (per-option elimination cards) than
+QuestionCard's single explanation-string prop supports, so that one
+block is custom-built directly from `AnswerChoice`/`AnswerExplanation`
+with local state, same interaction contract as QuestionCard otherwise
+— see `SatReadingLesson01Page.jsx` if a future lesson needs the same
+pattern. Not yet linked from any nav menu or category page — reachable
+only by direct URL for now; ask the user before adding nav entries, in
+case that's intentionally being staged separately.
 
 **SAT practice** — `src/data/satQuestions.js` (80 original questions,
 20 per official R&W domain), `SatCategoryOverview.jsx` (progress per
