@@ -68,7 +68,7 @@ export default function App() {
   } else if (route.name === "sat-practice") {
     page = <SatPracticePage categoryId={route.categoryId} />;
   } else if (route.name === "sat-challenge") {
-    page = <SatChallengePage />;
+    page = <SatChallengePage matchId={route.matchId} />;
   } else if (route.name === "sat-lessons-beginner-guide") {
     page = <SatBeginnerGuidePage />;
   } else if (route.name === "ielts-lessons-beginner-guide") {

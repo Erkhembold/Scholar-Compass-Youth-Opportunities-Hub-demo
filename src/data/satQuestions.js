@@ -101,3 +101,20 @@ export const SAT_QUESTIONS = {
   { id: "EI20", passage: "The committee debated the proposal for nearly three hours. ______, they reached no final decision and scheduled a follow-up meeting.", prompt: "Which choice completes the text with the most logical transition?", options: [{ id: "A", text: "Ultimately" }, { id: "B", text: "For example" }, { id: "C", text: "Similarly" }, { id: "D", text: "In addition" }], answer: "A", explanation: "The sentence describes the final outcome of the long debate, which calls for 'Ultimately.'" }
   ],
 };
+
+// Reuse-only helpers for anything that needs to pull from the whole 80-
+// question bank at once (currently: SAT 1v1 Challenge match setup),
+// without duplicating or reshaping the question data above.
+export function getAllSatQuestionsFlat() {
+  return SAT_CATEGORIES.flatMap((cat) =>
+    SAT_QUESTIONS[cat.id].map((q) => ({ id: q.id, category: cat.id }))
+  );
+}
+
+export function findSatQuestionById(id) {
+  for (const cat of SAT_CATEGORIES) {
+    const found = SAT_QUESTIONS[cat.id].find((q) => q.id === id);
+    if (found) return { ...found, category: cat.id };
+  }
+  return null;
+}

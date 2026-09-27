@@ -2451,6 +2451,14 @@ body.nav-open {
   color: var(--ink-soft);
 }
 
+.signin__status--error {
+  background: rgba(255, 59, 48, 0.08);
+  border-color: rgba(255, 59, 48, 0.3);
+  color: #c62828;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
 .signin__back {
   display: inline-block;
   margin-top: 24px;
@@ -4234,4 +4242,52 @@ body.nav-open {
   margin-top: 14px;
   font-size: 0.85rem;
   color: var(--text-tertiary, #8a8a8e);
+}
+
+.sat-challenge__pin {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-align: center;
+  padding: 18px 0;
+  margin: 12px 0;
+  border-radius: var(--radius-md);
+  background: rgba(255, 149, 0, 0.08);
+  border: 1.5px dashed rgba(255, 149, 0, 0.4);
+  color: #c76b00;
+}
+
+.sat-challenge__waiting-note {
+  font-size: 0.88rem;
+  color: var(--ink-faint, #8a8a8e);
+  margin: 10px 0 16px;
+}
+
+.sat-challenge__results-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.sat-challenge__results-score {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.sat-challenge__results-label {
+  font-size: 0.85rem;
+  color: var(--ink-faint, #8a8a8e);
+  font-weight: 600;
+}
+
+.sat-challenge__results-value {
+  font-size: 1.8rem;
+  font-weight: 800;
 }

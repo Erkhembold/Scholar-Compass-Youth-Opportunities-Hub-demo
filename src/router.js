@@ -39,6 +39,9 @@ function parseHash(hash) {
   if (parts[0] === "sat" && parts[1] === "practice" && parts[2]) {
     return { name: "sat-practice", categoryId: decodeURIComponent(parts[2]) };
   }
+  if (parts[0] === "sat" && parts[1] === "challenge" && parts[2]) {
+    return { name: "sat-challenge", matchId: decodeURIComponent(parts[2]) };
+  }
   if (parts[0] === "sat" && parts[1] === "challenge") {
     return { name: "sat-challenge" };
   }
@@ -119,6 +122,10 @@ export function satPracticeHref(categoryId) {
 
 export function satChallengeHref() {
   return "#/sat/challenge";
+}
+
+export function satChallengeMatchHref(matchId) {
+  return `#/sat/challenge/${encodeURIComponent(matchId)}`;
 }
 
 export function leaderboardHref() {
