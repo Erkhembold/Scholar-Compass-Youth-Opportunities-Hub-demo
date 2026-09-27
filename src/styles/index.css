@@ -4146,3 +4146,14 @@ body.nav-open {
   border-color: var(--status-yellow, #d69a00);
   background: rgba(214, 154, 0, 0.07);
 }
+
+.sat-overview__lessons-link {
+  display: inline-block;
+  margin: 10px 0 16px;
+  padding: 8px 14px;
+  background: rgba(10, 132, 255, 0.08);
+  border-radius: var(--radius-sm);
+  color: var(--blue-500);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
