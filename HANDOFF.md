@@ -149,6 +149,28 @@ string if no translation exists (safe no-op, never crashes). Only UI
 chrome is translated — actual opportunity/article/test content stays in
 English by design.
 
+## PENDING TASK (in progress, not yet started — pick this up first)
+The user has requested a new feature: **SAT 1v1 Challenge**, a real-time
+multiplayer head-to-head mode under SAT → Exercises, where two
+authenticated users answer the same SAT question set under a shared
+timer, with a 4-digit PIN-based lobby system. Full spec was given in
+detail (match creation with configurable question count/time-per-question,
+lobby with host/opponent, synchronized question set + timer via Supabase
+realtime, scoring, wait-for-both-players result screen, disconnect
+handling, PIN uniqueness, per-user auth-scoped security, XP via the
+existing `awardXp()`/`XP_REWARDS` system — no new flat reward). Explicit
+required order: **Step 1 is to inspect the current SAT Exercises
+architecture, auth system, question data, and Supabase setup, and report
+back which existing pieces can be reused BEFORE writing any code.** Then
+proceed in small steps (nav/UI shell → create/join/lobby → shared
+question selection/realtime state → timer/scoring → results/disconnects →
+final SQL handoff), building/testing/committing/pushing after each step —
+do not batch multiple steps into one push. Do not modify
+`src/data/satQuestions.js` unnecessarily; reuse it as the question source
+for matches. This will need new Supabase tables for match state — write
+the SQL and hand it to the user to run manually, same as every other
+migration in this project.
+
 ## Known issues / unfinished work (as of this handoff)
 - IELTS reading tests 3–10: content was drafted in a prior session but
   it's unclear if it was ever merged — check `src/data/ieltsTests.js`
