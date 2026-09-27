@@ -39,6 +39,9 @@ function parseHash(hash) {
   if (parts[0] === "sat" && parts[1] === "practice" && parts[2]) {
     return { name: "sat-practice", categoryId: decodeURIComponent(parts[2]) };
   }
+  if (parts[0] === "sat" && parts[1] === "challenge") {
+    return { name: "sat-challenge" };
+  }
   if (parts[0] === "sat" && parts[1] === "lessons" && parts[2] === "beginner-guide") {
     return { name: "sat-lessons-beginner-guide" };
   }
@@ -112,6 +115,10 @@ export function ieltsExercisesHref(skill) {
 
 export function satPracticeHref(categoryId) {
   return `#/sat/practice/${encodeURIComponent(categoryId)}`;
+}
+
+export function satChallengeHref() {
+  return "#/sat/challenge";
 }
 
 export function leaderboardHref() {

@@ -1,6 +1,6 @@
 import { SAT_CATEGORIES, SAT_QUESTIONS } from "../data/satQuestions.js";
 import { useSatProgress } from "../hooks/useSatProgress.js";
-import { satPracticeHref, satBeginnerGuideHref } from "../router.js";
+import { satPracticeHref, satBeginnerGuideHref, satChallengeHref } from "../router.js";
 
 export default function SatCategoryOverview() {
   const { masteredCount, isSignedIn } = useSatProgress();
@@ -21,6 +21,10 @@ export default function SatCategoryOverview() {
 
           <a href={satBeginnerGuideHref()} className="sat-overview__lessons-link">
             📘 SAT Lessons — start with the Beginner Guide →
+          </a>
+
+          <a href={satChallengeHref()} className="sat-overview__lessons-link sat-overview__challenge-link">
+            ⚡ SAT 1v1 Challenge — go head-to-head with a friend →
           </a>
 
           {!isSignedIn && (

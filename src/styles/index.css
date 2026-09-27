@@ -4157,3 +4157,27 @@ body.nav-open {
   font-weight: 600;
   font-size: 0.88rem;
 }
+
+.sat-overview__challenge-link {
+  display: block;
+  margin-top: -8px;
+  background: rgba(255, 149, 0, 0.1);
+  color: var(--orange-500, #c76b00);
+}
+
+.sat-challenge__card {
+  text-align: left;
+}
+
+.sat-challenge__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.sat-challenge__soon-note {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--text-tertiary, #8a8a8e);
+}
