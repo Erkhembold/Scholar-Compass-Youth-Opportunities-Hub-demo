@@ -4147,22 +4147,76 @@ body.nav-open {
   background: rgba(214, 154, 0, 0.07);
 }
 
-.sat-overview__lessons-link {
-  display: inline-block;
-  margin: 10px 0 16px;
-  padding: 8px 14px;
-  background: rgba(10, 132, 255, 0.08);
-  border-radius: var(--radius-sm);
-  color: var(--blue-500);
-  font-weight: 600;
-  font-size: 0.88rem;
+.sat-overview__actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 14px 0 20px;
 }
 
-.sat-overview__challenge-link {
-  display: block;
-  margin-top: -8px;
-  background: rgba(255, 149, 0, 0.1);
-  color: var(--orange-500, #c76b00);
+.sat-overview__action-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out),
+    border-color 0.15s var(--ease-out);
+}
+
+.sat-overview__action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.sat-overview__action-card--lessons {
+  border-color: rgba(10, 132, 255, 0.25);
+  background: rgba(10, 132, 255, 0.06);
+}
+
+.sat-overview__action-card--challenge {
+  border-color: rgba(255, 149, 0, 0.3);
+  background: rgba(255, 149, 0, 0.08);
+}
+
+.sat-overview__action-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sat-overview__action-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.sat-overview__action-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.sat-overview__action-sub {
+  font-size: 0.82rem;
+  color: var(--text-tertiary, #6b6b70);
+}
+
+.sat-overview__action-arrow {
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: var(--text-tertiary, #6b6b70);
+}
+
+@media (max-width: 720px) {
+  .sat-overview__actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 .sat-challenge__card {

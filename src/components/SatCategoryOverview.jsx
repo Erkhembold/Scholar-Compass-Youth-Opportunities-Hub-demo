@@ -19,13 +19,33 @@ export default function SatCategoryOverview() {
             SAT ENGLISH PRACTICE
           </h2>
 
-          <a href={satBeginnerGuideHref()} className="sat-overview__lessons-link">
-            📘 SAT Lessons — start with the Beginner Guide →
-          </a>
+          <div className="sat-overview__actions">
+            <a href={satBeginnerGuideHref()} className="sat-overview__action-card sat-overview__action-card--lessons">
+              <span className="sat-overview__action-icon" aria-hidden="true">
+                📘
+              </span>
+              <span className="sat-overview__action-text">
+                <span className="sat-overview__action-title">SAT Lessons</span>
+                <span className="sat-overview__action-sub">Start with the Beginner Guide</span>
+              </span>
+              <span className="sat-overview__action-arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
 
-          <a href={satChallengeHref()} className="sat-overview__lessons-link sat-overview__challenge-link">
-            ⚡ SAT 1v1 Challenge — go head-to-head with a friend →
-          </a>
+            <a href={satChallengeHref()} className="sat-overview__action-card sat-overview__action-card--challenge">
+              <span className="sat-overview__action-icon" aria-hidden="true">
+                ⚡
+              </span>
+              <span className="sat-overview__action-text">
+                <span className="sat-overview__action-title">1v1 Challenge</span>
+                <span className="sat-overview__action-sub">Go head-to-head with a friend</span>
+              </span>
+              <span className="sat-overview__action-arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
 
           {!isSignedIn && (
             <p className="sat-overview__signin-note">
