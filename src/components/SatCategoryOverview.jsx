@@ -19,29 +19,29 @@ export default function SatCategoryOverview() {
             SAT ENGLISH PRACTICE
           </h2>
 
-          <div className="sat-overview__actions">
-            <a href={satBeginnerGuideHref()} className="sat-overview__action-card sat-overview__action-card--lessons">
-              <span className="sat-overview__action-icon" aria-hidden="true">
+          <div className="category-actions">
+            <a href={satBeginnerGuideHref()} className="category-action-card category-action-card--lessons">
+              <span className="category-action-icon" aria-hidden="true">
                 📘
               </span>
-              <span className="sat-overview__action-text">
-                <span className="sat-overview__action-title">SAT Lessons</span>
-                <span className="sat-overview__action-sub">Start with the Beginner Guide</span>
+              <span className="category-action-text">
+                <span className="category-action-title">SAT Lessons</span>
+                <span className="category-action-sub">Start with the Beginner Guide</span>
               </span>
-              <span className="sat-overview__action-arrow" aria-hidden="true">
+              <span className="category-action-arrow" aria-hidden="true">
                 →
               </span>
             </a>
 
-            <a href={satChallengeHref()} className="sat-overview__action-card sat-overview__action-card--challenge">
-              <span className="sat-overview__action-icon" aria-hidden="true">
+            <a href={satChallengeHref()} className="category-action-card category-action-card--challenge">
+              <span className="category-action-icon" aria-hidden="true">
                 ⚡
               </span>
-              <span className="sat-overview__action-text">
-                <span className="sat-overview__action-title">1v1 Challenge</span>
-                <span className="sat-overview__action-sub">Go head-to-head with a friend</span>
+              <span className="category-action-text">
+                <span className="category-action-title">1v1 Challenge</span>
+                <span className="category-action-sub">Go head-to-head with a friend</span>
               </span>
-              <span className="sat-overview__action-arrow" aria-hidden="true">
+              <span className="category-action-arrow" aria-hidden="true">
                 →
               </span>
             </a>

@@ -6,6 +6,7 @@ import SatCategoryOverview from "../components/SatCategoryOverview.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { ieltsBeginnerGuideHref, ieltsChallengeHref } from "../router.js";
 
 export default function CategoryPage({ category }) {
   const { t } = useLanguage();
@@ -36,6 +37,36 @@ export default function CategoryPage({ category }) {
           <div className="section__inner practice-picker__row">
             <IeltsPracticePicker />
             <IeltsExercisesPicker />
+          </div>
+
+          <div className="section__inner">
+            <div className="category-actions">
+              <a href={ieltsBeginnerGuideHref()} className="category-action-card category-action-card--lessons">
+                <span className="category-action-icon" aria-hidden="true">
+                  📘
+                </span>
+                <span className="category-action-text">
+                  <span className="category-action-title">IELTS Lessons</span>
+                  <span className="category-action-sub">Start with the Beginner Guide</span>
+                </span>
+                <span className="category-action-arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+
+              <a href={ieltsChallengeHref()} className="category-action-card category-action-card--challenge">
+                <span className="category-action-icon" aria-hidden="true">
+                  ⚡
+                </span>
+                <span className="category-action-text">
+                  <span className="category-action-title">1v1 Challenge</span>
+                  <span className="category-action-sub">Go head-to-head with a friend</span>
+                </span>
+                <span className="category-action-arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </div>
           </div>
         </section>
       )}

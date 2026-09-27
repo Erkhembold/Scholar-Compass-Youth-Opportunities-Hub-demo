@@ -30,6 +30,12 @@ function parseHash(hash) {
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
+  if (parts[0] === "ielts" && parts[1] === "challenge" && parts[2]) {
+    return { name: "ielts-challenge", matchId: decodeURIComponent(parts[2]) };
+  }
+  if (parts[0] === "ielts" && parts[1] === "challenge") {
+    return { name: "ielts-challenge" };
+  }
   if (parts[0] === "ielts" && parts[1] === "practice" && parts[2]) {
     return { name: "ielts-practice", skill: decodeURIComponent(parts[2]) };
   }
@@ -138,6 +144,10 @@ export function satBeginnerGuideHref() {
 
 export function ieltsBeginnerGuideHref() {
   return "#/ielts/lessons/beginner-guide";
+}
+
+export function ieltsChallengeHref() {
+  return "#/ielts/challenge";
 }
 
 export function satReadingEvidenceHref() {
