@@ -3,7 +3,9 @@
 //
 // Shape:
 //   id, title, category, image, pattern (placeholder-art fallback style),
-//   deadline: { date?, time?, label? }  — see src/utils/deadline.js
+//   deadline: { date?, time?, label?, archiveDate? }  — see src/utils/deadline.js
+//     (archiveDate: last day of a label-only event; archives the listing
+//      after that day without adding a countdown indicator)
 //   essential: { duration, cost, participants, whoFor, organizer }
 //   description: string | { mn: string, en: string }
 //   links: [{ label, href }]
@@ -200,7 +202,7 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
     category: "events",
     image: ssmOpenDayImg,
     pattern: "diagonal",
-    deadline: { label: "Event day — Sep 12, 2026" },
+    deadline: { label: "Event day — Sep 12, 2026", archiveDate: "2026-09-12" },
     essential: {
       duration: "One day, 11:00–16:00",
       cost: "Free",
@@ -266,7 +268,7 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
     category: "events",
     image: japanStudyFairImg,
     pattern: "grid",
-    deadline: { label: "Event days — Oct 3–4, 2026" },
+    deadline: { label: "Event days — Oct 3–4, 2026", archiveDate: "2026-10-04" },
     essential: {
       duration: "Two days, 11:00–17:00",
       cost: "Free — no pre-registration required",
@@ -326,7 +328,7 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
     category: "volunteering",
     image: nightMarathonImg,
     pattern: "grid",
-    deadline: { label: "Event day — Sep 26, 2026" },
+    deadline: { label: "Event day — Sep 26, 2026", archiveDate: "2026-09-26" },
     essential: {
       duration: "One event day, Sep 26, 2026",
       cost: "Free",
@@ -611,7 +613,7 @@ From Waste to Wonder ♻️`,
     category: "volunteering",
     image: yscBookFairImg,
     pattern: "radial",
-    deadline: { label: "Event days: Sep 18–20, 2026" },
+    deadline: { label: "Event days: Sep 18–20, 2026", archiveDate: "2026-09-20" },
     essential: {
       duration: "Sep 18, 19, 20 — 10:00–18:00 (full day or shift)",
       cost: "Free",

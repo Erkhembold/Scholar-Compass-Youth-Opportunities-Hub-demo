@@ -15,7 +15,7 @@ import {
 } from "../components/icons.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_LABELS } from "../data/categories.js";
-import { formatDeadline } from "../utils/deadline.js";
+import { formatDeadline, isOpportunityArchived } from "../utils/deadline.js";
 import { categoryHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useSavedOpportunities } from "../hooks/useSavedOpportunities.js";
@@ -97,6 +97,11 @@ export default function OpportunityDetailPage({ id }) {
               onToggle={() => toggleSave(opportunity.id)}
             />
           </div>
+          {isOpportunityArchived(opportunity) && (
+            <p className="detail__archived" role="status">
+              {t("Archived — the deadline for this opportunity has passed. It's kept here for reference.")}
+            </p>
+          )}
           <h1 className="detail__title">{title}</h1>
         </header>
 

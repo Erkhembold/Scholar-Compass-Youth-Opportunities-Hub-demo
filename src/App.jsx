@@ -10,6 +10,7 @@ import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
+import ArchivePage from "./pages/ArchivePage.jsx";
 import IeltsPracticePage from "./pages/IeltsPracticePage.jsx";
 import IeltsExercisesPage from "./pages/IeltsExercisesPage.jsx";
 import IeltsChallengePage from "./pages/IeltsChallengePage.jsx";
@@ -58,6 +59,8 @@ export default function App() {
     page = <WritingTaskPage id={route.id} />;
   } else if (route.name === "read") {
     page = <ReadDetailPage id={route.id} />;
+  } else if (route.name === "archive") {
+    page = <ArchivePage />;
   } else if (route.name === "signin") {
     page = <SignInPage />;
   } else if (route.name === "profile") {

@@ -32,6 +32,14 @@ export const translations = {
   "Read the Guides": "Зөвлөмжүүдийг унших",
   "Start Now": "Эхлүүлэх",
   "Show more": "Цааш үзэх",
+  // Archive
+  Archive: "Архив",
+  "Browse archived opportunities": "Архивласан боломжуудыг үзэх",
+  "Back to current opportunities": "Одоогийн боломжууд руу буцах",
+  "Opportunities whose deadlines have passed. They're kept here for reference — check the current board for anything you can still apply to.":
+    "Хугацаа нь дууссан боломжууд. Лавлах зорилгоор энд хадгалагдаж байна — өргөдөл илгээх боломжтойг нь одоогийн самбараас үзнэ үү.",
+  "Archived — the deadline for this opportunity has passed. It's kept here for reference.":
+    "Архивласан — энэ боломжийн хугацаа дууссан. Лавлах зорилгоор энд хадгалагдаж байна.",
   "Learn More": "Дэлгэрэнгүй",
   "Read More": "Дэлгэрэнгүй унших",
   "Read Guide": "Зөвлөмж унших",

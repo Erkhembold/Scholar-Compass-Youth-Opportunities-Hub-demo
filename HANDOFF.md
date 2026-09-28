@@ -149,27 +149,33 @@ string if no translation exists (safe no-op, never crashes). Only UI
 chrome is translated — actual opportunity/article/test content stays in
 English by design.
 
-## PENDING TASK (in progress, not yet started — pick this up first)
-The user has requested a new feature: **SAT 1v1 Challenge**, a real-time
-multiplayer head-to-head mode under SAT → Exercises, where two
-authenticated users answer the same SAT question set under a shared
-timer, with a 4-digit PIN-based lobby system. Full spec was given in
-detail (match creation with configurable question count/time-per-question,
-lobby with host/opponent, synchronized question set + timer via Supabase
-realtime, scoring, wait-for-both-players result screen, disconnect
-handling, PIN uniqueness, per-user auth-scoped security, XP via the
-existing `awardXp()`/`XP_REWARDS` system — no new flat reward). Explicit
-required order: **Step 1 is to inspect the current SAT Exercises
-architecture, auth system, question data, and Supabase setup, and report
-back which existing pieces can be reused BEFORE writing any code.** Then
-proceed in small steps (nav/UI shell → create/join/lobby → shared
-question selection/realtime state → timer/scoring → results/disconnects →
-final SQL handoff), building/testing/committing/pushing after each step —
-do not batch multiple steps into one push. Do not modify
-`src/data/satQuestions.js` unnecessarily; reuse it as the question source
-for matches. This will need new Supabase tables for match state — write
-the SQL and hand it to the user to run manually, same as every other
-migration in this project.
+## SAT 1v1 Challenge (built — verify SQL status)
+Git history shows the full create/join/lobby/play/results flow is built
+(`SatChallengePage.jsx`, `useSatMatch.js`, `supabase/sat_matches_schema.sql`
+and `sat_matches_play_schema.sql`). The earlier "pending task" note here was
+stale. Not confirmed from the repo alone: whether both SQL files have been
+run in Supabase — ask the user before assuming realtime 1v1 works live.
+
+## Opportunity archive (expired listings)
+Opportunities are a **static array** in `src/data/opportunities.js` (not in
+Supabase), so "archived" is derived from the deadline, never stored as a flag
+and never deleted. All logic is in `src/utils/deadline.js`:
+`isDeadlinePassed` / `isOpportunityArchived` / `partitionOpportunities` /
+`getActiveOpportunities`. Rules: deadlines are read in **Ulaanbaatar time
+(UTC+8)** regardless of the viewer's timezone; a date with no time means end
+of that day; missing/label-only/malformed deadlines are **never** archived
+(wrongly hiding a live listing is worse than showing a stale one). Label-only
+event listings (e.g. "Event day — Sep 26, 2026") carry an optional
+`deadline.archiveDate` (last event day) used only for archiving — it adds no
+countdown indicator. **When adding a label-only event opportunity, add an
+`archiveDate` or it will never leave the active board.**
+Active-only: homepage `OpportunityBoard`, `CategoryPage`. Archived: `#/archive`
+(`ArchivePage.jsx`, linked from the board, category pages, and footer).
+Detail pages and Saved Opportunities still show archived items (old links and
+bookmarks keep working; detail shows an "Archived" notice). This also fixed a
+bug where a passed deadline showed "Deadline today" for up to 24h.
+Known gap: "World Cleanup Day" has only "Rolling until event day" — no date in
+the data, so it can't archive until an `archiveDate` is added.
 
 ## Known issues / unfinished work (as of this handoff)
 - IELTS reading tests 3–10: content was drafted in a prior session but

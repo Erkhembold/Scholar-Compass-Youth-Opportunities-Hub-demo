@@ -66,6 +66,9 @@ function parseHash(hash) {
   if (parts[0] === "sat" && parts[1] === "lessons" && parts[2] === "writing" && parts[3] === "transitions") {
     return { name: "sat-lessons-writing-transitions" };
   }
+  if (parts[0] === "archive") {
+    return { name: "archive" };
+  }
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
@@ -160,4 +163,8 @@ export function satWritingSentencesHref() {
 
 export function satWritingTransitionsHref() {
   return "#/sat/lessons/writing/transitions";
+}
+
+export function archiveHref() {
+  return "#/archive";
 }

@@ -1,7 +1,7 @@
 import FollowBar from "./FollowBar.jsx";
 import ContactSection from "./ContactSection.jsx";
 import { FOOTER_CATEGORIES, SITE_NAME } from "../data/config.js";
-import { categoryHref } from "../router.js";
+import { categoryHref, archiveHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Footer() {
@@ -30,6 +30,9 @@ export default function Footer() {
                 <a href={categoryHref(cat.category)}>{t(cat.label)}</a>
               </li>
             ))}
+            <li>
+              <a href={archiveHref()}>{t("Archive")}</a>
+            </li>
           </ul>
         </nav>
 

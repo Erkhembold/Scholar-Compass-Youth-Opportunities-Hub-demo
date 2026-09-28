@@ -6,7 +6,8 @@ import SatCategoryOverview from "../components/SatCategoryOverview.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
-import { ieltsBeginnerGuideHref, ieltsChallengeHref } from "../router.js";
+import { getActiveOpportunities } from "../utils/deadline.js";
+import { archiveHref, ieltsBeginnerGuideHref, ieltsChallengeHref } from "../router.js";
 
 export default function CategoryPage({ category }) {
   const { t } = useLanguage();
@@ -26,7 +27,7 @@ export default function CategoryPage({ category }) {
     );
   }
 
-  const visible = opportunities.filter((op) => op.category === category);
+  const visible = getActiveOpportunities(opportunities).filter((op) => op.category === category);
 
   return (
     <>
@@ -90,8 +91,11 @@ export default function CategoryPage({ category }) {
 
           <OpportunityGrid
             opportunities={visible}
-            emptyMessage={`Nothing in ${meta.label} yet — check back soon.`}
+            emptyMessage={`Nothing current in ${meta.label} right now — check back soon.`}
           />
+          <p className="board__archive-link">
+            <a href={archiveHref()}>{t("Browse archived opportunities")}</a>
+          </p>
         </div>
       </section>
     </>

@@ -3,6 +3,8 @@ import FilterBar from "./FilterBar.jsx";
 import OpportunityGrid from "./OpportunityGrid.jsx";
 import { FILTERS, opportunities } from "../data/opportunities.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { getActiveOpportunities } from "../utils/deadline.js";
+import { archiveHref } from "../router.js";
 
 // How many cards show before the "Show more" button appears, and how many
 // more each click reveals. The homepage board is meant to stay short and
@@ -20,7 +22,9 @@ export default function OpportunityBoard() {
   // "recent" always means "most recently added" without touching the data
   // file's own order.
   const filtered = useMemo(() => {
-    const mostRecentFirst = [...opportunities].reverse();
+    // Expired listings are archived, not deleted — they leave the active
+    // board here and live on the Archive page (see utils/deadline.js).
+    const mostRecentFirst = getActiveOpportunities(opportunities).reverse();
     if (active === "all") return mostRecentFirst;
     return mostRecentFirst.filter((op) => op.category === active);
   }, [active]);
@@ -51,6 +55,10 @@ export default function OpportunityBoard() {
         <FilterBar filters={FILTERS} active={active} onChange={setActive} />
 
         <OpportunityGrid opportunities={visible} />
+
+        <p className="board__archive-link">
+          <a href={archiveHref()}>{t("Browse archived opportunities")}</a>
+        </p>
 
         {hasMore && (
           <div className="board__more">
