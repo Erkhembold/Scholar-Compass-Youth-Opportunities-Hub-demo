@@ -183,7 +183,8 @@ Part of the "personalized student dashboard" project (see the four-stage plan
 the user gave: streaks -> progress tracker -> weak-area diagnosis -> roadmap,
 plus onboarding for NEW users only and an edit-goals screen for existing ones).
 **Only streaks + exercise history are built so far.** Weak-area diagnosis is
-deliberately deferred until the SAT Math exercises exist (user is building them).
+deliberately deferred until the SAT Math exercises existed; they now do (see
+"SAT Math (Exercises + 1v1)" below), so weak-area diagnosis is unblocked.
 
 **Manual step (not yet confirmed run):** `supabase/streaks_and_exercise_history.sql`
 in the SQL Editor. Until it runs, the UI degrades gracefully: StreakCard shows
@@ -295,7 +296,8 @@ Idempotent.
   avatar render. Not yet verified against the live Supabase project.
 
 ## Not built yet (from the dashboard spec)
-Progress tracker, weak-area diagnosis (waiting on SAT Math), roadmap, new-user
+Progress tracker, weak-area diagnosis (SAT Math now exists, so this is
+unblocked), roadmap, new-user
 onboarding (when built: backfill `onboarding_completed = true` for existing
 rows so nobody is forced through it), edit-goals settings, authenticated
 homepage. Existing profile columns to reuse instead of duplicating: `grade`,
