@@ -30,6 +30,15 @@ function parseHash(hash) {
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
+  if (parts[0] === "sat" && parts[1] === "math" && parts[2] === "challenge" && parts[3]) {
+    return { name: "sat-math-challenge", matchId: decodeURIComponent(parts[3]) };
+  }
+  if (parts[0] === "sat" && parts[1] === "math" && parts[2] === "challenge") {
+    return { name: "sat-math-challenge" };
+  }
+  if (parts[0] === "sat" && parts[1] === "math") {
+    return { name: "sat-math-exercises" };
+  }
   if (parts[0] === "ielts" && parts[1] === "challenge" && parts[2]) {
     return { name: "ielts-challenge", matchId: decodeURIComponent(parts[2]) };
   }
@@ -167,4 +176,12 @@ export function satWritingTransitionsHref() {
 
 export function archiveHref() {
   return "#/archive";
+}
+
+export function satMathExercisesHref() {
+  return "#/sat/math";
+}
+
+export function satMathChallengeHref() {
+  return "#/sat/math/challenge";
 }

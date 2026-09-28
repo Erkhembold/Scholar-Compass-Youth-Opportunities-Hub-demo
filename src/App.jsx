@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -22,6 +22,11 @@ import SatReadingLesson01Page from "./pages/SatReadingLesson01Page.jsx";
 import SatWritingLesson01Page from "./pages/SatWritingLesson01Page.jsx";
 import SatWritingLesson02Page from "./pages/SatWritingLesson02Page.jsx";
 import { useRoute } from "./router.js";
+
+// Loaded on demand: these pull in KaTeX (math rendering), which the rest of the
+// site doesn't need, so it stays out of the main bundle.
+const SatMathExercisesPage = lazy(() => import("./pages/SatMathExercisesPage.jsx"));
+const SatMathChallengePage = lazy(() => import("./pages/SatMathChallengePage.jsx"));
 
 export default function App() {
   const route = useRoute();
@@ -75,6 +80,10 @@ export default function App() {
     page = <SatPracticePage categoryId={route.categoryId} />;
   } else if (route.name === "sat-challenge") {
     page = <SatChallengePage matchId={route.matchId} />;
+  } else if (route.name === "sat-math-exercises") {
+    page = <SatMathExercisesPage />;
+  } else if (route.name === "sat-math-challenge") {
+    page = <SatMathChallengePage matchId={route.matchId} />;
   } else if (route.name === "sat-lessons-beginner-guide") {
     page = <SatBeginnerGuidePage />;
   } else if (route.name === "ielts-lessons-beginner-guide") {
@@ -97,7 +106,19 @@ export default function App() {
         Skip to content
       </a>
       <Header />
-      <main id="main">{page}</main>
+      <main id="main">
+        <Suspense
+          fallback={
+            <section className="section">
+              <div className="section__inner">
+                <p className="section__lede">Loading…</p>
+              </div>
+            </section>
+          }
+        >
+          {page}
+        </Suspense>
+      </main>
       <Footer />
     </>
   );

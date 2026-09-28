@@ -247,7 +247,65 @@ rows so nobody is forced through it), edit-goals settings, authenticated
 homepage. Existing profile columns to reuse instead of duplicating: `grade`,
 `intended_major`, `target_test`, `school`.
 
+## SAT Math (Exercises + 1v1) — added this session
+- `src/data/satMathQuestions.js`: 40 questions (10 per domain: Algebra,
+  Advanced Math, Data Analysis, Geometry & Trig), each with
+  difficulty/topic/explanation. Math is LaTeX (`$$...$$` display,
+  `\(...\)` inline) rendered by `src/components/MathText.jsx` via
+  KaTeX. **To add a question**: append one `mc(...)`/`spr(...)` call,
+  then run `npm run gen:sat-math-key` (rewrites the answer-key block in
+  `supabase/sat_math_1v1_schema.sql` from the JS file) and re-run that
+  SQL in Supabase. `npm test` checks the two stay in sync, and checks
+  every question is well-formed and every math delimiter is balanced.
+  Two source-bank answers didn't work as given (A07's ticket totals had
+  no integer solution; B07 had two positive y-values for "the positive
+  value") — both are called out with a `NOTE:` comment at the question
+  and adjusted so the printed answer is actually correct.
+- `src/pages/SatMathExercisesPage.jsx`: practice page, topic + difficulty
+  filters (reuses the existing `.filter-bar`/`.filter-chip` classes),
+  check-answer/explanation reuses `.sat-question-card`/`.sat-option`
+  styling from the existing SAT practice page.
+- **SAT Math 1v1 is architecturally different from the SAT/IELTS 1v1**:
+  those two trust the client to report its own score at the end. SAT
+  Math 1v1 grades server-side instead — see "Known issues" for why and
+  how (`supabase/sat_math_1v1_schema.sql`, `useSatMathMatch.js`,
+  `SatMathChallengePage.jsx`). If you build a fourth 1v1 mode, consider
+  whether it should follow the SAT Math pattern instead of the
+  SAT/IELTS one.
+- Tested against a real local Postgres + PostgREST (not just read over):
+  34 scripted checks as two real signed-in users (create, join, third-
+  player rejected, RLS blocks direct table writes/reads, duplicate/late/
+  early answers rejected, disconnect/reconnect via heartbeat, refresh
+  doesn't move the timer, expiry, leave/cancel). This sandbox has no
+  network access to Vercel/Supabase, so the actual deployed app itself
+  is unverified — ask the user to confirm the live flow once deployed
+  and the SQL is run.
+
 ## Known issues / unfinished work (as of this handoff)
+- **Why SAT Math 1v1 grades server-side instead of matching the SAT/
+  IELTS 1v1 pattern**: the user's requirements for SAT Math 1v1 were
+  explicit that "players cannot modify each other's scores" and to
+  "handle timeout, refresh, disconnect, reconnect, duplicate
+  submissions, expired challenges, and a third-player join attempt" —
+  the existing SAT/IELTS 1v1 tables let either player UPDATE the whole
+  match row (including `host_score`/`opponent_score`) once they're a
+  participant, which technically lets a player overwrite the other
+  player's score, and don't handle duplicate submissions, join-race
+  timing, or expiry at all. Rather than touch the working SAT/IELTS
+  tables (explicitly out of scope — "do NOT modify the IELTS 1v1
+  behavior"), SAT Math 1v1 uses its own tables with **no client write
+  access at all**: every action is a `SECURITY DEFINER` RPC
+  (`create_sat_math_match`, `join_sat_math_match`,
+  `start_sat_math_match`, `submit_sat_math_answer`,
+  `leave_sat_math_match`, `get_sat_math_match`) that checks identity and
+  match state server-side; the answer key lives in a table with no RLS
+  policies at all (so it's readable by nobody but the functions); a
+  `primary key (match_id, user_id, question_index)` on the answers table
+  is what makes duplicate submissions a no-op instead of a race; and the
+  timer is purely `started_at + index * seconds_per_question`, read
+  fresh from the server on every poll, so refreshing can't move it. If
+  the SAT/IELTS 1v1 ever need the same guarantees, they'd need a similar
+  rework — noting it here rather than doing it as a drive-by change.
 - IELTS reading tests 3–10: content was drafted in a prior session but
   it's unclear if it was ever merged — check `src/data/ieltsTests.js`
   for `comingSoon: true` entries before assuming this is done or
@@ -258,8 +316,9 @@ homepage. Existing profile columns to reuse instead of duplicating: `grade`,
   client-side when the affected user's own profile loads
   (`processWeeklyReset` in `leaderboard.js`). Cross-user consistency at
   week boundaries is best-effort, not guaranteed.
-- Main JS bundle is ~590KB minified — a code-splitting pass would help
-  but hasn't been prioritized.
+- Main JS bundle is ~590KB minified for the main chunk (SAT Math's own
+  chunk, with KaTeX, is lazy-loaded separately and doesn't add to this) —
+  a further code-splitting pass would help but hasn't been prioritized.
 - Mobile horizontal-overflow bug: fixed in this session by (1) adding
   `overflow-x: hidden` to `<html>` (it was only on `<body>`, which
   mobile Safari doesn't reliably honor alone), (2) removing the
