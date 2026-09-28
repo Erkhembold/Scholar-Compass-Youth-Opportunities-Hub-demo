@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LessonLayout from "../components/lessons/LessonLayout.jsx";
+import LessonCompleteButton from "../components/LessonCompleteButton.jsx";
 import LessonHeader from "../components/lessons/LessonHeader.jsx";
 import ConceptCard from "../components/lessons/ConceptCard.jsx";
 import QuestionCard from "../components/lessons/QuestionCard.jsx";
@@ -254,6 +255,7 @@ export default function SatReadingLesson01Page() {
           </p>
         </TakeawayCard>
       </div>
+      <LessonCompleteButton lessonId="sat-reading-evidence-based-inference" />
     </LessonLayout>
   );
 }

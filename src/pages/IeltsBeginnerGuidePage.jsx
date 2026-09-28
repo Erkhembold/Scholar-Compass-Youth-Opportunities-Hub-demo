@@ -1,4 +1,5 @@
 import LessonLayout from "../components/lessons/LessonLayout.jsx";
+import LessonCompleteButton from "../components/LessonCompleteButton.jsx";
 import LessonHeader from "../components/lessons/LessonHeader.jsx";
 import ConceptCard from "../components/lessons/ConceptCard.jsx";
 import QuestionCard from "../components/lessons/QuestionCard.jsx";
@@ -153,6 +154,7 @@ export default function IeltsBeginnerGuidePage() {
           </p>
         </TakeawayCard>
       </div>
+      <LessonCompleteButton lessonId="ielts-beginner-guide" />
     </LessonLayout>
   );
 }

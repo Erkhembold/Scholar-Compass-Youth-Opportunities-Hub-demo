@@ -4313,3 +4313,169 @@ body.nav-open {
   color: var(--ink);
   font-size: 0.95rem;
 }
+
+/* =========================================================================
+   Daily streak card + lesson completion + exercise history
+   Uses only theme tokens (or tokens redefined under [data-theme="dark"]) so
+   it stays readable in both Light and Dark mode.
+   ========================================================================= */
+:root {
+  --streak-flame: #d9480f;
+  --streak-active-bg: #1a9c5b;
+  --streak-active-fg: #ffffff;
+  --streak-today-ring: var(--blue-500);
+  --exercise-correct: #157a47;
+  --exercise-incorrect: #c62f37;
+}
+[data-theme="dark"] {
+  --streak-flame: #ff9a52;
+  --streak-active-bg: #23b06c;
+  --streak-active-fg: #04140c;
+  --exercise-correct: #4fd190;
+  --exercise-incorrect: #ff7b82;
+}
+
+.streak-card {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 24px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  color: var(--ink);
+}
+.streak-card__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.streak-card__flame {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.streak-card[data-state="broken"] .streak-card__flame,
+.streak-card[data-state="none"] .streak-card__flame {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.streak-card__headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--streak-flame);
+}
+.streak-card__message {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.streak-card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+.streak-card__stat-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.streak-card__stat-value {
+  display: block;
+  margin-top: 2px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+.streak-week {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.streak-week__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: transparent;
+  min-width: 0;
+}
+.streak-week__label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.streak-week__mark {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+.streak-week__day.is-active {
+  background: var(--streak-active-bg);
+  border-color: var(--streak-active-bg);
+}
+.streak-week__day.is-active .streak-week__label,
+.streak-week__day.is-active .streak-week__mark {
+  color: var(--streak-active-fg);
+}
+.streak-week__day.is-today {
+  box-shadow: 0 0 0 2px var(--streak-today-ring);
+}
+.streak-week__day.is-future {
+  opacity: 0.55;
+}
+.streak-card__note {
+  margin: 16px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.lesson-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 40px auto 24px;
+  padding: 0 24px;
+  text-align: center;
+}
+.lesson-complete__hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.exercise-history__result.is-correct {
+  color: var(--exercise-correct);
+}
+.exercise-history__result.is-incorrect {
+  color: var(--exercise-incorrect);
+}
+
+@media (max-width: 720px) {
+  .streak-card {
+    padding: 18px;
+  }
+  .streak-week {
+    gap: 4px;
+  }
+}
+
+.profile-subhead {
+  margin: 28px 0 0;
+  font-size: 0.95rem;
+  color: var(--heading);
+}

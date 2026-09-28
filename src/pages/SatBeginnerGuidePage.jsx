@@ -1,4 +1,5 @@
 import LessonLayout from "../components/lessons/LessonLayout.jsx";
+import LessonCompleteButton from "../components/LessonCompleteButton.jsx";
 import LessonHeader from "../components/lessons/LessonHeader.jsx";
 import ConceptCard from "../components/lessons/ConceptCard.jsx";
 import QuestionCard from "../components/lessons/QuestionCard.jsx";
@@ -135,6 +136,7 @@ export default function SatBeginnerGuidePage() {
           </p>
         </TakeawayCard>
       </div>
+      <LessonCompleteButton lessonId="sat-beginner-guide" />
     </LessonLayout>
   );
 }

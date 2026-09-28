@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { useIeltsMatch } from "../hooks/useIeltsMatch.js";
 import { awardXp } from "../utils/xp.js";
+import { recordActivity } from "../utils/streak.js";
 import {
   IELTS_CHALLENGE_SKILLS,
   getIeltsChallengeQuestions,
@@ -91,7 +92,10 @@ export default function IeltsChallengePage({ matchId }) {
 
   async function handleFinish(score) {
     await submitResult({ isHost, score });
-    if (user?.id) awardXp(supabase, user.id, "ieltsPractice");
+    if (user?.id) {
+      awardXp(supabase, user.id, "ieltsPractice");
+      recordActivity("ielts_1v1", match.id);
+    }
   }
 
   if (!opponentJoined) {

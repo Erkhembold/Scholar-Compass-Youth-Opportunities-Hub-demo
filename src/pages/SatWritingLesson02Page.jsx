@@ -1,4 +1,5 @@
 import LessonLayout from "../components/lessons/LessonLayout.jsx";
+import LessonCompleteButton from "../components/LessonCompleteButton.jsx";
 import LessonHeader from "../components/lessons/LessonHeader.jsx";
 import QuestionCard from "../components/lessons/QuestionCard.jsx";
 import TakeawayCard from "../components/lessons/TakeawayCard.jsx";
@@ -86,6 +87,7 @@ export default function SatWritingLesson02Page() {
           </p>
         </TakeawayCard>
       </div>
+      <LessonCompleteButton lessonId="sat-writing-transitions" />
     </LessonLayout>
   );
 }

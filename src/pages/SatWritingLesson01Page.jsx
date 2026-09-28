@@ -1,4 +1,5 @@
 import LessonLayout from "../components/lessons/LessonLayout.jsx";
+import LessonCompleteButton from "../components/LessonCompleteButton.jsx";
 import LessonHeader from "../components/lessons/LessonHeader.jsx";
 import ConceptCard from "../components/lessons/ConceptCard.jsx";
 import QuestionCard from "../components/lessons/QuestionCard.jsx";
@@ -101,6 +102,7 @@ export default function SatWritingLesson01Page() {
           explanation="B нь subject, verb болон бүрэн санаатай. A ба D нь бүрэн санаа биш. C нь хоёр бүрэн санааг буруу таслалаар холбосон."
         />
       </div>
+      <LessonCompleteButton lessonId="sat-writing-complete-sentences" />
     </LessonLayout>
   );
 }

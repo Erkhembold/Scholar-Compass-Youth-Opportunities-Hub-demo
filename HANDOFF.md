@@ -6,8 +6,9 @@ pick up the project without re-discovering the architecture from scratch.
 ## What this is
 A student opportunity hub for Mongolian high-school/university students:
 scholarships, competitions, volunteering, internships, IELTS reading
-practice, SAT English practice, a weekly XP leaderboard, and user
-accounts. React + Vite, deployed on Vercel, backed by Supabase.
+practice, SAT English practice, AI-graded IELTS Writing Task 2 essays
+(`evaluate-essay` edge function, `writing_attempts`), SAT and IELTS 1v1
+challenges, a weekly XP leaderboard, daily streaks, and user accounts. React + Vite, deployed on Vercel, backed by Supabase.
 
 ## Live URLs
 - Site: https://scholar-compass-youth-opportunities.vercel.app
@@ -177,6 +178,75 @@ bug where a passed deadline showed "Deadline today" for up to 24h.
 Known gap: "World Cleanup Day" has only "Rolling until event day" — no date in
 the data, so it can't archive until an `archiveDate` is added.
 
+## Daily streaks + IELTS exercise history (built — SQL must be run)
+Part of the "personalized student dashboard" project (see the four-stage plan
+the user gave: streaks -> progress tracker -> weak-area diagnosis -> roadmap,
+plus onboarding for NEW users only and an edit-goals screen for existing ones).
+**Only streaks + exercise history are built so far.** Weak-area diagnosis is
+deliberately deferred until the SAT Math exercises exist (user is building them).
+
+**Manual step (not yet confirmed run):** `supabase/streaks_and_exercise_history.sql`
+in the SQL Editor. Until it runs, the UI degrades gracefully: StreakCard shows
+"streaks aren't switched on yet", `recordActivity` silently returns null, and
+IELTS exercises save nothing. Nothing else breaks. It's idempotent.
+
+- **Day convention:** a day is a calendar day in **Ulaanbaatar time
+  (UTC+8)**, same as opportunity deadlines. The DATABASE decides "today"
+  (`public.ub_today()`), never the browser. `src/utils/streak.js` mirrors it
+  for display only (`todayInUB`, `weekDates` Monday-first, `streakStatus`).
+- **Storage:** `profiles.current_streak / longest_streak / last_activity_date`
+  + `public.activity_log` (unique per user+type+ref+day, so duplicate events
+  are ignored). Only `public.record_activity(p_type, p_ref)` (SECURITY DEFINER)
+  moves a streak; a trigger reverts direct client edits of those 3 columns
+  (SQL Editor edits are allowed — no JWT). Clients cannot insert into
+  `activity_log`; they can read only their own rows.
+- **Rules:** first activity -> 1; same day again -> unchanged; yesterday ->
+  +1; anything older -> reset to 1 (longest kept). A stored streak whose last
+  activity is older than yesterday is DISPLAYED as 0 immediately ("broken")
+  even though the column isn't rewritten until the next activity.
+- **What counts** (`recordActivity(type, ref)` from `utils/streak.js`, types
+  allow-listed in SQL): `sat_question` (any submitted answer, solo AND SAT 1v1 —
+  both go through `useSatProgress.recordAnswer`), `ielts_exercise`,
+  `ielts_mock` (only if >=1 question answered), `ielts_writing` (after the
+  essay is saved), `ielts_1v1` (on finish), `lesson`. Opening the site or
+  refreshing counts for nothing. XP is untouched.
+- **Lessons** had no completion signal, so `components/LessonCompleteButton.jsx`
+  ("Mark lesson complete") sits at the end of all 5 lesson pages; state is read
+  back from `activity_log` (type `lesson`, ref = lesson id). **A 6th lesson
+  page must add `<LessonCompleteButton lessonId="..."/>` too.**
+- **UI:** `components/StreakCard.jsx` + `hooks/useStreak.js`, currently on the
+  Profile page (inside the same `signin__inner`, per the layout gotcha above).
+  When the authenticated dashboard homepage is built it should move there.
+  `recordActivity` dispatches a `sc:activity` window event; AuthContext reloads
+  the profile on it and `useStreak` refetches the week.
+- **IELTS exercise history:** every submitted answer in
+  `IeltsExercisesPage` is saved to `public.ielts_exercise_attempts`
+  (`utils/ieltsExerciseHistory.js`): exercise id/type, `skill` (READING_SKILL_TAGS
+  tag — mc items carry their own, others map from type), difficulty, correct,
+  items_correct/items_total (tfng has several statements), raw answer. Repeats
+  are kept as history. Shown on Profile under "IELTS Reading history" ->
+  "Reading exercises". Signed-out users can still practise; nothing is saved.
+  This table is the intended feed for the future weak-area engine.
+- **Verified:** SQL rules run against a local Postgres 16 with the real file
+  (first/consecutive/same-day/duplicate/missed-day/tamper/RLS/anon/isolation);
+  UI driven in headless Chrome with a mocked Supabase (light+dark, desktop 1280
+  + mobile 390, browser TZ deliberately not Ulaanbaatar, UB midnight boundary
+  via a fake clock). Not verified against the live Supabase project.
+- **Honest limit:** answers are graded in the browser and the question banks
+  ship in the JS bundle, so a determined user could call `record_activity` by
+  hand. The design stops accidental/trivial gaming and cross-user access, not
+  a deliberate attacker; real protection needs server-side grading.
+- **Still-open pre-existing weakness:** `profiles` update RLS has no column
+  limit, so users can edit their own `weekly_xp`/`lifetime_xp` (and
+  `awardXp` is a client-side read-modify-write). Not changed here.
+
+## Not built yet (from the dashboard spec)
+Progress tracker, weak-area diagnosis (waiting on SAT Math), roadmap, new-user
+onboarding (when built: backfill `onboarding_completed = true` for existing
+rows so nobody is forced through it), edit-goals settings, authenticated
+homepage. Existing profile columns to reuse instead of duplicating: `grade`,
+`intended_major`, `target_test`, `school`.
+
 ## Known issues / unfinished work (as of this handoff)
 - IELTS reading tests 3–10: content was drafted in a prior session but
   it's unclear if it was ever merged — check `src/data/ieltsTests.js`
@@ -188,7 +258,7 @@ the data, so it can't archive until an `archiveDate` is added.
   client-side when the affected user's own profile loads
   (`processWeeklyReset` in `leaderboard.js`). Cross-user consistency at
   week boundaries is best-effort, not guaranteed.
-- Main JS bundle is ~750KB minified — a code-splitting pass would help
+- Main JS bundle is ~590KB minified — a code-splitting pass would help
   but hasn't been prioritized.
 - Mobile horizontal-overflow bug: fixed in this session by (1) adding
   `overflow-x: hidden` to `<html>` (it was only on `<body>`, which

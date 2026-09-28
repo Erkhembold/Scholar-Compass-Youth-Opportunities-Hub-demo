@@ -266,4 +266,27 @@ export const translations = {
     "Илгээмэгц бүрэн band оноо болон хариултын дэлгэрэнгүй шинжилгээ гарна",
   "Your band score": "Таны band оноо",
   correct: "зөв",
+  // Streaks & lesson completion
+  "Sign in": "Нэвтрэх",
+  "DAY STREAK": "ӨДРИЙН ЦУВРАЛ",
+  "Current streak": "Одоогийн цуврал",
+  "Longest streak": "Хамгийн урт цуврал",
+  day: "өдөр",
+  days: "өдөр",
+  "This week": "Энэ долоо хоног",
+  "Your day resets at midnight Ulaanbaatar time (UTC+8).":
+    "Таны өдөр Улаанбаатарын цагаар (UTC+8) шөнө дунд шинэчлэгдэнэ.",
+  "Today is done — see you tomorrow to keep it going.":
+    "Өнөөдрийнх дууслаа — цувралаа үргэлжлүүлэхийн тулд маргааш уулзъя.",
+  "Do any lesson or exercise today to keep your streak alive.":
+    "Цувралаа хадгалахын тулд өнөөдөр дурын хичээл эсвэл дасгал хийгээрэй.",
+  "Your streak ended. Start a new one with any lesson or exercise today.":
+    "Таны цуврал тасарлаа. Өнөөдөр дурын хичээл эсвэл дасгалаар шинээр эхлээрэй.",
+  "Complete any lesson or exercise to start your streak.":
+    "Цувралаа эхлүүлэхийн тулд дурын хичээл эсвэл дасгал хийгээрэй.",
+  "Mark lesson complete": "Хичээлийг дуусгасан гэж тэмдэглэх",
+  "Lesson completed": "Хичээл дууссан",
+  "to mark lessons complete and build a daily streak.":
+    "хичээлээ дуусгасан гэж тэмдэглэж, өдрийн цуврал үүсгээрэй.",
+  "Couldn't save that — please try again.": "Хадгалж чадсангүй — дахин оролдоно уу.",
 };

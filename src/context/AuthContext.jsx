@@ -43,6 +43,15 @@ export function AuthProvider({ children }) {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  // When a qualifying activity is recorded (see utils/streak.js), reload the
+  // profile so the streak numbers shown anywhere update straight away.
+  useEffect(() => {
+    if (!user) return undefined;
+    const onActivity = () => loadProfile(user.id);
+    window.addEventListener("sc:activity", onActivity);
+    return () => window.removeEventListener("sc:activity", onActivity);
+  }, [user]);
+
   const value = useMemo(
     () => ({
       user,

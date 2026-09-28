@@ -7,6 +7,8 @@ import { opportunities } from "../data/opportunities.js";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import LeagueBadge from "../components/LeagueBadge.jsx";
 import CollapsibleSection from "../components/CollapsibleSection.jsx";
+import StreakCard from "../components/StreakCard.jsx";
+import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
@@ -31,6 +33,8 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [attempts, setAttempts] = useState([]);
   const [attemptsLoading, setAttemptsLoading] = useState(true);
+  const [exerciseAttempts, setExerciseAttempts] = useState([]);
+  const [exercisesLoading, setExercisesLoading] = useState(true);
   const [leagueProfile, setLeagueProfile] = useState(profile);
 
   useEffect(() => {
@@ -61,6 +65,23 @@ export default function ProfilePage() {
       .then(({ data }) => {
         setAttempts(data || []);
         setAttemptsLoading(false);
+      });
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || !supabase) {
+      setExercisesLoading(false);
+      return;
+    }
+    supabase
+      .from("ielts_exercise_attempts")
+      .select("id, exercise_id, exercise_type, skill, difficulty, correct, items_total, items_correct, created_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(200)
+      .then(({ data }) => {
+        setExerciseAttempts(data || []);
+        setExercisesLoading(false);
       });
   }, [user]);
 
@@ -171,6 +192,8 @@ export default function ProfilePage() {
           </button>
         </div>
 
+        <StreakCard />
+
         <div
           className="league-header"
           style={{ "--league-color": league.primary, "--league-soft": league.soft, marginTop: 24 }}
@@ -249,6 +272,48 @@ export default function ProfilePage() {
                 </li>
               ))}
             </ul>
+          )}
+
+          <h3 className="profile-subhead">Reading exercises</h3>
+          {exercisesLoading ? (
+            <p className="signin__lede">Loading…</p>
+          ) : exerciseAttempts.length === 0 ? (
+            <p className="signin__lede">
+              No exercises yet. <a href="#/ielts/exercises/reading">Try a Reading exercise</a> and
+              every answer you submit will be saved here.
+            </p>
+          ) : (
+            <>
+              <p className="signin__lede">
+                {exerciseAttempts.length >= 200 ? "Last 200" : exerciseAttempts.length} answers ·{" "}
+                {Math.round(
+                  (100 * exerciseAttempts.reduce((n, a) => n + a.items_correct, 0)) /
+                    Math.max(1, exerciseAttempts.reduce((n, a) => n + a.items_total, 0))
+                )}
+                % of questions correct
+              </p>
+              <ul className="test-history">
+                {exerciseAttempts.slice(0, 15).map((a) => (
+                  <li className="test-history__row" key={a.id}>
+                    <div>
+                      <span className="test-history__title">
+                        {TYPE_LABELS[a.exercise_type] || a.exercise_type}
+                      </span>
+                      <span className="test-history__date">
+                        {a.exercise_id} · {new Date(a.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div
+                      className={`test-history__score exercise-history__result ${
+                        a.correct ? "is-correct" : "is-incorrect"
+                      }`}
+                    >
+                      {a.items_total > 1 ? `${a.items_correct}/${a.items_total}` : a.correct ? "Correct" : "Incorrect"}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </CollapsibleSection>
 

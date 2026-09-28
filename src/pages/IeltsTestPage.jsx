@@ -5,6 +5,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { awardXp } from "../utils/xp.js";
+import { recordActivity } from "../utils/streak.js";
 import PassageArt from "../components/PassageArt.jsx";
 
 const TEST_DURATION_SECONDS = 60 * 60;
@@ -374,7 +375,12 @@ export default function IeltsTestPage({ id }) {
     const r = buildReport(test, answers);
     saveAttemptLocally(test, r);
     saveAttemptToAccount(supabase, user?.id, test, r);
-    if (user?.id) awardXp(supabase, user.id, "ieltsPractice");
+    if (user?.id) {
+      awardXp(supabase, user.id, "ieltsPractice");
+      // A timer that runs out on a blank test isn't practice — only count
+      // it toward the streak if at least one question was answered.
+      if (Object.keys(answers).length > 0) recordActivity("ielts_mock", test.id);
+    }
     setReport(r);
     setPhase("results");
   }

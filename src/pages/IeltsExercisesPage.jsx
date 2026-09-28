@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 import { IELTS_READING_EXERCISES } from "../data/ieltsReadingExercises.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+import { supabase } from "../lib/supabaseClient.js";
+import { saveExerciseAttempt } from "../utils/ieltsExerciseHistory.js";
 
 const SKILL_META = {
   reading: { label: "Reading", ready: true },
@@ -52,6 +55,7 @@ export default function IeltsExercisesPage({ skill }) {
 
 function ReadingExerciseRunner() {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const exercises = IELTS_READING_EXERCISES;
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState(null); // mc/matching: string; tfng: array; completion: string
@@ -86,7 +90,11 @@ function ReadingExerciseRunner() {
     if (checked) return;
     setChecked(true);
     setAnsweredCount((c) => c + 1);
-    if (computeCorrect(exercise, selected)) setCorrectCount((c) => c + 1);
+    const correct = computeCorrect(exercise, selected);
+    if (correct) setCorrectCount((c) => c + 1);
+    // Signed-in students get this attempt saved to their history (and it
+    // counts toward their daily streak). Anonymous visitors practise as before.
+    saveExerciseAttempt(supabase, user?.id, exercise, selected, correct);
   }
 
   return (
@@ -102,6 +110,11 @@ function ReadingExerciseRunner() {
             Short, targeted practice — one passage and a quick question at a time. Not a timed
             mock test.
           </p>
+          {!user && (
+            <p className="section__lede">
+              <a href="#/signin">Sign in</a> to save your exercise history and build a daily streak.
+            </p>
+          )}
         </div>
 
         <div className="exercise-runner">

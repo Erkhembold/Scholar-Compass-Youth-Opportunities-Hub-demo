@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { WRITING_TASKS } from "../data/writingTasks.js";
 import { WRITING_DAILY_LIMIT } from "../data/config.js";
+import { recordActivity } from "../utils/streak.js";
 
 const CRITERIA_LABELS = {
   taskResponse: "Task Response",
@@ -81,7 +82,7 @@ export default function WritingTaskPage({ id }) {
 
       setResult(data);
 
-      await supabase.from("writing_attempts").insert({
+      const { error: saveError } = await supabase.from("writing_attempts").insert({
         user_id: user.id,
         task_id: task.id,
         task_title: task.title,
@@ -90,6 +91,7 @@ export default function WritingTaskPage({ id }) {
         overall_band: data.overallBand,
         result: data,
       });
+      if (!saveError) recordActivity("ielts_writing", task.id);
 
       setRemainingToday((r) => (r === null ? null : Math.max(0, r - 1)));
     } catch (err) {

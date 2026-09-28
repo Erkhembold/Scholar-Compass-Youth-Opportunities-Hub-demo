@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { awardXp } from "../utils/xp.js";
+import { recordActivity } from "../utils/streak.js";
 
 // Tracks per-question mastery for SAT practice. Deliberately granular —
 // a small XP award (see XP_REWARDS.satQuestion) fires the first time a
@@ -49,7 +50,7 @@ export function useSatProgress() {
 
     if (!user || !supabase) return;
 
-    await supabase.from("sat_progress").upsert(
+    const { error: saveError } = await supabase.from("sat_progress").upsert(
       {
         user_id: user.id,
         question_id: questionId,
@@ -61,6 +62,10 @@ export function useSatProgress() {
       },
       { onConflict: "user_id,question_id" }
     );
+
+    // Every submitted answer (right or wrong) is real practice, in both the
+    // solo practice page and SAT 1v1 — both go through this function.
+    if (!saveError) recordActivity("sat_question", questionId);
 
     if (isCorrect && !wasAlreadyCorrect) {
       awardXp(supabase, user.id, "satQuestion");
