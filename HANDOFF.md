@@ -436,17 +436,45 @@ continue this audit, rebuild that harness rather than eyeballing pages —
 it caught things (e.g. the accent-button white-text contrast) that were
 not visually obvious.
 
-**Still open** (found by grep, not yet fixed — none of these came up in the
-automated text-contrast audit, so they're lower-confidence/cosmetic):
-- A handful of hardcoded hex colors remain for non-text properties
-  (`border-color`, decorative `fill`) — e.g. `.sat-option--correct`/`--wrong`
-  borders, `.sat-question-chip--*`, `.category-action-card--*` accent
-  borders, `.tilt-frame`, `WritingTaskPage.jsx` inline error color. These are
-  borders/accents, not body text, so likely fine, but not yet checked for
-  dark-mode contrast the way body text was.
-- Audit was run with mock/stub league membership data (no live Supabase
-  connection in this environment) — re-verify against real leaderboard data
-  once possible.
+**Follow-up pass**: a grep for remaining hardcoded hex colors turned up
+several that the route-crawl audit couldn't see because they only appear in
+*interacted* states the crawler never triggers (answered SAT questions,
+success/error banners). Checked each by hand and fixed the real failures,
+computed against their actual composited background (see
+`--chip-correct-bg`, `--chip-attempted-fg`/`--chip-attempted-border` in
+`src/styles/index.css`):
+- `.sat-question-chip--correct`: white text on `#1a9c5c` was 3.53:1 (needs
+  4.5) — darkened to `--chip-correct-bg` (`#16854e`, 4.67:1). Self-contained
+  solid fill, same in both themes.
+- `.sat-question-chip--attempted`: text `#8a6a10` passed light (5.06) but
+  failed dark (3.51); border `#d6a419` passed dark but failed light's 3:1
+  (2.29) — both were static values on a background that flips with theme.
+  Now `--chip-attempted-fg`/`--chip-attempted-border`, theme-aware, AA in
+  both.
+- `.sat-challenge__pin` text (`#c76b00`) failed against its own translucent
+  background in both light (3.56) and dark (4.17) — replaced with the
+  already-proven `--status-yellow-text` token.
+- `.submit-opp__status--success`/`.review-item--correct` text (`#1a9c5c`,
+  3.53:1 on white) and `.submit-opp__status--error`/`.review-item--incorrect`/
+  `.profile-menu__signout` text (`#d64545`, 4.38/4.05:1, just under 4.5) —
+  all switched to `--status-green-text`/`--status-red-text`.
+- Verified by scripting real interactions (clicking through SAT
+  Check-answer to actually produce correct/wrong/attempted chip states,
+  not just the default page load) — 0 violations in both themes after.
+- Re-ran the full route × theme × viewport sweep and all 10 leagues after
+  these changes: still 0 violations.
+
+**Still open / not done**:
+- `border-color`-only hardcoded hex that are non-text and already clear
+  the 3:1 non-text threshold in both themes (checked, not changed):
+  `.sat-option--correct`/`--wrong` borders,
+  `.leaderboard-legend__item--*` dots. Left alone — no contrast issue.
+- `.category-action-card--*` background/border tints and `.tilt-frame`
+  (decorative phone-mockup bezel) are intentionally static across themes;
+  not text, not flagged, left as-is.
+- Audit was run with mock/stub league membership + profile data (no live
+  Supabase connection in this environment) — re-verify against real
+  leaderboard/profile data once possible.
 - No lint/typecheck run yet on this batch (build passes).
 
 ## SAT Math (Exercises + 1v1) — added this session
