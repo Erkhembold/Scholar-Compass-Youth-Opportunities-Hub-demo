@@ -8,6 +8,7 @@ import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import LeagueBadge from "../components/LeagueBadge.jsx";
 import CollapsibleSection from "../components/CollapsibleSection.jsx";
 import StreakCard from "../components/StreakCard.jsx";
+import AvatarUpload from "../components/AvatarUpload.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
@@ -20,6 +21,11 @@ const FIELD_DEFS = [
   { key: "target_test", label: "Target scholarship/test" },
 ];
 
+const TARGET_FIELD_DEFS = [
+  { key: "sat_target_score", label: "SAT target score", type: "number", min: 400, max: 1600, step: 10 },
+  { key: "ielts_target_score", label: "IELTS target score", type: "number", min: 1, max: 9, step: 0.5 },
+];
+
 export default function ProfilePage() {
   const { user, profile, signOut, updateProfile, loading } = useAuth();
   const { savedIds, loading: savedLoading } = useSavedOpportunities();
@@ -29,7 +35,11 @@ export default function ProfilePage() {
     grade: profile?.grade || "",
     intended_major: profile?.intended_major || "",
     target_test: profile?.target_test || "",
+    sat_target_score: profile?.sat_target_score ?? "",
+    ielts_target_score: profile?.ielts_target_score ?? "",
   }));
+  const [visible, setVisible] = useState(profile?.profile_visible !== false);
+  const [visibilitySaving, setVisibilitySaving] = useState(false);
   const [saving, setSaving] = useState(false);
   const [attempts, setAttempts] = useState([]);
   const [attemptsLoading, setAttemptsLoading] = useState(true);
@@ -87,7 +97,7 @@ export default function ProfilePage() {
 
   const { weekNumber } = getWeekInfo();
   const myLeagueId = leagueProfile?.current_league || "bronze";
-  const meEntry = user ? { id: user.id, name: leagueProfile?.name || "You", xp: leagueProfile?.weekly_xp || 0 } : null;
+  const meEntry = user ? { id: user.id, name: leagueProfile?.name || "You", xp: leagueProfile?.weekly_xp || 0, avatarPath: leagueProfile?.avatar_path || null } : null;
   const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, meEntry);
 
   if (loading) {
@@ -116,9 +126,27 @@ export default function ProfilePage() {
   async function handleSave(e) {
     e.preventDefault();
     setSaving(true);
-    await updateProfile(form);
+    await updateProfile({
+      ...form,
+      sat_target_score: form.sat_target_score === "" ? null : Number(form.sat_target_score),
+      ielts_target_score: form.ielts_target_score === "" ? null : Number(form.ielts_target_score),
+    });
     setSaving(false);
     setEditing(false);
+  }
+
+  async function handleAvatarUploaded(path) {
+    await updateProfile({ avatar_path: path });
+  }
+
+  async function handleVisibilityToggle() {
+    const next = !visible;
+    setVisible(next); // optimistic — other students only ever see this via
+    // get_public_profile(), which is fully server-enforced regardless
+    setVisibilitySaving(true);
+    const { error } = await updateProfile({ profile_visible: next });
+    if (error) setVisible(!next);
+    setVisibilitySaving(false);
   }
 
   const league = LEAGUE_BY_ID[myLeagueId];
@@ -138,8 +166,19 @@ export default function ProfilePage() {
     <section className="section signin">
       <div className="section__inner signin__inner">
         <div className="signin__card">
+          <AvatarUpload
+            userId={user.id}
+            name={profile?.name}
+            avatarPath={profile?.avatar_path}
+            onUploaded={handleAvatarUploaded}
+          />
           <h1 className="signin__title">{profile?.name || "Your profile"}</h1>
           <p className="signin__lede">{user.email}</p>
+
+          <label className="visibility-toggle">
+            <input type="checkbox" checked={visible} disabled={visibilitySaving} onChange={handleVisibilityToggle} />
+            Show my streak and target scores to other students
+          </label>
 
           {!editing ? (
             <>
@@ -148,6 +187,12 @@ export default function ProfilePage() {
                   <div className="essential-row" key={f.key}>
                     <dt>{f.label}</dt>
                     <dd>{profile?.[f.key] || "Not set"}</dd>
+                  </div>
+                ))}
+                {TARGET_FIELD_DEFS.map((f) => (
+                  <div className="essential-row" key={f.key}>
+                    <dt>{f.label}</dt>
+                    <dd>{profile?.[f.key] ?? "Not set"}</dd>
                   </div>
                 ))}
               </dl>
@@ -168,6 +213,21 @@ export default function ProfilePage() {
                   <input
                     id={`profile-${f.key}`}
                     type="text"
+                    value={form[f.key]}
+                    onChange={(e) => setForm((prev) => ({ ...prev, [f.key]: e.target.value }))}
+                  />
+                </div>
+              ))}
+              {TARGET_FIELD_DEFS.map((f) => (
+                <div className="signin__field" key={f.key}>
+                  <label htmlFor={`profile-${f.key}`}>{f.label}</label>
+                  <input
+                    id={`profile-${f.key}`}
+                    type="number"
+                    min={f.min}
+                    max={f.max}
+                    step={f.step}
+                    placeholder="Not set"
                     value={form[f.key]}
                     onChange={(e) => setForm((prev) => ({ ...prev, [f.key]: e.target.value }))}
                   />

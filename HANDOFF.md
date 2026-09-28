@@ -240,6 +240,60 @@ IELTS exercises save nothing. Nothing else breaks. It's idempotent.
   limit, so users can edit their own `weekly_xp`/`lifetime_xp` (and
   `awardXp` is a client-side read-modify-write). Not changed here.
 
+## Public student profiles + profile pictures (built — SQL must be run)
+Other students can now see a limited public card for any student:
+name, avatar photo, daily streak (current + longest), SAT target score,
+IELTS target score. **Nothing else** — no email, school, grade, intended
+major, XP, league, saved opportunities, or practice history.
+
+**Manual step (not yet confirmed run):** `supabase/public_profiles_and_avatars.sql`
+in the SQL Editor. Run it after `streaks_and_exercise_history.sql` (it calls
+`public.ub_today()`) — though it's written defensively so either order is
+safe, including running it before `leaderboard_secure.sql` even exists yet.
+Idempotent.
+
+- **Why not just open `profiles` to other users:** RLS filters ROWS, not
+  COLUMNS — a same-visibility policy on `profiles` would let anyone fetch
+  private columns (email, school, grade...) via a raw REST call, same
+  reasoning as the existing `leaderboard_entries` design. Instead the only
+  door is `public.get_public_profile(p_id)` (SECURITY DEFINER), which
+  returns exactly the 6 allowed fields for ONE profile at a time (no
+  "list everyone"), only to signed-in callers.
+- **Opt-out:** `profiles.profile_visible` (default true). When false,
+  `get_public_profile` returns null for everyone except the owner — same
+  response as a nonexistent id, on purpose (doesn't reveal *why*).
+- **Streak shown is corrected for missed days** (same "broken -> 0, longest
+  kept" rule as the owner's own streak card), computed inside the function
+  using `ub_today()`, so viewers never see raw `last_activity_date`.
+- **Target scores:** new `profiles.sat_target_score` (400-1600) and
+  `ielts_target_score` (1-9, half-point steps) with CHECK constraints.
+  Editable on the Profile page's existing edit form.
+- **Avatars:** public Storage bucket `avatars` (2 MB limit, jpg/png/webp
+  only). Client can only write to `<own user id>/avatar.<ext>` — enforced
+  both by storage policies AND a `profiles.avatar_path` CHECK constraint
+  (`avatar_path like id || '/%'`) so the column can't be pointed at someone
+  else's file or an outside URL. One fixed filename per user (re-upload
+  overwrites) — accept up to ~1h of CDN cache staleness after changing
+  photo (bucket `cacheControl: 3600`), not solved here.
+  `components/Avatar.jsx` (photo-or-initial, used everywhere), `AvatarUpload.jsx`
+  (owner-only, on Profile page), `utils/avatar.js`.
+- **New route:** `#/u/:id` -> `pages/PublicProfilePage.jsx`. Visiting your
+  own link points to your real Profile page instead. Leaderboard rows for
+  real users (not demo seats, not yourself) now link here and show avatars;
+  `leaderboard_entries` gained a mirrored `avatar_path` column + trigger
+  update (guarded to no-op if that table doesn't exist yet).
+- **Verified:** SQL exercised against local Postgres 16 — field-limited
+  return value, visibility opt-out (self still sees own hidden profile),
+  raw-table access still owner-only, unknown id, CHECK constraints (target
+  score ranges, avatar own-folder), streak/name un-editable by other users,
+  anon + signed-out both blocked, storage policies (own-folder insert/
+  update/delete allowed, other-folder/no-folder/wrong-bucket blocked),
+  and the leaderboard avatar-sync trigger in both file-application orders.
+  UI verified in headless Chrome with a mocked backend: upload flow (incl.
+  oversized-file client-side rejection), visibility toggle, visible/hidden/
+  unknown/self/signed-out states of `/u/:id`, and the leaderboard link +
+  avatar render. Not yet verified against the live Supabase project.
+
 ## Not built yet (from the dashboard spec)
 Progress tracker, weak-area diagnosis (waiting on SAT Math), roadmap, new-user
 onboarding (when built: backfill `onboarding_completed = true` for existing

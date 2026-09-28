@@ -39,7 +39,7 @@ export default function LeaderboardPage() {
   const league = myLeagueId ? LEAGUE_BY_ID[myLeagueId] : null;
 
   const meEntry = user
-    ? { id: user.id, name: resolvedProfile?.name || "You", xp: resolvedProfile?.weekly_xp || 0 }
+    ? { id: user.id, name: resolvedProfile?.name || "You", xp: resolvedProfile?.weekly_xp || 0, avatarPath: resolvedProfile?.avatar_path || null }
     : null;
 
   const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, meEntry);

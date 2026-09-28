@@ -81,6 +81,9 @@ function parseHash(hash) {
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
+  if (parts[0] === "u" && parts[1]) {
+    return { name: "public-profile", id: decodeURIComponent(parts[1]) };
+  }
   return { name: "home" };
 }
 
@@ -184,4 +187,8 @@ export function satMathExercisesHref() {
 
 export function satMathChallengeHref() {
   return "#/sat/math/challenge";
+}
+
+export function publicProfileHref(id) {
+  return `#/u/${encodeURIComponent(id)}`;
 }

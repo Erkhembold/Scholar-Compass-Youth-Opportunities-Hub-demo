@@ -108,7 +108,7 @@ export async function fetchLeaguePlayers(supabase, leagueId) {
   if (!supabase) return [];
   const { data, error } = await supabase
     .from("leaderboard_entries")
-    .select("id, name, weekly_xp")
+    .select("id, name, weekly_xp, avatar_path")
     .eq("current_league", leagueId);
 
   if (error || !data) return [];
@@ -117,6 +117,7 @@ export async function fetchLeaguePlayers(supabase, leagueId) {
     id: row.id,
     name: row.name?.trim() || "ScholarCompass student",
     xp: row.weekly_xp || 0,
+    avatarPath: row.avatar_path || null,
     isDemo: false,
   }));
 }

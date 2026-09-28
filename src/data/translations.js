@@ -289,4 +289,13 @@ export const translations = {
   "to mark lessons complete and build a daily streak.":
     "хичээлээ дуусгасан гэж тэмдэглэж, өдрийн цуврал үүсгээрэй.",
   "Couldn't save that — please try again.": "Хадгалж чадсангүй — дахин оролдоно уу.",
+  // Public profiles & avatars
+  "SAT target score": "SAT зорилтот оноо",
+  "IELTS target score": "IELTS зорилтот оноо",
+  "Change photo": "Зураг солих",
+  "Show my streak and target scores to other students": "Миний цуврал болон зорилтот оноог бусад сурагчдад харуулах",
+  "Profile not available": "Профайл боломжгүй байна",
+  "This student's profile doesn't exist or is set to private.": "Энэ сурагчийн профайл байхгүй эсвэл хувийн тохиргоотой байна.",
+  "You're not signed in": "Та нэвтрээгүй байна",
+  "to view student profiles.": "сурагчдын профайлыг харахын тулд.",
 };

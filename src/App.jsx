@@ -9,6 +9,7 @@ import WritingTaskPage from "./pages/WritingTaskPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import PublicProfilePage from "./pages/PublicProfilePage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import ArchivePage from "./pages/ArchivePage.jsx";
 import IeltsPracticePage from "./pages/IeltsPracticePage.jsx";
@@ -96,6 +97,8 @@ export default function App() {
     page = <SatWritingLesson02Page />;
   } else if (route.name === "leaderboard") {
     page = <LeaderboardPage />;
+  } else if (route.name === "public-profile") {
+    page = <PublicProfilePage id={route.id} />;
   } else {
     page = <HomePage />;
   }
