@@ -261,7 +261,8 @@ export default function ProfilePage() {
 
         <div
           className="league-header"
-          style={{ "--league-color": league.primary, "--league-soft": league.soft, marginTop: 24 }}
+          data-league={league.id}
+          style={{ marginTop: 24 }}
         >
           <div className="league-header__badge">{league.name}</div>
           <h2 className="league-header__title">League &amp; Achievements</h2>
@@ -293,7 +294,7 @@ export default function ProfilePage() {
 
           {badges.length > 0 && (
             <>
-              <h3 style={{ marginTop: 24, fontSize: "0.95rem", color: "var(--heading)" }}>
+              <h3 style={{ marginTop: 24, fontSize: "0.95rem", color: "var(--league-fg)" }}>
                 Weekly Achievements
               </h3>
               <div className="achievements-list">

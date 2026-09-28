@@ -193,7 +193,7 @@ function ChallengeLanding({ onCreate, onJoin, busy, error }) {
             </select>
           </div>
 
-          <button type="submit" className="signin__submit" disabled={busy}>
+          <button type="submit" className="btn btn--accent signin__submit" disabled={busy}>
             {busy ? "Creating…" : "Create match"}
           </button>
         </form>
@@ -216,7 +216,7 @@ function ChallengeLanding({ onCreate, onJoin, busy, error }) {
               onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
             />
           </div>
-          <button type="submit" className="signin__submit" disabled={busy || pin.length !== 4}>
+          <button type="submit" className="btn btn--accent signin__submit" disabled={busy || pin.length !== 4}>
             {busy ? "Joining…" : "Join match"}
           </button>
         </form>

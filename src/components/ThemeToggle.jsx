@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
-import { applyTheme, getInitialTheme } from "../utils/theme.js";
+import { useSyncExternalStore } from "react";
+import { applyTheme, getTheme, subscribeTheme } from "../utils/theme.js";
 
 export default function ThemeToggle({ className = "" }) {
-  const [theme, setTheme] = useState(getInitialTheme);
-
-  useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+  const theme = useSyncExternalStore(subscribeTheme, getTheme, () => "light");
 
   const isDark = theme === "dark";
 
@@ -14,7 +10,7 @@ export default function ThemeToggle({ className = "" }) {
     <button
       type="button"
       className={`theme-toggle ${className}`}
-      onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+      onClick={() => applyTheme(theme === "dark" ? "light" : "dark")}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={isDark}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}

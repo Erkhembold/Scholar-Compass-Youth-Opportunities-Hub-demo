@@ -78,7 +78,7 @@ export default function LeaderboardPage() {
 
             <div
               className="league-header"
-              style={{ "--league-color": league.primary, "--league-soft": league.soft }}
+              data-league={league.id}
             >
               <div className="league-header__badge">{league.name}</div>
               <h2 className="league-header__title">{league.name} League</h2>

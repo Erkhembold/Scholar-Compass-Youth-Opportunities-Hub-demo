@@ -382,6 +382,73 @@ rows so nobody is forced through it), edit-goals settings, authenticated
 homepage. Existing profile columns to reuse instead of duplicating: `grade`,
 `intended_major`, `target_test`, `school`.
 
+## Theme system (light/dark) — audit in progress
+
+Root causes of the SAT/IELTS-dashboard and league unreadable-text reports:
+1. `--text-primary`, `--text-tertiary`, `--surface-alt`, `--navy-950` were
+   used throughout the SAT/IELTS dashboards but **never defined** — their
+   hardcoded CSS fallbacks (e.g. `#1a1a1a`) always applied, giving dark text
+   on dark cards regardless of theme. Now defined for both themes in
+   `src/styles/index.css` (`:root` and `[data-theme="dark"]`).
+2. Each league tier had one pastel `soft` color as background with no
+   theme-aware text color, and solid chips hardcoded white text (illegible
+   on light tiers: Gold/Silver/Pearl/Diamond).
+
+**New centralized league color system**: `src/utils/leagueTheme.js` derives
+`--league-bg/fg/muted/border/accent/chip-bg/chip-fg` per tier per theme from
+each tier's one identity color (`data/leagues.js`'s `primary`), injected as
+`[data-league="<id>"]` CSS rules by `injectLeagueTokens()` (called once in
+`main.jsx`). Components set `data-league={league.id}` instead of inline
+`--league-color`/`--badge-color` vars — no component hardcodes a league hex.
+`scripts/check-league-contrast.mjs` (`node scripts/check-league-contrast.mjs`)
+asserts all 10 tiers hit WCAG AA in both themes; **run this after changing
+any league color**. Currently passing for all 10 tiers, both themes.
+
+Also fixed while auditing:
+- Brand blue (`--blue-500` = `#0a84ff`) is fine as a *fill* but only
+  3.5–3.65:1 as *text* or under white button-text — below AA. Added
+  `--blue-text` / `--blue-solid` (`#0068d6`, `#4da3ff` in dark) for those
+  uses; `--blue-500` itself is unchanged and still used for fills/dots.
+- `.btn--ghost` was hardcoded white-on-transparent, invisible on light
+  surfaces (e.g. Profile's "Edit details"). Now theme-aware by default;
+  still white-on-navy on the always-navy hero/header/footer.
+- Deadline-status and difficulty-badge text colors (`--status-*`) were the
+  same value used for both the pale badge *fill* and the *text* on white
+  cards — added `--status-*-text` variants with real AA contrast; the fills
+  are unchanged.
+- Two `<ThemeToggle>` instances (desktop bar + mobile menu) each held their
+  own `useState`, so toggling one could leave the other stale until
+  remount. `utils/theme.js` now has a single external store
+  (`getTheme`/`subscribeTheme`/`applyTheme`); both toggles use
+  `useSyncExternalStore` against it.
+- SAT/IELTS 1v1 "Create match"/"Join" buttons had no button class (plain
+  unstyled text in some states) — added `.btn.btn--accent`.
+
+**Verification method**: an automated contrast auditor (Playwright, not
+committed — lived in `/tmp/audit` in the session that did this work) walks
+every route, computes each visible text node's effective color against its
+actual resolved background (accounting for opacity/layered backgrounds),
+and flags anything under WCAG AA (4.5:1 normal text, 3:1 large text),
+excluding disabled controls and SVG `<text>` (fill-driven). Last full run:
+**0 violations** across all main routes × light/dark × desktop/mobile, and
+0 violations across all 10 leagues on Leaderboard + Profile. If you
+continue this audit, rebuild that harness rather than eyeballing pages —
+it caught things (e.g. the accent-button white-text contrast) that were
+not visually obvious.
+
+**Still open** (found by grep, not yet fixed — none of these came up in the
+automated text-contrast audit, so they're lower-confidence/cosmetic):
+- A handful of hardcoded hex colors remain for non-text properties
+  (`border-color`, decorative `fill`) — e.g. `.sat-option--correct`/`--wrong`
+  borders, `.sat-question-chip--*`, `.category-action-card--*` accent
+  borders, `.tilt-frame`, `WritingTaskPage.jsx` inline error color. These are
+  borders/accents, not body text, so likely fine, but not yet checked for
+  dark-mode contrast the way body text was.
+- Audit was run with mock/stub league membership data (no live Supabase
+  connection in this environment) — re-verify against real leaderboard data
+  once possible.
+- No lint/typecheck run yet on this batch (build passes).
+
 ## SAT Math (Exercises + 1v1) — added this session
 - `src/data/satMathQuestions.js`: 40 questions (10 per domain: Algebra,
   Advanced Math, Data Analysis, Geometry & Trig), each with

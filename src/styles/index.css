@@ -9,24 +9,47 @@
   --navy-800: #08234c;
   --navy-700: #0d2e60;
   --blue-500: #0a84ff;
+  /* --blue-500 is the brand color for fills/dots/borders. As TEXT (or under
+     white text) it is only 3.5-3.65:1, so text and solid buttons use these. */
+  --blue-text: #0068d6;
+  --blue-solid: #0068d6;
+  --blue-solid-hover: #005bbd;
   --blue-300: #5ac8fa;
   --white: #ffffff;
   --surface: #f7f9fc;
   --ink: #0b1220;
   --ink-soft: rgba(11, 18, 32, 0.66);
-  --ink-faint: rgba(11, 18, 32, 0.46);
+  --ink-faint: rgba(11, 18, 32, 0.64);
   --line: rgba(6, 26, 58, 0.12);
   --line-dark: rgba(255, 255, 255, 0.16);
   --on-navy-soft: rgba(255, 255, 255, 0.72);
-  --on-navy-faint: rgba(255, 255, 255, 0.5);
+  --on-navy-faint: rgba(255, 255, 255, 0.7);
   --heading: var(--navy-900);
   --on-dark: #ffffff;
+
+  /* Semantic text/surface tokens. These were referenced across the SAT/IELTS
+     dashboards and lessons but never defined, so their hardcoded fallbacks
+     (e.g. #1a1a1a) always applied — near-black text in dark mode. */
+  --text-primary: var(--ink);
+  --text-tertiary: #5b6478;
+  --surface-alt: #eef2f8;
+  --navy-950: #040f24;
+
+  /* Leaderboard zone indicators (promotion / stay / relegation) */
+  --zone-promotion-fg: #0f6b3f;
+  --zone-stay-fg: #7a5a00;
+  --zone-relegation-fg: #a02f2f;
 
   /* Deadline urgency indicator */
   --status-green: #1a9c5b;
   --status-yellow: #d69a00;
   --status-red: #d7373f;
   --status-expired: #6b7280;
+  /* Text-safe variants (the fills above are too light to read as small text) */
+  --status-green-text: #137a45;
+  --status-yellow-text: #7a5a00;
+  --status-red-text: #c02b33;
+  --status-expired-text: #5b6472;
 
   /* Type */
   --font-display: "Neue Haas Grotesk Display", "Neue Haas Grotesk Text",
@@ -55,6 +78,18 @@
   --ink-faint: rgba(237, 241, 249, 0.48);
   --line: rgba(255, 255, 255, 0.14);
   --heading: #f4f7fd;
+  --blue-text: #4da3ff;
+  --ink-faint: rgba(237, 241, 249, 0.64);
+  --status-green-text: #4fd69a;
+  --status-yellow-text: #f2cb62;
+  --status-red-text: #ff9b9b;
+  --status-expired-text: #9ca3af;
+  --text-tertiary: #9aa6bd;
+  --surface-alt: #172033;
+  --navy-950: #f4f7fd;
+  --zone-promotion-fg: #6fdca5;
+  --zone-stay-fg: #f2cb62;
+  --zone-relegation-fg: #ff9b9b;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
@@ -229,29 +264,27 @@ p {
 }
 
 .btn--accent {
-  background: var(--blue-500);
+  background: var(--blue-solid);
   color: var(--on-dark);
 }
 
 .btn--accent:hover {
-  background: #0b74e0;
+  background: var(--blue-solid-hover);
   transform: translateY(-1px);
 }
 
 .btn--ghost {
   background: transparent;
-  border-color: var(--line-dark);
-  color: var(--on-dark);
-}
-
-.hero .btn--ghost {
-  border-color: var(--line-dark);
-}
-
-.about .btn--ghost,
-.board .btn--ghost {
   border-color: var(--line);
   color: var(--heading);
+}
+
+/* Surfaces that are navy in BOTH themes keep light-on-dark ghost buttons. */
+.hero .btn--ghost,
+.site-header .btn--ghost,
+.site-footer .btn--ghost {
+  border-color: var(--line-dark);
+  color: var(--on-dark);
 }
 
 .btn--ghost:hover {
@@ -537,7 +570,7 @@ p {
 }
 
 .bookmark-btn--lg.bookmark-btn--saved {
-  color: var(--blue-500);
+  color: var(--blue-text);
   border-color: var(--blue-500);
 }
 
@@ -845,7 +878,7 @@ p {
 }
 
 .opp-card__category {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.02em;
@@ -883,28 +916,28 @@ p {
   background: var(--status-green);
 }
 .deadline-status--green .deadline-status__label {
-  color: var(--status-green);
+  color: var(--status-green-text);
 }
 
 .deadline-status--yellow .deadline-status__dot {
   background: var(--status-yellow);
 }
 .deadline-status--yellow .deadline-status__label {
-  color: var(--status-yellow);
+  color: var(--status-yellow-text);
 }
 
 .deadline-status--red .deadline-status__dot {
   background: var(--status-red);
 }
 .deadline-status--red .deadline-status__label {
-  color: var(--status-red);
+  color: var(--status-red-text);
 }
 
 .deadline-status--expired .deadline-status__dot {
   background: var(--status-expired);
 }
 .deadline-status--expired .deadline-status__label {
-  color: var(--status-expired);
+  color: var(--status-expired-text);
 }
 
 .deadline-status--lg {
@@ -1113,7 +1146,7 @@ p {
 }
 
 .read-card__category {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 0.03em;
@@ -1135,7 +1168,7 @@ p {
 }
 
 .read-card__title a:hover {
-  color: var(--blue-500);
+  color: var(--blue-text);
 }
 
 /* =========================================================================
@@ -1536,7 +1569,7 @@ p {
   height: 30px;
   border-radius: 50%;
   background: var(--surface);
-  color: var(--blue-500);
+  color: var(--blue-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1608,7 +1641,7 @@ p {
 }
 
 .rich-text a {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -2052,7 +2085,7 @@ p {
 }
 
 .results__save-status a {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 600;
 }
 
@@ -2464,7 +2497,7 @@ body.nav-open {
   margin-top: 24px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--blue-500);
+  color: var(--blue-text);
 }
 
 .signin__optional-label {
@@ -2513,7 +2546,7 @@ body.nav-open {
   flex-shrink: 0;
   font-size: 0.88rem;
   font-weight: 600;
-  color: var(--blue-500);
+  color: var(--blue-text);
 }
 
 /* =========================================================================
@@ -2526,7 +2559,7 @@ body.nav-open {
 }
 
 .leaderboard-page__signin-note a {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 600;
 }
 
@@ -2607,9 +2640,9 @@ body.nav-open {
 }
 
 .league-selector__pill--active {
-  border-color: var(--league-color);
-  background: var(--league-color);
-  color: #fff;
+  border-color: var(--league-chip-bg);
+  background: var(--league-chip-bg);
+  color: var(--league-chip-fg);
 }
 
 .league-selector__you {
@@ -2619,8 +2652,9 @@ body.nav-open {
 
 /* League header */
 .league-header {
-  background: var(--league-soft);
-  border: 1px solid var(--line);
+  background: var(--league-bg);
+  color: var(--league-fg);
+  border: 1px solid var(--league-border);
   border-radius: var(--radius-lg);
   padding: 28px;
   margin-bottom: 20px;
@@ -2633,13 +2667,13 @@ body.nav-open {
   position: absolute;
   inset: 0 0 auto 0;
   height: 4px;
-  background: var(--league-color);
+  background: var(--league-accent);
 }
 
 .league-header__badge {
   display: inline-block;
-  background: var(--league-color);
-  color: #fff;
+  background: var(--league-chip-bg);
+  color: var(--league-chip-fg);
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -2652,7 +2686,7 @@ body.nav-open {
 .league-header__title {
   font-size: 1.6rem;
   letter-spacing: -0.02em;
-  color: var(--heading);
+  color: var(--league-fg);
   margin-bottom: 16px;
 }
 
@@ -2670,18 +2704,18 @@ body.nav-open {
 .league-header__stat-value {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--heading);
+  color: var(--league-fg);
 }
 
 .league-header__stat-label {
   font-size: 0.78rem;
-  color: var(--ink-soft);
+  color: var(--league-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .league-header__preview-note {
-  color: var(--ink-soft);
+  color: var(--league-muted);
   font-size: 0.9rem;
 }
 
@@ -2786,7 +2820,7 @@ body.nav-open {
 }
 
 .leaderboard-row__you {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 700;
 }
 
@@ -2807,17 +2841,17 @@ body.nav-open {
 }
 
 .leaderboard-row__zone--promotion {
-  color: #0f6b3f;
+  color: var(--zone-promotion-fg);
   background: rgba(26, 156, 92, 0.14);
 }
 
 .leaderboard-row__zone--stay {
-  color: #8a6a10;
+  color: var(--zone-stay-fg);
   background: rgba(214, 164, 25, 0.16);
 }
 
 .leaderboard-row__zone--relegation {
-  color: #a02f2f;
+  color: var(--zone-relegation-fg);
   background: rgba(214, 69, 69, 0.14);
 }
 
@@ -2838,8 +2872,8 @@ body.nav-open {
   gap: 10px;
   padding: 10px 12px;
   border-radius: var(--radius-sm);
-  background: var(--badge-soft);
-  border: 1px solid color-mix(in srgb, var(--badge-color) 35%, transparent);
+  background: var(--league-bg);
+  border: 1px solid var(--league-border);
 }
 
 .league-badge__medal {
@@ -2855,12 +2889,12 @@ body.nav-open {
 .league-badge__title {
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--badge-color);
+  color: var(--league-fg);
 }
 
 .league-badge__meta {
   font-size: 0.74rem;
-  color: var(--ink-soft);
+  color: var(--league-muted);
 }
 
 .league-badge--compact {
@@ -2944,17 +2978,17 @@ body.nav-open {
 
 .exercise-runner__difficulty--easy {
   background: rgba(26, 156, 91, 0.12);
-  color: var(--status-green, #1a9c5b);
+  color: var(--status-green-text);
 }
 
 .exercise-runner__difficulty--medium {
   background: rgba(214, 154, 0, 0.14);
-  color: var(--status-yellow, #d69a00);
+  color: var(--status-yellow-text);
 }
 
 .exercise-runner__difficulty--hard {
   background: rgba(215, 55, 63, 0.12);
-  color: var(--status-red, #d7373f);
+  color: var(--status-red-text);
 }
 
 .exercise-runner__score {
@@ -3020,12 +3054,12 @@ body.nav-open {
 }
 
 .exercise-runner__option.is-correct-answer {
-  border-color: var(--status-green, #1a9c5b);
+  border-color: var(--status-green-text);
   background: rgba(26, 156, 91, 0.08);
 }
 
 .exercise-runner__option.is-wrong-answer {
-  border-color: var(--status-red, #d7373f);
+  border-color: var(--status-red-text);
   background: rgba(215, 55, 63, 0.08);
 }
 
@@ -3048,12 +3082,12 @@ body.nav-open {
 
 .exercise-runner__feedback--correct {
   background: rgba(26, 156, 91, 0.08);
-  color: var(--status-green, #1a9c5b);
+  color: var(--status-green-text);
 }
 
 .exercise-runner__feedback--incorrect {
   background: rgba(215, 55, 63, 0.08);
-  color: var(--status-red, #d7373f);
+  color: var(--status-red-text);
 }
 
 .exercise-runner__feedback p {
@@ -3072,7 +3106,7 @@ body.nav-open {
   font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: var(--blue-500);
+  color: var(--blue-text);
   margin-bottom: 20px;
 }
 
@@ -3168,7 +3202,7 @@ body.nav-open {
 }
 
 .sat-overview__signin-note a {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 600;
 }
 
@@ -3266,7 +3300,7 @@ body.nav-open {
 .sat-workspace__progress-label {
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--blue-500);
+  color: var(--blue-text);
 }
 
 .sat-workspace__layout {
@@ -3500,7 +3534,7 @@ body.nav-open {
     flex-shrink: 0;
     border-radius: 50%;
     background: var(--surface);
-    color: var(--blue-500);
+    color: var(--blue-text);
     font-size: 1.1rem;
     font-weight: 700;
   }
@@ -3575,7 +3609,7 @@ body.nav-open {
 }
 
 .lesson-breadcrumb a:hover {
-  color: var(--blue-500);
+  color: var(--blue-text);
 }
 
 .lesson-breadcrumb span[aria-current="page"] {
@@ -3594,7 +3628,7 @@ body.nav-open {
 .lesson-header__eyebrow {
   display: inline-block;
   background: var(--surface);
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -3658,7 +3692,7 @@ body.nav-open {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--blue-500);
+  color: var(--blue-text);
   margin-bottom: 10px;
 }
 
@@ -3782,11 +3816,11 @@ body.nav-open {
 }
 
 .lesson-choice--correct .lesson-choice__icon {
-  color: var(--status-green);
+  color: var(--status-green-text);
 }
 
 .lesson-choice--incorrect .lesson-choice__icon {
-  color: var(--status-red);
+  color: var(--status-red-text);
 }
 
 /* ---- AnswerExplanation ---- */
@@ -3981,7 +4015,7 @@ body.nav-open {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--blue-500);
+  color: var(--blue-text);
 }
 
 .lesson-nav-footer__label {
@@ -4075,7 +4109,7 @@ body.nav-open {
 }
 
 .lesson-flow__arrow {
-  color: var(--blue-500);
+  color: var(--blue-text);
   font-weight: 700;
 }
 
@@ -4128,7 +4162,7 @@ body.nav-open {
 }
 
 .lesson-elimination__item--correct {
-  border-color: var(--status-green, #1a9c5b);
+  border-color: var(--status-green-text);
   background: rgba(26, 156, 91, 0.06);
 }
 
@@ -4151,7 +4185,7 @@ body.nav-open {
 }
 
 .lesson-elimination__item--warning {
-  border-color: var(--status-yellow, #d69a00);
+  border-color: var(--status-yellow-text);
   background: rgba(214, 154, 0, 0.07);
 }
 
@@ -4299,7 +4333,7 @@ body.nav-open {
   font-size: 0.95rem;
 }
 .board__archive-link a {
-  color: var(--blue-500);
+  color: var(--blue-text);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -4848,6 +4882,18 @@ body.nav-open {
 }
 .leaderboard-row__name--link:hover {
   text-decoration: underline;
+
+/* Secondary buttons sitting on a league-tinted card follow that card's text
+   color so they stay readable on every tier in both themes. */
+.league-header .btn--ghost {
+  color: var(--league-fg);
+  border-color: var(--league-border);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Progress tracker + weak-area diagnosis */

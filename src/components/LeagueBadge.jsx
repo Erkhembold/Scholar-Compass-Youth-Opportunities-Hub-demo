@@ -12,10 +12,7 @@ export default function LeagueBadge({ placement, badge, leagueId, week, compact 
   return (
     <div
       className={`league-badge ${compact ? "league-badge--compact" : ""}`}
-      style={{
-        "--badge-color": league.primary,
-        "--badge-soft": league.soft,
-      }}
+      data-league={league.id}
       title={`${badge} — ${league.name} League${week != null ? `, week ${week}` : ""}`}
     >
       <span className="league-badge__medal" aria-hidden="true">
