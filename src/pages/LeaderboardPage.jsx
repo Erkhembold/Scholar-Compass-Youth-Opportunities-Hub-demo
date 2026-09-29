@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
-import { zoneForRank, processWeeklyReset, LEAGUE_CAPACITY } from "../utils/leaderboard.js";
+import { zoneForRank, triggerWeeklyRollover, LEAGUE_CAPACITY } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
 import LeagueCountdown from "../components/LeagueCountdown.jsx";
 import LeaderboardRow from "../components/LeaderboardRow.jsx";
@@ -26,7 +26,7 @@ export default function LeaderboardPage() {
       setResolvedProfile(profile);
       return;
     }
-    processWeeklyReset(supabase, { id: user.id, ...profile }).then((updated) => {
+    triggerWeeklyRollover(supabase, { id: user.id, ...profile }).then((updated) => {
       if (!cancelled) setResolvedProfile(updated);
     });
     return () => {

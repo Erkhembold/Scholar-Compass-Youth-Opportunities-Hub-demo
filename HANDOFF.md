@@ -375,6 +375,87 @@ vanished on navigation.
   sessions' test suites (36 checks) re-run clean on top of this. Not yet
   verified against the live Supabase project.
 
+## Leaderboard hotfix: only the signed-in user was visible (fixed)
+`fetchLeaguePlayers()` started selecting `avatar_path` unconditionally
+when public profiles were added. That column only exists once
+`supabase/public_profiles_and_avatars.sql` has been run — until then the
+select failed outright, the function's existing "return `[]` on any
+error" fallback silently swallowed it, and every real player vanished
+except the client's own synthesized `meEntry` row. Fixed by retrying the
+same query without `avatar_path` on error, so the leaderboard itself
+never breaks just because that separate, newer migration hasn't been
+applied yet — same graceful-degrade pattern used everywhere else in this
+project (StreakCard, ProgressTracker, etc. all show a "not switched on
+yet" notice instead of breaking core functionality; this file should have
+followed that pattern from the start and didn't). Verified by reproducing
+the exact failure (a mocked backend that errors on any request naming
+`avatar_path`) before and after the fix.
+
+## Real weekly league promotion / relegation (built — SQL must be run)
+Leagues previously never really moved anyone. `processWeeklyReset()` (the
+function this replaces) ran per-user, client-side, only when that user's
+own Profile or Leaderboard page happened to load, and to decide whether
+THEY were promoted it built a one-off board of ~39 deterministically-
+seeded FAKE players and ranked the user against those — never against the
+real students actually shown on the Leaderboard page. So a user's league
+had no real relationship to how they did against real competitors.
+
+**Manual step (not yet confirmed run):** `supabase/league_promotion.sql`
+in the SQL Editor. Independent of the other migrations. Idempotent.
+
+- **`public.run_weekly_league_rollover()`** (SECURITY DEFINER) computes
+  every real user's rank from real `weekly_xp` in `leaderboard_entries`,
+  resolves promotion/stay/relegation for every league in one pass (so no
+  league's outcome depends on another league's outcome from the same
+  rollover — all computed from a single snapshot via window functions,
+  then applied together), and updates every real profile at once: new
+  `current_league`, `weekly_xp` reset to 0, and a Gold/Silver/Bronze badge
+  appended (not overwritten) for each league's top 3. Same thresholds as
+  before (rank <= 15 promotes, bottom 5 relegates, `totalPlayers` is the
+  REAL per-league count, not the 40-seat capacity) — `zoneForRank` /
+  `resolveOutcome` stay in `leaderboard.js` too, now display-only (used
+  for the Leaderboard page's zone labels), while the SQL function is the
+  only thing that actually moves anyone.
+- **Idempotent per week**, not per user: a singleton
+  `league_rollover_state` row tracks the last processed week (same
+  Monday-anchored week as `getWeekInfo()`'s EPOCH/WEEK_MS), locked with
+  `for update` before the check so concurrent triggers from different
+  students can't double-process. Seeded to the CURRENT week on first run
+  (not replayed backward) — see the file's own comment for why an exact
+  historical replay isn't recoverable (no per-week XP snapshot table
+  exists, same limitation the old client-side version had).
+  `src/utils/leaderboard.js` still exports a client-side
+  `triggerWeeklyRollover(supabase, profile)` that calls this RPC then
+  re-reads the caller's own profile row, called opportunistically from
+  both the Leaderboard and Profile pages on load (unchanged call sites,
+  just swapped which function they call) — so a rollover still happens
+  promptly even with nobody running a server-side cron.
+- **Best-effort `pg_cron` scheduling** is included (guarded in a
+  `DO`/`EXCEPTION` block so it never fails the rest of the file if that
+  extension isn't available on this Supabase project/plan) to also run it
+  automatically right at the week boundary. Not verified against the live
+  project — only confirmed the guard doesn't break anything when pg_cron
+  is absent, which is the case in this sandbox.
+- **Deleted** the demo-player generator (`generateDemoPlayers`,
+  `buildLeaderboard`, and their seeded-RNG helpers) along with
+  `processWeeklyReset` — confirmed nothing else in the app imported them
+  before removing.
+- **Verified:** SQL exercised against local Postgres 16 with a realistic
+  multi-league seed (20 real Bronze players, 10 Silver, 5 in the top
+  league) — correct top-15 promotion and bottom-5-stays-in-Bronze floor
+  math, a small league (10/10) where everyone promotes because there
+  aren't enough real competitors to fill a relegation zone, the top
+  league's promotion-zone players correctly staying (no league above),
+  badges assigned to the real top 3 by rank and accumulating (not
+  overwriting) across weeks, same-week idempotency (second call is a
+  no-op, nothing double-applied), and anon/signed-out both blocked. UI
+  driven in headless Chrome with a mocked RPC: real promotion reflected
+  on both the Leaderboard and Profile pages without a reload, and RPC
+  failure (SQL not yet run) degrading gracefully with no crash. Full
+  regression: 59 checks across every earlier suite in this project still
+  pass. Not yet verified against the live Supabase project.
+
+
 ## Not built yet (from the dashboard spec)
 Roadmap, new-user
 onboarding (when built: backfill `onboarding_completed = true` for existing
@@ -542,10 +623,6 @@ computed against their actual composited background (see
   redoing it.
 - Two possibly-overlapping IELTS practice entry points exist (see
   above) — needs reconciliation.
-- No server-side cron for weekly leaderboard rollover — it only runs
-  client-side when the affected user's own profile loads
-  (`processWeeklyReset` in `leaderboard.js`). Cross-user consistency at
-  week boundaries is best-effort, not guaranteed.
 - Main JS bundle is ~590KB minified for the main chunk (SAT Math's own
   chunk, with KaTeX, is lazy-loaded separately and doesn't add to this) —
   a further code-splitting pass would help but hasn't been prioritized.

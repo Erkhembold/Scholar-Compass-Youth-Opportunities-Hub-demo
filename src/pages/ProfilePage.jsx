@@ -13,7 +13,7 @@ import ProgressTracker from "../components/ProgressTracker.jsx";
 import WeakAreaCard from "../components/WeakAreaCard.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
-import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
+import { getWeekInfo, zoneForRank, triggerWeeklyRollover } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
 
 const FIELD_DEFS = [
@@ -55,7 +55,7 @@ export default function ProfilePage() {
       setLeagueProfile(profile);
       return;
     }
-    processWeeklyReset(supabase, { id: user.id, ...profile }).then((updated) => {
+    triggerWeeklyRollover(supabase, { id: user.id, ...profile }).then((updated) => {
       if (!cancelled) setLeagueProfile(updated);
     });
     return () => {

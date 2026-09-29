@@ -27,73 +27,7 @@ export function formatCountdown(ms) {
   return { days, hours, minutes, seconds };
 }
 
-// --- deterministic pseudo-random demo players ------------------------
-
-function mulberry32(seed) {
-  let a = seed;
-  return function () {
-    a |= 0;
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function hashString(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) {
-    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
-  }
-  return h;
-}
-
-const FIRST_NAMES = [
-  "Bat-Erdene", "Oyunchimeg", "Temuulen", "Anujin", "Munkhbat", "Sarnai",
-  "Gantulga", "Bolormaa", "Enkhjin", "Tuvshinbayar", "Nomin", "Chuluun",
-  "Ariunaa", "Batbayar", "Delgermaa", "Khulan", "Otgonbayar", "Saruul",
-  "Uyanga", "Zorigt", "Amar", "Bilguun", "Erdenechimeg", "Ganzorig",
-  "Ider", "Javkhlan", "Khongorzul", "Lkhagvasuren", "Mongolsuvd", "Naran",
-  "Oyunaa", "Purevdorj", "Sainbayar", "Tsetsegmaa", "Undral", "Yesui",
-  "Aiganym", "Batzorig", "Chinzorig", "Dulguun", "Erkhembayar", "Ganbold",
-  "Hulan", "Ikhbayar", "Jargal", "Khaliun", "Lkhamsuren", "Munkhjin",
-];
-const LAST_INITIALS = ["B.", "D.", "E.", "G.", "J.", "L.", "M.", "N.", "O.", "S.", "T.", "U.", "Z."];
-
-// Weekly XP for a league drops off roughly log-linearly from top to
-// bottom rank, with a little seeded jitter so it doesn't look robotic.
-function xpCurve(rank, leagueOrder, rand) {
-  const leagueBoost = 1 + leagueOrder * 0.35;
-  const base = 3200 * leagueBoost * Math.pow(1 - (rank - 1) / 42, 1.35);
-  const jitter = (rand() - 0.5) * 90;
-  return Math.max(10, Math.round(base + jitter));
-}
-
-// Generates synthetic opponents used ONLY for the internal weekly-replay
-// math in processWeeklyReset below, to estimate roughly where a returning
-// user's XP would have landed in a week they missed (there's no stored
-// per-week snapshot of every real user's historical XP in this
-// prototype, so an exact historical rank isn't recoverable). These
-// players are NEVER rendered in the UI as a roster of named people —
-// only their count and XP distribution feed a rank number.
-export function generateDemoPlayers(leagueId, weekNumber, count = 39) {
-  const league = LEAGUES.find((l) => l.id === leagueId) || LEAGUES[0];
-  const seed = hashString(`${leagueId}:${weekNumber}`);
-  const rand = mulberry32(seed);
-  const players = [];
-  for (let i = 0; i < count; i++) {
-    const first = FIRST_NAMES[Math.floor(rand() * FIRST_NAMES.length)];
-    const last = LAST_INITIALS[Math.floor(rand() * LAST_INITIALS.length)];
-    players.push({
-      id: `demo-${leagueId}-${weekNumber}-${i}`,
-      name: `${first} ${last}`,
-      xp: xpCurve(i + 1, league.order, rand),
-      isDemo: true,
-    });
-  }
-  return players;
-}
-
+// --- real weekly promotion / relegation ---------------------------------
 // Fetches every real ScholarCompass user currently placed in `leagueId`
 // from public.leaderboard_entries (see supabase/leaderboard_secure.sql).
 // That table only ever contains safe, public columns (id, name,
@@ -133,28 +67,9 @@ export async function fetchLeaguePlayers(supabase, leagueId) {
   }));
 }
 
-// Merges the signed-in user into the demo roster, sorts by XP, and
-// assigns ranks 1..N. `user` is { id, name, xp } or null.
-//
-// Used only by processWeeklyReset's historical replay below — simulating
-// what would have happened in a past week you weren't around to see is
-// necessarily approximate in a client-only prototype (there's no stored
-// per-week snapshot of every real user's XP), so that replay stays
-// demo-only. The *live*, currently-displayed board uses
-// buildLiveLeaderboard instead, which pulls in real signed-up users.
-export function buildLeaderboard(leagueId, weekNumber, user) {
-  const demo = generateDemoPlayers(leagueId, weekNumber, user ? 39 : 40);
-  const all = user ? [...demo, { ...user, isDemo: false }] : demo;
-  all.sort((a, b) => b.xp - a.xp);
-  return all.map((p, i) => ({ ...p, rank: i + 1 }));
-}
-
 // Builds the board actually shown on the Leaderboard and Profile pages:
 // ONLY real, currently-registered ScholarCompass users in this league,
-// ranked by weekly XP. No synthetic/demo players are mixed in here —
-// generateDemoPlayers above exists solely for the internal weekly-replay
-// math in processWeeklyReset further down (never rendered as a roster of
-// named people), which is documented at its own definition.
+// ranked by weekly XP. No synthetic/demo players are mixed in.
 //
 // If fewer than 40 real users occupy a league, the returned array is
 // simply shorter than 40 — callers render the remaining seats as empty
@@ -177,7 +92,7 @@ export function buildLiveLeaderboard(leagueId, realPlayers, meEntry) {
 
 export const LEAGUE_CAPACITY = 40;
 
-// --- promotion / stay / relegation rules -------------------------------
+// --- promotion / stay / relegation rules (for display only) -------------
 //
 // `totalPlayers` here must be the ACTUAL number of real users in the
 // league, not the fixed 40-seat capacity — empty seats are not
@@ -193,6 +108,12 @@ export const LEAGUE_CAPACITY = 40;
 //     honest — there weren't enough real competitors to fill lower
 //     tiers, so nobody is arbitrarily held back to simulate a full
 //     league that doesn't exist.
+//
+// This mirrors exactly what supabase/league_promotion.sql computes
+// server-side (same rank<=15 / rank<=total-5 / else thresholds) — kept
+// here too so the Leaderboard page can show each row's zone label
+// (Promotion/Stay/Relegation) without a round trip, purely for display.
+// The ACTUAL promotion is decided server-side; this never writes anything.
 
 export function zoneForRank(rank, totalPlayers = 40) {
   if (rank <= 15) return "promotion";
@@ -201,7 +122,8 @@ export function zoneForRank(rank, totalPlayers = 40) {
 }
 
 // Resolves a rank into the *actual* outcome for a given league, honoring
-// the Bronze-floor and Diamond-ceiling exceptions.
+// the Bronze-floor and top-league-ceiling exceptions. Display-only, same
+// caveat as zoneForRank above.
 export function resolveOutcome(rank, leagueId, totalPlayers = 40) {
   const zone = zoneForRank(rank, totalPlayers);
   const league = LEAGUES.find((l) => l.id === leagueId);
@@ -219,47 +141,27 @@ export function resolveOutcome(rank, leagueId, totalPlayers = 40) {
   return { zone: "stay", nextLeagueId: leagueId };
 }
 
-// --- weekly rollover ----------------------------------------------------
-// Since there's no server-side cron in this prototype, the rollover is
-// processed the next time the signed-in user's profile loads, comparing
-// the last week they were scored in against the current real week. Each
-// missed week is replayed in order so a long absence still promotes or
-// relegates the user through every week they weren't around for, exactly
-// as it would have happened live.
-export async function processWeeklyReset(supabase, profile) {
-  if (!supabase || !profile) return profile;
-  const { weekNumber } = getWeekInfo();
-  const lastProcessed = profile.last_processed_week ?? weekNumber;
-  if (lastProcessed >= weekNumber) return profile;
+// --- weekly rollover (real) ----------------------------------------------
+// Calls public.run_weekly_league_rollover() (see
+// supabase/league_promotion.sql), which computes EVERY real user's rank
+// from EVERY other real user's actual weekly_xp in their league and
+// updates the database directly — a genuine competitive outcome, not a
+// simulation against synthetic opponents. It's idempotent (safe to call
+// on every page load; it only actually does anything once per real week)
+// and processes ALL leagues/users at once, not just the caller — this
+// client call is simply an opportunistic trigger so a rollover happens
+// promptly even without a server-side cron. After it runs, this re-reads
+// the caller's own profile row so the UI reflects any change immediately.
+export async function triggerWeeklyRollover(supabase, profile) {
+  if (!supabase || !profile?.id) return profile;
+  const { error: rpcError } = await supabase.rpc("run_weekly_league_rollover");
+  if (rpcError) return profile; // RPC not set up yet, or the call failed — keep showing current state
 
-  let league = profile.current_league || "bronze";
-  let weeklyXp = profile.weekly_xp || 0;
-  let badges = profile.badges || [];
-
-  for (let w = lastProcessed; w < weekNumber; w++) {
-    const board = buildLeaderboard(league, w, {
-      id: "me",
-      name: profile.name || "You",
-      xp: weeklyXp,
-    });
-    const me = board.find((p) => p.id === "me");
-    const outcome = resolveOutcome(me.rank, league, board.length);
-
-    if (me.rank <= 3) {
-      const badgeName = me.rank === 1 ? "Gold" : me.rank === 2 ? "Silver" : "Bronze";
-      badges = [{ placement: me.rank, badge: badgeName, league, week: w }, ...badges].slice(0, 50);
-    }
-
-    league = outcome.nextLeagueId;
-    weeklyXp = 0;
-  }
-
-  const updates = {
-    current_league: league,
-    weekly_xp: weeklyXp,
-    last_processed_week: weekNumber,
-    badges,
-  };
-  await supabase.from("profiles").update(updates).eq("id", profile.id);
-  return { ...profile, ...updates };
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("current_league, weekly_xp, last_processed_week, badges")
+    .eq("id", profile.id)
+    .single();
+  if (error || !data) return profile;
+  return { ...profile, ...data };
 }

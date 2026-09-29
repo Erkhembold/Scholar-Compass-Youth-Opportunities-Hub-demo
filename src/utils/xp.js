@@ -10,8 +10,8 @@ export const XP_REWARDS = {
 };
 
 // Increments both weekly and lifetime XP for a user in one round trip.
-// Weekly XP resets at the end of each competition (see processWeeklyReset
-// in leagueProfile.js); lifetime XP never resets.
+// Weekly XP resets at the end of each competition (see triggerWeeklyRollover
+// in utils/leaderboard.js); lifetime XP never resets.
 export async function awardXp(supabase, userId, activityType) {
   const amount = XP_REWARDS[activityType] ?? 0;
   if (!supabase || !userId || amount <= 0) return;
