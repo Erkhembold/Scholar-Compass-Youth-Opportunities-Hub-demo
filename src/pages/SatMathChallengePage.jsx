@@ -4,6 +4,7 @@ import { useSatMathMatch } from "../hooks/useSatMathMatch.js";
 import MathText from "../components/MathText.jsx";
 import { SAT_MATH_QUESTIONS, getSatMathQuestion } from "../data/satMathQuestions.js";
 import { computeClock, isPlayerConnected } from "../utils/satMathTimer.js";
+import { recordActivity } from "../utils/streak.js";
 
 const MIN_QUESTIONS = 5;
 const MIN_SECONDS = 30;
@@ -13,6 +14,17 @@ export default function SatMathChallengePage({ matchId }) {
   const { user, loading } = useAuth();
   const m = useSatMathMatch(matchId);
   const { match, error, resuming } = m;
+
+  // Counts as one qualifying activity, same as the SAT/IELTS 1v1 modes —
+  // once per match, guarded locally since the completed screen can
+  // re-render several times while results stream in.
+  const recordedRef = useRef(false);
+  useEffect(() => {
+    if (match?.status === "completed" && !recordedRef.current) {
+      recordedRef.current = true;
+      recordActivity("sat_question", matchId);
+    }
+  }, [match?.status, matchId]);
 
   // Ticks ~4x/second so timers and heartbeat checks stay fresh. Uses SERVER time.
   const [nowMs, setNowMs] = useState(() => m.getServerNow());

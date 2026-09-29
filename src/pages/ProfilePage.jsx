@@ -9,6 +9,8 @@ import LeagueBadge from "../components/LeagueBadge.jsx";
 import CollapsibleSection from "../components/CollapsibleSection.jsx";
 import StreakCard from "../components/StreakCard.jsx";
 import AvatarUpload from "../components/AvatarUpload.jsx";
+import ProgressTracker from "../components/ProgressTracker.jsx";
+import WeakAreaCard from "../components/WeakAreaCard.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, processWeeklyReset } from "../utils/leaderboard.js";
@@ -253,6 +255,9 @@ export default function ProfilePage() {
         </div>
 
         <StreakCard />
+
+        <ProgressTracker />
+        <WeakAreaCard />
 
         <div
           className="league-header"

@@ -295,9 +295,88 @@ Idempotent.
   unknown/self/signed-out states of `/u/:id`, and the leaderboard link +
   avatar render. Not yet verified against the live Supabase project.
 
+## SAT/IELTS progress tracker + weak-area diagnosis (built — SQL must be run)
+Priorities 2 and 3 of the personalized-dashboard plan (see the streaks
+section above for the full plan). Built together since both are pure
+derivations of the same practice data.
+
+**Manual step (not yet confirmed run):** `supabase/sat_math_progress.sql`
+in the SQL Editor. Independent of the other migrations — order doesn't
+matter. Idempotent. Fixes a real gap: `SatMathExercisesPage` saved
+**nothing** before this — every answer lived only in React state and
+vanished on navigation.
+
+- **Also fixed:** `sat_math_match_answers` (the SAT Math 1v1 answer log)
+  deliberately has no SELECT policy at all — not even the two players in a
+  match could read it. Added `public.get_my_sat_math_answers()` (SECURITY
+  DEFINER, filters by `auth.uid()` internally) as the one safe read path:
+  a student's own answers, and only their own, regardless of which
+  `match_id` existing data has. Domain/topic per question stay in
+  `src/data/satMathQuestions.js` only (not duplicated into SQL) — the
+  frontend merges the two so the taxonomy has one source of truth, same
+  reasoning as the existing `gen:sat-math-key` script.
+- **SAT Math exercises + 1v1 now report streak activity too** (`sat_question`,
+  same type SAT R&W already used) — this was a real gap, not by design;
+  neither hooked into `recordActivity` before this.
+- **`utils/progress.js` + `utils/weakAreas.js`**: pure functions, no
+  network calls, so the derivation logic is directly unit-testable (was
+  run against ~25 hand-written cases during development covering merge
+  behavior, threshold behavior, and the "no data" vs "not enough data"
+  distinction — not committed as a test file, since this repo has no test
+  runner wired up for plain Node scripts; `npm test` here is the SAT-Math
+  answer-key sync/lint check).
+- **`hooks/useProgressData.js`** fetches every raw row once (SAT R&W, SAT
+  Math exercises, SAT Math 1v1 via the new function, IELTS mocks, IELTS
+  Reading exercises) and feeds both derivations from the same fetch.
+  Refetches on the `sc:activity` event streaks already dispatch.
+- **Why SAT Reading & Writing is reported as "mastery," not "accuracy"**:
+  `sat_progress` is a sticky one-row-per-question table (has this question
+  EVER been gotten right), not a per-attempt log — that's true of the
+  existing schema, not something changed here. Relabeling it as a false
+  "accuracy %" would overstate what the data actually shows, so R&W
+  progress reads "Mastered 8/10 questions tried" instead. SAT Math and
+  IELTS Reading exercises ARE real per-attempt logs, so those get a true
+  accuracy percentage.
+- **SAT score vs. practice performance, and IELTS score vs. practice**, are
+  kept visibly distinct per the spec: SAT shows a target score plus real
+  practice stats with an explicit note that there's no official diagnostic
+  test; IELTS shows a real band from the most recent mock test (not
+  invented from exercise accuracy) separately from Reading-exercise
+  accuracy.
+- **Weak-area diagnosis**: `MIN_SAMPLE = 5` (spec's "1 wrong out of 1 ≠
+  weak area" rule) across three subjects — SAT R&W (by the 4 official
+  domains), SAT Math (by the 4 official domains — sub-topic tags exist in
+  the data but aren't enough sample per-topic yet for most students, so
+  diagnosis is domain-level for now), IELTS Reading (by skill tag from
+  `ielts_exercise_attempts`, not the coarser mock `by_type` — the two use
+  different granularities and weren't merged). Below the threshold shows
+  "not enough data" (some attempts) vs. "No practice yet" (zero attempts)
+  as genuinely different states, never a fabricated weak area. Each
+  flagged area links straight to that subject's practice page.
+- **UI**: `components/ProgressTracker.jsx` + `WeakAreaCard.jsx`, on the
+  Profile page for now (same "belongs on the future dashboard homepage"
+  caveat as StreakCard above — Stage 7 still pending).
+- **Also fixed a real CSS bug found while testing this**: an unclosed
+  `.profile-subhead` rule (from the streaks session) had silently
+  swallowed every SAT Math style rule that came after it into one broken
+  selector — `SatMathExercisesPage` had never actually loaded its intended
+  CSS. Confirmed fixed with a real render (screenshot), not just a build
+  check, since a build can succeed with broken CSS.
+- **Verified:** SQL exercised against local Postgres 16 (own-answers-only
+  isolation via the new function even though the underlying table has zero
+  policies, direct-table-read still fully blocked, insert restricted to
+  own user_id, anon/signed-out blocked). UI driven in headless Chrome with
+  a mocked backend: brand-new user (everything honestly empty, no
+  fabricated numbers), a realistic mixed-data user (correct merge of
+  exercises + 1v1 into SAT Math accuracy, correct mastery math for R&W,
+  real IELTS band surfaced, weak areas correctly flagged only once over
+  threshold), practice-this links, signed-out gating, and the SAT Math
+  submit flow persisting an attempt + firing streak activity. All earlier
+  sessions' test suites (36 checks) re-run clean on top of this. Not yet
+  verified against the live Supabase project.
+
 ## Not built yet (from the dashboard spec)
-Progress tracker, weak-area diagnosis (SAT Math now exists, so this is
-unblocked), roadmap, new-user
+Roadmap, new-user
 onboarding (when built: backfill `onboarding_completed = true` for existing
 rows so nobody is forced through it), edit-goals settings, authenticated
 homepage. Existing profile columns to reuse instead of duplicating: `grade`,

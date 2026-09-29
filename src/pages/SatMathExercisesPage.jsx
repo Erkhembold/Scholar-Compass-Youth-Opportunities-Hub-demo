@@ -7,6 +7,9 @@ import {
   isSatMathAnswerCorrect,
 } from "../data/satMathQuestions.js";
 import { satMathChallengeHref } from "../router.js";
+import { useAuth } from "../context/AuthContext.jsx";
+import { supabase } from "../lib/supabaseClient.js";
+import { saveSatMathAttempt } from "../utils/satMathExerciseHistory.js";
 
 const TOPIC_FILTERS = [{ id: "all", label: "All" }, ...SAT_MATH_DOMAINS.map((d) => ({ id: d.id, label: d.short }))];
 const DIFFICULTY_FILTERS = [{ id: "all", label: "All levels" }, ...SAT_MATH_DIFFICULTIES];
@@ -16,6 +19,7 @@ function difficultyLabel(id) {
 }
 
 export default function SatMathExercisesPage() {
+  const { user } = useAuth();
   const [topic, setTopic] = useState("all");
   const [difficulty, setDifficulty] = useState("all");
   // responses[id] = { value: string, submitted: boolean }
@@ -43,7 +47,11 @@ export default function SatMathExercisesPage() {
     setResponses((prev) => (prev[id]?.submitted ? prev : { ...prev, [id]: { value, submitted: false } }));
   }
   function submit(id) {
-    setResponses((prev) => (prev[id]?.value ? { ...prev, [id]: { ...prev[id], submitted: true } } : prev));
+    const value = responses[id]?.value;
+    if (!value) return;
+    setResponses((prev) => ({ ...prev, [id]: { ...prev[id], submitted: true } }));
+    const question = SAT_MATH_QUESTIONS.find((q) => q.id === id);
+    if (question) saveSatMathAttempt(supabase, user?.id, question, value, isSatMathAnswerCorrect(question, value));
   }
   function retry(id) {
     setResponses((prev) => {
