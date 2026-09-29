@@ -106,10 +106,21 @@ export function generateDemoPlayers(leagueId, weekNumber, count = 39) {
 // renders (as real-only, possibly with empty seats) rather than crashing.
 export async function fetchLeaguePlayers(supabase, leagueId) {
   if (!supabase) return [];
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from("leaderboard_entries")
     .select("id, name, weekly_xp, avatar_path")
     .eq("current_league", leagueId);
+
+  if (error) {
+    // avatar_path doesn't exist on leaderboard_entries until
+    // supabase/public_profiles_and_avatars.sql has been run. Fall back to
+    // the base columns so the leaderboard itself never breaks just
+    // because that separate, newer migration hasn't been applied yet.
+    ({ data, error } = await supabase
+      .from("leaderboard_entries")
+      .select("id, name, weekly_xp")
+      .eq("current_league", leagueId));
+  }
 
   if (error || !data) return [];
 
