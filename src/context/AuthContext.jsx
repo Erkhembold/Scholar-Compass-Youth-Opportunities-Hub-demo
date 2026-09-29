@@ -93,6 +93,23 @@ export function AuthProvider({ children }) {
         return { error: error ? error.message : null };
       },
 
+      // Works for both sign-in and sign-up: Google OAuth creates the
+      // account automatically the first time, and just logs the person
+      // in on every visit after that — there's no separate "sign up
+      // with Google" call. This sends the browser away to Google and
+      // back, so there's no local busy/error state to manage here; the
+      // page picks the session back up via onAuthStateChange once the
+      // redirect completes.
+      async signInWithGoogle() {
+        if (!supabase) return { error: "Sign-in isn't configured yet." };
+        const redirectTo = `${window.location.origin}${window.location.pathname}#/profile`;
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo },
+        });
+        return { error: error ? error.message : null };
+      },
+
       async signOut() {
         if (!supabase) return;
         await supabase.auth.signOut();

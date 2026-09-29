@@ -140,6 +140,10 @@ export const translations = {
   // Sign in
   "Sign In": "Нэвтрэх",
   "Create Account": "Бүртгэл үүсгэх",
+  "Continue with Google": "Google-ээр нэвтрэх",
+  "Sign up with Google": "Google-ээр бүртгүүлэх",
+  "Redirecting to Google…": "Google руу шилжиж байна…",
+  or: "эсвэл",
 
   // Hero
   "ScholarCompass brings scholarships, competitions, volunteering, internships, and test-prep guidance into one place, so finding your next step takes minutes instead of a dozen open tabs.":

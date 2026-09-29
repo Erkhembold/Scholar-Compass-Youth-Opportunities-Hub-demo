@@ -2483,6 +2483,58 @@ body.nav-open {
   width: 100%;
 }
 
+.signin__oauth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--white);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--heading);
+  cursor: pointer;
+  transition: background 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+}
+
+.signin__oauth-btn:hover {
+  background: var(--surface);
+}
+
+.signin__oauth-btn:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.signin__oauth-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.signin__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint, #8a8a8e);
+}
+
+.signin__divider::before,
+.signin__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
 .signin__status {
   margin-top: 24px;
   padding: 16px;

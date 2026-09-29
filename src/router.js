@@ -36,6 +36,9 @@ function parseHash(hash) {
   if (parts[0] === "sat" && parts[1] === "math" && parts[2] === "challenge") {
     return { name: "sat-math-challenge" };
   }
+  if (parts[0] === "sat" && parts[1] === "math" && parts[2]) {
+    return { name: "sat-math-exercises", domain: decodeURIComponent(parts[2]) };
+  }
   if (parts[0] === "sat" && parts[1] === "math") {
     return { name: "sat-math-exercises" };
   }
@@ -181,8 +184,8 @@ export function archiveHref() {
   return "#/archive";
 }
 
-export function satMathExercisesHref() {
-  return "#/sat/math";
+export function satMathExercisesHref(domain) {
+  return domain ? `#/sat/math/${encodeURIComponent(domain)}` : "#/sat/math";
 }
 
 export function satMathChallengeHref() {
