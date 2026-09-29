@@ -4893,6 +4893,7 @@ body.nav-open {
 }
 .leaderboard-row__name--link:hover {
   text-decoration: underline;
+}
 
 /* Secondary buttons sitting on a league-tinted card follow that card's text
    color so they stay readable on every tier in both themes. */
