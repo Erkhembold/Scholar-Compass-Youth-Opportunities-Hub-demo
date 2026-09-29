@@ -4523,6 +4523,7 @@ body.nav-open {
   font-size: 0.95rem;
   color: var(--heading);
 }
+
 /* ------------------------------------------------------------------ SAT Math */
 .category-action-card--math {
   border-color: rgba(88, 86, 214, 0.28);
@@ -4639,17 +4640,17 @@ body.nav-open {
 
 .math-badge--easy {
   background: rgba(26, 156, 92, 0.12);
-  color: #157a48;
+  color: var(--status-green-text);
 }
 
 .math-badge--medium {
   background: rgba(214, 154, 0, 0.14);
-  color: #8a6200;
+  color: var(--status-yellow-text);
 }
 
 .math-badge--hard {
   background: rgba(214, 69, 69, 0.12);
-  color: #b03030;
+  color: var(--status-red-text);
 }
 
 .math-field-hint {

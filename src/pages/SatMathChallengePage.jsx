@@ -237,7 +237,7 @@ function Landing({ m }) {
               Choose between {MIN_SECONDS} and {MAX_SECONDS} seconds per question.
             </p>
           )}
-          <button type="submit" className="signin__submit" disabled={m.busy || !countOk || !secondsOk}>
+          <button type="submit" className="btn btn--accent signin__submit" disabled={m.busy || !countOk || !secondsOk}>
             {m.busy ? "Creating…" : "Create challenge"}
           </button>
         </form>
@@ -261,7 +261,7 @@ function Landing({ m }) {
               onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
             />
           </div>
-          <button type="submit" className="signin__submit" disabled={m.busy || pin.length !== 4}>
+          <button type="submit" className="btn btn--accent signin__submit" disabled={m.busy || pin.length !== 4}>
             {m.busy ? "Joining…" : "Join challenge"}
           </button>
         </form>
