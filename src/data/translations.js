@@ -293,6 +293,15 @@ export const translations = {
   "to mark lessons complete and build a daily streak.":
     "хичээлээ дуусгасан гэж тэмдэглэж, өдрийн цуврал үүсгээрэй.",
   "Couldn't save that — please try again.": "Хадгалж чадсангүй — дахин оролдоно уу.",
+  // Homepage streak bar
+  "Daily streak": "Өдрийн цуврал",
+  "day streak": "өдрийн цуврал",
+  "Streak ended": "Цуврал тасарлаа",
+  "Start your streak": "Цувралаа эхлүүл",
+  "Nice — you're set for today.": "Гоё — өнөөдрийнхөө хийчихлээ.",
+  "Keep it alive — do today's lesson.": "Цувралаа бүү таслаарай — өнөөдрийн хичээлээ хийгээрэй.",
+  "Start a new one today.": "Өнөөдөр шинээр эхлээрэй.",
+  "Complete a lesson or exercise to start one.": "Эхлүүлэхийн тулд хичээл эсвэл дасгал хийгээрэй.",
   // Public profiles & avatars
   "SAT target score": "SAT зорилтот оноо",
   "IELTS target score": "IELTS зорилтот оноо",

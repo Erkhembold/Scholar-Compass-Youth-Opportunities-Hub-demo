@@ -1,4 +1,5 @@
 import Hero from "../components/Hero.jsx";
+import HomeStreakBar from "../components/HomeStreakBar.jsx";
 import OpportunityBoard from "../components/OpportunityBoard.jsx";
 import NotificationSection from "../components/NotificationSection.jsx";
 import SuggestedReads from "../components/SuggestedReads.jsx";
@@ -8,6 +9,7 @@ import SubmitOpportunitySection from "../components/SubmitOpportunitySection.jsx
 export default function HomePage() {
   return (
     <>
+      <HomeStreakBar />
       <Hero />
       <OpportunityBoard />
       <NotificationSection />
