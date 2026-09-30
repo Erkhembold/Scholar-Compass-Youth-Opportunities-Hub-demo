@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { buildProgressSummary } from "../utils/progress.js";
 import { buildWeakAreas } from "../utils/weakAreas.js";
+import { buildRoadmap } from "../utils/roadmap.js";
 
 // Fetches every raw signal the progress tracker and weak-area diagnosis
 // need, once, then derives both views from the same data with the pure
@@ -45,6 +46,7 @@ export function useProgressData() {
 
   const progress = raw ? buildProgressSummary({ profile, ...raw }) : null;
   const weakAreas = raw ? buildWeakAreas(raw) : null;
+  const roadmap = progress && weakAreas ? buildRoadmap({ progress, weakAreas }) : null;
 
-  return { progress, weakAreas, loading, isSetUp: !!raw };
+  return { progress, weakAreas, roadmap, loading, isSetUp: !!raw };
 }

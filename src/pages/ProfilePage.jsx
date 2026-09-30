@@ -11,6 +11,7 @@ import StreakCard from "../components/StreakCard.jsx";
 import AvatarUpload from "../components/AvatarUpload.jsx";
 import ProgressTracker from "../components/ProgressTracker.jsx";
 import WeakAreaCard from "../components/WeakAreaCard.jsx";
+import RoadmapCard from "../components/RoadmapCard.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, triggerWeeklyRollover } from "../utils/leaderboard.js";
@@ -258,6 +259,7 @@ export default function ProfilePage() {
 
         <ProgressTracker />
         <WeakAreaCard />
+        <RoadmapCard />
 
         <div
           className="league-header"

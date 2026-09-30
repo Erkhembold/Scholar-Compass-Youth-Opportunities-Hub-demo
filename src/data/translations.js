@@ -317,4 +317,8 @@ export const translations = {
   "Practice this": "Үүнийг дасгалжуулах",
   "Progress tracking isn\u2019t switched on yet.": "Ахиц дэвшлийн хяналт одоогоор идэвхжээгүй байна.",
   "Weak-area diagnosis isn\u2019t switched on yet.": "Сул талын оношилгоо одоогоор идэвхжээгүй байна.",
+  // Roadmap
+  "Your roadmap": "Таны төлөвлөгөө",
+  "What to do next, based on your real goals and practice so far.": "Таны бодит зорилго болон одоог хүртэлх дадлагад үндэслэн дараа юу хийхийг харуулна.",
+  "Your roadmap isn\u2019t switched on yet.": "Таны төлөвлөгөө одоогоор идэвхжээгүй байна.",
 };

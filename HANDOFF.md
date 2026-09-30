@@ -456,8 +456,55 @@ in the SQL Editor. Independent of the other migrations. Idempotent.
   pass. Not yet verified against the live Supabase project.
 
 
+## Personalized roadmap (Priority 4 — built)
+The last of the four dashboard-plan priorities (streaks → progress
+tracker → weak-area diagnosis → roadmap). No SQL step — purely a
+derivation of data the earlier three priorities already collect.
+
+- **`utils/roadmap.js`**: pure, network-free step generators, same style
+  as `utils/progress.js` / `weakAreas.js` (unit-tested against 24 cases
+  during development — merge/threshold behavior, not committed as a test
+  file, see the same note under the progress-tracker section above for
+  why). `buildSatRoadmap` / `buildIeltsRoadmap` each produce an ordered
+  list of `{id, title, done}` steps from real progress + weak-area data;
+  `withStatus` marks the first not-done step `"current"` (the one
+  actionable thing to do next), everything before it `"done"`, everything
+  after `"upcoming"`. A step's `done` state is recomputed from live data
+  every render — nothing is stored, so it can never drift from reality.
+- **No fabricated journey for a new user**: if a subject has neither a
+  target score/band nor any practice at all, its roadmap is a single
+  "Set a target to get your personalized roadmap" prompt — not a fake
+  5-step script with nothing behind it. Once there's a real goal or real
+  practice, the full adaptive sequence appears: set target → first
+  practice → (more data needed, if diagnosis isn't confident yet) →
+  practice the real weakest area → keep practicing (trailing, never
+  marked done). A weak area's step is marked done once its accuracy/
+  mastery clears 70% (`MASTERY_BAR` in `roadmap.js`) — a deliberately
+  higher bar than `MIN_SAMPLE`'s "confident enough to name it" threshold,
+  so a step doesn't flip to done the moment a weak area is barely
+  identified.
+- **UI**: `components/RoadmapCard.jsx`, on the Profile page (same
+  temporary-home caveat as every other dashboard piece — Stage 7 still
+  pending). Each step links to the right practice page (SAT Math weak
+  area → SAT Math exercises, IELTS weak area → IELTS Reading exercises,
+  target-setting → Profile's own edit form, etc.) except done/trailing
+  steps, which aren't links.
+- **Verified**: 24 unit-test cases (brand-new user gets the single prompt
+  not a fake journey, target/practice steps flip done at the right time,
+  a mastered area doesn't keep nagging, a genuinely weak area does, the
+  trailing step never completes, `withStatus` ordering, and a full
+  composed roadmap end to end). UI driven in headless Chrome: empty
+  state, a realistic mixed-mastery student (confirmed the *current*
+  highlighted step is the real weak domain, not the already-mastered
+  one), current-step links resolving to the correct practice page, and
+  signed-out gating. Full regression: all 65 checks from every earlier
+  suite in this project still pass on top of this. Not yet verified
+  against the live Supabase project (nothing here needs it — no new
+  tables or RPCs).
+
+
 ## Not built yet (from the dashboard spec)
-Roadmap, new-user
+New-user
 onboarding (when built: backfill `onboarding_completed = true` for existing
 rows so nobody is forced through it), edit-goals settings, authenticated
 homepage. Existing profile columns to reuse instead of duplicating: `grade`,
