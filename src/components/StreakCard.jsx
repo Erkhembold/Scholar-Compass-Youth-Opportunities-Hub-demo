@@ -1,5 +1,6 @@
 import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import ProgressRing from "./ProgressRing.jsx";
 
 const MESSAGES = {
   done_today: "Today is done — see you tomorrow to keep it going.",
@@ -22,12 +23,23 @@ export default function StreakCard() {
     );
   }
 
+  const daysActive = week.filter((d) => d.active).length;
+
   return (
     <div className="streak-card" data-state={state}>
       <div className="streak-card__head">
-        <span className="streak-card__flame" aria-hidden="true">
-          🔥
-        </span>
+        <ProgressRing
+          percent={(daysActive / 7) * 100}
+          size={84}
+          strokeWidth={9}
+          color="var(--streak-active-bg)"
+          label={`${daysActive} of 7 days active this week`}
+        >
+          <span className="streak-card__ring-flame" aria-hidden="true">
+            🔥
+          </span>
+          <span className="streak-card__ring-value">{current}</span>
+        </ProgressRing>
         <div>
           <p className="streak-card__headline">
             {current} {t("DAY STREAK")}

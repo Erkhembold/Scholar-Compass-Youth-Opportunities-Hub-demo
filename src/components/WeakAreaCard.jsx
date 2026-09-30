@@ -32,13 +32,17 @@ function Row({ diagnosis }) {
   }
 
   const { weakest } = diagnosis;
-  const rateText = `${Math.round(weakest.rate * 100)}% ${weakest.metric === "mastery" ? "mastered" : "accuracy"}`;
+  const percent = Math.round(weakest.rate * 100);
+  const rateText = `${percent}% ${weakest.metric === "mastery" ? "mastered" : "accuracy"}`;
 
   return (
     <div className="weak-area-row">
-      <div>
+      <div className="weak-area-row__main">
         <span className="weak-area-row__subject">{label}</span>
         <span className="weak-area-row__tag">{weakest.label}</span>
+        <div className="weak-area-row__bar" role="img" aria-label={rateText}>
+          <div className="weak-area-row__bar-fill" style={{ width: `${percent}%` }} />
+        </div>
         <span className="weak-area-row__stat">
           {rateText} · {weakest.sample} question{weakest.sample === 1 ? "" : "s"} attempted
         </span>

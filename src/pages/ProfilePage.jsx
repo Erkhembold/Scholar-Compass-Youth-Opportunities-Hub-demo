@@ -166,18 +166,92 @@ export default function ProfilePage() {
   const badges = leagueProfile?.badges || [];
 
   return (
-    <section className="section signin">
-      <div className="section__inner signin__inner">
-        <div className="signin__card">
+    <section className="section dashboard">
+      <div className="section__inner dashboard__inner">
+        <header className="dashboard-header">
           <AvatarUpload
             userId={user.id}
             name={profile?.name}
             avatarPath={profile?.avatar_path}
             onUploaded={handleAvatarUploaded}
           />
-          <h1 className="signin__title">{profile?.name || "Your profile"}</h1>
-          <p className="signin__lede">{user.email}</p>
+          <div className="dashboard-header__text">
+            <h1 className="dashboard-header__greeting">Hey {profile?.name || "there"} 👋</h1>
+            <p className="dashboard-header__email">{user.email}</p>
+          </div>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={async () => {
+              await signOut();
+              window.location.hash = "#/";
+            }}
+          >
+            Sign out
+          </button>
+        </header>
 
+        <div className="dashboard-grid">
+          <div className="dashboard-grid__cell dashboard-grid__cell--streak">
+            <StreakCard />
+          </div>
+          <div className="dashboard-grid__cell dashboard-grid__cell--progress">
+            <ProgressTracker />
+          </div>
+          <div className="dashboard-grid__cell dashboard-grid__cell--half">
+            <WeakAreaCard />
+          </div>
+          <div className="dashboard-grid__cell dashboard-grid__cell--half">
+            <div className="league-header" data-league={league.id}>
+              <div className="league-header__badge">{league.name}</div>
+              <h2 className="league-header__title">League &amp; Achievements</h2>
+              <div className="league-header__stats">
+                <div>
+                  <span className="league-header__stat-value">{league.name}</span>
+                  <span className="league-header__stat-label">Current league</span>
+                </div>
+                <div>
+                  <span className="league-header__stat-value">
+                    #{myRow ? myRow.rank : "—"} / {board.length}
+                  </span>
+                  <span className="league-header__stat-label">Rank</span>
+                </div>
+                <div>
+                  <span className="league-header__stat-value">
+                    {(leagueProfile?.weekly_xp || 0).toLocaleString()}
+                  </span>
+                  <span className="league-header__stat-label">Weekly XP</span>
+                </div>
+                <div>
+                  <span className="league-header__stat-value">{statusLabel}</span>
+                  <span className="league-header__stat-label">Status</span>
+                </div>
+              </div>
+              <a className="btn btn--ghost" style={{ marginTop: 18 }} href={leaderboardHref()}>
+                View full leaderboard
+              </a>
+
+              {badges.length > 0 && (
+                <>
+                  <h3 style={{ marginTop: 24, fontSize: "0.95rem", color: "var(--league-fg)" }}>
+                    Weekly Achievements
+                  </h3>
+                  <div className="achievements-list">
+                    {badges.map((b, i) => (
+                      <LeagueBadge key={i} placement={b.placement} badge={b.badge} leagueId={b.league} week={b.week} />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="dashboard-grid__cell">
+            <RoadmapCard />
+          </div>
+        </div>
+
+        <CollapsibleSection title="Account details">
           <label className="visibility-toggle">
             <input type="checkbox" checked={visible} disabled={visibilitySaving} onChange={handleVisibilityToggle} />
             Show my streak and target scores to other students
@@ -199,12 +273,7 @@ export default function ProfilePage() {
                   </div>
                 ))}
               </dl>
-              <button
-                type="button"
-                className="btn btn--ghost"
-                style={{ marginTop: 20 }}
-                onClick={() => setEditing(true)}
-              >
+              <button type="button" className="btn btn--ghost" style={{ marginTop: 20 }} onClick={() => setEditing(true)}>
                 Edit details
               </button>
             </>
@@ -241,78 +310,8 @@ export default function ProfilePage() {
               </button>
             </form>
           )}
-
-          <button
-            type="button"
-            className="signin__back"
-            style={{ background: "none", border: "none", cursor: "pointer" }}
-            onClick={async () => {
-              await signOut();
-              window.location.hash = "#/";
-            }}
-          >
-            Sign out
-          </button>
-        </div>
-
-        <StreakCard />
-
-        <ProgressTracker />
-        <WeakAreaCard />
-        <RoadmapCard />
-
-        <div
-          className="league-header"
-          data-league={league.id}
-          style={{ marginTop: 24 }}
-        >
-          <div className="league-header__badge">{league.name}</div>
-          <h2 className="league-header__title">League &amp; Achievements</h2>
-          <div className="league-header__stats">
-            <div>
-              <span className="league-header__stat-value">{league.name}</span>
-              <span className="league-header__stat-label">Current league</span>
-            </div>
-            <div>
-              <span className="league-header__stat-value">
-                #{myRow ? myRow.rank : "—"} / {board.length}
-              </span>
-              <span className="league-header__stat-label">Rank</span>
-            </div>
-            <div>
-              <span className="league-header__stat-value">
-                {(leagueProfile?.weekly_xp || 0).toLocaleString()}
-              </span>
-              <span className="league-header__stat-label">Weekly XP</span>
-            </div>
-            <div>
-              <span className="league-header__stat-value">{statusLabel}</span>
-              <span className="league-header__stat-label">Status</span>
-            </div>
-          </div>
-          <a className="btn btn--ghost" style={{ marginTop: 18 }} href={leaderboardHref()}>
-            View full leaderboard
-          </a>
-
-          {badges.length > 0 && (
-            <>
-              <h3 style={{ marginTop: 24, fontSize: "0.95rem", color: "var(--league-fg)" }}>
-                Weekly Achievements
-              </h3>
-              <div className="achievements-list">
-                {badges.map((b, i) => (
-                  <LeagueBadge
-                    key={i}
-                    placement={b.placement}
-                    badge={b.badge}
-                    leagueId={b.league}
-                    week={b.week}
-                  />
-                ))}
-              </div>
-            </>
           )}
-        </div>
+        </CollapsibleSection>
 
         <CollapsibleSection title="IELTS Reading history">
           {attemptsLoading ? (
