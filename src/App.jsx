@@ -82,7 +82,7 @@ export default function App() {
   } else if (route.name === "sat-challenge") {
     page = <SatChallengePage matchId={route.matchId} />;
   } else if (route.name === "sat-math-exercises") {
-    page = <SatMathExercisesPage />;
+    page = <SatMathExercisesPage initialDomain={route.domain} />;
   } else if (route.name === "sat-math-challenge") {
     page = <SatMathChallengePage matchId={route.matchId} />;
   } else if (route.name === "sat-lessons-beginner-guide") {

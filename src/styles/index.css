@@ -3442,6 +3442,14 @@ body.nav-open {
   padding: 28px;
 }
 
+.sat-math-overview {
+  padding-top: 0;
+}
+
+.sat-math-overview .sat-overview__card {
+  border-top-color: var(--streak-active-bg, #1a9c5c);
+}
+
 .sat-overview__signin-note {
   font-size: 0.88rem;
   color: var(--ink-soft);

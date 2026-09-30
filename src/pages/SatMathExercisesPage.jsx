@@ -18,9 +18,10 @@ function difficultyLabel(id) {
   return SAT_MATH_DIFFICULTIES.find((d) => d.id === id)?.label || id;
 }
 
-export default function SatMathExercisesPage() {
+export default function SatMathExercisesPage({ initialDomain }) {
   const { user } = useAuth();
-  const [topic, setTopic] = useState("all");
+  const validInitialDomain = SAT_MATH_DOMAINS.some((d) => d.id === initialDomain) ? initialDomain : "all";
+  const [topic, setTopic] = useState(validInitialDomain);
   const [difficulty, setDifficulty] = useState("all");
   // responses[id] = { value: string, submitted: boolean }
   const [responses, setResponses] = useState({});

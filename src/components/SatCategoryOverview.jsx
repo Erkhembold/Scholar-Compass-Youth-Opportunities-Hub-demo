@@ -1,12 +1,6 @@
 import { SAT_CATEGORIES, SAT_QUESTIONS } from "../data/satQuestions.js";
 import { useSatProgress } from "../hooks/useSatProgress.js";
-import {
-  satPracticeHref,
-  satBeginnerGuideHref,
-  satChallengeHref,
-  satMathExercisesHref,
-  satMathChallengeHref,
-} from "../router.js";
+import { satPracticeHref, satBeginnerGuideHref, satChallengeHref } from "../router.js";
 
 export default function SatCategoryOverview() {
   const { masteredCount, isSignedIn } = useSatProgress();
@@ -46,32 +40,6 @@ export default function SatCategoryOverview() {
               <span className="category-action-text">
                 <span className="category-action-title">Reading &amp; Writing 1v1</span>
                 <span className="category-action-sub">Go head-to-head with a friend</span>
-              </span>
-              <span className="category-action-arrow" aria-hidden="true">
-                →
-              </span>
-            </a>
-
-            <a href={satMathExercisesHref()} className="category-action-card category-action-card--math">
-              <span className="category-action-icon" aria-hidden="true">
-                ➗
-              </span>
-              <span className="category-action-text">
-                <span className="category-action-title">SAT Math Exercises</span>
-                <span className="category-action-sub">40 questions with filters and explanations</span>
-              </span>
-              <span className="category-action-arrow" aria-hidden="true">
-                →
-              </span>
-            </a>
-
-            <a href={satMathChallengeHref()} className="category-action-card category-action-card--math">
-              <span className="category-action-icon" aria-hidden="true">
-                🧮
-              </span>
-              <span className="category-action-text">
-                <span className="category-action-title">SAT Math 1v1</span>
-                <span className="category-action-sub">Race a friend on the same math questions</span>
               </span>
               <span className="category-action-arrow" aria-hidden="true">
                 →

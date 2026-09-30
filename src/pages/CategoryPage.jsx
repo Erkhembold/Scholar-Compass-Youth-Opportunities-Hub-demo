@@ -3,6 +3,7 @@ import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import IeltsPracticePicker from "../components/IeltsPracticePicker.jsx";
 import IeltsExercisesPicker from "../components/IeltsExercisesPicker.jsx";
 import SatCategoryOverview from "../components/SatCategoryOverview.jsx";
+import SatMathOverview from "../components/SatMathOverview.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -72,7 +73,12 @@ export default function CategoryPage({ category }) {
         </section>
       )}
 
-      {category === "sat" && <SatCategoryOverview />}
+      {category === "sat" && (
+        <>
+          <SatCategoryOverview />
+          <SatMathOverview />
+        </>
+      )}
 
       <section
         id="category-board"
