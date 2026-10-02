@@ -150,12 +150,15 @@ string if no translation exists (safe no-op, never crashes). Only UI
 chrome is translated — actual opportunity/article/test content stays in
 English by design.
 
-## SAT 1v1 Challenge (built — verify SQL status)
-Git history shows the full create/join/lobby/play/results flow is built
-(`SatChallengePage.jsx`, `useSatMatch.js`, `supabase/sat_matches_schema.sql`
-and `sat_matches_play_schema.sql`). The earlier "pending task" note here was
-stale. Not confirmed from the repo alone: whether both SQL files have been
-run in Supabase — ask the user before assuming realtime 1v1 works live.
+## SAT 1v1 Challenge (built — SQL confirmed run)
+Full create/join/lobby/play/results flow (`SatChallengePage.jsx`,
+`useSatMatch.js`). `supabase/sat_matches_schema.sql` and
+`sat_matches_play_schema.sql` were both confirmed run by the user (checked
+Table Editor, saw `sat_matches`). `ielts_matches_schema.sql` and
+`sat_math_1v1_schema.sql` (same pattern, for the IELTS and SAT Math 1v1
+modes) were handed to the user but not explicitly reconfirmed since —
+all three schema files are idempotent, so re-running any of them is safe
+if unsure.
 
 ## Opportunity archive (expired listings)
 Opportunities are a **static array** in `src/data/opportunities.js` (not in
