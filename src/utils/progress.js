@@ -85,7 +85,23 @@ function readableSkill(key) {
     .join(" ");
 }
 
-// ---- Full progress summary for the dashboard -------------------------------
+// ---- Combined headline stats for the "Total questions answered" card ------
+// Mixes two different kinds of row (a sticky per-question mastery flag for
+// SAT R&W; real per-attempt correctness for SAT Math and IELTS exercises)
+// into one approachable pair of numbers. Precise per-source accuracy is
+// still available via progress.sat / progress.ielts for anyone who wants
+// the breakdown — this is deliberately just the headline.
+export function buildOverallStats(progress) {
+  if (!progress) return { totalAnswered: 0, accuracy: null };
+  const { rw, math } = progress.sat;
+  const { itemsTotal, itemsCorrect } = progress.ielts.exercises;
+  const attempted = rw.attempted + math.attempted + itemsTotal;
+  const correct = rw.mastered + math.correct + itemsCorrect;
+  return {
+    totalAnswered: attempted,
+    accuracy: attempted > 0 ? correct / attempted : null,
+  };
+}
 export function buildProgressSummary({ profile, satProgressRows, satMathExerciseRows, satMathAnswerRows, ieltsAttempts, ieltsExerciseRows }) {
   const rw = summarizeSatRW(satProgressRows);
   const math = summarizeSatMath(satMathExerciseRows, satMathAnswerRows);

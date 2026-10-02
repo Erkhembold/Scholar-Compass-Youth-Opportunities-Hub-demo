@@ -27,6 +27,9 @@ function parseHash(hash) {
   if (parts[0] === "signin") {
     return { name: "signin" };
   }
+  if (parts[0] === "profile" && parts[1] === "progress") {
+    return { name: "profile-stats" };
+  }
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
@@ -130,6 +133,10 @@ export function signInHref() {
 
 export function profileHref() {
   return "#/profile";
+}
+
+export function profileStatsHref() {
+  return "#/profile/progress";
 }
 
 export function ieltsPracticeHref(skill) {

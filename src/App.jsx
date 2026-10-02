@@ -9,6 +9,7 @@ import WritingTaskPage from "./pages/WritingTaskPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import ProfileStatsPage from "./pages/ProfileStatsPage.jsx";
 import PublicProfilePage from "./pages/PublicProfilePage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import ArchivePage from "./pages/ArchivePage.jsx";
@@ -71,6 +72,8 @@ export default function App() {
     page = <SignInPage />;
   } else if (route.name === "profile") {
     page = <ProfilePage />;
+  } else if (route.name === "profile-stats") {
+    page = <ProfileStatsPage />;
   } else if (route.name === "ielts-practice") {
     page = <IeltsPracticePage skill={route.skill} />;
   } else if (route.name === "ielts-exercises") {

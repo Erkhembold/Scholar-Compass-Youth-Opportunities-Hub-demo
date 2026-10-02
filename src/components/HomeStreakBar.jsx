@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { profileStatsHref } from "../router.js";
 
 const SUB_COPY = {
   done_today: "Nice — you're set for today.",
@@ -52,7 +53,11 @@ export default function HomeStreakBar() {
 
   return (
     <section className="home-streak" data-state={state} aria-label={t("Daily streak")}>
-      <div className="home-streak__inner">
+      <a
+        className="home-streak__inner home-streak__link"
+        href={profileStatsHref()}
+        aria-label={t("View your streak milestones and level progress")}
+      >
         <div className="home-streak__headline-group">
           <span
             className={`home-streak__flame ${isAlive ? "home-streak__flame--lit" : ""}`}
@@ -95,7 +100,7 @@ export default function HomeStreakBar() {
             </li>
           ))}
         </ul>
-      </div>
+      </a>
     </section>
   );
 }

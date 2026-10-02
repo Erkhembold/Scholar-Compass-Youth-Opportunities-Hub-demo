@@ -59,6 +59,12 @@
   --chip-attempted-fg: #927011;
   --chip-attempted-border: #b88d16;
 
+  /* Level ring (profile stats page) — reuses the brand blue rather than a
+     new hue, so "level" reads as an extension of the app's own palette
+     rather than a competing accent. Checked non-text (3:1) against both
+     card surfaces: 3.65:1 light, 4.87:1 dark. */
+  --level-ring-fill: var(--blue-500);
+
   /* Type */
   --font-display: "Neue Haas Grotesk Display", "Neue Haas Grotesk Text",
     "Helvetica Now Display", "Inter Tight", "Inter", "Helvetica Neue",
@@ -100,6 +106,7 @@
   --zone-relegation-fg: #ff9b9b;
   --chip-attempted-fg: #d6a419;
   --chip-attempted-border: #d6a419;
+  --level-ring-fill: var(--blue-300);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
@@ -655,6 +662,20 @@ p {
   justify-content: space-between;
   gap: 32px;
   flex-wrap: wrap;
+}
+
+.home-streak__link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.15s var(--ease-out);
+}
+.home-streak__link:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.home-streak__link:focus-visible {
+  outline: 2px solid var(--blue-300);
+  outline-offset: -2px;
 }
 
 .home-streak__headline-group {
@@ -4730,6 +4751,264 @@ body.nav-open {
   margin: 16px 0 0;
   font-size: 0.78rem;
   color: var(--ink-faint);
+}
+
+/* Whole card is now a link to the full stats/milestones page. */
+.streak-card--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+}
+.streak-card--link:hover {
+  border-color: var(--blue-300);
+}
+.streak-card--link:focus-visible {
+  outline: 2px solid var(--blue-500);
+  outline-offset: 2px;
+}
+.streak-card__cta {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--blue-text);
+}
+
+/* =========================================================================
+   Profile stats page — Level, Questions, Streak milestones. Reuses the
+   same white/dark card shell as streak-card/progress-tracker so it feels
+   like part of the same system rather than a bolted-on second design.
+   ========================================================================= */
+.stats-page__back {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.stats-page__back:hover {
+  color: var(--blue-text);
+}
+
+.stats-page__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+.stats-page__grid--full {
+  grid-template-columns: 1fr;
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+}
+.stat-card__heading {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--heading);
+}
+
+.stat-row-list {
+  margin: 0;
+}
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.stat-row:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.stat-row dt {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.stat-row dd {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--heading);
+}
+
+/* ---- Level card ---- */
+.level-card__body {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.level-card__ring {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  flex-shrink: 0;
+}
+.level-card__ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.level-card__ring-track {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 9;
+}
+.level-card__ring-fill {
+  fill: none;
+  stroke: var(--level-ring-fill);
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s var(--ease-out);
+}
+.level-card__ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.level-card__ring-number {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--heading);
+  line-height: 1;
+}
+.level-card__ring-word {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.level-card__details {
+  flex: 1;
+  min-width: 200px;
+}
+.level-card__to-next {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--heading);
+}
+.level-card__bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  overflow: hidden;
+}
+.level-card__bar-fill {
+  height: 100%;
+  background: var(--level-ring-fill);
+  border-radius: 999px;
+}
+.level-card__bar-ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+.level-card__total {
+  margin: 14px 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+.level-card__total strong {
+  color: var(--heading);
+}
+
+/* ---- Streak milestones card ---- */
+.milestones-card__headline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.milestones-card__flame {
+  font-size: 2rem;
+}
+.milestones-card__current {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--heading);
+}
+.milestones-card__longest {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.milestone-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.milestone-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+}
+.milestone-chip.is-achieved {
+  border-color: var(--status-green-text);
+  background: rgba(26, 156, 92, 0.08);
+}
+.milestone-chip.is-today {
+  border-color: var(--blue-300);
+  box-shadow: 0 0 0 2px rgba(90, 200, 250, 0.22);
+}
+.milestone-chip__icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.milestone-chip.is-achieved .milestone-chip__icon {
+  color: var(--status-green-text);
+}
+.milestone-chip__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.milestone-chip__label {
+  display: block;
+  font-weight: 700;
+  color: var(--heading);
+  font-size: 0.92rem;
+}
+.milestone-chip__sub {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
+
+@media (max-width: 760px) {
+  .stats-page__grid {
+    grid-template-columns: 1fr;
+  }
+  .level-card__body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .lesson-complete {

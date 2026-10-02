@@ -1,6 +1,7 @@
 import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import ProgressRing from "./ProgressRing.jsx";
+import { profileStatsHref } from "../router.js";
 
 const MESSAGES = {
   done_today: "Today is done — see you tomorrow to keep it going.",
@@ -26,7 +27,12 @@ export default function StreakCard() {
   const daysActive = week.filter((d) => d.active).length;
 
   return (
-    <div className="streak-card" data-state={state}>
+    <a
+      className="streak-card streak-card--link"
+      data-state={state}
+      href={profileStatsHref()}
+      aria-label={t("View your streak milestones and level progress")}
+    >
       <div className="streak-card__head">
         <ProgressRing
           percent={(daysActive / 7) * 100}
@@ -83,6 +89,7 @@ export default function StreakCard() {
       <p className="streak-card__note">
         {t("Your day resets at midnight Ulaanbaatar time (UTC+8).")}
       </p>
-    </div>
+      <p className="streak-card__cta">{t("View level & milestones →")}</p>
+    </a>
   );
 }
