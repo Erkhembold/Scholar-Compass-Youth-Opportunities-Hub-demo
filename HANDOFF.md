@@ -642,6 +642,46 @@ computed against their actual composited background (see
   is unverified — ask the user to confirm the live flow once deployed
   and the SQL is run.
 
+## Levels + streak milestones page — added this session
+Clicking the streak anywhere (the homepage `HomeStreakBar`, or the
+`StreakCard` on Profile — both are now real `<a>` links, not onClick
+handlers) opens `#/profile/progress` (`ProfileStatsPage.jsx`): a page
+styled after a reference screenshot the user supplied (a competing SAT
+prep tool's stats dashboard), deliberately **excluding its leaderboard/
+rank-history panel** per explicit instruction. Only three cards:
+
+- **Level** (`LevelCard.jsx` + `utils/levels.js`): a level is purely a
+  *read* of `profile.lifetime_xp` — already a real, permanently-
+  accumulating column (see `utils/xp.js`, awarded for SAT questions and
+  IELTS practice/mocks) — run through a quadratic curve,
+  `xpForLevel(L) = 50*L*(L-1)`. **No new DB column or migration**; it
+  works immediately. Uses the shared `ProgressRing` component (added by
+  the Profile-redesign commit this was rebased onto) rather than a
+  second hand-rolled ring.
+- **Questions** (`QuestionsStatCard.jsx`): total answered + overall
+  accuracy, via a new `buildOverallStats()` in `utils/progress.js` that
+  combines the existing SAT R&W/Math + IELTS exercise aggregates. Mixes
+  a sticky mastery flag (SAT R&W) with real per-attempt correctness (SAT
+  Math, IELTS) into one headline pair — precise per-source numbers are
+  still in `progress.sat`/`progress.ielts` for anyone who wants the
+  breakdown.
+- **Streak milestones** (`StreakMilestonesCard.jsx` +
+  `utils/streakMilestones.js`): a fixed ladder (3/7/14/30/60/100/180/365
+  days). "Achieved" = the **longest** streak on record ever reached it
+  (stays achieved even after the streak later breaks). Not-yet-reached
+  ones show days-to-go + a target calendar date, computed from the
+  **current** streak, only while it's alive.
+
+Verified: full route x theme x viewport contrast audit 0 violations,
+including three synthetic states (no XP/no streak, mid-level/early
+streak, max level/all-milestones-achieved) in both themes. All 10
+leagues re-checked (unaffected — unrelated code path). No JS pageerrors.
+
+Incidental fix while reconciling with the concurrent Profile-redesign
+commit: that commit's "Account details" section had a duplicated `)}`
+after the edit-form ternary, rendering a stray `}` next to the "Edit
+details" button on every load. Fixed (one-line removal).
+
 ## Known issues / unfinished work (as of this handoff)
 - **Why SAT Math 1v1 grades server-side instead of matching the SAT/
   IELTS 1v1 pattern**: the user's requirements for SAT Math 1v1 were
