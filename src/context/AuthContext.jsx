@@ -7,14 +7,22 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  // True only while a signed-in user's profile row is being fetched, so
+  // callers (the home route's onboarding-vs-dashboard gate, in App.jsx)
+  // can tell "still finding out" apart from "checked, and there wasn't
+  // one" — `loading` above already flips false right after the session
+  // itself resolves, before this fetch does.
+  const [profileLoading, setProfileLoading] = useState(false);
 
   async function loadProfile(userId) {
     if (!supabase || !userId) {
       setProfile(null);
       return;
     }
+    setProfileLoading(true);
     const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
     setProfile(data || null);
+    setProfileLoading(false);
   }
 
   useEffect(() => {
@@ -57,6 +65,7 @@ export function AuthProvider({ children }) {
       user,
       profile,
       loading,
+      profileLoading,
       isConfigured: !!supabase,
 
       async signUp({ name, email, password, school, grade, intendedMajor, targetTest }) {
@@ -102,7 +111,7 @@ export function AuthProvider({ children }) {
       // redirect completes.
       async signInWithGoogle() {
         if (!supabase) return { error: "Sign-in isn't configured yet." };
-        const redirectTo = `${window.location.origin}${window.location.pathname}#/profile`;
+        const redirectTo = `${window.location.origin}${window.location.pathname}#/`;
         const { error } = await supabase.auth.signInWithOAuth({
           provider: "google",
           options: { redirectTo },
@@ -122,7 +131,7 @@ export function AuthProvider({ children }) {
         return { error: error ? error.message : null };
       },
     }),
-    [user, profile, loading]
+    [user, profile, loading, profileLoading]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

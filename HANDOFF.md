@@ -506,12 +506,89 @@ derivation of data the earlier three priorities already collect.
   tables or RPCs).
 
 
+## New-user onboarding + real dashboard homepage (built — SQL must be run)
+Stages 5–8 of the dashboard plan: a short onboarding flow for brand-new
+users, and the authenticated homepage the streak/progress/weak-area/
+roadmap cards were always meant to live on (they'd been sitting on the
+Profile page as a stand-in since the streak session — that caveat is
+resolved now).
+
+**Manual step (not yet confirmed run):** `supabase/onboarding.sql` in the
+SQL Editor. Independent of the other migrations. Idempotent.
+
+- **Existing users are never forced through onboarding — enforced at the
+  database level, not just by frontend logic.** `onboarding_completed` is
+  added with `default true`, which Postgres backfills into every row that
+  already exists the moment the column is added — no separate UPDATE
+  needed, and nothing here can touch a user who already finished
+  onboarding. Genuinely new sign-ups need the opposite, so
+  `public.handle_new_user()` (the trigger that fires exactly once per
+  brand-new `auth.users` row) was updated to explicitly insert
+  `onboarding_completed = false` — this covers Google sign-ups too, since
+  those create their account through the same trigger, no separate
+  handling needed.
+- **New profile columns**: `intended_countries text[]`, `preparing_for_sat
+  boolean`, `preparing_for_ielts boolean`, `sat_target_date date`,
+  `ielts_target_date date`. Reused existing columns for the rest (`grade`,
+  `intended_major`, `sat_target_score`, `ielts_target_score`) rather than
+  duplicating them, per the spec's own instruction to check the schema
+  first.
+- **`pages/OnboardingPage.jsx`**: every field skippable (no field blocks
+  reaching the dashboard — both "Start using ScholarCompass" and "Skip for
+  now" save whatever was filled in, if anything, and mark onboarding
+  complete either way). Uses a new shared `components/ToggleGroup.jsx`
+  (tappable chips, single or multi-select) — also used by the Profile
+  page's goal-editing form now, so the two stay consistent.
+- **`pages/DashboardPage.jsx`**: the real authenticated homepage. Greeting
+  + the 4 cards (`StreakCard`, `ProgressTracker`, `WeakAreaCard`,
+  `RoadmapCard` — moved here from Profile) + the exact same
+  `OpportunityBoard` every visitor sees, unmodified, so nothing is lost by
+  no longer landing on the public homepage. Deliberately skips the public
+  homepage's Hero/Notification/SuggestedReads/About sections — those are
+  for visitors deciding whether to sign up, not a returning student.
+- **The routing gate lives in `App.jsx`'s "home" route** (also the catch-
+  all for any unrecognized URL, matching the old behavior's fallback):
+  signed-out → public `HomePage` (unchanged); signed-in but the profile
+  fetch hasn't resolved yet → a brief loading state (see `AuthContext`'s
+  new `profileLoading`, distinct from `loading`, which flips false right
+  after the *session* resolves, before the profile row fetch does — without
+  this a race could flash the wrong page); signed-in with
+  `onboarding_completed === false` → `OnboardingPage`; everything else
+  (`true`, or the column missing entirely because the SQL hasn't run,
+  or even an unexpectedly-null profile) → `DashboardPage`, never
+  onboarding. All three post-auth redirects (email/password sign-up,
+  sign-in, Google OAuth) now land on `#/` instead of `#/profile`, so this
+  one gate decides where a person actually ends up either way.
+- **Profile page is now settings-only**: the 4 cards moved out to the
+  dashboard; a "View my dashboard" link was added; the edit form gained
+  the new goal fields (countries as multi-select chips, SAT/IELTS prep as
+  Yes/No/Not-sure chips, target dates) alongside the existing ones, and
+  the read-only view shows all of them. This is Stage 8 (existing users
+  can edit their goals any time) — done by extending the form that
+  already existed rather than building a separate screen.
+- **Verified**: SQL exercised against local Postgres 16 — seeded a user
+  BEFORE running the migration and confirmed they land on
+  `onboarding_completed = true` (never forced through onboarding), then
+  inserted a new `auth.users` row AFTER and confirmed the trigger gives
+  them `false`. UI driven in headless Chrome: a brand-new user sees
+  onboarding not the dashboard; filling it in and finishing saves every
+  field and flips to the dashboard; "Skip for now" completes onboarding
+  with nothing forced; an existing user goes straight to the dashboard
+  every time; a profile with the `onboarding_completed` column missing
+  entirely (migration not run) still reaches the dashboard, never traps
+  the user in onboarding; a signed-out visitor still gets the normal
+  public homepage; the Profile page shows the saved goal fields, links to
+  the dashboard, and no longer shows the 4 cards. Full regression: all 65
+  checks from every earlier suite in this project still pass (several
+  needed their navigation target updated from `#/profile` to `#/`, since
+  that's genuinely where the cards live now — not a regression, an
+  intentional part of this move). Not yet verified against the live
+  Supabase project.
+
+
 ## Not built yet (from the dashboard spec)
-New-user
-onboarding (when built: backfill `onboarding_completed = true` for existing
-rows so nobody is forced through it), edit-goals settings, authenticated
-homepage. Existing profile columns to reuse instead of duplicating: `grade`,
-`intended_major`, `target_test`, `school`.
+Nothing remains from the original four-priority dashboard plan.
+
 
 ## Theme system (light/dark) — audit in progress
 

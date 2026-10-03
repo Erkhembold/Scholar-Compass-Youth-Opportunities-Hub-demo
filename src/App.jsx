@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect } from "react";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import DashboardPage from "./pages/DashboardPage.jsx";
+import OnboardingPage from "./pages/OnboardingPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
 import IeltsTestPage from "./pages/IeltsTestPage.jsx";
@@ -24,6 +26,7 @@ import SatReadingLesson01Page from "./pages/SatReadingLesson01Page.jsx";
 import SatWritingLesson01Page from "./pages/SatWritingLesson01Page.jsx";
 import SatWritingLesson02Page from "./pages/SatWritingLesson02Page.jsx";
 import { useRoute } from "./router.js";
+import { useAuth } from "./context/AuthContext.jsx";
 
 // Loaded on demand: these pull in KaTeX (math rendering), which the rest of the
 // site doesn't need, so it stays out of the main bundle.
@@ -32,6 +35,7 @@ const SatMathChallengePage = lazy(() => import("./pages/SatMathChallengePage.jsx
 
 export default function App() {
   const route = useRoute();
+  const { user, profile, loading, profileLoading } = useAuth();
 
   // Scroll to top on every route change, except when the URL still carries
   // an in-page anchor (e.g. "#notify") meant for the homepage — that case
@@ -102,8 +106,28 @@ export default function App() {
     page = <LeaderboardPage />;
   } else if (route.name === "public-profile") {
     page = <PublicProfilePage id={route.id} />;
-  } else {
+  } else if (!user) {
     page = <HomePage />;
+  } else if (loading || profileLoading) {
+    // Signed in, but we don't yet know whether this is a brand-new
+    // account (-> onboarding) or a returning one (-> dashboard). Shown
+    // only for the brief window before the profile fetch resolves, so
+    // neither page flashes incorrectly first.
+    page = (
+      <section className="section">
+        <div className="section__inner">
+          <p className="section__lede">Loading…</p>
+        </div>
+      </section>
+    );
+  } else if (profile && profile.onboarding_completed === false) {
+    page = <OnboardingPage />;
+  } else {
+    // Covers onboarding_completed === true, and also a missing/undefined
+    // value (e.g. supabase/onboarding.sql hasn't been run yet, or the
+    // profile row is unexpectedly missing) — nobody is ever forced into
+    // onboarding by a column that doesn't exist or a fetch that failed.
+    page = <DashboardPage />;
   }
 
   return (

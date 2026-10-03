@@ -58,7 +58,7 @@ export default function SignInPage() {
           "Almost there — check your email to confirm your account before signing in."
         );
       } else {
-        window.location.hash = "#/profile";
+        window.location.hash = "#/";
       }
       return;
     }
@@ -69,7 +69,7 @@ export default function SignInPage() {
       setError(signInError);
       return;
     }
-    window.location.hash = "#/profile";
+    window.location.hash = "#/";
   }
 
   if (user) {
@@ -78,7 +78,7 @@ export default function SignInPage() {
         <div className="section__inner signin__inner">
           <div className="signin__card">
             <p className="signin__lede">
-              You're already signed in. <a href="#/profile">Go to your profile</a>.
+              You're already signed in. <a href="#/">Go to your dashboard</a>.
             </p>
           </div>
         </div>
