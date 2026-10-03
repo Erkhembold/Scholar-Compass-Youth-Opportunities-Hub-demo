@@ -4847,37 +4847,9 @@ body.nav-open {
   gap: 24px;
   flex-wrap: wrap;
 }
-.level-card__ring {
-  position: relative;
-  width: 108px;
-  height: 108px;
-  flex-shrink: 0;
-}
-.level-card__ring svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-.level-card__ring-track {
-  fill: none;
-  stroke: var(--line);
-  stroke-width: 9;
-}
-.level-card__ring-fill {
-  fill: none;
-  stroke: var(--level-ring-fill);
-  stroke-width: 9;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.6s var(--ease-out);
-}
-.level-card__ring-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+/* The ring itself is the shared ProgressRing component (see
+   components/ProgressRing.jsx) — only the number/word inside it are
+   specific to this card. */
 .level-card__ring-number {
   font-family: var(--font-display);
   font-size: 1.8rem;

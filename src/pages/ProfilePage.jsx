@@ -310,7 +310,6 @@ export default function ProfilePage() {
               </button>
             </form>
           )}
-          )}
         </CollapsibleSection>
 
         <CollapsibleSection title="IELTS Reading history">
