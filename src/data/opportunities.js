@@ -32,6 +32,8 @@ import yscBookFairImg from "../assets/opportunities/ysc-book-fair.png";
 import wingsOfHopeImg from "../assets/opportunities/wings-of-hope-volunteers.png";
 import openParliamentImg from "../assets/opportunities/open-parliament-hackathon.png";
 import wcsFieldAssistantImg from "../assets/opportunities/wcs-field-assistant.png";
+import arcEduTeenResearcherImg from "../assets/opportunities/arc-edu-teen-researcher.png";
+import artGalleryPaintingCourseImg from "../assets/opportunities/mongolian-art-gallery-painting-course.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -727,5 +729,76 @@ WCS Монгол Өмнөговь аймагт цоохор ирвэсийн с�
       { label: "Email application", href: "mailto:procurementmongolia@wcs.org" },
     ],
     contactNote: "Phone: 323719 · mongolia.wcs.org",
+  },
+  {
+    id: "arc-edu-teen-researcher-2026-intake-2",
+    title: "ARC EDU — \"Teen Researcher\" мэргэжил сонголтын цогц хөтөлбөр (2 дахь элсэлт)",
+    category: "events",
+    image: arcEduTeenResearcherImg,
+    pattern: "radial",
+    deadline: { date: "2026-10-31" },
+    essential: {
+      duration: "Oct 31 – Nov 15, 2026 (In-person: 10.31–11.07 · Project: 11.09–13 · Graduation: 11.14–15)",
+      cost: "2,500,000₮ (includes 10 days of meals, instruction, a trip, and materials)",
+      participants: "Not specified",
+      whoFor: "10th & 11th grade students (English A2+). Not open to 12th graders or gap-year students.",
+      organizer: "ARC EDU боловсролын төв",
+    },
+    description: `🚀 ИРЭЭДҮЙДЭЭ БЭЛЭН ҮҮ? 🚀
+
+ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагчдад зориулсан МЭРГЭЖИЛ СОНГОЛТ + ИХ СУРГУУЛИЙН БЭЛТГЭЛ + СУДАЛГААНЫ АЖИЛ гэсэн үндсэн хэсгүүдтэй "Teen Researcher" мэргэжил сонголтын цогц хөтөлбөрийнхөө 2 дахь элсэлтийг зарлаж байна! 🎉
+
+Хөтөлбөрийн хүрээнд сурагчид:
+✅ 4 мэргэжлийн талбарын 12 төслөөс сонгож, тухайн мэргэжлийн менторын удирдлага дор салбартайгаа гүнзгий танилцана.
+🔬 Салбарын асуудлаар шинжлэх ухааны судалгаа хийж, үр дүн гаргана.
+💡 Судалсан асуудалтай холбоотой төсөл хэрэгжүүлж, шийдэл боловсруулна.
+🎓 Их сургуулийн элсэлтийн цогц сургалтад хамрагдаж, ахлах сургуулийн төлөвлөгөөгөө гаргана (College counseling).
+🗣 Багаар ажиллах, олны өмнө ярих, бусадтай харилцах, асуудал шийдвэрлэх, өөрийгөө илэрхийлэх чадваруудаа хөгжүүлнэ.
+🎯 Мэргэжлийн чиг баримжаагаа олж, ирээдүйн сонголтоо зөв хийх боломжтой болно.
+
+Мэргэжлийн 4 чиглэл:
+📌 Нийгмийн ухаан: Нийгэм, хүмүүнлэг, социологи, сэтгүүл зүй, олон улс харилцаа, хууль, иргэний нийгэм салбарын 2 төсөл
+📈 Санхүү эдийн засаг: Хөрөнгө оруулалт, татвар, эдийн засаг салбарын 2 төсөл
+💻 Технологи: Хиймэл оюун, мэдээллийн аюулгүй байдал салбарын 2 төсөл
+🧪 Байгалийн ШУ ба инженерчлэл: Хими (анагаах), биологи, хүрээлэн буй орчин, физикийн салбарын тус бүр 1 төсөл
+
+(Менторуудын танилцуулга тун удахгүй тавигдана)
+
+🗓 Хэрэгжих хугацаа: 2026.10.31-11.15
+🏫 Танхимын сургалт: 2026.10.31-11.07
+⚙️ Төсөл: 2026.11.09-13
+🎓 Хөтөлбөрийн төгсөлт: 2026.11.14-15
+
+📍 Байршил: EduPark төв 609 тоот
+🙋‍♀️ Хэнд тохиромжтой вэ: Мэргэжлээ сонгосон ч бүрэн итгэлтэй биш байгаа, өөрийгөө олж нээх, хөгжүүлэх сонирхолтой 10, 11-р ангийн сурагчдад. (Англи хэлний А2-с дээш түвшинтэй байх).
+⚠️ 12-р анги ба өнжих жил авсан сурагчид хамрагдах боломжгүй болно.
+💵 Төлбөр: 2,500,000₮ /Төлбөрт 10 хоногийн өдрийн хоол, оройн цай, сургалт, аялал, ашиглагдах материал багтсан болно/`,
+    links: [{ label: "Register", href: "https://forms.gle/qjPCH4cRvMEETDcH7" }],
+  },
+  {
+    id: "mongolian-art-gallery-painting-course",
+    title: "Монголын Уран Зургийн Галерей — Уран зургийн сургалт",
+    category: "events",
+    image: artGalleryPaintingCourseImg,
+    pattern: "grid",
+    deadline: { label: "Rolling enrollment" },
+    essential: {
+      duration: "Beginner through advanced levels",
+      cost: "Not specified",
+      participants: "Not specified",
+      whoFor: "Anyone interested in learning painting, beginner to advanced",
+      organizer: "Монголын Уран Зургийн Галерей",
+    },
+    description: `Монголын уран зургийн галерейн "УРАН ЗУРГИЙН СУРГАЛТ"-даа элсэлт авч байна.
+
+📌 Суралцах агуулга:
+• Хар зураг, өнгө судлал, зохиомж
+• Их сургуульд элсэх ур чадварын шалгалтад бэлтгэх
+• Мэргэжлийн зураачийн заах хичээлүүд анхан шатнаас ахисан түвшин хүртэл явагдана.
+
+📍 Хаяг: СБД, 8-р хороо, Соёлын төв өргөө, B корпус – Монголын Уран Зургийн Галерей
+📞 Холбогдох утас: 11327177, 99598735`,
+    links: [],
+    contactNote: "Утас: 11327177, 99598735",
   },
 ];
