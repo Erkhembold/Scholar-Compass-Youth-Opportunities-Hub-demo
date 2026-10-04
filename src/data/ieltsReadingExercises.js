@@ -20,6 +20,13 @@ export const READING_SKILL_TAGS = [
   "matching_headings",
   "sentence_completion",
   "information_location",
+  // Added for the 60-question set below (ids R-MC-101..160): these cover
+  // categories that set didn't have an existing tag for.
+  "vocabulary",
+  "specific_detail",
+  "matching_information",
+  "reference",
+  "main_purpose",
 ];
 
 export const IELTS_READING_EXERCISES = [
@@ -367,5 +374,301 @@ export const IELTS_READING_EXERCISES = [
     prompt: "Field measurements were needed to confirm genuine ecological ________.",
     answer: "recovery",
     explanation: "",
+  },
+
+  // ---------------- SET 2 — 60-question bank (R-MC-101..160), added in 3 batches of 20 ----------------
+  {
+    id: "R-MC-101",
+    type: "mc",
+    difficulty: "easy",
+    skill: "main_idea",
+    passage: "Urban gardens are becoming more common in large cities. They can provide fresh food, create green spaces, and give residents opportunities to meet their neighbors.",
+    question: "What is the main idea?",
+    options: [
+      { id: "A", text: "Urban gardens are expensive to maintain." },
+      { id: "B", text: "Urban gardens can provide several benefits to city residents." },
+      { id: "C", text: "Most city residents grow their own food." },
+      { id: "D", text: "Gardens are replacing city parks." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-102",
+    type: "mc",
+    difficulty: "easy",
+    skill: "true_false_not_given",
+    passage: "The museum opened in 1985 and originally contained only paintings. In 2004, it expanded its collection to include photographs and sculptures.",
+    question: "Statement: The museum displayed sculptures before 2004. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-103",
+    type: "mc",
+    difficulty: "easy",
+    skill: "vocabulary",
+    passage: "The new bus system is more efficient because buses spend less time waiting at stops.",
+    question: "What does “efficient” mean here?",
+    options: [
+      { id: "A", text: "More expensive" },
+      { id: "B", text: "Working effectively with less wasted time" },
+      { id: "C", text: "More crowded" },
+      { id: "D", text: "More complicated" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-104",
+    type: "mc",
+    difficulty: "easy",
+    skill: "specific_detail",
+    passage: "The course lasts twelve weeks and includes two classes each week.",
+    question: "How many classes does the course include?",
+    options: [
+      { id: "A", text: "12" },
+      { id: "B", text: "18" },
+      { id: "C", text: "24" },
+      { id: "D", text: "30" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-105",
+    type: "mc",
+    difficulty: "easy",
+    skill: "matching_information",
+    passage: "A. Solar panels convert sunlight into electricity.\nB. Wind turbines use moving air to generate electricity.\nC. Hydroelectric systems use flowing water.",
+    question: "Which source depends on wind?",
+    options: [
+      { id: "A", text: "A" },
+      { id: "B", text: "B" },
+      { id: "C", text: "C" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-106",
+    type: "mc",
+    difficulty: "easy",
+    skill: "inference",
+    passage: "Nora always carries a reusable bottle because the school has removed plastic cups from its cafeteria.",
+    question: "Why does Nora carry a reusable bottle?",
+    options: [
+      { id: "A", text: "She dislikes drinking water." },
+      { id: "B", text: "She wants to avoid buying drinks." },
+      { id: "C", text: "She needs an alternative to disposable cups." },
+      { id: "D", text: "She works in the cafeteria." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-107",
+    type: "mc",
+    difficulty: "easy",
+    skill: "sentence_completion",
+    passage: "The sports centre is open from 6 a.m. until 10 p.m. on weekdays.",
+    question: "The centre closes at ______ on weekdays.",
+    options: [
+      { id: "A", text: "6 a.m." },
+      { id: "B", text: "8 p.m." },
+      { id: "C", text: "9 p.m." },
+      { id: "D", text: "10 p.m." }
+    ],
+    answer: "D",
+  },
+  {
+    id: "R-MC-108",
+    type: "mc",
+    difficulty: "easy",
+    skill: "true_false_not_given",
+    passage: "The university's new library contains 40 study rooms. Students can reserve some of these rooms online.",
+    question: "Statement: All 40 study rooms must be reserved online. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-109",
+    type: "mc",
+    difficulty: "easy",
+    skill: "main_idea",
+    passage: "Walking to school can help students become more physically active. It may also reduce the number of cars around school entrances.",
+    question: "What is the passage mainly about?",
+    options: [
+      { id: "A", text: "Why cars are necessary near schools" },
+      { id: "B", text: "Benefits of walking to school" },
+      { id: "C", text: "Problems with school entrances" },
+      { id: "D", text: "How to buy walking shoes" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-110",
+    type: "mc",
+    difficulty: "easy",
+    skill: "vocabulary",
+    passage: "The old bridge was demolished to make space for a wider road.",
+    question: "What does “demolished” mean?",
+    options: [
+      { id: "A", text: "Repaired" },
+      { id: "B", text: "Painted" },
+      { id: "C", text: "Completely destroyed" },
+      { id: "D", text: "Carefully moved" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-111",
+    type: "mc",
+    difficulty: "easy",
+    skill: "specific_detail",
+    passage: "The study began in March and ended in August.",
+    question: "How long did the study last?",
+    options: [
+      { id: "A", text: "Three months" },
+      { id: "B", text: "Four months" },
+      { id: "C", text: "Five months" },
+      { id: "D", text: "Six months" }
+    ],
+    answer: "D",
+  },
+  {
+    id: "R-MC-112",
+    type: "mc",
+    difficulty: "easy",
+    skill: "reference",
+    passage: "The town planted 500 trees last spring. They were placed along several main roads.",
+    question: "What does “They” refer to?",
+    options: [
+      { id: "A", text: "The roads" },
+      { id: "B", text: "The trees" },
+      { id: "C", text: "The towns" },
+      { id: "D", text: "The seasons" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-113",
+    type: "mc",
+    difficulty: "medium",
+    skill: "inference",
+    passage: "When the school introduced a quiet study room, teachers noticed that students began staying after class for longer periods.",
+    question: "What can be inferred?",
+    options: [
+      { id: "A", text: "Students wanted a quieter place to work." },
+      { id: "B", text: "Teachers increased the length of lessons." },
+      { id: "C", text: "Students were no longer allowed to go home." },
+      { id: "D", text: "The school reduced homework." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "R-MC-114",
+    type: "mc",
+    difficulty: "medium",
+    skill: "true_false_not_given",
+    passage: "The community centre offers cooking classes every Saturday. Some classes focus on traditional dishes, while others teach international recipes.",
+    question: "Statement: Every cooking class teaches traditional Mongolian food. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-115",
+    type: "mc",
+    difficulty: "medium",
+    skill: "main_purpose",
+    passage: "Several companies now allow employees to work from home for part of the week. Supporters say this can reduce commuting time, although some employees report that they miss informal conversations with colleagues.",
+    question: "What is the purpose of the passage?",
+    options: [
+      { id: "A", text: "To show only the advantages of remote work" },
+      { id: "B", text: "To show both benefits and drawbacks of remote work" },
+      { id: "C", text: "To explain how to build a home office" },
+      { id: "D", text: "To argue that all companies should work remotely" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-116",
+    type: "mc",
+    difficulty: "medium",
+    skill: "vocabulary",
+    passage: "The researchers found a significant increase in attendance after the school changed its timetable.",
+    question: "What does “significant” most likely mean?",
+    options: [
+      { id: "A", text: "Very small" },
+      { id: "B", text: "Noticeable or important" },
+      { id: "C", text: "Temporary" },
+      { id: "D", text: "Unexpectedly negative" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-117",
+    type: "mc",
+    difficulty: "medium",
+    skill: "sentence_completion",
+    passage: "The science museum introduced a discounted student ticket in September. The new ticket costs 5 dollars, compared with 9 dollars for adults.",
+    question: "Students pay ______ dollars for the new ticket.",
+    options: [
+      { id: "A", text: "4" },
+      { id: "B", text: "5" },
+      { id: "C", text: "9" },
+      { id: "D", text: "14" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-118",
+    type: "mc",
+    difficulty: "medium",
+    skill: "matching_information",
+    passage: "A. Dr. Kim studies ocean temperatures.\nB. Dr. Patel studies urban air quality.\nC. Dr. Wong studies soil erosion.",
+    question: "Who studies pollution in cities?",
+    options: [
+      { id: "A", text: "Dr. Kim" },
+      { id: "B", text: "Dr. Patel" },
+      { id: "C", text: "Dr. Wong" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-119",
+    type: "mc",
+    difficulty: "medium",
+    skill: "true_false_not_given",
+    passage: "Researchers surveyed 600 students from five secondary schools. The students answered questions about sleep, exercise and schoolwork.",
+    question: "Statement: The survey included university students. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-120",
+    type: "mc",
+    difficulty: "medium",
+    skill: "inference",
+    passage: "The café had very few customers during its first month. After it added vegetarian meals, lunchtime sales increased.",
+    question: "What is the most reasonable inference?",
+    options: [
+      { id: "A", text: "Vegetarian options may have attracted additional customers." },
+      { id: "B", text: "The café became cheaper." },
+      { id: "C", text: "The café stopped serving lunch." },
+      { id: "D", text: "Customers preferred meat dishes." }
+    ],
+    answer: "A",
   },
 ];

@@ -3277,6 +3277,7 @@ body.nav-open {
   border-radius: var(--radius-md);
   padding: 18px 20px;
   margin-bottom: 20px;
+  white-space: pre-line;
 }
 
 .exercise-runner__question {
