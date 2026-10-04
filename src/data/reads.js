@@ -10,7 +10,8 @@
 
 import volunteerCleanupImg from "../assets/reads/volunteer-cleanup.jpg";
 import unvOnlineVolunteeringImg from "../assets/reads/unv-online-volunteering.png";
-import { UNV_ONLINE_VOLUNTEERING_BODY } from "./readBodies.js";
+import volunteerHoursClockImg from "../assets/reads/volunteer-hours-clock.png";
+import { UNV_ONLINE_VOLUNTEERING_BODY, CV_VOLUNTEERING_PHRASING_BODY } from "./readBodies.js";
 
 export const reads = [
   {
@@ -21,6 +22,14 @@ export const reads = [
     pattern: "grid",
     image: unvOnlineVolunteeringImg,
     body: UNV_ONLINE_VOLUNTEERING_BODY,
+  },
+  {
+    id: "r-17",
+    category: "Volunteering",
+    title: "CV-Д \"VOLUNTEERING\"-ЭЭ ЯАЖ ЗӨВ БИЧИХ ВЭ?",
+    pattern: "stripe",
+    image: volunteerHoursClockImg,
+    body: CV_VOLUNTEERING_PHRASING_BODY,
   },
   {
     id: "r-01",

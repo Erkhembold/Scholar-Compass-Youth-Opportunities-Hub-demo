@@ -565,3 +565,786 @@ Idealist Remote Volunteering
 ScholarCompass редакцийн тэмдэглэл
 
 UNV ONLINE VOLUNTEERING БОЛ 18+ ХҮМҮҮСТ ЗОРИУЛСАН ҮЙЛЧИЛГЭЭ. Энэ нийтлэлийг ахлах ангийн сурагчдад зориулж байгаа тул насны шаардлагыг санаатайгаар урд хэсэгт нь тодорхой бичлээ. Мөн UNV-ийн платформ, дүрэм, assignment-ийн хэлбэрүүд шинэчлэгдэж болох тул өргөдөл гаргахын өмнө тухайн assignment-ийн одоогийн шаардлагыг өөрийнх нь хуудсаас заавал шалгаарай`;
+
+export const CV_VOLUNTEERING_PHRASING_BODY = `Сайн дурын ажил хийсэн бол CV дээрээ:
+
+"VOLUNTEER — 100 HOURS"
+
+гээд нэг мөр биччихэд хангалттай гэж боддог сурагч олон.
+
+Гэхдээ энэ нь таны хийсэн ажлын талаар маш бага зүйл хэлнэ.
+
+Та хаана, ямар үүрэгтэй, яг юу хийсэн, хамгийн гол нь юу өөрчилсөн бэ?
+
+Сайн бичсэн volunteering хэсэг эдгээрийг аль болох богино, тодорхой харуулдаг.
+
+Мэргэжлийн CV-ийн удирдамжууд ч яг энэ зарчмыг давтдаг: үүрэг жагсаахаас илүү хийсэн зүйл, ашигласан ур чадвар, гарсан үр дүнг харуулах; боломжтой үедээ үр дүнгээ тоогоор илэрхийлэх; bullet бүрийг action verb-ээр эхлүүлэхийг MIT, UC Berkeley, Yale-ийн career offices зөвлөдөг.
+
+1. ЮУНЫ ӨМНӨ: "VOLUNTEERING" ГЭЖ ЮУГ ХЭЛЖ БАЙНА ВЭ?
+
+Сайн дурын ажил гэдэг нь заавал:
+
+"Нэг байгууллагад очоод volunteer гэсэн badge зүүх"
+
+гэсэн үг биш.
+
+Тусламж, үйлчилгээний бодит ажил хийсэн бол дараах зүйлс ч volunteering эсвэл community involvement-ийн туршлага болж чадна:
+
+СУРГУУЛИЙН CLUB-Д ҮЙЛ АЖИЛЛАГАА ЗОХИОН БАЙГУУЛАХ
+
+БАГА АНГИЙН ХҮҮХДҮҮДЭД ХИЧЭЭЛ ЗААХ
+
+ОЛОН НИЙТИЙН АЯНД ХУВЬ НЭМЭР ОРУУЛАХ
+
+NONPROFIT-Д ONLINE VOLUNTEER ХИЙХ
+
+ХОРОО / СУРГУУЛИЙН ОРЧНЫ ЦЭВЭРЛЭГЭЭНД ОРОЛЦОХ
+
+ОРЧУУЛГА, DESIGN, SOCIAL MEDIA, RESEARCH-ЭЭР ТУСЛАХ
+
+Common App хүртэл activities хэсэгт volunteer work-оос гадна ажил, гэр бүлийн хариуцлага, клуб, спорт, хобби зэрэг олон төрлийн туршлагыг оруулж болдог гэж тайлбарладаг.
+
+Тиймээс:
+
+"НАДАД АЛБАН ЁСНЫ VOLUNTEER ЦОЛ БАЙГААГҮЙ"
+
+гэдэг нь автоматаар:
+
+"НАДАД БИЧИХ ТУРШЛАГА БАЙХГҮЙ"
+
+гэсэн үг биш.
+
+2. CV ДЭЭР ХАМГИЙН ЧУХАЛ НЬ "БИ ЮУ ХИЙСЭН БЭ?" БИШ
+
+Хамгийн энгийн CV bullet:
+
+"Helped organize a school charity event."
+
+Энэ өгүүлбэр буруу биш.
+
+Гэхдээ маш сул.
+
+Яагаад?
+
+Уншигч мэдэхгүй:
+
+чи яг юу хийсэн,
+ямар үүрэгтэй байсан,
+хэр том ажил байсан,
+ямар үр дүн гарсан.
+
+MIT-ийн CV guidance туршлагаа зүгээр нэг job description шиг бичихээс илүү accomplishment болон contribution-оо харуулахыг зөвлөдөг.
+
+Тиймээс volunteering-ээ дараах байдлаар бод:
+
+ACTION → WHAT → RESULT
+
+Жишээ:
+
+Организед a school charity drive, coordinating 12 volunteers and collecting 340 donated items.
+
+Энд:
+
+ACTION: organized
+WHAT: charity drive + coordinated 12 volunteers
+RESULT: 340 items collected
+
+гэдэг гурван зүйл байна.
+
+3. CV BULLET-ИЙН ХАМГИЙН ХЭРЭГТЭЙ ТОМЬЁО
+
+MIT-ийн зөвлөмжид үүнийг PAR — Project, Action, Result хэлбэрээр тайлбарладаг.
+
+ScholarCompass дээр үүнийг арай энгийнээр:
+
+ХИЙСЭН АЖИЛ → ЯАЖ ХИЙСЭН → ҮР ДҮН
+
+гэж ойлго.
+
+Жишээ 1 — Teaching
+
+❌ Helped teach English to younger students.
+
+✅ Taught weekly English lessons to 18 Grade 5 students, creating vocabulary and speaking activities.
+
+Хэрэв бодит үр дүн байгаа бол:
+
+✅ Taught weekly English lessons to 18 Grade 5 students, creating vocabulary and speaking activities across a 6-month program.
+
+Жишээ 2 — Event
+
+❌ Participated in a school charity event.
+
+✅ Coordinated student volunteers for a school charity drive and managed donation collection.
+
+Хэрэв тоо байгаа бол:
+
+✅ Coordinated 10 student volunteers and collected 280 donated items during a school charity drive.
+
+Жишээ 3 — Social media
+
+❌ Managed Instagram for a club.
+
+✅ Created and scheduled Instagram content for a school club.
+
+Илүү тодорхой:
+
+✅ Created 25 Instagram posts and promoted club events through weekly social media campaigns.
+
+4. "PARTICIPATED" БОЛОН "LED" ХОЁРЫН ХООРОНД МАШ ТОМ ЯЛГАА БИЙ
+
+Сурагчид CV дээрээ өөрсдийгөө том харагдуулахын тулд:
+
+LED
+
+DIRECTED
+
+MANAGED
+
+FOUNDED
+
+гэх мэт үгийг хэтрүүлэн ашиглах тохиолдол байдаг.
+
+Гэхдээ CV дээр хамгийн сайн үг гэдэг нь хамгийн "том" сонсогдох үг биш.
+
+Yale-ийн resume guidance яг өөрийн хийсэн contribution-ийг тодорхойлохыг зөвлөдөг.
+
+Тиймээс:
+
+Хэрэв чи:
+
+багийн нэг гишүүн байсан
+
+бол:
+
+CONTRIBUTED
+
+COLLABORATED
+
+SUPPORTED
+
+гэж бич.
+
+Хэрэв чи:
+
+багийг удирдсан
+
+бол:
+
+LED
+
+гэж бич.
+
+Хэрэв чи:
+
+бүх төслийг өөрөө эхлүүлсэн
+
+бол:
+
+INITIATED
+
+FOUNDED
+
+гэж бичиж болно.
+
+Алтан дүрэм:
+
+CV-ГОО ГОЁ БОЛГОХ ГЭЖ ҮГЭЭ ТОМРУУЛАХ ХЭРЭГГҮЙ. БОДИТ ХИЙСЭН АЖЛАА ТОМРУУЛЖ ХАРУУЛ.
+
+5. ТОО ОРУУЛАХДАА "100 HOURS" ГЭДГЭЭС ИЛҮҮ СОНГОЛТ БИЙ
+
+Тоог оруулах нь хүчтэй.
+
+Гэхдээ:
+
+"100 HOURS OF VOLUNTEERING"
+
+гэдэг ганц тоо таны impact-ийг сайн харуулахгүй байж болно.
+
+MIT, Berkeley, Yale-ийн resume guidance нь боломжтой үед үр дүнгээ quantify хийхийг зөвлөдөг.
+
+Жишээ нь:
+
+СУЛ
+
+Volunteered for 100 hours.
+
+ИЛҮҮ ТОДОРХОЙ
+
+Tutored 20 elementary students in English across weekly sessions.
+
+БҮР ИЛҮҮ САЙН
+
+Tutored 20 elementary students in English across 40 weekly sessions, developing vocabulary and pronunciation activities.
+
+Энд 40 sessions гэсэн тоо нь оролцооны хэмжээг, 20 students нь хамрах хүрээг харуулж байна.
+
+6. ГЭХДЭЭ БҮХНИЙГ ТОО БОЛГОХ ГЭЖ БҮҮ ОРОЛД
+
+Зарим volunteering-ийн үр дүнг тоолох боломжгүй.
+
+Жишээ нь:
+
+Хэн нэгнийг сонсох
+Ахмад хүнд туслах
+Орчуулах
+Судалгаанд хувь нэмэр оруулах
+Нийгмийн нэг асуудлыг шийдэхэд туслах
+
+Тэгвэл:
+
+ямар асуудал дээр
+ямар үүргээр
+юу хийсэн
+
+гэдгээ тодорхой бич.
+
+Тоо байхгүй бол туршлага чинь автоматаар сул гэсэн үг биш.
+
+MIT ч яг тоо байхгүй үед туршлагаасаа олсон үр дүн, үнэ цэнийг тодорхой тайлбарлахыг зөвлөдөг.
+
+7. "HELPED" ҮГИЙГ ХЭТ ИХ БҮҮ АШИГЛА
+
+Энэ бол CV дээр хамгийн түгээмэл асуудлуудын нэг.
+
+HELPED
+
+гэдэг үг чиний яг юу хийснийг нуудаг.
+
+Жишээ:
+
+❌ Helped teachers organize a competition.
+
+Чи юу хийсэн юм?
+
+Registration?
+Social media?
+Scheduling?
+Materials?
+Communication?
+Scoring?
+
+Тодруул:
+
+✅ Coordinated participant registration and prepared competition materials for a 120-student school event.
+
+Одоо уншигч яг юу хийснийг ойлгож чадна.
+
+MIT, Yale, Berkeley бүгд accomplishment/action-oriented wording болон strong action verbs ашиглахыг зөвлөдөг.
+
+8. АШИГЛАЖ БОЛОХ ACTION VERBS
+LEADERSHIP
+
+Led
+Coordinated
+Organized
+Directed
+Managed
+Initiated
+
+TEACHING
+
+Taught
+Tutored
+Mentored
+Trained
+Instructed
+
+RESEARCH
+
+Researched
+Analyzed
+Collected
+Reviewed
+Documented
+
+COMMUNICATION
+
+Translated
+Wrote
+Presented
+Promoted
+Published
+Communicated
+
+DESIGN / DIGITAL
+
+Designed
+Created
+Developed
+Produced
+Edited
+
+Yale, MIT болон Berkeley-ийн resume resources-д эдгээрийн адил action verbs-ийг ашиглан bullet-ээ эхлүүлэхийг зөвлөдөг.
+
+9. CV-Д ЯГ ЯАЖ БАЙРЛУУЛАХ ВЭ?
+
+Жишээ:
+
+VOLUNTEER TEACHER
+
+87th Rural Secondary School — Ulaanbaatar, Mongolia
+Jan 2026 – Present
+
+Taught weekly Chinese lessons to 20 Grade 4–5 students, focusing on vocabulary, pronunciation, and basic sentence formation.
+Designed beginner-level activities and adapted explanations for students with different learning speeds.
+
+Ийм бүтэц нь:
+
+ROLE
+
+→ ORGANIZATION
+
+→ LOCATION
+
+→ DATE
+
+→ 2–3 STRONG BULLETS
+
+гэдгийг маш хурдан харагдуулна.
+
+Туршлага бүрт 7–8 bullet бичих шаардлагагүй.
+
+10. ОДОО ХАМГИЙН ЧУХАЛ ЯЛГАА: CV VS COLLEGE APPLICATION
+
+Энд олон сурагч андуурдаг.
+
+CV / RESUME
+
+Чи илүү дэлгэрэнгүй туршлагаа bullet хэлбэрээр тайлбарлаж болно.
+
+Жишээ:
+
+Coordinated 12 volunteers and organized a school environmental campaign reaching 300 students.
+
+COMMON APP ACTIVITIES
+
+Энд зай маш хязгаарлагдмал.
+
+Common App одоогийн guidance-д:
+
+Position/Leadership — 50 characters
+
+Organization — 100 characters
+
+Activity details — 150 characters
+
+гэж заасан бөгөөд hours/week болон weeks/year-ийг тусад нь оруулдаг.
+
+Тэгэхээр:
+
+CV:
+
+Coordinated 12 volunteers to organize a school environmental campaign reaching 300 students through waste-reduction workshops and posters.
+
+Common App:
+
+Led 12 volunteers; organized waste-reduction workshops and posters reaching 300 students.
+
+Нэг туршлага.
+
+Гэхдээ хоёр өөр формат.
+
+11. "VOLUNTEERED FOR 200 HOURS" ГЭЖ COMMON APP ДЭЭР ДАВТАХ ХЭРЭГГҮЙ
+
+Учир нь Common App activity section-д:
+
+hours/week
+
+болон
+
+weeks/year
+
+гэдэг мэдээллийг тусад нь асуудаг.
+
+Тиймээс 150 тэмдэгтийн activity description-аа:
+
+"Volunteered 200 hours..."
+
+гэж үрэхээс илүү:
+
+"Tutored 15 students in English; developed weekly speaking and vocabulary activities."
+
+гэж ашиглах нь илүү их мэдээлэл өгнө.
+
+12. ХАМГИЙН ТОМ МИФ: "ОЛОН VOLUNTEERING = ИЛҮҮ САЙН"
+
+Ингэж бодох хэрэггүй.
+
+Harvard одоогийн application guidance дээрээ activities-ийн quantity-ээс илүү quality-г сонирхдог гэж тодорхой хэлдэг. MIT оюутнуудад дөрөв хүртэлх хамгийн чухал activity-гаа сонгохыг хүсдэг бөгөөд "impressive харагдуулахын тулд" activity сонгохыг зөвлөдөггүй. Stanford мөн нэг эсвэл хоёр activity дээрх exceptional depth нь олон club-д бага оролцсоноос илүү хүчтэй туршлага харуулж чадна гэж тайлбарладаг.
+
+Тиймээс:
+
+10 RANDOM VOLUNTEERING
+
+заавал
+
+1 DEEP, MEANINGFUL VOLUNTEERING
+
+-ээс сайн биш.
+
+13. "CERTIFICATE COLLECTING" БОЛ VOLUNTEERING-ИЙН ЗОРИЛГО БИШ
+
+Жишээ:
+
+VOLUNTEERING #1 — 3 hours
+VOLUNTEERING #2 — 5 hours
+VOLUNTEERING #3 — 2 hours
+VOLUNTEERING #4 — 8 hours
+
+CV дээр харахад урт жагсаалт болж болно.
+
+Гэхдээ чи яг юу хийсэн бэ?
+
+Harvard, MIT, Stanford зэрэг сургуулиудын албан ёсны admissions guidance нь activity-ийн утга учир, оролцоо, contribution, impact-ийг контексттэй нь харахыг онцолдог.
+
+Тиймээс volunteering-ийг:
+
+CERTIFICATE FARM
+
+болгохоос илүү:
+
+REAL CONTRIBUTION
+
+болго.
+
+14. МОНГОЛ СУРАГЧИЙН ЖИШЭЭ
+
+Төсөөлье:
+
+Сурагч нэг сургуулийн Red Cross club-д volunteer хийдэг.
+
+МУУ CV BULLET
+
+Volunteered at Red Cross club and participated in various activities.
+
+САЙЖРУУЛСАН
+
+Supported Red Cross club activities and helped organize school community events.
+
+ИЛҮҮ САЙН
+
+Coordinated student volunteers for school health and community-service events, handling registration and event logistics.
+
+БОДИТ ТОО БАЙВАЛ
+
+Coordinated 15 student volunteers across three school service events, managing registration and event logistics.
+
+Чи энд:
+
+"VOLUNTEER"
+
+гэдэг үгнээс илүү:
+
+COORDINATED 15 VOLUNTEERS
+
+гэдгээр өөрийн contribution-ийг харуулж байна.
+
+15. ONLINE VOLUNTEERING-ЭЭ ХЭРХЭН БИЧИХ ВЭ?
+
+Жишээ нь чи UNV-ийн Online Volunteering assignment хийлээ гэж бодъё.
+
+СУЛ
+
+UN Online Volunteer
+
+ИЛҮҮ САЙН
+
+Online Volunteer — UNDP Project
+2026
+
+Translated project materials from English into Mongolian.
+Reviewed terminology and edited documents for clarity.
+
+Хэрэв бодит тоо байгаа бол:
+
+Translated 18 pages of project materials and reviewed terminology across 6 documents.
+
+Энд:
+
+байгууллага өөрөө нэр биш.
+
+хийсэн ажил нь гол мэдээлэл.
+
+16. "IMPACT" ГЭДЭГ НЬ ЗААВАЛ 10,000 ХҮНД ХҮРЭХИЙГ ХЭЛЭХГҮЙ
+
+Энэ маш чухал.
+
+Impact:
+
+300 students reached
+
+байж болно.
+
+Гэхдээ:
+
+5 students taught every week for 8 months
+
+ч impact.
+
+Мөн:
+
+school process improved
+
+ч impact.
+
+research adopted by the club
+
+ч impact.
+
+website launched
+
+ч impact.
+
+Yale resume guidance нь үр дүнг боломжтой үед тоогоор харуулахыг зөвлөдөг ч accomplishment гэдэг нь зөвхөн том тоо биш; ямар нэг зүйлийг сайжруулсан, шийдсэн, бий болгосон эсвэл contribution хийсэн байхыг хэлдэг.
+
+17. ХЭРЭВ ҮР ДҮН НЬ ОДОО БОЛООГҮЙ БОЛ?
+
+Зүгээр.
+
+Одоо хийж байгаа project байж болно.
+
+Тэгвэл:
+
+WHAT YOU HAVE DONE SO FAR
+
+эсвэл
+
+INTENDED OUTCOME
+
+-оо бич.
+
+Жишээ:
+
+Developed an environmental audit framework for the school and began collecting waste data to identify major sources of organic waste.
+
+Project дуусаагүй ч:
+
+developed
+began collecting
+identify
+
+гэдэг бодит ажил харагдаж байна.
+
+MIT ч үр дүн нь бүрэн гараагүй research/project дээр хийж гүйцэтгэсэн зүйл болон intended impact-ийг тодорхойлохыг зөвлөдөг.
+
+18. БҮҮ ХИЙ
+❌ "Helped with various activities."
+
+Хэт ерөнхий.
+
+❌ "Was responsible for volunteering."
+
+Үүрэг л хэлсэн, contribution биш.
+
+❌ "Worked with many students."
+
+"Many" юу гэсэн үг вэ?
+
+❌ "Made a huge impact."
+
+Impact-аа хэлэлгүй өөрөө дүгнэсэн.
+
+❌ "Volunteer — 150 hours."
+
+Юу хийсэн нь алга.
+
+❌ БОДИТ БИШ ТОО
+
+10 хүн байсан бол:
+
+10
+
+гэж бич.
+
+100 болгож болохгүй.
+
+❌ TITLE-ЭЭ ХӨӨРӨГДҮҮЛЭХ
+
+"International Youth Development Strategist"
+
+гэж нэрлэхээсээ өмнө чи үнэхээр тийм role хийсэн эсэхээ асуу.
+
+19. ОРОНД НЬ ИНГЭ
+❌ "Helped with social media."
+✅ "Created 18 Instagram posts promoting school volunteer initiatives."
+❌ "Tutored students."
+✅ "Tutored 12 Grade 5 students in beginner Chinese through weekly lessons."
+❌ "Participated in environmental activities."
+✅ "Collected and analyzed school waste data to identify major waste sources."
+❌ "Was a volunteer at a nonprofit."
+✅ "Supported the nonprofit's social media campaign by designing 10 awareness graphics."
+20. ТУРШЛАГАА БИЧИХЭЭСЭЭ ӨМНӨ 5 АСУУЛТ АСУУ
+
+1. БИ ЯГ ЮУ ХИЙСЭН БЭ?
+
+2. БИНИЙ ҮҮРЭГ ЮУ БАЙСАН БЭ?
+
+3. ЯМАР УР ЧАДВАР АШИГЛАСАН БЭ?
+
+4. ЮУ ӨӨРЧЛӨГДСӨН БЭ?
+
+5. ҮҮНИЙГ ЯМАР НЭГ ТОО, БАРИМТААР ХАРУУЛЖ БОЛОХ УУ?
+
+Дараа нь:
+
+ACTION + TASK + RESULT
+
+болгож нэг bullet болго.
+
+21. "VOLUNTEER" ГЭДЭГ НЬ CV-Д ГАНЦААРАА ХАНГАЛТГҮЙ
+
+Энэ:
+
+VOLUNTEER
+
+гэдэг нэршил.
+
+Гэхдээ:
+
+TAUGHT
+
+COORDINATED
+
+DESIGNED
+
+TRANSLATED
+
+RESEARCHED
+
+ORGANIZED
+
+DEVELOPED
+
+гэдэг үйл үгнүүд чиний яг хийсэн ажлыг харуулна.
+
+Тиймээс боломжтой бол:
+
+ROLE + SPECIFIC CONTRIBUTION
+
+гэсэн хэлбэрээр бод.
+
+22. ТЭГЭЭД САЙН VOLUNTEERING ЯМАР БАЙДАГ ВЭ?
+
+Заавал:
+
+NOBODY HAS EVER DONE THIS BEFORE
+
+байх шаардлагагүй.
+
+Yale-ийн admissions team бүр олон улсын болон үндэсний хэмжээний шагнал заавал хэрэгтэй гэсэн ойлголтыг няцааж, сурагчийн өөрийн сургууль болон орон нутагт үзүүлсэн impact ч маш чухал гэдгийг тайлбарладаг.
+
+Тиймээс:
+
+СУРГУУЛИЙН 20 СУРАГЧИД ХИЧЭЭЛ ЗААСАН
+
+гэдэг нь:
+
+"НҮБ-ТЭЙ ХАМТРАН 1 ӨДРИЙН GLOBAL EVENT-Д ОРОЛЦСОН"
+
+гээс автоматаар муу биш.
+
+Чиний:
+
+оролцоо
+тууштай байдал
+үүрэг
+үр дүн
+
+л чухал.
+
+23. ЭЦЭСТ НЬ CV BULLET-ЭЭ ШАЛГА
+
+Бэлэн болсон bullet-ээ хараад:
+
+"ЭНЭ ӨГҮҮЛБЭРЭЭС БИ ЯГ ЮУ ХИЙСНИЙГ ОЙЛГОЖ БОЛОХ УУ?"
+
+гэж асуу.
+
+Хэрэв хариулт:
+
+"ҮГҮЙ"
+
+бол дахин бич.
+
+Дараа нь:
+
+"НАДААС ГАДНА ӨӨР 100 СУРАГЧ ЭНЭ ӨГҮҮЛБЭРИЙГ БИЧИЖ БОЛОХ УУ?"
+
+Хэрэв:
+
+"ТИЙМ"
+
+бол бүр тодорхой болго.
+
+THE SCHOLARCOMPASS FORMULA
+
+Бүх volunteering experience-ээ ингэж хөрвүүл:
+
+WHERE
+
+Хаана?
+
+ROLE
+
+Ямар үүрэгтэй?
+
+ACTION
+
+Яг юу хийсэн?
+
+SKILL
+
+Ямар ур чадвар ашигласан?
+
+RESULT
+
+Юу өөрчлөгдсөн?
+
+NUMBER
+
+Тоо / хэмжээ / хамрах хүрээ байгаа юу?
+
+Дараа нь:
+
+[ACTION VERB] + [WHAT YOU DID] + [HOW / SKILL] + [RESULT / NUMBER]
+
+COPY-PASTE TEMPLATE
+ROLE / POSITION
+Organization
+Location | Dates
+
+• [ACTION VERB] + [WHAT YOU DID] + [RESULT]
+• [ACTION VERB] + [SPECIFIC CONTRIBUTION] + [NUMBER / IMPACT]
+
+Жишээ:
+
+VOLUNTEER TEACHER
+Community School | Ulaanbaatar, Mongolia
+2025–Present
+
+• Taught weekly Chinese lessons to 20 Grade 4–5 students, focusing on vocabulary and pronunciation.
+• Designed beginner activities and adapted lessons for different learning levels.
+ONE LAST THING
+
+Сайн бичсэн volunteering experience бол "би volunteer хийсэн" гэдгийг нотлох текст биш.
+
+Энэ бол:
+
+"БИ БОДИТ АЖИЛ ДЭЭР ЮУ ХИЙЖ ЧАДДАГ ВЭ?"
+
+гэдгийг харуулах хамгийн богино арга.
+
+Тиймээс дараагийн удаа CV дээрээ:
+
+"VOLUNTEER — 80 HOURS"
+
+гэж бичихээсээ өмнө:
+
+"БИ ЭНЭ 80 ЦАГИЙН ДОТОР ЯГ ЮУ БҮТЭЭСЭН БЭ?"
+
+гэж асуу.
+
+Тэр хариулт чинь CV bullet байх ёстой.
+
+Sources: Common App-ийн одоогийн Activities guidance нь volunteer work-ийг activity хэлбэрээр оруулах боломж, role/description болон hours/weeks-ийн бүтэц, тэмдэгтийн хязгаарыг тайлбарладаг. Harvard, MIT, Stanford, Yale-ийн admissions/career resources нь activity-ийн чанар, contribution, impact, тодорхой action-oriented resume writing-ийг онцолдог.`;
