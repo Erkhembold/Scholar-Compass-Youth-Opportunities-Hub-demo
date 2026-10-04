@@ -586,6 +586,55 @@ SQL Editor. Independent of the other migrations. Idempotent.
   Supabase project.
 
 
+## Merge note: onboarding/dashboard session vs. the concurrent Profile redesign
+Two sessions touched the same ground at the same time: this session built
+the onboarding flow + a separate `DashboardPage` (originally making
+Profile settings-only, cards moved OUT), while a concurrent session
+independently rebuilt Profile itself into a visual ring-based dashboard
+(`2f02d3b`, later extended with Level/Questions/Streak-milestones in
+`0224725`/`f7bb4a4`/`1ebcfb5`). Per the user's explicit instruction not to
+revert or fight the other session's work, the merge keeps BOTH: Profile
+is now its own rich dashboard-style page (streak ring, progress rings,
+weak areas, roadmap, league, account details all in one `dashboard-grid`)
+**and** a separate `#/` `DashboardPage` exists too (greeting + the same
+4 cards + the Opportunity board), reached via the onboarding gate. A
+little redundant — both pages show the same 4 cards — but not broken,
+and not something this session unilaterally decided to "clean up" on
+someone else's work. A future session may want to make a deliberate call
+on whether Profile should go back to settings-only now that `DashboardPage`
+exists, but that's a product decision, not a merge-conflict fix.
+
+**A real bug was introduced resolving that merge's conflict, found and
+fixed in the same session**: the conflict resolution's import block
+dropped `StreakCard`/`ProgressTracker`/`WeakAreaCard`/`RoadmapCard`
+imports entirely, even though the kept (upstream) JSX still rendered all
+four — `ReferenceError: StreakCard is not defined` on every load of
+`/profile`, crashing the whole page (React never mounted `<main>`, which
+is also why several of this session's own Playwright tests mysteriously
+timed out waiting for that element — not flakiness, a real crash). Fixed
+by re-adding all four imports. Caught by instrumenting a timing-out test
+with `pageerror` logging rather than assuming it was test flakiness —
+worth remembering: an inexplicable `main`-not-found timeout in this app's
+test setup is worth checking for a pageerror before assuming the test
+itself is at fault.
+
+A second rebase onto further concurrent commits (the Level/Questions/
+Streak-milestones page + that session's own reconciliation of the same
+Profile redesign) applied with zero conflicts, confirming no duplicate
+fix was needed.
+
+## Two new opportunities
+Added via the normal `data/opportunities.js` + `assets/opportunities/`
+pattern, images sourced from the organizers' own Instagram posts (same
+convention as other entries using real promotional graphics):
+- **ARC EDU "Teen Researcher"** (2nd intake) — paid career-exploration +
+  university-prep + research program, 10th/11th graders, Oct 31–Nov 15 2026.
+- **Mongolian Art Gallery painting course** — ongoing/rolling enrollment.
+
+Both categorized `"events"` (existing category for structured programs
+that aren't scholarships/competitions/volunteering/internships — already
+used elsewhere in this file, just not one of the four filter tabs).
+
 ## Not built yet (from the dashboard spec)
 Nothing remains from the original four-priority dashboard plan.
 
