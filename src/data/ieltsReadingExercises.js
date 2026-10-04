@@ -966,4 +966,299 @@ export const IELTS_READING_EXERCISES = [
     ],
     answer: "B",
   },
+  {
+    id: "R-MC-141",
+    type: "mc",
+    difficulty: "hard",
+    skill: "vocabulary",
+    passage: "The researchers found a substantial difference between the two groups.",
+    question: "What does “substantial” most likely mean?",
+    options: [
+      { id: "A", text: "Very small" },
+      { id: "B", text: "Considerable" },
+      { id: "C", text: "Temporary" },
+      { id: "D", text: "Impossible to measure" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-142",
+    type: "mc",
+    difficulty: "hard",
+    skill: "sentence_completion",
+    passage: "The programme originally targeted university students, but it was later expanded to include secondary school students because demand was higher than expected.",
+    question: "Secondary school students were included because ______.",
+    options: [
+      { id: "A", text: "the university closed" },
+      { id: "B", text: "demand exceeded expectations" },
+      { id: "C", text: "teachers requested fewer programmes" },
+      { id: "D", text: "funding was reduced" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-143",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "The city installed sensors to monitor traffic levels. During the first year, officials used the data mainly to identify congestion hotspots rather than to change speed limits.",
+    question: "What does this suggest?",
+    options: [
+      { id: "A", text: "The sensors were installed only for decoration." },
+      { id: "B", text: "The first priority was understanding where congestion occurred." },
+      { id: "C", text: "Speed limits were increased immediately." },
+      { id: "D", text: "Officials were not interested in the data." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-144",
+    type: "mc",
+    difficulty: "hard",
+    skill: "true_false_not_given",
+    passage: "The study included participants from six countries. The researchers found some differences between countries, but they concluded that more research was needed before drawing broad conclusions.",
+    question: "Statement: The researchers believed the results applied equally to every country. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-145",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "A factory reduced its water consumption by installing more efficient equipment. However, total water use changed little because production increased significantly during the same period.",
+    question: "Why did total water use change little?",
+    options: [
+      { id: "A", text: "The new equipment did not work." },
+      { id: "B", text: "Production increased enough to offset the efficiency gains." },
+      { id: "C", text: "Workers used more drinking water." },
+      { id: "D", text: "The factory stopped measuring water use." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-146",
+    type: "mc",
+    difficulty: "hard",
+    skill: "reference",
+    passage: "The city introduced a congestion charge in the centre. The policy initially faced opposition from some business owners, but traffic levels later fell.",
+    question: "What does “The policy” refer to?",
+    options: [
+      { id: "A", text: "Falling traffic" },
+      { id: "B", text: "Business ownership" },
+      { id: "C", text: "The congestion charge" },
+      { id: "D", text: "The city centre" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-147",
+    type: "mc",
+    difficulty: "hard",
+    skill: "main_idea",
+    passage: "Artificial light at night can affect some species by changing their feeding and migration patterns. The extent of these effects varies depending on the species, light intensity and local environment.",
+    question: "What is the main idea?",
+    options: [
+      { id: "A", text: "Artificial light has exactly the same effect on every species." },
+      { id: "B", text: "Artificial light can affect wildlife in different ways." },
+      { id: "C", text: "Wildlife is unaffected by cities." },
+      { id: "D", text: "Migration is caused only by light." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-148",
+    type: "mc",
+    difficulty: "hard",
+    skill: "matching_information",
+    passage: "A. The report identifies rising costs as the main problem.\nB. The report focuses on shortages of skilled workers.\nC. The report emphasizes weak transport links.",
+    question: "Which section discusses a lack of qualified employees?",
+    options: [
+      { id: "A", text: "A" },
+      { id: "B", text: "B" },
+      { id: "C", text: "C" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-149",
+    type: "mc",
+    difficulty: "hard",
+    skill: "vocabulary",
+    passage: "The committee rejected the proposal because the evidence was considered insufficient.",
+    question: "What does “insufficient” mean?",
+    options: [
+      { id: "A", text: "More than enough" },
+      { id: "B", text: "Not enough" },
+      { id: "C", text: "Completely irrelevant" },
+      { id: "D", text: "Difficult to read" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-150",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "The school introduced an optional morning study session. Attendance was initially low, but participation increased after teachers allowed students to use the session for their own homework rather than following a fixed lesson.",
+    question: "What probably increased attendance?",
+    options: [
+      { id: "A", text: "Students were given more freedom in how to use the session." },
+      { id: "B", text: "The session became compulsory." },
+      { id: "C", text: "Teachers shortened the school day." },
+      { id: "D", text: "Homework was cancelled." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "R-MC-151",
+    type: "mc",
+    difficulty: "hard",
+    skill: "true_false_not_given",
+    passage: "The survey found that 68% of respondents used public transport at least once a week. It did not record how many journeys each respondent made.",
+    question: "Statement: The survey showed that most respondents used public transport every day. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-152",
+    type: "mc",
+    difficulty: "hard",
+    skill: "main_purpose",
+    passage: "The article reviews several studies on whether background music affects concentration. It concludes that the answer may depend on the type of task and the kind of music being played.",
+    question: "What is the article mainly doing?",
+    options: [
+      { id: "A", text: "Proving music always improves concentration" },
+      { id: "B", text: "Reviewing evidence showing that the effect varies" },
+      { id: "C", text: "Teaching readers to play an instrument" },
+      { id: "D", text: "Comparing headphones" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-153",
+    type: "mc",
+    difficulty: "hard",
+    skill: "specific_detail",
+    passage: "Researchers tested three water filters. Filter A removed 82% of impurities, Filter B removed 91%, and Filter C removed 88%.",
+    question: "Which filter was most effective?",
+    options: [
+      { id: "A", text: "A" },
+      { id: "B", text: "B" },
+      { id: "C", text: "C" },
+      { id: "D", text: "They were equally effective" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-154",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "The library extended its opening hours during exam season. Student attendance increased, especially between 8 p.m. and 10 p.m., although the library remained relatively quiet during the afternoon.",
+    question: "What can be inferred?",
+    options: [
+      { id: "A", text: "Students preferred using the library late in the day during exams." },
+      { id: "B", text: "The library was full all day." },
+      { id: "C", text: "Students stopped studying in the afternoon permanently." },
+      { id: "D", text: "The library reduced its opening hours." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "R-MC-155",
+    type: "mc",
+    difficulty: "hard",
+    skill: "vocabulary",
+    passage: "The report recommends a gradual transition to renewable energy rather than an immediate replacement of all existing systems.",
+    question: "What does “gradual” mean?",
+    options: [
+      { id: "A", text: "Sudden" },
+      { id: "B", text: "Slow and step-by-step" },
+      { id: "C", text: "Unplanned" },
+      { id: "D", text: "Temporary" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-156",
+    type: "mc",
+    difficulty: "hard",
+    skill: "matching_information",
+    passage: "A. The project reduced electricity use.\nB. The project improved access to healthcare.\nC. The project increased local employment.",
+    question: "Which project had an employment-related effect?",
+    options: [
+      { id: "A", text: "A" },
+      { id: "B", text: "B" },
+      { id: "C", text: "C" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-157",
+    type: "mc",
+    difficulty: "hard",
+    skill: "true_false_not_given",
+    passage: "The company plans to open two new offices next year. The locations have not yet been announced.",
+    question: "Statement: The new offices will be located in the capital. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-158",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "During the first stage of the environmental project, researchers collected data from only three locations. They plan to expand the study after determining which measurement methods work best.",
+    question: "Why are they delaying expansion?",
+    options: [
+      { id: "A", text: "They have no interest in additional locations." },
+      { id: "B", text: "They want to refine their methods first." },
+      { id: "C", text: "The first locations were unsuccessful." },
+      { id: "D", text: "The project has been cancelled." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-159",
+    type: "mc",
+    difficulty: "hard",
+    skill: "main_idea",
+    passage: "Although online courses can provide flexibility, completion rates vary considerably. Researchers suggest that factors such as course design, student motivation and opportunities for interaction all influence whether students finish.",
+    question: "What is the main point?",
+    options: [
+      { id: "A", text: "Online courses always have low completion rates." },
+      { id: "B", text: "Course completion depends on several interacting factors." },
+      { id: "C", text: "Students dislike online learning." },
+      { id: "D", text: "Course design is the only important factor." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-160",
+    type: "mc",
+    difficulty: "hard",
+    skill: "specific_detail",
+    passage: "The research team collected temperature measurements every two hours for 30 days.",
+    question: "Approximately how many measurements were collected?",
+    options: [
+      { id: "A", text: "180" },
+      { id: "B", text: "240" },
+      { id: "C", text: "360" },
+      { id: "D", text: "720" }
+    ],
+    answer: "C",
+  },
 ];
