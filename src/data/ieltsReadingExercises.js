@@ -671,4 +671,299 @@ export const IELTS_READING_EXERCISES = [
     ],
     answer: "A",
   },
+  {
+    id: "R-MC-121",
+    type: "mc",
+    difficulty: "medium",
+    skill: "main_idea",
+    passage: "Many museums now offer virtual tours. These tours allow people to view exhibitions from home and can be especially useful for visitors who live far away.",
+    question: "What is the main idea?",
+    options: [
+      { id: "A", text: "Museums are closing permanently." },
+      { id: "B", text: "Virtual tours can make museums more accessible." },
+      { id: "C", text: "Most visitors dislike museums." },
+      { id: "D", text: "Virtual tours are more expensive than travel." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-122",
+    type: "mc",
+    difficulty: "medium",
+    skill: "vocabulary",
+    passage: "The committee decided to postpone the event because of severe weather.",
+    question: "What does “postpone” mean?",
+    options: [
+      { id: "A", text: "Cancel permanently" },
+      { id: "B", text: "Move to a later time" },
+      { id: "C", text: "Finish early" },
+      { id: "D", text: "Advertise" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-123",
+    type: "mc",
+    difficulty: "medium",
+    skill: "specific_detail",
+    passage: "The new recycling programme began with paper and cardboard. Glass containers were added six months later.",
+    question: "Which material was added later?",
+    options: [
+      { id: "A", text: "Paper" },
+      { id: "B", text: "Cardboard" },
+      { id: "C", text: "Glass" },
+      { id: "D", text: "Plastic" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-124",
+    type: "mc",
+    difficulty: "medium",
+    skill: "reference",
+    passage: "The company introduced flexible working hours. This change allowed employees to begin their day earlier or later.",
+    question: "What does “This change” refer to?",
+    options: [
+      { id: "A", text: "Employees leaving the company" },
+      { id: "B", text: "Flexible working hours" },
+      { id: "C", text: "The company building" },
+      { id: "D", text: "The employees' commute" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-125",
+    type: "mc",
+    difficulty: "medium",
+    skill: "true_false_not_given",
+    passage: "The park contains a lake, two playgrounds and several walking paths. It is most crowded on Sunday afternoons.",
+    question: "Statement: The park is closed on Sundays. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-126",
+    type: "mc",
+    difficulty: "medium",
+    skill: "matching_information",
+    passage: "A. The first experiment lasted two weeks.\nB. The second experiment lasted three months.\nC. The third experiment was repeated several times.",
+    question: "Which experiment was repeated?",
+    options: [
+      { id: "A", text: "A" },
+      { id: "B", text: "B" },
+      { id: "C", text: "C" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-127",
+    type: "mc",
+    difficulty: "medium",
+    skill: "inference",
+    passage: "The school introduced lockers near the sports hall. Within a month, fewer bags were left in the corridor.",
+    question: "What probably caused the decrease in bags in the corridor?",
+    options: [
+      { id: "A", text: "More students stopped attending sports classes." },
+      { id: "B", text: "Students began using the lockers." },
+      { id: "C", text: "Teachers removed the bags." },
+      { id: "D", text: "The corridor became smaller." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-128",
+    type: "mc",
+    difficulty: "medium",
+    skill: "main_purpose",
+    passage: "The report compares three methods of transporting food. It discusses their cost, speed and environmental impact.",
+    question: "Why was the report written?",
+    options: [
+      { id: "A", text: "To advertise a transport company" },
+      { id: "B", text: "To compare different transport methods" },
+      { id: "C", text: "To describe one food shipment" },
+      { id: "D", text: "To explain how food is produced" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-129",
+    type: "mc",
+    difficulty: "medium",
+    skill: "vocabulary",
+    passage: "The project is sustainable because it uses local materials and can continue without large amounts of outside funding.",
+    question: "What does “sustainable” mean here?",
+    options: [
+      { id: "A", text: "Able to continue over time" },
+      { id: "B", text: "Extremely expensive" },
+      { id: "C", text: "Difficult to understand" },
+      { id: "D", text: "Designed for one season only" }
+    ],
+    answer: "A",
+  },
+  {
+    id: "R-MC-130",
+    type: "mc",
+    difficulty: "medium",
+    skill: "sentence_completion",
+    passage: "The language course has three levels: beginner, intermediate and advanced. Students take a placement test before joining a class.",
+    question: "Students take a ______ before choosing a level.",
+    options: [
+      { id: "A", text: "final exam" },
+      { id: "B", text: "placement test" },
+      { id: "C", text: "speaking competition" },
+      { id: "D", text: "university interview" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-131",
+    type: "mc",
+    difficulty: "medium",
+    skill: "inference",
+    passage: "Researchers gave one group of students printed textbooks and another group digital textbooks. After eight weeks, both groups performed similarly on a reading test.",
+    question: "What did the results suggest?",
+    options: [
+      { id: "A", text: "Digital textbooks were clearly worse." },
+      { id: "B", text: "Printed textbooks were clearly better." },
+      { id: "C", text: "Both formats produced similar reading performance." },
+      { id: "D", text: "Students refused to use digital textbooks." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-132",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "Although the new train was designed to reduce journey times, passengers reported little improvement during the first month. Engineers later discovered that several sections of track required maintenance.",
+    question: "Why may the train have failed to reduce journey times initially?",
+    options: [
+      { id: "A", text: "Passengers were using the wrong stations." },
+      { id: "B", text: "Track problems limited its performance." },
+      { id: "C", text: "The train had too few seats." },
+      { id: "D", text: "The train was only used at night." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-133",
+    type: "mc",
+    difficulty: "hard",
+    skill: "true_false_not_given",
+    passage: "The researchers observed that students who slept more tended to perform better on memory tasks. However, because the study was observational, the researchers could not establish that additional sleep directly caused the improvement.",
+    question: "Statement: The study proved that more sleep causes better memory. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-134",
+    type: "mc",
+    difficulty: "hard",
+    skill: "main_idea",
+    passage: "Some governments provide subsidies for electric vehicles. These policies can accelerate adoption, but their effect depends on factors such as charging infrastructure, electricity prices and consumer preferences.",
+    question: "What is the main point?",
+    options: [
+      { id: "A", text: "Subsidies are the only way to increase electric-vehicle use." },
+      { id: "B", text: "Electric vehicles are always cheaper." },
+      { id: "C", text: "The success of subsidies depends on several other factors." },
+      { id: "D", text: "Consumers dislike electric vehicles." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-135",
+    type: "mc",
+    difficulty: "hard",
+    skill: "vocabulary",
+    passage: "The findings challenge the assumption that all young people prefer digital communication to face-to-face interaction.",
+    question: "What does “challenge” mean?",
+    options: [
+      { id: "A", text: "Support strongly" },
+      { id: "B", text: "Put into question" },
+      { id: "C", text: "Explain clearly" },
+      { id: "D", text: "Repeat" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-136",
+    type: "mc",
+    difficulty: "hard",
+    skill: "matching_information",
+    passage: "A. Professor Ali argues that tree planting should focus on native species.\nB. Professor Chen believes urban design should prioritize public transport.\nC. Professor Silva emphasizes the importance of water management.",
+    question: "Who focuses on transport systems?",
+    options: [
+      { id: "A", text: "Ali" },
+      { id: "B", text: "Chen" },
+      { id: "C", text: "Silva" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-137",
+    type: "mc",
+    difficulty: "hard",
+    skill: "inference",
+    passage: "A company introduced a four-day workweek without reducing salaries. Productivity remained stable during the first six months, but managers reported that some teams needed additional coordination.",
+    question: "What can be inferred?",
+    options: [
+      { id: "A", text: "The policy created no challenges at all." },
+      { id: "B", text: "Productivity necessarily increased." },
+      { id: "C", text: "The new schedule may require changes in team coordination." },
+      { id: "D", text: "All employees preferred the new system." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-138",
+    type: "mc",
+    difficulty: "hard",
+    skill: "true_false_not_given",
+    passage: "A university study followed students for four years. Those who participated in music activities reported stronger social connections, although the study did not determine whether music participation caused those connections.",
+    question: "Statement: The researchers proved that music activities create stronger social relationships. True, False, or Not Given?",
+    options: [
+      { id: "A", text: "TRUE" },
+      { id: "B", text: "FALSE" },
+      { id: "C", text: "NOT GIVEN" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "R-MC-139",
+    type: "mc",
+    difficulty: "hard",
+    skill: "specific_detail",
+    passage: "The first version of the software was tested by 120 volunteers. After changes were made, the second version was tested by 300 volunteers.",
+    question: "How many volunteers tested the second version?",
+    options: [
+      { id: "A", text: "120" },
+      { id: "B", text: "180" },
+      { id: "C", text: "300" },
+      { id: "D", text: "420" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "R-MC-140",
+    type: "mc",
+    difficulty: "hard",
+    skill: "main_purpose",
+    passage: "The article examines why some public parks attract more visitors than others. It considers location, facilities, maintenance and the availability of activities.",
+    question: "What is the author's main purpose?",
+    options: [
+      { id: "A", text: "To recommend one specific park" },
+      { id: "B", text: "To identify factors that influence park use" },
+      { id: "C", text: "To argue that parks should charge entry fees" },
+      { id: "D", text: "To explain how parks are built" }
+    ],
+    answer: "B",
+  },
 ];
