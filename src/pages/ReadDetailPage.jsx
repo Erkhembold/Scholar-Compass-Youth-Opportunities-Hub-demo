@@ -29,7 +29,12 @@ export default function ReadDetailPage({ id }) {
     );
   }
 
-  const { title, category, pattern, image, source, sourceUrl, summary, external } = read;
+  const { title, category, pattern, image, source, sourceUrl, summary, external, body } = read;
+  // `body` holds a full original article, reproduced as-is: paragraphs are
+  // separated by a blank line in the source, and any single line breaks
+  // within one paragraph are preserved visually via CSS (white-space:
+  // pre-line on .read-detail__paragraph) rather than by changing the text.
+  const paragraphs = body ? body.split(/\n\n+/) : [];
 
   return (
     <article className="section detail">
@@ -58,7 +63,13 @@ export default function ReadDetailPage({ id }) {
         </header>
 
         <div className="detail__content read-detail__content">
-          {external ? (
+          {body ? (
+            paragraphs.map((para, i) => (
+              <p className="read-detail__paragraph" key={i}>
+                {para}
+              </p>
+            ))
+          ) : external ? (
             <>
               <p>{summary}</p>
               <div className="read-detail__credit">

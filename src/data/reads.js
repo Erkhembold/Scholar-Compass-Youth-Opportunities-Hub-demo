@@ -4,12 +4,24 @@
 // are written in our own words. Entries with `external: true` are backed by
 // a real free article: `source`/`sourceUrl` are shown and credited in full
 // on the read page, with an outbound link so the original authors get the
-// visit and the credit. Entries without `sourceUrl` are original
-// ScholarCompass editorial placeholders pending a written article.
+// visit and the credit. Entries with a `body` (see readBodies.js) are full
+// original ScholarCompass articles, reproduced in full on the read page.
+// Entries with neither are editorial placeholders pending a written article.
 
 import volunteerCleanupImg from "../assets/reads/volunteer-cleanup.jpg";
+import unvOnlineVolunteeringImg from "../assets/reads/unv-online-volunteering.png";
+import { UNV_ONLINE_VOLUNTEERING_BODY } from "./readBodies.js";
 
 export const reads = [
+  {
+    id: "r-16",
+    category: "Volunteering",
+    title:
+      "ONLINE VOLUNTEERING: МОНГОЛ СУРАГЧ ГЭРИЙНХЭЭ БУЮУ СУРГУУЛИАСАА ДЭЛХИЙН БАЙГУУЛЛАГАД ЯАЖ ХУВЬ НЭМЭР ОРУУЛАХ ВЭ?",
+    pattern: "grid",
+    image: unvOnlineVolunteeringImg,
+    body: UNV_ONLINE_VOLUNTEERING_BODY,
+  },
   {
     id: "r-01",
     category: "IELTS",

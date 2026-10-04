@@ -1729,6 +1729,11 @@ p {
   color: var(--ink);
 }
 
+.read-detail__paragraph {
+  white-space: pre-line;
+  margin-bottom: 20px;
+}
+
 .read-detail__credit {
   margin-top: 24px;
   padding: 20px;
