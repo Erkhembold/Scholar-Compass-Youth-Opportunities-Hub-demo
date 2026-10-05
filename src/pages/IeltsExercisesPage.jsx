@@ -1,15 +1,16 @@
 import { useMemo, useState } from "react";
 import { IELTS_READING_EXERCISES } from "../data/ieltsReadingExercises.js";
+import { IELTS_WRITING_EXERCISES } from "../data/ieltsWritingExercises.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { saveExerciseAttempt } from "../utils/ieltsExerciseHistory.js";
 
 const SKILL_META = {
-  reading: { label: "Reading", ready: true },
+  reading: { label: "Reading", ready: true, exercises: IELTS_READING_EXERCISES },
   listening: { label: "Listening", ready: false },
   speaking: { label: "Speaking", ready: false },
-  writing: { label: "Writing", ready: false },
+  writing: { label: "Writing", ready: true, exercises: IELTS_WRITING_EXERCISES },
 };
 
 const DIFFICULTY_LABEL = { easy: "Easy", medium: "Medium", hard: "Hard" };
@@ -50,13 +51,18 @@ export default function IeltsExercisesPage({ skill }) {
     );
   }
 
-  return <ReadingExerciseRunner />;
+  // key={skill} forces a fresh mount (fresh index/selected/checked state)
+  // when switching between Reading and Writing rather than carrying over
+  // state from one exercise array into the other.
+  return <ExerciseRunner key={skill} exercises={meta.exercises} label={meta.label} />;
 }
 
-function ReadingExerciseRunner() {
+// Shared by Reading and Writing — both use the same `mc` question schema
+// (see ieltsReadingExercises.js / ieltsWritingExercises.js), so one runner
+// works for either as long as it's told which array and which label to show.
+function ExerciseRunner({ exercises, label }) {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const exercises = IELTS_READING_EXERCISES;
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState(null); // mc/matching: string; tfng: array; completion: string
   const [checked, setChecked] = useState(false);
@@ -105,10 +111,9 @@ function ReadingExerciseRunner() {
         </a>
 
         <div className="section__head">
-          <h1 className="section__title">IELTS Reading Exercises</h1>
+          <h1 className="section__title">IELTS {t(label)} Exercises</h1>
           <p className="section__lede">
-            Short, targeted practice — one passage and a quick question at a time. Not a timed
-            mock test.
+            Short, targeted practice — one question at a time. Not a timed mock test.
           </p>
           {!user && (
             <p className="section__lede">
@@ -132,7 +137,7 @@ function ReadingExerciseRunner() {
             )}
           </div>
 
-          <div className="exercise-runner__passage">{exercise.passage}</div>
+          {exercise.passage && <div className="exercise-runner__passage">{exercise.passage}</div>}
 
           <ExerciseQuestion
             exercise={exercise}

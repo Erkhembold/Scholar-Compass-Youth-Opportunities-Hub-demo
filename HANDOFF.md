@@ -927,6 +927,14 @@ after the edit-form ternary, rendering a stray `}` next to the "Edit
 details" button on every load. Fixed (one-line removal).
 
 ## Known issues / unfinished work (as of this handoff)
+- IELTS Writing exercises (the short-drill mode, `ieltsWritingExercises.js`
+  — not the full essay grader) now save attempts to the same
+  `ielts_exercise_attempts` table as Reading exercises, with nothing
+  distinguishing the two. `ProfilePage.jsx`'s "IELTS Reading" stat card
+  will silently start including Writing-exercise accuracy too once people
+  use it. Fix needs a `section` column (migration) + a `utils/progress.js`
+  change to filter by it. Not done yet — flagging so it isn't mistaken for
+  an oversight.
 - **Why SAT Math 1v1 grades server-side instead of matching the SAT/
   IELTS 1v1 pattern**: the user's requirements for SAT Math 1v1 were
   explicit that "players cannot modify each other's scores" and to
