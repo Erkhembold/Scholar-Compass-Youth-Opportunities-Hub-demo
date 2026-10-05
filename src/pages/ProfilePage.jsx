@@ -13,6 +13,7 @@ import StreakCard from "../components/StreakCard.jsx";
 import ProgressTracker from "../components/ProgressTracker.jsx";
 import WeakAreaCard from "../components/WeakAreaCard.jsx";
 import RoadmapCard from "../components/RoadmapCard.jsx";
+import FriendsSection from "../components/FriendsSection.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, triggerWeeklyRollover } from "../utils/leaderboard.js";
@@ -275,6 +276,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        <div className="profile-split">
         <CollapsibleSection title="Account details">
           <label className="visibility-toggle">
             <input type="checkbox" checked={visible} disabled={visibilitySaving} onChange={handleVisibilityToggle} />
@@ -405,6 +407,11 @@ export default function ProfilePage() {
             </form>
           )}
         </CollapsibleSection>
+
+        <CollapsibleSection title="Friends" defaultOpen>
+          <FriendsSection />
+        </CollapsibleSection>
+        </div>
 
         <CollapsibleSection title="IELTS Reading history">
           {attemptsLoading ? (

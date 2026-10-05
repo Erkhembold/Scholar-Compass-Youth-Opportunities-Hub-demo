@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import Avatar from "../components/Avatar.jsx";
-import { profileHref } from "../router.js";
+import FriendButton from "../components/FriendButton.jsx";
+import LeagueBadge from "../components/LeagueBadge.jsx";
+import { LEAGUE_BY_ID } from "../data/leagues.js";
+import { leaderboardHref, profileHref } from "../router.js";
 
-// Another student's card: name, photo, streak, and target scores only —
-// nothing else, and never editable here. What's actually shown is decided
+// Another student's card: name, photo, streak, target scores, league and
+// rank, weekly-achievement badges, plus the friend button — nothing else,
+// and never editable here. What's actually shown is decided
 // entirely by public.get_public_profile() in
 // supabase/public_profiles_and_avatars.sql: it returns exactly these
 // fields, returns nothing at all if the profile doesn't exist or its
@@ -97,6 +101,9 @@ export default function PublicProfilePage({ id }) {
   }
 
   const hasStreak = data.current_streak > 0;
+  // league fields only exist once supabase/friends.sql has been run
+  const league = data.current_league ? LEAGUE_BY_ID[data.current_league] : null;
+  const badges = Array.isArray(data.badges) ? data.badges : [];
 
   return (
     <section className="section signin">
@@ -106,6 +113,17 @@ export default function PublicProfilePage({ id }) {
           <h1 className="signin__title" style={{ marginTop: 16 }}>
             {data.name || "ScholarCompass student"}
           </h1>
+          {league && (
+            <p className="public-profile-league" data-league={league.id}>
+              <span className="public-profile-league__chip">{league.name} League</span>
+              {data.league_rank ? (
+                <span className="public-profile-league__rank">
+                  Rank #{data.league_rank} of {data.league_size}
+                </span>
+              ) : null}
+            </p>
+          )}
+          <FriendButton userId={data.id} />
         </div>
 
         <div className="streak-card" data-state={hasStreak ? "done_today" : "none"} style={{ marginTop: 24 }}>
@@ -139,6 +157,20 @@ export default function PublicProfilePage({ id }) {
             <dd>{data.ielts_target_score ?? "Not set"}</dd>
           </div>
         </dl>
+
+        {badges.length > 0 && (
+          <div className="public-profile-badges">
+            <h2 className="public-profile-badges__title">Weekly achievements</h2>
+            <div className="achievements-list">
+              {badges.map((b, i) => (
+                <LeagueBadge key={i} placement={b.placement} badge={b.badge} leagueId={b.league} week={b.week} />
+              ))}
+            </div>
+          </div>
+        )}
+        <p className="public-profile-back">
+          <a href={leaderboardHref()}>← Back to leaderboard</a>
+        </p>
       </div>
     </section>
   );

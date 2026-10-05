@@ -702,6 +702,43 @@ deadline, no date published so it never auto-archives), (3) **TEEN ХУРАЛД�
 `https://hurteemj.github.io/.mn` exactly as written in the post (registration
 steps were in a 2nd image we don't have) - verify it resolves. No SQL involved.
 
+## Friends + richer public profiles (built — SQL must be run)
+**Manual step (NOT yet confirmed run):** `supabase/friends.sql` in the SQL Editor.
+Run it AFTER `public_profiles_and_avatars.sql` (it replaces `get_public_profile()`
+and uses `ub_today()`). Idempotent. Until it runs the UI degrades gracefully:
+the Friends card and the friend button show "Friends aren't switched on yet" and
+the public profile simply omits league/rank/badges.
+
+- **Public profiles** reuse the existing route `#/u/:id` (`PublicProfilePage`);
+  leaderboard names/avatars already link there, and so does every friend row.
+  `get_public_profile()` now also returns `current_league`, `league_rank`/
+  `league_size` (rank by weekly XP among that league) and `badges`. Still NO
+  email/school/grade/major/XP/history, and still null for hidden profiles.
+  Your own `#/u/<your id>` points to the real Profile page (edit controls).
+- **Table `public.friendships`**: one row per PAIR (unique index on
+  least/greatest of the two ids, so duplicates and crossed requests can't
+  exist), `status` pending|accepted, self-friending blocked by CHECK. RLS: select
+  only for the two people; clients have NO insert/update/delete rights.
+- **All changes go through SECURITY DEFINER RPCs**: `send_friend_request`
+  (if they already asked you, it accepts instead), `respond_friend_request`
+  (recipient only; decline deletes the row so either side can re-request),
+  `remove_friendship` (cancel your own pending request, or unfriend; recipients
+  use decline), `get_my_friendships` (names/avatars; league + streak hidden for
+  people with `profile_visible = false`). Hidden profiles can't be requested.
+- **UI**: `hooks/useFriendships.js` (shared via a `sc:friends` window event),
+  `components/FriendButton.jsx` (public profile: Add friend / Request sent +
+  Cancel / Accept + Decline / Friends + Unfriend-with-confirm),
+  `components/FriendsSection.jsx` (Profile page: requests, sent requests,
+  friends). Profile page: Account details + Friends sit side by side in
+  `.profile-split` (stacks under 900px; both are accordions on mobile).
+  There is no user search yet: people are found via the leaderboard.
+- **Verified**: SQL against local Postgres 16 with stubbed auth/roles (self,
+  hidden, unknown, duplicate, crossed, non-party accept/read/unfriend, sender
+  self-accept, direct table writes blocked, anon blocked, decline/cancel/unfriend,
+  public profile fields + rank, hidden-profile masking, idempotent re-run). UI in
+  headless Chrome with a mocked backend: 58 checks over 390/1280 x light/dark,
+  no horizontal overflow, no page errors. Not verified against live Supabase.
+
 ## Not built yet (from the dashboard spec)
 Nothing remains from the original four-priority dashboard plan.
 

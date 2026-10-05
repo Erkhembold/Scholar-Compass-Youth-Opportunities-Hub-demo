@@ -5977,3 +5977,184 @@ a.roadmap-step:hover {
     align-items: stretch;
   }
 }
+
+/* Friends + richer public profile ---------------------------------------- */
+.btn--danger-ghost {
+  background: transparent;
+  color: var(--status-red-text);
+  border: 1px solid currentColor;
+}
+.btn--danger-ghost:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--status-red-text) 10%, transparent);
+}
+
+.friend-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.friend-actions__label {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.friend-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-alt, var(--white));
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.friend-pill--on {
+  color: var(--status-green-text);
+  border-color: currentColor;
+}
+.friend-note {
+  flex-basis: 100%;
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+.friend-note--error {
+  color: var(--status-red-text);
+}
+
+.public-profile-league {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 10px 0 0;
+}
+.public-profile-league__chip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--league-chip-bg, var(--surface-alt));
+  color: var(--league-chip-fg, var(--ink));
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.public-profile-league__rank {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+.public-profile-badges {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 24px;
+}
+.public-profile-badges__title {
+  font-size: 0.95rem;
+  margin: 0 0 10px;
+}
+.public-profile-back {
+  margin-top: 24px;
+  font-size: 0.9rem;
+}
+
+/* Account details + Friends side by side on desktop, stacked on mobile */
+.profile-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+.profile-split > .profile-accordion__item {
+  min-width: 0;
+  margin: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 900px) {
+  .profile-split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-bottom: 0;
+  }
+}
+
+.friends-section__subhead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 8px;
+  font-size: 0.95rem;
+}
+.friends-section__subhead:first-child {
+  margin-top: 0;
+}
+.friends-section__count {
+  display: inline-flex;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--blue-solid, #0068d6);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.friends-section__empty {
+  margin: 0;
+}
+.friend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.friend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+}
+.friend-row__who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1 1 160px;
+  color: inherit;
+  text-decoration: none;
+}
+.friend-row__who:hover .friend-row__name {
+  text-decoration: underline;
+}
+.friend-row__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.friend-row__name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.friend-row__meta {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.friend-row__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
