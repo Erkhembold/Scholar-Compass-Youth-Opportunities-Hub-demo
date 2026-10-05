@@ -397,4 +397,8 @@ export const translations = {
   // Dashboard
   "Good to see you": "Тавтай морил",
   "Good to see you, {name}": "Тавтай морил, {name}",
+  // Dashboard header (streamlined homepage)
+  "Hello {name}!": "Сайн байна уу, {name}!",
+  "Hello!": "Сайн байна уу!",
+  "Day Streak": "өдрийн цуврал",
 };

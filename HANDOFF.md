@@ -586,6 +586,43 @@ SQL Editor. Independent of the other migrations. Idempotent.
   Supabase project.
 
 
+## Homepage (`#/`) simplified, per the user's own sketch
+Following a rough reference image the user drew (greeting + streak pill
+top-right, "Level progress" and "Your progress" centered side by side,
+nothing else above the Opportunity board), `DashboardPage.jsx` was pared
+back down:
+- **Removed from `#/`**: the full `StreakCard` (week row, longest-streak
+  stat, milestone messaging), `WeakAreaCard`, and `RoadmapCard`. All
+  three still exist and render in full on `/profile` (now the "everything"
+  view; `#/` is the lean daily check-in) — nothing was deleted, just
+  un-rendered from the homepage specifically.
+- **New `components/DashboardStreakPill.jsx`**: a compact "🔥 X Day
+  Streak" readout for the header only — no week row, no longest-streak
+  stat, no milestone text. Links to `/profile/stats`. Renders nothing at
+  all (not even "0 Day Streak") while `isSetUp` is false, so a
+  not-yet-migrated database never shows a misleading zero.
+- **`dashboard__header`**: greeting and the streak pill in one flex row,
+  pill right-aligned, matching the sketch's "Hello, user! ... X Day
+  Streak" layout. Wraps to stack cleanly on mobile.
+- **`dashboard__cards` now centers exactly two cards** (`LevelCard` +
+  `ProgressTracker`) instead of the previous 4-card auto-fit grid.
+- **Test files updated, not just the app**: several of this session's own
+  Playwright suites (`ui_test.py`, parts of `ui_test2/4/6.py`) had
+  hard-coded assumptions that the full StreakCard/WeakAreaCard/RoadmapCard
+  lived on `#/` — because at the time they were written, they did. Updated
+  those specific assertions to check `/profile` instead, where that
+  content now actually lives; the ProgressTracker-specific assertions in
+  the same files correctly stayed on `#/`, since that card IS still there.
+  This is the same category of fix as the earlier `#/profile` → `#/`
+  updates from when the cards first moved the other direction — tests
+  tracking where the UI genuinely is, not a sign of app regressions.
+- **Verified**: 14 new checks (greeting, streak pill content and its
+  absence pre-migration, Level/Progress presence, confirmed absence of
+  the three removed sections, Opportunity board still present, light/dark/
+  mobile) plus the full existing suite (96 prior checks) all passing
+  after retargeting. Build, CSS-brace check, contrast check, and this
+  repo's own `npm test` all clean.
+
 ## Merge note: onboarding/dashboard session vs. the concurrent Profile redesign
 Two sessions touched the same ground at the same time: this session built
 the onboarding flow + a separate `DashboardPage` (originally making
