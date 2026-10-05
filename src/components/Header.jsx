@@ -4,6 +4,7 @@ import { categoryHref, leaderboardHref, profileHref, signInHref, useRoute } from
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
+import TextSizeToggle from "./TextSizeToggle.jsx";
 import LanguageToggle from "./LanguageToggle.jsx";
 import logoIcon from "../assets/brand/scholarcompass-icon.png";
 
@@ -81,6 +82,7 @@ export default function Header() {
 
         <div className="site-header__actions">
           <LanguageToggle className="header-only-control" />
+          <TextSizeToggle className="header-only-control" />
           <button
             type="button"
             className="nav-toggle"
@@ -138,6 +140,7 @@ export default function Header() {
       <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile" hidden={!open}>
         <div className="mobile-nav__toggles">
           <LanguageToggle />
+          <TextSizeToggle />
           <ThemeToggle />
         </div>
         <ul>

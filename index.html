@@ -14,6 +14,7 @@
     <script>
       (function () {
         try {
+          var root = document.documentElement;
           var stored = localStorage.getItem("scholarcompass-theme");
           var theme =
             stored === "light" || stored === "dark"
@@ -21,7 +22,12 @@
               : window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
               : "light";
-          document.documentElement.setAttribute("data-theme", theme);
+          root.setAttribute("data-theme", theme);
+
+          var textSize = localStorage.getItem("scholarcompass-text-size");
+          if (textSize === "large" || textSize === "larger") {
+            root.setAttribute("data-text-size", textSize);
+          }
         } catch (e) {}
       })();
     </script>
