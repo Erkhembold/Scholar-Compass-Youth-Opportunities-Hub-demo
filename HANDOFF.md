@@ -623,6 +623,26 @@ back down:
   after retargeting. Build, CSS-brace check, contrast check, and this
   repo's own `npm test` all clean.
 
+## Fixed a landmine between onboarding.sql and the Google sign-in migration
+`supabase/onboarding.sql` and `supabase/google_oauth_profile_name_fallback.sql`
+(the latter from a concurrent session, see below) both used `create or
+replace function public.handle_new_user()` — which replaces the ENTIRE
+function body, not just the part each file cared about. The Google file
+predated `onboarding_completed` and didn't set it, so running it *after*
+`onboarding.sql` would have silently reverted every future sign-up
+(Google or email/password) to not getting `onboarding_completed = false`,
+quietly breaking "new users see onboarding" with no error of any kind.
+Fixed by merging both fixes into each file (so either one, run in either
+order, or alone, produces the same correct result), and adding a
+cross-reference comment in each so a future edit to one doesn't
+reintroduce the drift. Verified against local Postgres in both run
+orders, confirmed idempotent (re-running either file doesn't reset an
+existing user back into onboarding), and confirmed normal email/password
+sign-ups are unaffected.
+**Not yet confirmed which order was actually run on the live project** —
+if you're unsure, just re-run both files now (in either order); the fix
+makes that safe.
+
 ## Merge note: onboarding/dashboard session vs. the concurrent Profile redesign
 Two sessions touched the same ground at the same time: this session built
 the onboarding flow + a separate `DashboardPage` (originally making

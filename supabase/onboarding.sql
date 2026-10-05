@@ -29,11 +29,22 @@ alter table public.profiles add column if not exists preparing_for_ielts boolean
 alter table public.profiles add column if not exists sat_target_date date;
 alter table public.profiles add column if not exists ielts_target_date date;
 
+-- IMPORTANT: this function is also defined in
+-- supabase/google_oauth_profile_name_fallback.sql (adds a full_name
+-- fallback for Google sign-ins). Because `create or replace function`
+-- replaces the ENTIRE body, these two files must stay in sync — keep
+-- both fixes in whichever copy is edited, or a later run of the other
+-- file will silently undo it.
 create or replace function public.handle_new_user()
 returns trigger as $$
 begin
   insert into public.profiles (id, name, email, onboarding_completed)
-  values (new.id, new.raw_user_meta_data->>'name', new.email, false);
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data->>'name', new.raw_user_meta_data->>'full_name'),
+    new.email,
+    false
+  );
   return new;
 end;
 $$ language plpgsql security definer;
