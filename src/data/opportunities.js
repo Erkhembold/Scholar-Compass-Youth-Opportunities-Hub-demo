@@ -34,6 +34,9 @@ import openParliamentImg from "../assets/opportunities/open-parliament-hackathon
 import wcsFieldAssistantImg from "../assets/opportunities/wcs-field-assistant.png";
 import arcEduTeenResearcherImg from "../assets/opportunities/arc-edu-teen-researcher.png";
 import artGalleryPaintingCourseImg from "../assets/opportunities/mongolian-art-gallery-painting-course.png";
+import seanAcademyVolunteerImg from "../assets/opportunities/sean-academy-volunteer-english-teacher.png";
+import ilspsdErasmusImg from "../assets/opportunities/ilspsd-erasmus-mundus-2027.png";
+import teenHuraldaiImg from "../assets/opportunities/teen-huraldai-2026.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -800,5 +803,111 @@ ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагч�
 📞 Холбогдох утас: 11327177, 99598735`,
     links: [],
     contactNote: "Утас: 11327177, 99598735",
+  },
+  {
+    id: "sean-academy-volunteer-english-teacher-2026",
+    title: "Sean Academy — Хүүхдүүдэд англи хэл заах сайн дурын ажил",
+    category: "volunteering",
+    image: seanAcademyVolunteerImg,
+    pattern: "grid",
+    // No registration deadline was published; the programme runs to Dec 20,
+    // so archiveDate retires the listing after that (label-only rule).
+    deadline: { label: "Programme starts Oct 10, 2026", archiveDate: "2026-12-20" },
+    essential: {
+      duration: "Oct 10 – Dec 20, 2026 · 3 times a week, 1.5 hours each",
+      cost: "Free (volunteers receive transport allowance)",
+      participants: "6 volunteers (±)",
+      whoFor: "Intermediate/advanced English speakers. Under-18s may assist as teaching helpers with a signed parental consent form.",
+      organizer: "Sean English Academy (Hurteemj)",
+    },
+    description: `Манай анхны сайн дурын ажил зарлагдлаа! 🎉
+
+📚 Sean academy-д хүүхдүүдэд англи хэл заах
+📍 Улаанчулуутын хогийн цэгийн ойролцоо
+🗓 10-р сарын 10 – 12-р сарын 20, долоо хоногт 3 удаа, удаадаа 1.5 цаг
+👥 6 хүн авна (+,-)
+
+Сонгинохайрхан дүүргийн хүүхдүүдэд англи хэл заах сайн дурын ажилтан хайж байна. Англи хэлний дунд, ахисан түвшний хүмүүс бүгд тавтай морилно уу.
+
+🎁 Сайн дурынханд:
+✅ Унааны мөнгө
+✅ Recommendation letter
+✅ Гадаадад суралцах зөвлөгөө
+
+⚠️ Утасны дугаараа үнэн зөв оруулаарай, баталгаажсан хүмүүстэй бид утсаар ярина. 18-аас доош насныхан туслах багшаар ажиллаж болох ч эцэг эхийн зөвшөөрлийн хуудас заавал шаардлагатай.
+
+Бүртгүүлэх заавар 2-р зурагт 👉 hurteemj.github.io/.mn
+
+#Hurteemj #volunteermongolia #English #songinhairhan`,
+    links: [
+      { label: "Register", href: "https://hurteemj.github.io/.mn" },
+      { label: "Instagram", href: "https://www.instagram.com/sean.english.academy/" },
+    ],
+  },
+  {
+    id: "ilspsd-erasmus-mundus-joint-master-2027",
+    title:
+      "Erasmus Mundus Joint Master — International Law of Security, Peace and Sustainable Development (ILSPSD), September 2027 intake",
+    category: "scholarships",
+    image: ilspsdErasmusImg,
+    pattern: "radial",
+    deadline: { label: "Applications open — see programme website for dates" },
+    essential: {
+      duration: "2-year joint master's programme (entry September 2027)",
+      cost: "Erasmus Mundus scholarship applications included",
+      participants: "Not specified",
+      whoFor: "Prospective master's students interested in law, security, peace and sustainability",
+      organizer: "ILSPSD consortium (Leuphana, IBEI Barcelona + Glasgow / ULB / NOVA Lisbon / Tartu)",
+    },
+    description: `📣 Applications for entry to the ILSPSD programme in September 2027, including Erasmus Mundus Scholarship applications, are now open!
+
+🌏 Study at Leuphana in semester 1, IBEI Barcelona in semester 2, and your choice of a third, world-class university in year two:
+
+🏴󠁧󠁢󠁳󠁣󠁴󠁿 University of Glasgow — focus on International Law and International Security
+🇧🇪 Université libre de Bruxelles — focus on Security and Conflict
+🇵🇹 Universidade NOVA de Lisboa — focus on Globalization, Law and Security
+🇪🇪 University of Tartu — focus on International Law and Human Rights
+
+With its focus on the nexus of law, security, peace and sustainability, ILSPSD equips you to address the defining challenges of the 21st century — and to become part of the solutions shaping our global future.
+
+👉 Visit the ILSPSD website for all the information you need to know about the programme.
+
+#ILSPSD #ErasmusMundus #EMJM #InternationalMasters`,
+    links: [
+      { label: "Programme website", href: "https://master-international-law-erasmusmundus.eu/" },
+    ],
+  },
+  {
+    id: "teen-huraldai-2026-applications",
+    title: "TEEN ХУРАЛДАЙ 2026 — Байгальд ээлтэй залуусын чуулга уулзалт (өргөдөл нээгдлээ)",
+    category: "events",
+    image: teenHuraldaiImg,
+    pattern: "radial",
+    deadline: { date: "2026-10-14", time: "23:45" },
+    essential: {
+      duration: "Application closes Oct 14, 2026, 23:45 (Ulaanbaatar time)",
+      cost: "Free — accommodation, meals and inter-city travel for regional participants are covered",
+      participants: "Not specified",
+      whoFor: "Students in grades 9–12 from across Mongolia",
+      organizer: "Mongolian Ecology Center NGO, with EU co-funding (YSC programme)",
+    },
+    description: `БАЙГАЛЬД ЭЭЛТЭЙ ЗАЛУУСЫН ИХ ХУРАЛДАЙН ЦАГ ИРЛЭЭ!
+
+🤩 Монгол орны дөрвөн зүг, найман зовхист оршин суугаа 9-12-р ангийн сурагчдын анхааралд!🙌🏻
+
+🌱 Монгол Экологи Төв НҮТББ-аас Европын Холбооны хамтын санхүүжилтээр хэрэгжүүлдэг "YSC" буюу "Залуучуудын Тогтвортой Хөгжлийн Корпус" хөтөлбөрийн хүрээнд ТАВ дахь жилдээ зохион байгуулж буй "TEEN ХУРАЛДАЙ 2026" Байгальд ээлтэй залуусын чуулга уулзалтын оролцогчдыг сонгон шалгаруулах өргөдөл намрын дунд сард ийнхүү нээгдлээ.🤩
+
+📨 Та био хэсэг дэх холбоосоор нэвтэрч өргөдлөө илгээгээрэй.📭
+
+⏰ Өргөдөл хүлээн авах холбоос 10 дугаар сарын 14-ны 23:45 цагт хаагдах болно. (Улаанбаатар хотын цагаар)
+
+‼️ Өргөдлийг зөвхөн холбоосоор нэвтэрч илгээх ба имэйл хаяг, бусад хэлбэрээр болон хоцорч илгээсэн тохиолдолд хүлээн авахгүйг анхаарна уу.
+
+✅ Хөтөлбөрт арга хэмжээний үеэр байрлах газар, хоол, мөн орон нутгаас оролцох оролцогчдын хот хоорондын тээврийн зардал багтсан болно.
+
+🇲🇳 Өргөдлөө илгээж буй байгальд ээлтэй залуу манлайлагч танд амжилт хүсье. Тун удахгүй уулзах өлзийтэй сайхан ерөөлийг өргөн дэвшүүлье.🫶🏻`,
+    links: [
+      { label: "Apply", href: "https://form.jotform.com/262721959731465" },
+    ],
   },
 ];

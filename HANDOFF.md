@@ -672,6 +672,16 @@ Both categorized `"events"` (existing category for structured programs
 that aren't scholarships/competitions/volunteering/internships — already
 used elsewhere in this file, just not one of the four filter tabs).
 
+## Three more opportunities (Oct 5, 2026)
+Appended to `data/opportunities.js` in this order (thumbnails match 1:1, files in
+`assets/opportunities/`): (1) **Sean Academy** volunteer English teaching
+(`volunteering`, label-only deadline + `archiveDate: 2026-12-20`), (2) **ILSPSD
+Erasmus Mundus Joint Master**, Sept 2027 intake (`scholarships`, label-only
+deadline, no date published so it never auto-archives), (3) **TEEN ХУРАЛДАЙ 2026**
+(`events`, deadline 2026-10-14 23:45 UB time). The Sean registration link is
+`https://hurteemj.github.io/.mn` exactly as written in the post (registration
+steps were in a 2nd image we don't have) - verify it resolves. No SQL involved.
+
 ## Not built yet (from the dashboard spec)
 Nothing remains from the original four-priority dashboard plan.
 
