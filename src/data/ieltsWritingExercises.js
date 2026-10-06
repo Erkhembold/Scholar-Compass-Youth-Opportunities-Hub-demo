@@ -331,4 +331,304 @@ export const IELTS_WRITING_EXERCISES = [
     ],
     answer: "A",
   },
+  {
+    id: "W-MC-021",
+    type: "mc",
+    difficulty: "medium",
+    skill: "task1",
+    passage: "",
+    question: "Which sentence appropriately describes a trend?",
+    options: [
+      { id: "A", text: "The number of students was going up very nicely." },
+      { id: "B", text: "Student numbers increased steadily over the period." },
+      { id: "C", text: "Students went up a lot." },
+      { id: "D", text: "The graph was happy to rise." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-022",
+    type: "mc",
+    difficulty: "medium",
+    skill: "task1",
+    passage: "",
+    question: "Which sentence best compares two figures?",
+    options: [
+      { id: "A", text: "Electricity use was 40%, and gas was 20%." },
+      { id: "B", text: "Electricity use was twice as high as gas use." },
+      { id: "C", text: "Electricity use and gas use were things on the graph." },
+      { id: "D", text: "Gas was electricity's opposite." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-023",
+    type: "mc",
+    difficulty: "hard",
+    skill: "sentence_improvement",
+    passage: "",
+    question: "Choose the clearest sentence.",
+    options: [
+      { id: "A", text: "Due to the fact that students have many assignments, they are unable to have enough time for rest." },
+      { id: "B", text: "Because students have many assignments, they may have insufficient time to rest." },
+      { id: "C", text: "Students have assignments and this is because they do not rest enough." },
+      { id: "D", text: "Assignments are many and rest is not enough for students." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-024",
+    type: "mc",
+    difficulty: "hard",
+    skill: "transition",
+    passage: "",
+    question: "Some people believe university education should be free. ______, others argue that students should contribute to the cost of their education.",
+    options: [
+      { id: "A", text: "Therefore" },
+      { id: "B", text: "In contrast" },
+      { id: "C", text: "For example" },
+      { id: "D", text: "As a result" }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-025",
+    type: "mc",
+    difficulty: "hard",
+    skill: "thesis",
+    passage: "",
+    question: "Which thesis is strongest for: “Is technology making communication better or worse?”",
+    options: [
+      { id: "A", text: "Technology is very important today." },
+      { id: "B", text: "This essay will discuss communication." },
+      { id: "C", text: "Although digital technology allows people to communicate more quickly, excessive reliance on it can reduce the quality of some face-to-face interactions." },
+      { id: "D", text: "Technology and communication are related." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "W-MC-026",
+    type: "mc",
+    difficulty: "hard",
+    skill: "argument_development",
+    passage: "Topic: Governments should invest more in public parks.",
+    question: "Which sentence provides the strongest supporting evidence?",
+    options: [
+      { id: "A", text: "Parks are nice and people like them." },
+      { id: "B", text: "Green spaces can provide residents with places for exercise and recreation while improving access to urban nature." },
+      { id: "C", text: "Parks are found in lots of cities." },
+      { id: "D", text: "Governments have money to spend." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-027",
+    type: "mc",
+    difficulty: "hard",
+    skill: "concision",
+    passage: "",
+    question: "Choose the most concise version.",
+    options: [
+      { id: "A", text: "Due to the fact that pollution levels are increasing, it is necessary that governments take action." },
+      { id: "B", text: "Because pollution levels are increasing, governments need to act." },
+      { id: "C", text: "Pollution levels are increasing, and this is a fact that is currently happening." },
+      { id: "D", text: "Governments, due to pollution levels that are increasing in nature, need action." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-028",
+    type: "mc",
+    difficulty: "hard",
+    skill: "transition",
+    passage: "",
+    question: "The city introduced a congestion charge. ______, the number of cars entering the centre fell.",
+    options: [
+      { id: "A", text: "As a result" },
+      { id: "B", text: "Nevertheless" },
+      { id: "C", text: "In contrast" },
+      { id: "D", text: "Similarly" }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-029",
+    type: "mc",
+    difficulty: "hard",
+    skill: "argument_development",
+    passage: "",
+    question: "Which sentence best explains why volunteering can benefit teenagers?",
+    options: [
+      { id: "A", text: "Teenagers volunteer in many places." },
+      { id: "B", text: "Volunteering can help teenagers develop communication and teamwork skills through practical experience." },
+      { id: "C", text: "Volunteer work is a popular topic." },
+      { id: "D", text: "Some teenagers enjoy helping people." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-030",
+    type: "mc",
+    difficulty: "hard",
+    skill: "coherence",
+    passage: "1. Public transport can reduce the number of private cars on the road.\n2. Buses and trains can also make commuting more affordable.\n3. Many students enjoy playing video games after school.\n4. Reliable public transport can therefore benefit both individuals and cities.",
+    question: "Which sentence does NOT belong in this paragraph?",
+    options: [
+      { id: "A", text: "Sentence 1" },
+      { id: "B", text: "Sentence 2" },
+      { id: "C", text: "Sentence 3" },
+      { id: "D", text: "Sentence 4" }
+    ],
+    answer: "C",
+  },
+  {
+    id: "W-MC-031",
+    type: "mc",
+    difficulty: "hard",
+    skill: "task1",
+    passage: "A chart shows:\nSolar: 10 → 30\nWind: 20 → 35\nCoal: 50 → 25\nGas: 20 → 10",
+    question: "Which is the strongest overview?",
+    options: [
+      { id: "A", text: "Renewable energy sources increased, while coal and gas declined." },
+      { id: "B", text: "Solar energy remained the least popular source." },
+      { id: "C", text: "Coal was always the most important source." },
+      { id: "D", text: "Gas increased slightly over the period." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-032",
+    type: "mc",
+    difficulty: "hard",
+    skill: "task1",
+    passage: "",
+    question: "Which sentence correctly describes data?",
+    options: [
+      { id: "A", text: "The percentage rose from 25% to 40%, an increase of 15 percentage points." },
+      { id: "B", text: "The percentage rose by 15% from 25% to 40%." },
+      { id: "C", text: "The percentage increased 25 points to 40%." },
+      { id: "D", text: "The percentage was increased 40 from 25." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-033",
+    type: "mc",
+    difficulty: "hard",
+    skill: "paraphrasing",
+    passage: "Original: Governments need to take immediate action to reduce air pollution.",
+    question: "Best paraphrase:",
+    options: [
+      { id: "A", text: "Immediate measures are required from governments to tackle air pollution." },
+      { id: "B", text: "Governments should perhaps think about air pollution one day." },
+      { id: "C", text: "Air pollution is something that governments know about." },
+      { id: "D", text: "Governments are pollution." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-034",
+    type: "mc",
+    difficulty: "hard",
+    skill: "formal_language",
+    passage: "",
+    question: "Which is most appropriate for an IELTS essay?",
+    options: [
+      { id: "A", text: "People nowadays totally freak out about social media." },
+      { id: "B", text: "Social media is pretty bad for everyone." },
+      { id: "C", text: "Excessive social-media use may have negative effects on users' well-being." },
+      { id: "D", text: "Social media can mess people up." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "W-MC-035",
+    type: "mc",
+    difficulty: "hard",
+    skill: "sentence_improvement",
+    passage: "",
+    question: "Choose the grammatically correct sentence.",
+    options: [
+      { id: "A", text: "Although public transport is cheaper, many people still prefer cars because they offer greater convenience." },
+      { id: "B", text: "Although public transport cheaper, many people still prefer cars because offer greater convenience." },
+      { id: "C", text: "Although public transport is cheaper, but many people prefer cars." },
+      { id: "D", text: "Public transport cheaper although people prefer cars because convenience." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-036",
+    type: "mc",
+    difficulty: "hard",
+    skill: "cause_effect",
+    passage: "",
+    question: "Which sentence has the clearest causal relationship?",
+    options: [
+      { id: "A", text: "Housing costs rose, so some families moved to cheaper areas." },
+      { id: "B", text: "Housing costs rose, although some families moved because cheaper." },
+      { id: "C", text: "Housing costs rose, and therefore cheaper areas were expensive." },
+      { id: "D", text: "Families moved to cheaper areas, despite housing costs." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-037",
+    type: "mc",
+    difficulty: "hard",
+    skill: "argument_development",
+    passage: "Topic: Some people believe university students should study only subjects directly related to their future careers.",
+    question: "Which sentence introduces a counterargument effectively?",
+    options: [
+      { id: "A", text: "However, a broader education may help students develop skills that are transferable across different careers." },
+      { id: "B", text: "University subjects are different." },
+      { id: "C", text: "Students have many classes." },
+      { id: "D", text: "Careers are important in life." }
+    ],
+    answer: "A",
+  },
+  {
+    id: "W-MC-038",
+    type: "mc",
+    difficulty: "hard",
+    skill: "conclusion",
+    passage: "",
+    question: "Which is the strongest concluding sentence for an essay arguing that cities should invest in cycling infrastructure?",
+    options: [
+      { id: "A", text: "In conclusion, bicycles are interesting." },
+      { id: "B", text: "To conclude, cities are places where people live." },
+      { id: "C", text: "Overall, expanding safe cycling infrastructure can reduce car dependence while encouraging healthier forms of urban travel." },
+      { id: "D", text: "That's all about cycling." }
+    ],
+    answer: "C",
+  },
+  {
+    id: "W-MC-039",
+    type: "mc",
+    difficulty: "hard",
+    skill: "thesis",
+    passage: "Question: “Some people think schools should teach financial skills such as budgeting and saving. To what extent do you agree?”",
+    question: "Which sentence gives the clearest position?",
+    options: [
+      { id: "A", text: "Money is important to everyone." },
+      { id: "B", text: "I think schools should teach financial skills because students need to make informed decisions about money as they become independent." },
+      { id: "C", text: "This topic has many opinions." },
+      { id: "D", text: "Students learn many things at school." }
+    ],
+    answer: "B",
+  },
+  {
+    id: "W-MC-040",
+    type: "mc",
+    difficulty: "hard",
+    skill: "sentence_combination",
+    passage: "Many students use online resources. These resources provide access to information at any time.",
+    question: "Combine the ideas most effectively.",
+    options: [
+      { id: "A", text: "Many students use online resources, these provide information at any time." },
+      { id: "B", text: "Many students use online resources because they provide access to information at any time." },
+      { id: "C", text: "Many students use online resources although information is available at any time because." },
+      { id: "D", text: "Online resources are many students because information." }
+    ],
+    answer: "B",
+  },
 ];
