@@ -739,6 +739,20 @@ the public profile simply omits league/rank/badges.
   headless Chrome with a mocked backend: 58 checks over 390/1280 x light/dark,
   no horizontal overflow, no page errors. Not verified against live Supabase.
 
+## Header profile menu + profile photos (Oct 6, 2026)
+- **Profile dropdown** (`Header.jsx`): used to stay open after clicking "View
+  profile" because the header never remounts on hash navigation. It now closes
+  on any link click, on route change, on Escape (focus returns to the button)
+  and on outside click. Restyled: avatar + caret trigger (the "Profile" text
+  hides under 1400px - the nav is tight there), a header with avatar/name/email,
+  "View profile", "My dashboard", "Sign out".
+- **Profile photos**: UI already existed (`AvatarUpload` on Profile). Uploads now
+  use a unique name `<user id>/avatar-<timestamp>.<ext>` (fixes the up-to-1h CDN
+  staleness noted earlier) and delete the replaced file best-effort.
+  **Still needs `supabase/public_profiles_and_avatars.sql` run** (creates the
+  `avatars` bucket + policies + `profiles.avatar_path`); status: handed to the
+  user on Oct 6, NOT yet confirmed run. The same applies to `friends.sql`.
+
 ## Not built yet (from the dashboard spec)
 Nothing remains from the original four-priority dashboard plan.
 

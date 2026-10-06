@@ -531,56 +531,125 @@ p {
   position: relative;
 }
 
+.profile-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 6px;
+}
+.profile-menu__trigger .avatar-img {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+/* The primary nav is already tight below ~1400px: keep just avatar + caret. */
+@media (max-width: 1400px) {
+  .profile-menu__trigger-label {
+    display: none;
+  }
+  .profile-menu__trigger {
+    gap: 6px;
+    padding-right: 12px;
+  }
+}
+.profile-menu__caret {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.15s ease;
+}
+.profile-menu__caret[data-open="true"] {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
 .profile-menu__dropdown {
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  min-width: 220px;
+  width: 260px;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
   background: var(--white);
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  padding: 14px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   z-index: 120;
+  animation: profile-menu-in 0.14s ease-out;
+}
+@keyframes profile-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-menu__dropdown {
+    animation: none;
+  }
+}
+
+.profile-menu__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+.profile-menu__who {
+  min-width: 0;
 }
 
 .profile-menu__name {
   margin: 0;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--heading);
+  overflow-wrap: anywhere;
 }
 
 .profile-menu__email {
-  margin: 0 0 8px;
-  font-size: 0.82rem;
+  margin: 2px 0 0;
+  font-size: 0.8rem;
   color: var(--ink-soft);
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .profile-menu__link {
   display: block;
+  box-sizing: border-box;
   width: 100%;
   text-align: left;
+  text-decoration: none;
   border: none;
   background: none;
-  padding: 8px 6px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  padding: 10px 10px;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
   cursor: pointer;
 }
 
-.profile-menu__link:hover {
+.profile-menu__link:hover,
+.profile-menu__link:focus-visible {
   background: var(--surface);
 }
 
 .profile-menu__signout {
   color: var(--status-red-text);
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
 .bookmark-btn {

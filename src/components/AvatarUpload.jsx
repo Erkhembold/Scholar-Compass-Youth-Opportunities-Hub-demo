@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Avatar from "./Avatar.jsx";
-import { uploadAvatar } from "../utils/avatar.js";
+import { removeAvatarFile, uploadAvatar } from "../utils/avatar.js";
 
 // Lets the signed-in user replace their own profile picture. Nothing here
 // grants access to anyone else's photo: the upload always goes to the
@@ -21,6 +21,7 @@ export default function AvatarUpload({ userId, name, avatarPath, onUploaded }) {
     try {
       const path = await uploadAvatar(userId, file);
       await onUploaded(path);
+      if (avatarPath && avatarPath !== path) removeAvatarFile(avatarPath);
     } catch (err) {
       setError(err.message || "Couldn't upload that image — please try again.");
     } finally {

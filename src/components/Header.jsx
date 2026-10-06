@@ -3,6 +3,7 @@ import { NAV_LINKS, SITE_NAME } from "../data/config.js";
 import { categoryHref, leaderboardHref, profileHref, signInHref, useRoute } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import Avatar from "./Avatar.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import TextSizeToggle from "./TextSizeToggle.jsx";
 import LanguageToggle from "./LanguageToggle.jsx";
@@ -30,6 +31,7 @@ export default function Header() {
 
   useEffect(() => {
     setOpen(false);
+    setProfileOpen(false); // the profile dropdown always closes once you navigate
   }, [route.name, route.category, route.id]);
 
   useEffect(() => {
@@ -39,8 +41,18 @@ export default function Header() {
         setProfileOpen(false);
       }
     }
+    function onKey(e) {
+      if (e.key === "Escape") {
+        setProfileOpen(false);
+        profileRef.current?.querySelector("button")?.focus();
+      }
+    }
     document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClickOutside);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [profileOpen]);
 
   const isActive = (category) => route.name === "category" && route.category === category;
@@ -100,27 +112,48 @@ export default function Header() {
             <div className="profile-menu" ref={profileRef}>
               <button
                 type="button"
-                className="signin-btn"
+                className="signin-btn profile-menu__trigger"
                 aria-haspopup="true"
                 aria-expanded={profileOpen}
+                aria-label={t("Profile")}
                 onClick={() => setProfileOpen((v) => !v)}
               >
-                {t("Profile")}
+                <Avatar path={profile?.avatar_path} name={profile?.name} size={26} />
+                <span className="profile-menu__trigger-label">{t("Profile")}</span>
+                <span className="profile-menu__caret" aria-hidden="true" data-open={profileOpen} />
               </button>
               {profileOpen && (
                 <div className="profile-menu__dropdown" role="menu">
-                  <p className="profile-menu__name">{profile?.name || "ScholarCompass user"}</p>
-                  <p className="profile-menu__email">{user.email}</p>
-                  <a className="profile-menu__link" href={profileHref()} role="menuitem">
+                  <div className="profile-menu__head">
+                    <Avatar path={profile?.avatar_path} name={profile?.name} size={44} />
+                    <div className="profile-menu__who">
+                      <p className="profile-menu__name">{profile?.name || "ScholarCompass user"}</p>
+                      <p className="profile-menu__email">{user.email}</p>
+                    </div>
+                  </div>
+                  <a
+                    className="profile-menu__link"
+                    href={profileHref()}
+                    role="menuitem"
+                    onClick={() => setProfileOpen(false)}
+                  >
                     View profile
+                  </a>
+                  <a
+                    className="profile-menu__link"
+                    href="#/"
+                    role="menuitem"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    My dashboard
                   </a>
                   <button
                     type="button"
                     className="profile-menu__link profile-menu__signout"
                     role="menuitem"
                     onClick={async () => {
-                      await signOut();
                       setProfileOpen(false);
+                      await signOut();
                       window.location.hash = "#/";
                     }}
                   >
