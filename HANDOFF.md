@@ -623,6 +623,47 @@ back down:
   after retargeting. Build, CSS-brace check, contrast check, and this
   repo's own `npm test` all clean.
 
+## Fixed: Google sign-in completed but never actually logged anyone in
+The real bug behind "Google sign-in doesn't work" — not a Supabase
+dashboard config issue, a code bug. `lib/supabaseClient.js`'s
+`createClient()` had no `flowType` set, so it used the library's default
+**implicit flow**, which returns the session as a URL **hash fragment**
+(`#access_token=...`). This app's own router is also hash-based, and
+`signInWithGoogle()`'s `redirectTo` ended in `#/` — so the final return
+URL had two `#` characters
+(`.../#/#access_token=xyz&refresh_token=abc...`). Per URL spec, only the
+first `#` starts a fragment; everything after is swallowed into one
+string. The router tried to parse the combined mess as a route, the auth
+token was never where Supabase's client looks for it, and the session
+was silently dropped — Google approved the sign-in, a session was
+issued, and the browser threw it away. Matches the reported symptom
+exactly: looked like nothing happened, no error, no profile.
+
+Fixed two ways together (either alone would have broken the other case):
+- `supabaseClient.js` now passes `{ auth: { flowType: "pkce" } }` to
+  `createClient()`, so the return trip uses a `?code=` query parameter
+  instead of a hash fragment — the router never touches it.
+- `AuthContext.jsx`'s `redirectTo` dropped its trailing `#/` entirely.
+  Even with PKCE, a trailing hash would still break things: an OAuth
+  provider appends its own params to the END of whatever URL you give
+  it, and anything after an existing `#` is always part of the fragment,
+  never a real query parameter — so `?code=...` would have landed in
+  `location.hash` instead of `location.search` regardless of flow type.
+  The router already treats a bare origin+path (no hash at all) as
+  `"home"` (see `parseHash` in `router.js`), so no routing logic needed
+  to change.
+
+No SQL and no Supabase dashboard change needed for this specific fix —
+confirmed by inspecting the actual compiled production bundle (not just
+source) for both `flowType:"pkce"` and the corrected `redirectTo`
+construction. Full regression (110 checks) and this repo's own
+`npm test`/CSS-brace check all clean on top of it. The only thing this
+couldn't verify without live Google OAuth credentials is the real
+end-to-end round trip — see the four diagnostic SQL queries given to the
+user (query `auth.users` for `provider = 'google'` rows, join against
+`profiles`, and check the `on_auth_user_created` trigger is attached) for
+confirming that on the live project.
+
 ## Fixed a landmine between onboarding.sql and the Google sign-in migration
 `supabase/onboarding.sql` and `supabase/google_oauth_profile_name_fallback.sql`
 (the latter from a concurrent session, see below) both used `create or

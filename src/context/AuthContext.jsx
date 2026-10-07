@@ -111,7 +111,16 @@ export function AuthProvider({ children }) {
       // redirect completes.
       async signInWithGoogle() {
         if (!supabase) return { error: "Sign-in isn't configured yet." };
-        const redirectTo = `${window.location.origin}${window.location.pathname}#/`;
+        // No trailing "#/" here: whatever this app's router adds, the
+        // OAuth round-trip's own params (a "?code=..." query string with
+        // PKCE — see supabaseClient.js) get appended AFTER whatever URL
+        // is given. Anything after an existing "#" is swallowed into
+        // that same fragment per URL spec, not treated as a real query
+        // parameter — so a trailing hash here would break the code
+        // exchange even with PKCE. The router already treats a bare
+        // origin+path (no hash) as "home" (see parseHash in router.js),
+        // so nothing else needs to change for routing to still work.
+        const redirectTo = `${window.location.origin}${window.location.pathname}`;
         const { error } = await supabase.auth.signInWithOAuth({
           provider: "google",
           options: { redirectTo },
