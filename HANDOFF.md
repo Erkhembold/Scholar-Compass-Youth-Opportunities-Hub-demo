@@ -753,6 +753,51 @@ the public profile simply omits league/rank/badges.
   `avatars` bucket + policies + `profiles.avatar_path`); status: handed to the
   user on Oct 6, NOT yet confirmed run. The same applies to `friends.sql`.
 
+## Shareable student cards + per-field privacy (built — SQL must be run)
+**Manual step (NOT yet confirmed run):** `supabase/share_cards.sql`. Run order matters:
+`public_profiles_and_avatars.sql` -> `friends.sql` -> `share_cards.sql` (it replaces
+`get_public_profile()` and `get_my_friendships()`, and needs the `friendships` table,
+`profile_visible`, `avatar_path`). Idempotent. Until it runs, the Profile section says
+"Shareable cards aren't switched on yet" and public profiles fall back to the old flat
+response (`publicViewModel` understands both).
+
+- **Privacy model** (`profiles.public_profile` jsonb: `show{field:bool}`, `cards[]`,
+  `featured`). Fields: name, avatar, school, grade, sat, ielts, streak, league, xp,
+  achievements. Unset = safe default: only name/avatar/streak/sat/ielts are public
+  (what was public before); school, grade, league, xp, achievements start PRIVATE.
+  `profile_visible=false` still hides the whole profile. A BEFORE trigger
+  (`sanitize_public_profile`) drops unknown keys / non-booleans / unknown cards.
+  Filtering is done in SQL: `_card_data(uid)` (internal, not callable by clients) builds
+  everything; `get_public_profile` returns a field only if its flag is on (the owner gets
+  the same filtered view, so preview == what visitors see); `get_my_card_data()` returns
+  the owner's own unfiltered data + settings. Email/auth ids are never returned.
+  Not covered: the leaderboard still shows name/avatar to league-mates (separate,
+  older mirror table `leaderboard_entries`). There is no username field in this app, so
+  "username" isn't a toggle - name is.
+- **Cards**: Student, Streak, League, SAT, IELTS, Achievements (`utils/cardModel.js`, pure,
+  unit-tested in `tests/cardModel.test.mjs`). Real numbers only - a card is null when its
+  data is missing/private. SAT/IELTS cards show target + questions practiced / latest MOCK
+  band and the note "not an official score" (no invented score).
+- **Image export** (`utils/shareCard.js`): one canvas renderer for preview AND export,
+  1080x1920 (9:16) PNG, Download + `navigator.share({files})` with download fallback.
+  Fonts: Inter if loaded, else system. Avatar needs CORS on the avatars bucket (public
+  bucket is fine); if it fails the initial is drawn.
+- **Milestones** (owner-only, from real data): 7/14/30/60/100/180/365-day streak, league
+  above Bronze, 100/500/1000 SAT or IELTS questions. NOT built: "first 1v1 win" (needs
+  wins across three match tables).
+- **UI**: Profile -> "Share your progress" (`StudentCardsSection`): cards on/off + featured
+  star, 10 Public/Private switches, milestones. `#/u/:id` shows the featured card first
+  plus chips for the others, and only public stats.
+- **Found in the working tree, not written in the chat that built the rest**: an earlier
+  uncommitted draft of `share_cards.sql`, `shareCard.js`, `ShareCardCanvas/Actions`,
+  `useMyCardData` (design matched this task). It was reviewed, tested and adopted; the pure
+  model was split out into `cardModel.js` for testing.
+- **Verified**: SQL on local Postgres 16 (defaults, per-field on/off, no leaks of private
+  values, sanitizer, hidden profile, own-data-only, `_card_data` not callable, anon blocked,
+  friends list masking, re-run). UI in headless Chrome with a mocked backend: 108 checks over
+  390/1280 x light/dark (privacy combos, featured ordering, 1080x1920 PNG download, native
+  share + fallback, no overflow, no page errors). Not verified against live Supabase.
+
 ## Not built yet (from the dashboard spec)
 Nothing remains from the original four-priority dashboard plan.
 

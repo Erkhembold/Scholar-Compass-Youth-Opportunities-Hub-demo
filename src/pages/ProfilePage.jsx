@@ -14,6 +14,7 @@ import ProgressTracker from "../components/ProgressTracker.jsx";
 import WeakAreaCard from "../components/WeakAreaCard.jsx";
 import RoadmapCard from "../components/RoadmapCard.jsx";
 import FriendsSection from "../components/FriendsSection.jsx";
+import StudentCardsSection from "../components/StudentCardsSection.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, triggerWeeklyRollover } from "../utils/leaderboard.js";
@@ -276,11 +277,21 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        <div style={{ marginBottom: 28 }}>
+          <CollapsibleSection
+            title="Share your progress"
+            lede="Make a card from your real streak, league and practice — and choose exactly what other students can see."
+            defaultOpen
+          >
+            <StudentCardsSection />
+          </CollapsibleSection>
+        </div>
+
         <div className="profile-split">
         <CollapsibleSection title="Account details">
           <label className="visibility-toggle">
             <input type="checkbox" checked={visible} disabled={visibilitySaving} onChange={handleVisibilityToggle} />
-            Show my streak and target scores to other students
+            Let other students open my profile (turn off to hide it completely)
           </label>
 
           {!editing ? (
