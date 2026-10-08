@@ -26,7 +26,7 @@ export function useProgressData() {
       supabase.from("sat_math_exercise_attempts").select("question_id, domain, topic, difficulty, correct").eq("user_id", user.id),
       supabase.rpc("get_my_sat_math_answers"),
       supabase.from("ielts_attempts").select("band, test_title, completed_at").eq("user_id", user.id).order("completed_at", { ascending: false }),
-      supabase.from("ielts_exercise_attempts").select("exercise_type, skill, difficulty, correct, items_total, items_correct").eq("user_id", user.id),
+      supabase.from("ielts_exercise_attempts").select("exercise_id, exercise_type, skill, difficulty, correct, items_total, items_correct").eq("user_id", user.id),
     ]);
     setRaw({
       satProgressRows: satProgress.data || [],

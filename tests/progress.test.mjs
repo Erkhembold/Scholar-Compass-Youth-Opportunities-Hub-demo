@@ -49,3 +49,15 @@ test("IELTS Reading diagnosis reports no data when only Writing was practiced", 
   assert.equal(d.weakest, null);
   assert.equal(d.reason, "no_data");
 });
+
+import { readFileSync } from "node:fs";
+
+test("useProgressData selects exercise_id for IELTS exercise attempts", () => {
+  // The Reading/Writing split is keyed off exercise_id, so a query that
+  // forgets to select it silently classifies every attempt as Reading while
+  // the unit tests above (which hand-build rows) keep passing.
+  const src = readFileSync(new URL("../src/hooks/useProgressData.js", import.meta.url), "utf8");
+  const m = src.match(/from\("ielts_exercise_attempts"\)\s*\.select\("([^"]+)"\)/);
+  assert.ok(m, "could not find the ielts_exercise_attempts select");
+  assert.ok(m[1].split(",").map((c) => c.trim()).includes("exercise_id"), "exercise_id missing from select");
+});
