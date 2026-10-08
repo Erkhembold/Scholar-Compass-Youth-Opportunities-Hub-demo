@@ -1,7 +1,6 @@
 import CategoryHero from "../components/CategoryHero.jsx";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import IeltsPracticePicker from "../components/IeltsPracticePicker.jsx";
-import IeltsExercisesPicker from "../components/IeltsExercisesPicker.jsx";
 import SatCategoryOverview from "../components/SatCategoryOverview.jsx";
 import SatMathOverview from "../components/SatMathOverview.jsx";
 import IeltsPracticeOverview from "../components/IeltsPracticeOverview.jsx";
@@ -39,10 +38,8 @@ export default function CategoryPage({ category }) {
         <section className="section practice-picker" aria-labelledby="practice-picker-heading">
           <div className="section__inner practice-picker__row">
             <IeltsPracticePicker />
-            <IeltsExercisesPicker />
+            <IeltsPracticeOverview />
           </div>
-
-          <IeltsPracticeOverview />
         </section>
       )}
 

@@ -6415,3 +6415,22 @@ a.roadmap-step:hover {
     margin: 0 auto;
   }
 }
+
+/* IELTS overview card sitting in the practice-picker row (replaces the old
+   separate IELTS Exercises picker). Stack the two shortcut cards since the
+   card is only about half the page wide here. */
+.practice-picker__row .ielts-overview {
+  flex: 1 1 320px;
+  max-width: 560px;
+}
+
+.ielts-overview .category-actions {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 720px) {
+  .practice-picker__row .ielts-overview {
+    width: 100%;
+    max-width: none;
+  }
+}
