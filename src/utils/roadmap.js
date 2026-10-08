@@ -69,13 +69,13 @@ export function buildIeltsRoadmap({ ielts, weakArea }) {
 
   const steps = [step("ielts-set-target", "Set your IELTS target band", ielts.targetBand != null)];
 
-  steps.push(step("ielts-first-practice", "Try a few IELTS Reading exercises", ielts.exercises.attempted > 0));
+  steps.push(step("ielts-first-practice", "Try a few IELTS Reading exercises", ielts.exercises.reading.attempted > 0));
   steps.push(step("ielts-diagnostic", "Take a full IELTS mock test for a real band score", ielts.mockCount > 0));
 
   if (weakArea.ieltsReading.weakest) {
     const w = weakArea.ieltsReading.weakest;
     steps.push(step("ielts-practice-weak", `Practice ${w.label} (IELTS Reading)`, w.rate >= MASTERY_BAR));
-  } else if (ielts.exercises.attempted > 0) {
+  } else if (ielts.exercises.reading.attempted > 0) {
     steps.push(
       step(
         "ielts-more-data",

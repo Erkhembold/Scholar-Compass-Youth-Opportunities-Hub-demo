@@ -3330,7 +3330,7 @@ body.nav-open {
    IELTS short-exercise runner
    ========================================================================= */
 .exercise-runner {
-  max-width: 720px;
+  max-width: 960px;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);

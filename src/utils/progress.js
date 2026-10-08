@@ -62,10 +62,28 @@ export function summarizeSatMath(exerciseRows, matchAnswerRows) {
 }
 
 // ---- IELTS Reading exercises (short drills, per-skill accuracy) -----------
+// Single source of truth for the Reading-vs-Writing split of IELTS exercise
+// attempts (see the note in summarizeIeltsExercises below).
+export function isIeltsWritingExerciseId(exerciseId) {
+  return String(exerciseId || "").startsWith("W-");
+}
+
 export function summarizeIeltsExercises(rows) {
   const bySkill = {};
   let itemsTotal = 0;
   let itemsCorrect = 0;
+  // Reading vs Writing split, inferred from the exercise_id prefix
+  // (Writing exercise ids are "W-MC-xxx"; everything else — all of
+  // Reading's id families, "R-MC-"/"R-TFNG-"/"R-MATCH-"/"R-COMP-"/"R-SC-" —
+  // is Reading). ielts_exercise_attempts has no column that records this
+  // directly, so this is a client-side stand-in rather than a DB change;
+  // see HANDOFF.md for why. It's reliable because the id prefixes were
+  // assigned once and don't overlap, even though a few `skill` tag values
+  // (e.g. "cause_effect") happen to be reused by both sections.
+  const bySection = {
+    reading: { attempted: 0, correct: 0 },
+    writing: { attempted: 0, correct: 0 },
+  };
   for (const r of rows || []) {
     const key = r.skill || r.exercise_type;
     bySkill[key] = bySkill[key] || { id: key, label: TYPE_LABELS[key] || readableSkill(key), attempted: 0, correct: 0 };
@@ -73,9 +91,21 @@ export function summarizeIeltsExercises(rows) {
     if (r.correct) bySkill[key].correct += 1;
     itemsTotal += r.items_total || 1;
     itemsCorrect += r.items_correct ?? (r.correct ? 1 : 0);
+
+    const section = isIeltsWritingExerciseId(r.exercise_id) ? "writing" : "reading";
+    bySection[section].attempted += 1;
+    if (r.correct) bySection[section].correct += 1;
   }
   const skills = Object.values(bySkill).map((s) => ({ ...s, accuracy: s.attempted ? s.correct / s.attempted : null }));
-  return { skills, attempted: rows?.length || 0, itemsTotal, itemsCorrect };
+  const withAccuracy = (s) => ({ ...s, accuracy: s.attempted ? s.correct / s.attempted : null });
+  return {
+    skills,
+    attempted: rows?.length || 0,
+    itemsTotal,
+    itemsCorrect,
+    reading: withAccuracy(bySection.reading),
+    writing: withAccuracy(bySection.writing),
+  };
 }
 
 function readableSkill(key) {

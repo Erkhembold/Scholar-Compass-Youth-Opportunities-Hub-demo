@@ -34,9 +34,10 @@ export default function ProgressTracker() {
   // so their rings show accuracy on what's been attempted rather than a
   // "% of the bank completed" claim the data doesn't support.
   const mathPercent = sat.math.accuracy != null ? sat.math.accuracy * 100 : 0;
-  const ieltsPercent = ielts.exercises.itemsTotal
-    ? (ielts.exercises.itemsCorrect / ielts.exercises.itemsTotal) * 100
-    : 0;
+  // Reading only — the card is labelled and linked as IELTS Reading, so it
+  // shouldn't also absorb Writing-exercise attempts (see summarizeIeltsExercises).
+  const ieltsReading = ielts.exercises.reading;
+  const ieltsPercent = ieltsReading.attempted ? ieltsReading.accuracy * 100 : 0;
 
   return (
     <div className="progress-tracker">
@@ -77,12 +78,12 @@ export default function ProgressTracker() {
           title="IELTS Reading"
           percent={ieltsPercent}
           color="#a855f7"
-          centerValue={ielts.exercises.itemsTotal ? Math.round(ieltsPercent) : "—"}
-          centerUnit={ielts.exercises.itemsTotal ? "%" : null}
+          centerValue={ieltsReading.attempted ? Math.round(ieltsPercent) : "—"}
+          centerUnit={ieltsReading.attempted ? "%" : null}
           ringLabel="IELTS Reading exercise accuracy"
           statusLine={
-            ielts.exercises.itemsTotal
-              ? `${ielts.exercises.itemsCorrect}/${ielts.exercises.itemsTotal} correct` +
+            ieltsReading.attempted
+              ? `${ieltsReading.correct}/${ieltsReading.attempted} correct` +
                 (ielts.latestBand != null ? ` · Band ${ielts.latestBand}` : "")
               : "No exercises yet"
           }

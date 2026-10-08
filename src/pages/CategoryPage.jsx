@@ -4,11 +4,12 @@ import IeltsPracticePicker from "../components/IeltsPracticePicker.jsx";
 import IeltsExercisesPicker from "../components/IeltsExercisesPicker.jsx";
 import SatCategoryOverview from "../components/SatCategoryOverview.jsx";
 import SatMathOverview from "../components/SatMathOverview.jsx";
+import IeltsPracticeOverview from "../components/IeltsPracticeOverview.jsx";
 import { opportunities } from "../data/opportunities.js";
 import { CATEGORY_META } from "../data/categories.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { getActiveOpportunities } from "../utils/deadline.js";
-import { archiveHref, ieltsBeginnerGuideHref, ieltsChallengeHref } from "../router.js";
+import { archiveHref } from "../router.js";
 
 export default function CategoryPage({ category }) {
   const { t } = useLanguage();
@@ -41,35 +42,7 @@ export default function CategoryPage({ category }) {
             <IeltsExercisesPicker />
           </div>
 
-          <div className="section__inner">
-            <div className="category-actions">
-              <a href={ieltsBeginnerGuideHref()} className="category-action-card category-action-card--lessons">
-                <span className="category-action-icon" aria-hidden="true">
-                  📘
-                </span>
-                <span className="category-action-text">
-                  <span className="category-action-title">IELTS Lessons</span>
-                  <span className="category-action-sub">Start with the Beginner Guide</span>
-                </span>
-                <span className="category-action-arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-
-              <a href={ieltsChallengeHref()} className="category-action-card category-action-card--challenge">
-                <span className="category-action-icon" aria-hidden="true">
-                  ⚡
-                </span>
-                <span className="category-action-text">
-                  <span className="category-action-title">1v1 Challenge</span>
-                  <span className="category-action-sub">Go head-to-head with a friend</span>
-                </span>
-                <span className="category-action-arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-            </div>
-          </div>
+          <IeltsPracticeOverview />
         </section>
       )}
 

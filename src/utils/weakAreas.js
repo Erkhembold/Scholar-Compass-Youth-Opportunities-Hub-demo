@@ -3,7 +3,7 @@
 // "Not enough data" is a first-class outcome, not an edge case — see
 // MIN_SAMPLE in utils/progress.js (a single wrong answer out of one is
 // never reported as a weak area).
-import { MIN_SAMPLE, summarizeSatRW, summarizeSatMath, summarizeIeltsExercises } from "./progress.js";
+import { MIN_SAMPLE, summarizeSatRW, summarizeSatMath, summarizeIeltsExercises, isIeltsWritingExerciseId } from "./progress.js";
 
 // Lowest-mastery / lowest-accuracy entry that has met the sample
 // threshold, or null with a reason if nothing qualifies yet.
@@ -39,7 +39,11 @@ export function diagnoseSatMath(exerciseRows, matchAnswerRows) {
 }
 
 export function diagnoseIeltsReading(exerciseRows) {
-  const { skills } = summarizeIeltsExercises(exerciseRows);
+  // Reading only: Writing-exercise attempts share this table (and a couple of
+  // skill tags, e.g. cause_effect), and would otherwise surface as a weak
+  // "IELTS Reading" topic like "Grammar".
+  const readingRows = (exerciseRows || []).filter((r) => !isIeltsWritingExerciseId(r.exercise_id));
+  const { skills } = summarizeIeltsExercises(readingRows);
   const { weakest, reason } = pickWeakest(skills, { rateKey: "accuracy", sampleKey: "attempted" });
   return {
     subject: "ielts_reading",

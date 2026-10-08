@@ -972,14 +972,19 @@ after the edit-form ternary, rendering a stray `}` next to the "Edit
 details" button on every load. Fixed (one-line removal).
 
 ## Known issues / unfinished work (as of this handoff)
-- IELTS Writing exercises (the short-drill mode, `ieltsWritingExercises.js`
-  — not the full essay grader) now save attempts to the same
-  `ielts_exercise_attempts` table as Reading exercises, with nothing
-  distinguishing the two. `ProfilePage.jsx`'s "IELTS Reading" stat card
-  will silently start including Writing-exercise accuracy too once people
-  use it. Fix needs a `section` column (migration) + a `utils/progress.js`
-  change to filter by it. Not done yet — flagging so it isn't mistaken for
-  an oversight.
+- IELTS Reading vs Writing exercise attempts share one table
+  (`ielts_exercise_attempts`) with no column recording which section an
+  attempt came from. This is handled client-side instead of by migration:
+  Writing exercise ids are all `W-MC-xxx`, every Reading id starts `R-`, and
+  `isIeltsWritingExerciseId()` in `utils/progress.js` is the single place that
+  rule lives. `summarizeIeltsExercises()` returns `.reading` / `.writing`
+  sub-summaries; the Profile's IELTS Reading card, `diagnoseIeltsReading()`
+  (weak areas) and the roadmap's Reading steps all use Reading-only data
+  (regression-tested in `tests/progress.test.mjs`). The "Total questions
+  answered" headline intentionally still counts both. Don't reuse a `W-`
+  prefix for anything Reading, and if you add another IELTS section
+  (Listening/Speaking), give it its own prefix and extend that helper — or
+  add a real `section` column at that point.
 - **Why SAT Math 1v1 grades server-side instead of matching the SAT/
   IELTS 1v1 pattern**: the user's requirements for SAT Math 1v1 were
   explicit that "players cannot modify each other's scores" and to
