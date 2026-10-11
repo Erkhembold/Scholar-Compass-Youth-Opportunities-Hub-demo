@@ -1,9 +1,12 @@
 import { NEWS } from "../data/news.js";
 import { NewsAvatar } from "../components/NewsSection.jsx";
+import { newsArticleHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 // All Scholar Compass News, laid out like the Opportunity Board (same section,
 // heading and bordered card grid).
+const excerpt = (s) => (s.length > 170 ? s.slice(0, 170).replace(/\s+\S*$/, "") + "…" : s);
+
 export default function NewsPage() {
   const { t } = useLanguage();
   return (
@@ -21,7 +24,7 @@ export default function NewsPage() {
         <div className="opp-grid" role="list">
           {NEWS.map((item) => (
             <div role="listitem" key={item.id}>
-              <a className="opp-card news-page-card" href={item.targetUrl}>
+              <a className="opp-card news-page-card" href={newsArticleHref(item.id)}>
                 <div className="news-page-card__head">
                   <NewsAvatar item={item} size={64} />
                   <div>
@@ -37,11 +40,8 @@ export default function NewsPage() {
                     {item.testedOn ? <span className="opp-card__deadline">{item.testedOn}</span> : null}
                   </div>
                   <h2 className="opp-card__title">{item.headline}</h2>
-                  {item.quoteOrStory.map((para, i) => (
-                    <p key={i} className="news-page-card__text">
-                      {para}
-                    </p>
-                  ))}
+                  <p className="news-page-card__text">{excerpt(item.quoteOrStory[0])}</p>
+                  <span className="news-page-card__read">{t("Read the story")} →</span>
                 </div>
               </a>
             </div>

@@ -84,6 +84,9 @@ function parseHash(hash) {
   if (parts[0] === "archive") {
     return { name: "archive" };
   }
+  if (parts[0] === "news" && parts[1]) {
+    return { name: "news-article", id: decodeURIComponent(parts[1]) };
+  }
   if (parts[0] === "news") {
     return { name: "news" };
   }
@@ -197,6 +200,10 @@ export function satWritingSentencesHref() {
 
 export function satWritingTransitionsHref() {
   return "#/sat/lessons/writing/transitions";
+}
+
+export function newsArticleHref(id) {
+  return `#/news/${encodeURIComponent(id)}`;
 }
 
 export function newsHref() {

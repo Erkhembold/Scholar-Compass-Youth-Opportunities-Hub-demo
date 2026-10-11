@@ -1,6 +1,6 @@
 import { NEWS } from "../data/news.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
-import { newsHref } from "../router.js";
+import { newsHref, newsArticleHref } from "../router.js";
 
 export function NewsAvatar({ item, size = 44 }) {
   return item.imageUrl ? (
@@ -24,7 +24,7 @@ export default function NewsSection({ onDark = false }) {
       </h2>
       <div className="news-sidebar__list">
         {NEWS.map((item) => (
-          <a key={item.id} className="news-card" href={item.targetUrl}>
+          <a key={item.id} className="news-card" href={newsArticleHref(item.id)}>
             <span className="news-card__who">
               <NewsAvatar item={item} />
               <span className="news-card__tag">{item.scoreTag}</span>

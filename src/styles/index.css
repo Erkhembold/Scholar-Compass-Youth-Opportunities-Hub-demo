@@ -6914,3 +6914,25 @@ a.roadmap-step:hover {
 .news-page-card__meta { display: block; margin-top: 4px; font-size: 0.85rem; color: var(--ink-soft); }
 .news-page-card__text { margin: 10px 0 0; font-size: 0.92rem; line-height: 1.55; color: var(--ink-soft); }
 @media (max-width: 720px) { .news-page-card__head { padding: 16px 16px 0; } }
+
+/* News article page */
+.news-article__inner { max-width: 760px; }
+.news-article__kicker { margin: 18px 0 8px; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-text); }
+.news-article__headline { font-family: var(--font-display); font-size: clamp(1.8rem, 4.5vw, 2.7rem); line-height: 1.12; margin: 0 0 18px; color: var(--heading); overflow-wrap: anywhere; }
+.news-article__byline { display: flex; align-items: center; gap: 12px; }
+.news-article__byline div { display: flex; flex-direction: column; font-size: 0.9rem; color: var(--ink-soft); }
+.news-article__byline strong { color: var(--ink); }
+.news-article__date { margin: 12px 0 22px; font-size: 0.85rem; color: var(--ink-faint); }
+.news-article__figure { margin: 0 0 24px; }
+.news-article__figure img { width: 100%; max-height: 420px; object-fit: cover; object-position: center 25%; border-radius: 14px; display: block; }
+.news-article__figure figcaption { margin-top: 8px; font-size: 0.8rem; color: var(--ink-faint); }
+.news-article__body { font-size: 1.08rem; line-height: 1.75; color: var(--ink); }
+.news-article__body p { margin: 0 0 1.2em; }
+.news-article__body blockquote { margin: 0 0 1.2em; padding: 4px 0 4px 20px; border-left: 4px solid #ffc933; font-size: 1.2rem; line-height: 1.65; font-style: italic; }
+.news-article__cta { margin: 32px 0; padding: 20px 22px; border-radius: 14px; background: #ffc933; color: #061a3a; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.news-article__cta p { margin: 0; font-weight: 700; flex: 1 1 260px; }
+.news-article__more { border-top: 1px solid var(--line); padding-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.news-article__more h2 { margin: 0; font-size: 1.1rem; color: var(--heading); }
+.news-article__more a { color: var(--blue-text); font-weight: 600; text-decoration: none; }
+.news-article__more a:hover { text-decoration: underline; }
+.news-page-card__read { margin-top: 10px; font-weight: 700; font-size: 0.9rem; color: var(--blue-text); }
