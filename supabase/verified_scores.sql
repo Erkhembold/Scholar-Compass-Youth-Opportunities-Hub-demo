@@ -24,7 +24,8 @@ create policy "Signed-in users can read verified scores"
 -- (no insert/update/delete policies on purpose)
 
 -- Seed: Erkhem Bileg -> IELTS 7.5, Jake -> IELTS 8.0.
--- Jake is matched by his account email; Erkhem by profile name.
+-- Both are matched by profile name. If the check at the bottom shows a
+-- different 'Jake' than yours, tell me and I'll narrow it.
 insert into public.verified_scores (user_id, test_type, score, label, sublabel)
 select p.id, 'IELTS', '7.5', 'Real IELTS Score', 'IELTS Overall'
 from public.profiles p
@@ -35,7 +36,7 @@ on conflict (user_id, test_type) do update
 insert into public.verified_scores (user_id, test_type, score, label, sublabel)
 select p.id, 'IELTS', '8.0', 'Real IELTS Score', 'IELTS Overall'
 from public.profiles p
-where lower(p.email) = 'jakebookderson3@gmail.com'
+where p.name ilike 'Jake%'
 on conflict (user_id, test_type) do update
   set score = excluded.score, label = excluded.label, sublabel = excluded.sublabel;
 
