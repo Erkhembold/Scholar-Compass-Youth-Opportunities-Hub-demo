@@ -1108,3 +1108,5 @@ UNCONFIRMED run; read-only for users, rows inserted by the owner in SQL; seeds E
 Bileg IELTS 7.5 and Jake IELTS 8.0). `UserScoreBadge.jsx`, `useVerifiedScores.js`;
 shown under leaderboard rows, on public profiles and on the own profile. Add more
 people by inserting rows; nothing shows until the SQL is run.
+
+**Scholar Compass News** — `src/data/news.js` (add an item to publish), `NewsSection.jsx`; shown right of the hero (signed-out) and right of the dashboard cards (signed-in); stacks below at <=1200px / <=900px.
