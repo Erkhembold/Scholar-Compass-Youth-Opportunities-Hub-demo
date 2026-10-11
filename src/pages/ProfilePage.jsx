@@ -7,6 +7,8 @@ import { opportunities } from "../data/opportunities.js";
 import OpportunityGrid from "../components/OpportunityGrid.jsx";
 import LeagueBadge from "../components/LeagueBadge.jsx";
 import CollapsibleSection from "../components/CollapsibleSection.jsx";
+import { UserScoreBadges } from "../components/UserScoreBadge.jsx";
+import { useVerifiedScores } from "../hooks/useVerifiedScores.js";
 import AvatarUpload from "../components/AvatarUpload.jsx";
 import ToggleGroup from "../components/ToggleGroup.jsx";
 import StreakCard from "../components/StreakCard.jsx";
@@ -45,6 +47,7 @@ function labelToPrep(v) {
 export default function ProfilePage() {
   const { user, profile, signOut, updateProfile, loading } = useAuth();
   const { savedIds, loading: savedLoading } = useSavedOpportunities();
+  const myVerifiedScores = useVerifiedScores([user?.id])[user?.id];
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState(() => ({
     school: profile?.school || "",
@@ -216,6 +219,8 @@ export default function ProfilePage() {
             </button>
           </div>
         </header>
+
+        <UserScoreBadges scores={myVerifiedScores} />
 
         <div className="dashboard-grid">
           <div className="dashboard-grid__cell dashboard-grid__cell--streak">

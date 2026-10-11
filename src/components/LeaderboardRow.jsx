@@ -6,13 +6,15 @@ const ZONE_LABEL = {
 
 import Avatar from "./Avatar.jsx";
 import { publicProfileHref } from "../router.js";
+import { UserScoreBadges } from "./UserScoreBadge.jsx";
 
-export default function LeaderboardRow({ player, zone, isBronzeFloor, isMe }) {
+export default function LeaderboardRow({ player, zone, isBronzeFloor, isMe, verifiedScores }) {
   const label = isBronzeFloor ? "Stays in Bronze" : ZONE_LABEL[zone];
   // Demo/filler seats have no real id and can't be linked to a profile.
   const canLink = !isMe && !player.isDemo && player.id;
 
   return (
+    <>
     <div
       className={`leaderboard-row leaderboard-row--${zone} ${
         isMe ? "leaderboard-row--me" : ""
@@ -35,5 +37,11 @@ export default function LeaderboardRow({ player, zone, isBronzeFloor, isMe }) {
       <span className="leaderboard-row__xp">{player.xp.toLocaleString()} XP</span>
       <span className={`leaderboard-row__zone leaderboard-row__zone--${zone}`}>{label}</span>
     </div>
+    {verifiedScores?.length ? (
+      <div className="leaderboard-row__scores">
+        <UserScoreBadges scores={verifiedScores} />
+      </div>
+    ) : null}
+    </>
   );
 }

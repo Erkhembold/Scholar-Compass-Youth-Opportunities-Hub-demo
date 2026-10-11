@@ -1102,3 +1102,9 @@ details" button on every load. Fixed (one-line removal).
   this was explicitly removed as a trust/accuracy issue.
 - Update this file when you finish a body of work, especially anything
   in "Known issues" above.
+
+**Verified score badges** — `public.verified_scores` (`supabase/verified_scores.sql`,
+UNCONFIRMED run; read-only for users, rows inserted by the owner in SQL; seeds Erkhem
+Bileg IELTS 7.5 and Jake IELTS 8.0). `UserScoreBadge.jsx`, `useVerifiedScores.js`;
+shown under leaderboard rows, on public profiles and on the own profile. Add more
+people by inserting rows; nothing shows until the SQL is run.

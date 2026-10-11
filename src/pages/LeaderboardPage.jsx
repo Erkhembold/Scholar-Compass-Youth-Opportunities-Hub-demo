@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabaseClient.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { zoneForRank, triggerWeeklyRollover, LEAGUE_CAPACITY } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
+import { useVerifiedScores } from "../hooks/useVerifiedScores.js";
 import LeagueCountdown from "../components/LeagueCountdown.jsx";
 import LeaderboardRow from "../components/LeaderboardRow.jsx";
 import EmptyLeaderboardSlot from "../components/EmptyLeaderboardSlot.jsx";
@@ -43,6 +44,7 @@ export default function LeaderboardPage() {
     : null;
 
   const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, meEntry);
+  const verifiedScores = useVerifiedScores(board.map((p) => (p.isDemo ? null : p.id)));
   const myRow = user ? board.find((p) => p.id === user.id) : null;
   const emptySeats = Math.max(0, LEAGUE_CAPACITY - board.length);
 
@@ -139,6 +141,7 @@ export default function LeaderboardPage() {
                     <LeaderboardRow
                       key={player.id}
                       player={player}
+                      verifiedScores={verifiedScores[player.id]}
                       zone={zoneForRank(player.rank, board.length)}
                       isMe={!!user && player.id === user.id}
                       isBronzeFloor={

@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import Avatar from "../components/Avatar.jsx";
 import FriendButton from "../components/FriendButton.jsx";
+import { UserScoreBadges } from "../components/UserScoreBadge.jsx";
+import { useVerifiedScores } from "../hooks/useVerifiedScores.js";
 import LeagueBadge from "../components/LeagueBadge.jsx";
 import ShareCardCanvas from "../components/ShareCardCanvas.jsx";
 import { buildCard, publicViewModel } from "../utils/cardModel.js";
@@ -114,6 +116,7 @@ function PublicProfileView({ data, cardId, setCardId }) {
   const vm = useMemo(() => publicViewModel(data), [data]);
   const league = vm.league && LEAGUE_BY_ID[vm.league.id];
   const badges = vm.badges || [];
+  const verifiedScores = useVerifiedScores([data.id])[data.id];
 
   // The owner's chosen cards, featured first; a card whose data is private or
   // empty is never listed.
@@ -151,6 +154,7 @@ function PublicProfileView({ data, cardId, setCardId }) {
             </p>
           )}
           <FriendButton userId={data.id} />
+          <UserScoreBadges scores={verifiedScores} />
         </div>
 
         {shown && (
