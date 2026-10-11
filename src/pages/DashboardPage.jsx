@@ -3,6 +3,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import LevelCard from "../components/LevelCard.jsx";
 import ProgressTracker from "../components/ProgressTracker.jsx";
 import DashboardStreakPill from "../components/DashboardStreakPill.jsx";
+import NewsSection from "../components/NewsSection.jsx";
 import OpportunityBoard from "../components/OpportunityBoard.jsx";
 
 // The personalized homepage a signed-in, onboarded user sees instead of
@@ -29,9 +30,12 @@ export default function DashboardPage() {
             </h1>
             <DashboardStreakPill />
           </div>
-          <div className="dashboard__cards dashboard__cards--centered">
-            <LevelCard />
-            <ProgressTracker />
+          <div className="dashboard__layout">
+            <div className="dashboard__cards dashboard__cards--centered">
+              <LevelCard />
+              <ProgressTracker />
+            </div>
+            <NewsSection />
           </div>
         </div>
       </section>

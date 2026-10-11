@@ -309,6 +309,7 @@ export const translations = {
   "Your level, questions answered, and streak — including how far you are from your next streak milestone.":
     "Таны түвшин, хариулсан асуултын тоо, цуврал — дараагийн цувралын оргилд хэр ойрхон байгаа зэрэг.",
   "Level progress": "Түвшний дэвшил",
+  "Scholar Compass News": "Scholar Compass мэдээ",
   "Level": "Түвшин",
   "pts to Level": "оноо үлдлээ түвшин хүртэл",
   "pts": "оноо",

@@ -1,4 +1,5 @@
 import TiltImage from "./TiltImage.jsx";
+import NewsSection from "./NewsSection.jsx";
 import HoverText from "./HoverText.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import heroImage from "../assets/student-raising-hand.png";
@@ -17,6 +18,7 @@ export default function Hero() {
 
   return (
     <section className="hero hero--home" aria-label="Introduction">
+      <div className="hero__layout">
       <div className="hero__inner">
         <div className="hero__copy">
           <p className="hero__eyebrow">Student opportunity hub</p>
@@ -51,6 +53,8 @@ export default function Hero() {
             alt="A student raises their hand to ask a question during a classroom presentation."
           />
         </div>
+      </div>
+      <NewsSection onDark />
       </div>
     </section>
   );
