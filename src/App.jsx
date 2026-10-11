@@ -14,6 +14,9 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import ProfileStatsPage from "./pages/ProfileStatsPage.jsx";
 import PublicProfilePage from "./pages/PublicProfilePage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
+import LeaguesPage from "./pages/LeaguesPage.jsx";
+import LeagueCreatePage from "./pages/LeagueCreatePage.jsx";
+import LeagueDetailPage from "./pages/LeagueDetailPage.jsx";
 import ArchivePage from "./pages/ArchivePage.jsx";
 import IeltsPracticePage from "./pages/IeltsPracticePage.jsx";
 import IeltsExercisesPage from "./pages/IeltsExercisesPage.jsx";
@@ -104,6 +107,12 @@ export default function App() {
     page = <SatWritingLesson02Page />;
   } else if (route.name === "leaderboard") {
     page = <LeaderboardPage />;
+  } else if (route.name === "leagues") {
+    page = <LeaguesPage />;
+  } else if (route.name === "league-new") {
+    page = <LeagueCreatePage />;
+  } else if (route.name === "league") {
+    page = <LeagueDetailPage id={route.id} />;
   } else if (route.name === "public-profile") {
     page = <PublicProfilePage id={route.id} />;
   } else if (!user) {

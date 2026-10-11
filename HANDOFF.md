@@ -845,6 +845,14 @@ response (`publicViewModel` understands both).
   390/1280 x light/dark (privacy combos, featured ordering, 1080x1920 PNG download, native
   share + fallback, no overflow, no page errors). Not verified against live Supabase.
 
+## Friend leagues / custom leagues (Oct 2026 — built, SQL UNCONFIRMED)
+Private leagues any student can create. Separate from the global Bronze→Diamond leagues (nothing there is touched).
+- SQL: `supabase/custom_leagues.sql` (**UNCONFIRMED — not yet run**; run AFTER `friends.sql`). Tables `custom_leagues`, `custom_league_members`, `custom_league_invites`, `custom_league_baselines`. RLS is select-only; every change is a SECURITY DEFINER RPC (`create_custom_league`, `invite_to_custom_league`, `respond_league_invite`, `cancel_league_invite`, `leave_custom_league`, `remove_league_member`, `update_custom_league`, `delete_custom_league`, `get_my_custom_leagues`, `get_my_league_invites`, `get_custom_league`).
+- Rules: owner-only, friends-only invites; invite never adds anyone (accept required); no self/duplicate invites; 7-day cooldown after a decline; max 20 per league (pending invites count); max 5 owned / 10 joined per student; owner can't leave (delete instead). Soft-state rows (left/removed/declined/cancelled) so realtime UPDATEs are RLS-filtered.
+- XP: `weekly` mode = `profiles.weekly_xp`; `ongoing` = `lifetime_xp − baseline at join`. No XP ledger exists. Known weakness: `profiles` UPDATE RLS has no column limit, so a student can edit their own XP.
+- Frontend: routes `#/leagues`, `#/leagues/new`, `#/leagues/<id>`; `src/hooks/useCustomLeagues.js` (realtime + 30s poll); pages `LeaguesPage`, `LeagueCreatePage`, `LeagueDetailPage`; CSS prefix `.cleague-*`; header dropdown link "Friend leagues" with pending-invite count. Helpers/tests: `src/utils/customLeague.js`, `tests/customLeague.test.mjs`.
+- Tested locally on Postgres 16 with stubbed auth (all actions + unauthorized cases) and Playwright with a mocked Supabase (desktop/mobile, light/dark).
+
 ## Not built yet (from the dashboard spec)
 Nothing remains from the original four-priority dashboard plan.
 

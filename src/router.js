@@ -87,6 +87,15 @@ function parseHash(hash) {
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
+  if (parts[0] === "leagues" && parts[1] === "new") {
+    return { name: "league-new" };
+  }
+  if (parts[0] === "leagues" && parts[1]) {
+    return { name: "league", id: decodeURIComponent(parts[1]) };
+  }
+  if (parts[0] === "leagues") {
+    return { name: "leagues" };
+  }
   if (parts[0] === "u" && parts[1]) {
     return { name: "public-profile", id: decodeURIComponent(parts[1]) };
   }

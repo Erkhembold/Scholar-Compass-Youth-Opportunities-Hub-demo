@@ -4,6 +4,7 @@ import { categoryHref, leaderboardHref, profileHref, signInHref, useRoute } from
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import Avatar from "./Avatar.jsx";
+import { useMyLeagues } from "../hooks/useCustomLeagues.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 import TextSizeToggle from "./TextSizeToggle.jsx";
 import LanguageToggle from "./LanguageToggle.jsx";
@@ -17,6 +18,8 @@ export default function Header() {
   const route = useRoute();
   const { t } = useLanguage();
   const { user, profile, signOut } = useAuth();
+  const { invites: leagueInviteList } = useMyLeagues();
+  const leagueInvites = user ? leagueInviteList.length : 0;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -146,6 +149,19 @@ export default function Header() {
                     onClick={() => setProfileOpen(false)}
                   >
                     My dashboard
+                  </a>
+                  <a
+                    className="profile-menu__link"
+                    href="#/leagues"
+                    role="menuitem"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Friend leagues
+                    {leagueInvites > 0 && (
+                      <span className="profile-menu__dot" aria-label={`${leagueInvites} pending invites`}>
+                        {leagueInvites}
+                      </span>
+                    )}
                   </a>
                   <button
                     type="button"
