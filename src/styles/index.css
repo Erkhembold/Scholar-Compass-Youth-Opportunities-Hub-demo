@@ -6866,14 +6866,14 @@ a.roadmap-step:hover {
 .news-sidebar__list { display: flex; flex-direction: column; gap: 12px; }
 .news-card {
   display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 14px;
-  background: #e0401a; color: #fff; text-decoration: none; min-width: 0; overflow-wrap: anywhere;
+  background: #ffc933; color: #061a3a; text-decoration: none; min-width: 0; overflow-wrap: anywhere;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .news-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18); }
-.news-card:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-.news-card__date { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+.news-card:focus-visible { outline: 3px solid #061a3a; outline-offset: 2px; }
+.news-card__date { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5a4300; }
 .news-card__title { font-weight: 800; font-size: 1.02rem; line-height: 1.25; }
-.news-card__summary { font-size: 0.86rem; line-height: 1.4; opacity: 0.95; }
+.news-card__summary { font-size: 0.86rem; line-height: 1.4; color: #1a2a4a; }
 
 /* signed-out hero: copy + graphic on the left, news on the right */
 .hero__layout {
