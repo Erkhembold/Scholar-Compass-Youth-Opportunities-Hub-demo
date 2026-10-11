@@ -84,6 +84,9 @@ function parseHash(hash) {
   if (parts[0] === "archive") {
     return { name: "archive" };
   }
+  if (parts[0] === "news") {
+    return { name: "news" };
+  }
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
@@ -194,6 +197,10 @@ export function satWritingSentencesHref() {
 
 export function satWritingTransitionsHref() {
   return "#/sat/lessons/writing/transitions";
+}
+
+export function newsHref() {
+  return "#/news";
 }
 
 export function archiveHref() {

@@ -310,6 +310,7 @@ export const translations = {
     "Таны түвшин, хариулсан асуултын тоо, цуврал — дараагийн цувралын оргилд хэр ойрхон байгаа зэрэг.",
   "Level progress": "Түвшний дэвшил",
   "Scholar Compass News": "Scholar Compass мэдээ",
+  "Stories from students using ScholarCompass to reach their goals.": "ScholarCompass ашиглан зорилгодоо хүрч буй сурагчдын түүхүүд.",
   "Level": "Түвшин",
   "pts to Level": "оноо үлдлээ түвшин хүртэл",
   "pts": "оноо",
