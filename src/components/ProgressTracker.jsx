@@ -1,8 +1,9 @@
 import { useProgressData } from "../hooks/useProgressData.js";
 import { satMathExercisesHref } from "../router.js";
+import { SAT_QUESTIONS } from "../data/satQuestions.js";
 import SubjectProgressCard from "./SubjectProgressCard.jsx";
 
-const SAT_RW_TOTAL = 80; // SAT_CATEGORIES: 4 x 20 questions — see satQuestions.js
+const SAT_RW_TOTAL = Object.values(SAT_QUESTIONS).reduce((n, qs) => n + qs.length, 0);
 const SAT_MATH_TOTAL = 40; // SAT_MATH_QUESTIONS — see satMathQuestions.js
 
 export default function ProgressTracker() {
@@ -27,7 +28,7 @@ export default function ProgressTracker() {
 
   // SAT Reading & Writing: sat_progress is a sticky "ever gotten this one
   // right" flag per question, so a completion ring (mastered out of the
-  // full 80-question bank) is honest here.
+  // full question bank) is honest here.
   const rwPercent = (sat.rw.mastered / SAT_RW_TOTAL) * 100;
 
   // SAT Math and IELTS exercises are per-attempt logs, not sticky mastery,

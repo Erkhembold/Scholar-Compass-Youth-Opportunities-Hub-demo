@@ -1,15 +1,32 @@
 import { useState } from "react";
-import { SAT_CATEGORIES, SAT_QUESTIONS } from "../data/satQuestions.js";
+import { SAT_CATEGORIES, SAT_QUESTIONS, SAT_DIFFICULTIES } from "../data/satQuestions.js";
 import { useSatProgress } from "../hooks/useSatProgress.js";
 
 export default function SatPracticePage({ categoryId }) {
   const category = SAT_CATEGORIES.find((c) => c.id === categoryId);
-  const questions = SAT_QUESTIONS[categoryId] || [];
+  const allQuestions = SAT_QUESTIONS[categoryId] || [];
   const { progress, recordAnswer, masteredCount } = useSatProgress();
 
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState(null);
   const [checked, setChecked] = useState(false);
+  const [difficulty, setDifficulty] = useState("all");
+  const [skill, setSkill] = useState("all");
+
+  // Questions without metadata (the original 80) only show under "All".
+  const skills = [...new Set(allQuestions.map((x) => x.skill).filter(Boolean))].sort();
+  const questions = allQuestions.filter(
+    (x) =>
+      (difficulty === "all" || x.difficulty === difficulty) &&
+      (skill === "all" || x.skill === skill)
+  );
+
+  function changeFilter(setter, value) {
+    setter(value);
+    setIndex(0);
+    setSelected(null);
+    setChecked(false);
+  }
 
   if (!category) {
     return (
@@ -25,8 +42,7 @@ export default function SatPracticePage({ categoryId }) {
   }
 
   const q = questions[index];
-  const qProgress = progress[q.id];
-  const isCorrect = selected === q.answer;
+  const isCorrect = q ? selected === q.answer : false;
 
   function selectQuestion(i) {
     setIndex(i);
@@ -58,11 +74,43 @@ export default function SatPracticePage({ categoryId }) {
           </span>
         </div>
 
+        {skills.length > 0 ? (
+          <div className="sat-filters">
+            <label className="sat-filters__field">
+              Difficulty
+              <select value={difficulty} onChange={(e) => changeFilter(setDifficulty, e.target.value)}>
+                <option value="all">All</option>
+                {SAT_DIFFICULTIES.map((d) => (
+                  <option key={d} value={d}>
+                    {d[0].toUpperCase() + d.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="sat-filters__field">
+              Skill
+              <select value={skill} onChange={(e) => changeFilter(setSkill, e.target.value)}>
+                <option value="all">All</option>
+                {skills.map((sk) => (
+                  <option key={sk} value={sk}>
+                    {sk}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        ) : null}
+
+        {!q ? (
+          <p className="section__lede">No questions match these filters.</p>
+        ) : (
         <div className="sat-workspace__layout">
           <div className="sat-workspace__main">
             <div className="sat-question-card">
               <span className="sat-question-card__number">
                 Question {index + 1} of {questions.length}
+                {q.difficulty ? ` · ${q.difficulty[0].toUpperCase() + q.difficulty.slice(1)}` : ""}
+                {q.skill ? ` · ${q.skill}` : ""}
               </span>
               <p className="sat-question-card__passage">{q.passage}</p>
               <p className="sat-question-card__prompt">{q.prompt}</p>
@@ -145,6 +193,7 @@ export default function SatPracticePage({ categoryId }) {
             </div>
           </aside>
         </div>
+        )}
       </div>
     </section>
   );

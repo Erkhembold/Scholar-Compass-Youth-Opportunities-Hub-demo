@@ -2,7 +2,11 @@
 // for ScholarCompass — not reproduced from any real SAT test. Category
 // names match the four official digital SAT R&W domains (generic,
 // widely-used educational category labels, not test content itself).
-// 20 questions per category, 80 total.
+// 20 questions per category (80 total), plus the 100-question SC-SAT-RW
+// bank (data/sat_rw_bank_v1.csv -> satRwBank.js, generated). All original,
+// SAT-style content — not official College Board material.
+
+import { SAT_RW_BANK_V1 } from "./satRwBank.js";
 
 export const SAT_CATEGORIES = [
   { id: "craft-and-structure", label: "Craft and Structure" },
@@ -11,7 +15,7 @@ export const SAT_CATEGORIES = [
   { id: "expression-of-ideas", label: "Expression of Ideas" },
 ];
 
-export const SAT_QUESTIONS = {
+const SAT_QUESTIONS_BASE = {
   "craft-and-structure": [
   { id: "CS01", passage: "Early microscopes could magnify objects only a few hundred times, so the smallest bacteria remained entirely ______ to seventeenth-century scientists.", prompt: "Which choice completes the text with the most logical and precise word?", options: [{ id: "A", text: "visible" }, { id: "B", text: "invisible" }, { id: "C", text: "familiar" }, { id: "D", text: "irrelevant" }], answer: "B", explanation: "The sentence sets up a contrast: limited magnification meant scientists could NOT see the smallest bacteria, so 'invisible' fits." },
   { id: "CS02", passage: "The novelist's prose is often praised as spare, yet a closer reading reveals sentences dense with unexpected, almost ______ detail.", prompt: "Which choice completes the text with the most logical and precise word?", options: [{ id: "A", text: "predictable" }, { id: "B", text: "superfluous" }, { id: "C", text: "ornate" }, { id: "D", text: "muted" }], answer: "C", explanation: "'Yet' signals a contrast with 'spare,' so a word meaning heavily decorated or elaborate ('ornate') fits best." },
@@ -102,7 +106,18 @@ export const SAT_QUESTIONS = {
   ],
 };
 
-// Reuse-only helpers for anything that needs to pull from the whole 80-
+// Base questions first (ids unchanged, so saved progress and old 1v1
+// matches keep resolving), then the imported bank.
+export const SAT_QUESTIONS = Object.fromEntries(
+  SAT_CATEGORIES.map((c) => [
+    c.id,
+    [...SAT_QUESTIONS_BASE[c.id], ...(SAT_RW_BANK_V1[c.id] || [])],
+  ])
+);
+
+export const SAT_DIFFICULTIES = ["easy", "medium", "hard"];
+
+// Reuse-only helpers for anything that needs to pull from the whole
 // question bank at once (currently: SAT 1v1 Challenge match setup),
 // without duplicating or reshaping the question data above.
 export function getAllSatQuestionsFlat() {

@@ -133,9 +133,15 @@ pattern. Not yet linked from any nav menu or category page — reachable
 only by direct URL for now; ask the user before adding nav entries, in
 case that's intentionally being staged separately.
 
-**SAT practice** — `src/data/satQuestions.js` (80 original questions,
-20 per official R&W domain), `SatCategoryOverview.jsx` (progress per
-domain), `SatPracticePage.jsx` (question workspace). Progress persisted
+**SAT practice** — `src/data/satQuestions.js` (180 original questions: 80
+base `CS01`-style ids + the 100-question `SC-SAT-RW-###` bank), `SatCategoryOverview.jsx` (progress per
+domain), `SatPracticePage.jsx` (question workspace, difficulty/skill filters;
+the base 80 have no metadata and only show under "All"). The 100-question bank
+is generated: edit `data/sat_rw_bank_v1.csv` then run
+`node scripts/gen-sat-rw-bank.mjs` -> `src/data/satRwBank.js` (a test fails if
+they drift). Not official College Board material. No SQL needed (ids are text).
+6 "Command of Evidence — Quantitative" rows (SC-SAT-RW-021..026) refer to a
+chart/table that is not in the spreadsheet; imported verbatim, flagged to owner. Progress persisted
 per-question in `public.sat_progress` (`supabase/sat_progress_schema.sql`).
 
 **Opportunities** — `src/data/opportunities.js`, static array, images in
