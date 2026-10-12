@@ -37,6 +37,10 @@ import artGalleryPaintingCourseImg from "../assets/opportunities/mongolian-art-g
 import seanAcademyVolunteerImg from "../assets/opportunities/sean-academy-volunteer-english-teacher.png";
 import ilspsdErasmusImg from "../assets/opportunities/ilspsd-erasmus-mundus-2027.png";
 import teenHuraldaiImg from "../assets/opportunities/teen-huraldai-2026.png";
+import irimResearcherImg from "../assets/opportunities/irim-student-researcher-2026.png";
+import japanYouthSummitImg from "../assets/opportunities/japan-youth-summit-2027.png";
+import imagineArtImg from "../assets/opportunities/imagine-art-festival-tosool-2026.png";
+import youthChangemakersImg from "../assets/opportunities/youth-changemakers-summit-2026.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -909,5 +913,146 @@ With its focus on the nexus of law, security, peace and sustainability, ILSPSD e
     links: [
       { label: "Apply", href: "https://form.jotform.com/262721959731465" },
     ],
+  },
+  {
+    id: "irim-student-researcher-program-2026",
+    title: "13th Annual Student Researcher Program — Independent Research Institute of Mongolia (IRIM)",
+    category: "internships",
+    image: irimResearcherImg,
+    pattern: "grid",
+    deadline: { date: "2026-10-20", time: "23:59" },
+    essential: {
+      duration: "4 weeks: Oct 27 – Nov 20, 2026 · 4–8 hours per week",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Third-year students or above (GPA above 3.0) in social sciences, humanities, natural sciences or business",
+      organizer: "Independent Research Institute of Mongolia (IRIM)",
+    },
+    description: `Applications open for the 13th Annual Student Researcher Program
+
+The Independent Research Institute of Mongolia (IRIM) invites students interested in research and analysis to apply for the 2026 intake of its annual Student Researcher Program.
+
+The program runs for four weeks (27 Oct – 20 Nov).
+
+By participating in the program, you will:
+🎯 Learn research methodology and how to work with data through a dedicated researcher training program.
+🎯 Gain foundational knowledge of research methods, the effective use of artificial intelligence, and the research sector.
+🎯 Strengthen your research and personal skills and receive support in writing research papers.
+🎯 Explore opportunities to collaborate with IRIM.
+🎯 Work and learn alongside your peers.
+🎯 Share research findings on digital transformation.
+🎯 Gain practical experience through research projects.
+
+Eligibility requirements:
+✅ Have an interest in research and analysis.
+✅ Have a GPA above 3.0.
+✅ Be studying social sciences, humanities, natural sciences, or business.
+✅ Be a third-year student or above.
+✅ Be able to commit 4–8 hours per week throughout the program.
+
+🕓 Application deadline: 20 October 2026 at 23:59. Late applications will not be considered.
+
+For more information about the program, please visit IRIM's website or call 8670-6007.`,
+    links: [{ label: "Application form", href: "https://forms.gle/nCvqUsBxW91J5D8b7" }],
+    contactNote: "Phone: 8670-6007",
+  },
+  {
+    id: "japan-youth-summit-2027",
+    title: "Japan Youth Summit 2027 — Fully funded registration open (Osaka, Japan)",
+    category: "scholarships",
+    image: japanYouthSummitImg,
+    pattern: "radial",
+    deadline: { date: "2026-12-20" },
+    essential: {
+      duration: "May 10–13, 2027 · Osaka, Japan",
+      cost: "Fully funded registration available",
+      participants: "Not specified",
+      whoFor: "Young innovators interested in SDG 4, 8, 9, 11 and 13",
+      organizer: "Youth Break the Boundaries (YBB) with Puspresnas",
+    },
+    description: `YOUR IDEAS DESERVE A GLOBAL STAGE. 🇯🇵✨
+
+What if your next big idea could help shape a better world?
+
+At the Japan Youth Summit 2027, young innovators come together to explore bold ideas, exchange global perspectives, and develop youth-led solutions for a more sustainable future.
+
+And now, the door is OPEN! 🔥
+
+🎓 FULLY FUNDED REGISTRATION IS AVAILABLE!
+
+💡 Theme: Youth Innovation for a World Without Limits
+
+🌍 Turn your passion into purpose with:
+📚 SDG 4 — Quality Education
+💼 SDG 8 — Decent Work & Economic Growth
+🏗️ SDG 9 — Industry, Innovation & Infrastructure
+🏙️ SDG 11 — Sustainable Cities & Communities
+🌱 SDG 13 — Climate Action
+
+📍 Osaka, Japan
+📅 May 10–13, 2027
+🗓️ Application Deadline: December 20, 2026
+
+Your ideas matter. Your voice matters. And your journey toward global impact can start TODAY. 🌟
+
+#JapanYouthSummit2027 #YouthForChange #GlobalLeadership #YouthInnovation #SustainableDevelopment`,
+    links: [],
+    contactNote: "The original post gives the application link as a QR code on the poster. Check the organizers' Instagram for the link.",
+  },
+  {
+    id: "tosool-hand-drawing-contest-2026",
+    title: "“ТӨСӨӨЛ-2026” гар зургийн уралдаан — IMAGINE ART FESTIVAL",
+    category: "competitions",
+    image: imagineArtImg,
+    pattern: "diagonal",
+    deadline: { label: "See the programme guidelines for the submission date" },
+    essential: {
+      duration: "Held as part of IMAGINE ART FESTIVAL 2026 at AIC Steppe Arena",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Children aged 15–19 interested in art and drawing",
+      organizer: "Gonchigsumlaa Foundation (with UNICEF Mongolia and AIC Steppe Arena)",
+    },
+    description: `Гончигсумлаа сангаас жил бүр зохион байгуулдаг “ТӨСӨӨЛ” гар зургийн уралдаан эхэллээ!
+
+Ирээдүйд уран бүтээлч болох хүсэл эрмэлзэлтэй, урлаг, уран зурагт сонирхолтой 15-19 настай хүүхдүүдийн дунд зохион байгуулагдаг “ТӨСӨӨЛ-2026” гар зургийн уралдаан 5 дахь жилдээ “IMAGINE ART FESTIVAL”-ын хүрээнд “AIC STEPPE ARENA”-д болох гэж байна.
+
+Уран зургаар өөрсдийгөө илэрхийлж, бүтээлч мэдрэмжээ хөгжүүлэх хүсэлтэй хүүхдүүд та бүхэн хөтөлбөрийн удирдамжтай танилцан бүтээлээ ирүүлээрэй!
+
+#imagineartfestival2026 #gonchigsumlaafoundation #guidingtobrighterfutures #aicsteppearena`,
+    links: [{ label: "Instagram", href: "https://www.instagram.com/gonchigsumlaa_foundation/" }],
+  },
+  {
+    id: "youth-changemakers-summit-2026-budapest",
+    title: "Youth Changemakers Summit 2026 — Budapest, Hungary (70 scholarship awards)",
+    category: "scholarships",
+    image: youthChangemakersImg,
+    pattern: "stripe",
+    deadline: { date: "2026-10-11" },
+    essential: {
+      duration: "Dec 2–5, 2026 · Budapest, Hungary",
+      cost: "30 fully funded and 40 partially funded awards",
+      participants: "70 scholarship awards",
+      whoFor: "Ages 16–48, all nationalities and academic backgrounds. No IELTS or previous conference experience required.",
+      organizer: "thegiic.org",
+    },
+    description: `YOU’RE ELIGIBLE. NOW MAKE YOUR MOVE.
+
+Applications are open for the Youth Changemakers Summit 2026 in Budapest, Hungary.
+
+70 SCHOLARSHIP AWARDS
+30 Fully Funded | 40 Partially Funded
+
+FULLY FUNDED BENEFITS
+International Airfare | 4-Star Shared Accommodation | Forum Meals | Official Invitation Letter | Embassy Support | Full Summit Access | Global Networking | Speaking Opportunity | Official Certificate
+
+ELIGIBILITY
+Ages 16–48 | All Nationalities | All Academic Backgrounds | Students, Professionals, Entrepreneurs & Changemakers | No IELTS Required | No Previous International Conference Experience Required
+
+02–05 December 2026 | Budapest, Hungary
+Deadline: 11 October 2026
+
+#YCS2026 #FullyFunded #YouthOpportunities #InternationalConference #Budapest2026`,
+    links: [{ label: "Apply", href: "https://www.thegiic.org" }],
   },
 ];

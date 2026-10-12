@@ -1110,3 +1110,6 @@ shown under leaderboard rows, on public profiles and on the own profile. Add mor
 people by inserting rows; nothing shows until the SQL is run.
 
 **Scholar Compass News** — `src/data/news.js` (add an item to publish; currently the two Oct 11 IELTS student stories), `NewsSection.jsx`, full list at `#/news` (`NewsPage.jsx`, same grid/card look as the Opportunity Board); shown right of the hero (signed-out) and right of the dashboard cards (signed-in); stacks below at <=1200px / <=900px.
+
+## Four more opportunities (Oct 12, 2026)
+Added IRIM Student Researcher Program (internships, Oct 20 23:59), Japan Youth Summit 2027 (scholarships, Dec 20), ТӨСӨӨЛ-2026 / IMAGINE Art Festival (competitions, no date published, label-only), Youth Changemakers Summit 2026 (scholarships, deadline Oct 11 — already passed when added, so it shows as expired/archived). Thumbnails are in `src/assets/opportunities/`.
