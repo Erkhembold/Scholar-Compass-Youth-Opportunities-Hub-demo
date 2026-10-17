@@ -128,7 +128,7 @@ export default function StudentCardsSection() {
                   disabled={!available && featured !== k.id}
                   onClick={() => setFeatured(k.id)}
                 >
-                  {featured === k.id ? "★" : "☆"}
+                  {featured === k.id ? "Featured" : "Feature"}
                 </button>
               </li>
             );

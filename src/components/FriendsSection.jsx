@@ -16,7 +16,7 @@ function PersonRow({ person, children }) {
             <span className="friend-row__meta">
               {league ? `${league.name} League` : ""}
               {league && hasStreak ? " · " : ""}
-              {hasStreak ? `🔥 ${person.current_streak}` : ""}
+              {hasStreak ? `${person.current_streak} day streak` : ""}
             </span>
           )}
         </span>

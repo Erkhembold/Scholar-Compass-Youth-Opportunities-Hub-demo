@@ -120,3 +120,12 @@ export function IconBookmark({ filled = false, ...props }) {
     </svg>
   );
 }
+
+export function IconFlame(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M12 3c.6 3.2 4.5 5.1 4.5 9.6A4.5 4.5 0 0 1 12 17a4.5 4.5 0 0 1-4.5-4.4c0-1.6.7-2.7 1.6-3.7.2 1.2.8 1.9 1.6 2.1C10.4 8.2 10.8 5.4 12 3Z" />
+      <path d="M8 18.5a5.5 5.5 0 0 0 8 0" />
+    </svg>
+  );
+}

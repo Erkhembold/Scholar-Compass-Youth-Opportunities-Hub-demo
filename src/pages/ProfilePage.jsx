@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { ieltsTestHref, leaderboardHref } from "../router.js";
@@ -9,11 +9,8 @@ import LeagueBadge from "../components/LeagueBadge.jsx";
 import CollapsibleSection from "../components/CollapsibleSection.jsx";
 import { UserScoreBadges } from "../components/UserScoreBadge.jsx";
 import { useVerifiedScores } from "../hooks/useVerifiedScores.js";
-import AvatarUpload from "../components/AvatarUpload.jsx";
+import ProfileDashboard from "../components/ProfileDashboard.jsx";
 import ToggleGroup from "../components/ToggleGroup.jsx";
-import StreakCard from "../components/StreakCard.jsx";
-import ProgressTracker from "../components/ProgressTracker.jsx";
-import WeakAreaCard from "../components/WeakAreaCard.jsx";
 import RoadmapCard from "../components/RoadmapCard.jsx";
 import FriendsSection from "../components/FriendsSection.jsx";
 import StudentCardsSection from "../components/StudentCardsSection.jsx";
@@ -70,6 +67,10 @@ export default function ProfilePage() {
   const [exerciseAttempts, setExerciseAttempts] = useState([]);
   const [exercisesLoading, setExercisesLoading] = useState(true);
   const [leagueProfile, setLeagueProfile] = useState(profile);
+  const [settingsSignal, setSettingsSignal] = useState(0);
+  const [friendsSignal, setFriendsSignal] = useState(0);
+  const settingsRef = useRef(null);
+  const friendsRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -162,8 +163,8 @@ export default function ProfilePage() {
     setEditing(false);
   }
 
-  async function handleAvatarUploaded(path) {
-    await updateProfile({ avatar_path: path });
+  function handleAvatarProfile(fields) {
+    return updateProfile(fields);
   }
 
   async function handleVisibilityToggle() {
@@ -188,50 +189,35 @@ export default function ProfilePage() {
         : "Relegation zone"
       : "Safe zone";
   const badges = leagueProfile?.badges || [];
+  // League/XP come from the weekly-rollover result; name and photo follow live edits.
+  const dashboardProfile = {
+    ...(leagueProfile || {}),
+    ...(profile ? { name: profile.name, avatar_path: profile.avatar_path, lifetime_xp: profile.lifetime_xp ?? leagueProfile?.lifetime_xp } : {}),
+  };
 
   return (
-    <section className="section dashboard">
-      <div className="section__inner dashboard__inner">
-        <header className="dashboard-header">
-          <AvatarUpload
-            userId={user.id}
-            name={profile?.name}
-            avatarPath={profile?.avatar_path}
-            onUploaded={handleAvatarUploaded}
-          />
-          <div className="dashboard-header__text">
-            <h1 className="dashboard-header__greeting">Hey {profile?.name || "there"} 👋</h1>
-            <p className="dashboard-header__email">{user.email}</p>
-          </div>
-          <div className="dashboard-header__actions">
-            <a className="btn btn--ghost" href="#/">
-              View my dashboard
-            </a>
-            <button
-              type="button"
-              className="btn btn--ghost"
-              onClick={async () => {
-                await signOut();
-                window.location.hash = "#/";
-              }}
-            >
-              Sign out
-            </button>
-          </div>
-        </header>
-
+    <section className="section dashboard dashboard--wide">
+      <ProfileDashboard
+        user={user}
+        profile={dashboardProfile}
+        onProfileChange={handleAvatarProfile}
+        onSettings={() => {
+          setSettingsSignal((n) => n + 1);
+          setTimeout(() => settingsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+        }}
+        onSignOut={async () => {
+          await signOut();
+          window.location.hash = "#/";
+        }}
+        onManageFriends={() => {
+          setFriendsSignal((n) => n + 1);
+          setTimeout(() => friendsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+        }}
+      />
+      <div className="section__inner dashboard__inner dashboard__inner--wide">
         <UserScoreBadges scores={myVerifiedScores} />
 
         <div className="dashboard-grid">
-          <div className="dashboard-grid__cell dashboard-grid__cell--streak">
-            <StreakCard />
-          </div>
-          <div className="dashboard-grid__cell dashboard-grid__cell--progress">
-            <ProgressTracker />
-          </div>
-          <div className="dashboard-grid__cell dashboard-grid__cell--half">
-            <WeakAreaCard />
-          </div>
           <div className="dashboard-grid__cell dashboard-grid__cell--half">
             <div className="league-header" data-league={league.id}>
               <div className="league-header__badge">{league.name}</div>
@@ -277,7 +263,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="dashboard-grid__cell">
+          <div className="dashboard-grid__cell dashboard-grid__cell--half">
             <RoadmapCard />
           </div>
         </div>
@@ -293,7 +279,7 @@ export default function ProfilePage() {
         </div>
 
         <div className="profile-split">
-        <CollapsibleSection title="Account details">
+        <div ref={settingsRef} className="profile-anchor"><CollapsibleSection title="Account details" openSignal={settingsSignal}>
           <label className="visibility-toggle">
             <input type="checkbox" checked={visible} disabled={visibilitySaving} onChange={handleVisibilityToggle} />
             Let other students open my profile (turn off to hide it completely)
@@ -422,11 +408,11 @@ export default function ProfilePage() {
               </button>
             </form>
           )}
-        </CollapsibleSection>
+        </CollapsibleSection></div>
 
-        <CollapsibleSection title="Friends" defaultOpen>
+        <div ref={friendsRef} className="profile-anchor"><CollapsibleSection title="Friends and requests" defaultOpen openSignal={friendsSignal}>
           <FriendsSection />
-        </CollapsibleSection>
+        </CollapsibleSection></div>
         </div>
 
         <CollapsibleSection title="IELTS Reading history">

@@ -1,8 +1,6 @@
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 
-const MEDAL = { Gold: "🥇", Silver: "🥈", Bronze: "🥉" };
-
-// A single weekly achievement badge: placement medal + the color identity
+// A single weekly achievement badge: placement number + the color identity
 // of the league it was earned in. Reusable both in the small "Weekly
 // Achievements" list on the profile and anywhere else a badge needs to
 // render (leaderboard results screen, share cards, etc.).
@@ -16,7 +14,7 @@ export default function LeagueBadge({ placement, badge, leagueId, week, compact 
       title={`${badge} — ${league.name} League${week != null ? `, week ${week}` : ""}`}
     >
       <span className="league-badge__medal" aria-hidden="true">
-        {MEDAL[badge] || "🏅"}
+        {placement}
       </span>
       <span className="league-badge__text">
         <span className="league-badge__title">
