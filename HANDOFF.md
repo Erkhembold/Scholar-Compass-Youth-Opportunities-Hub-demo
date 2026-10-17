@@ -1122,3 +1122,13 @@ New `#/settings` page (`src/pages/SettingsPage.jsx`) holding "Account details" (
 
 ## Split-pane exercise UI (Oct 17, 2026)
 SAT Reading & Writing practice (`SatPracticePage`), SAT Math exercises (`SatMathExercisesPage`) and IELTS Reading/Writing exercises (`IeltsExercisesPage`) now use one shared Bluebook-style layout: `src/components/exercise/ExerciseShell.jsx` (+ `XsOption`, `XsCheck`), CSS prefix `.xs-*`. Top bar: Directions, Filters, timer (count-up, Hide, pause), Highlight, Notes. Left pane passage/stimulus, right pane question + choices; draggable divider (30-70%, double-click resets, arrow keys). Bottom: "Question X of Y" pill opens a map (answered / unanswered / marked for review / current), Back / Next. Highlights are stored as character ranges per question (`src/utils/highlights.js`, tested); notes, flags, highlights and timer live in the shell for the session (not saved to the database). Answers are kept per question when you go Back. Scoring, XP, streak and history saving are unchanged. NOT converted: IELTS mock tests (`IeltsTestPage`), writing essays, and the SAT / SAT Math / IELTS 1v1 challenge pages. On mobile (<=800px) panes stack and the bottom bar is sticky.
+
+## Exercise XP (IELTS Reading + SAT Math)
+- New `supabase/exercise_xp.sql` (UNCONFIRMED — user must run it in the SQL Editor). Needs
+  `leaderboard_schema.sql`, `streaks_and_exercise_history.sql` and `sat_math_progress.sql` first; idempotent.
+- DB triggers on `sat_math_exercise_attempts` (5 XP) and `ielts_exercise_attempts` (10 XP) add to
+  `profiles.weekly_xp` / `lifetime_xp` on the FIRST correct answer per question/exercise per user.
+  Wrong or repeat answers earn nothing. No front-end change; `XP_REWARDS` in `xp.js` is NOT used for these.
+- Amounts are the `xp_amount` constants inside the two trigger functions.
+- Optional commented backfill block at the bottom pays XP for old correct answers; run at most once.
+- Tested on local Postgres 16 (first-correct only, repeat-run safe, helper not callable by clients).
