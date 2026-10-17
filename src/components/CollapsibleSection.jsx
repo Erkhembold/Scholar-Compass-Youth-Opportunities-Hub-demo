@@ -5,10 +5,12 @@ import { useIsMobile } from "../hooks/useIsMobile.js";
 // content always visible underneath — no accordion behavior at all,
 // visually unchanged from before. On mobile it becomes a tap-to-expand
 // row: collapsed by default, content only mounts once opened.
-export default function CollapsibleSection({ title, lede, children, defaultOpen = false, openSignal = 0 }) {
+export default function CollapsibleSection({ title, lede, children, defaultOpen = false, openSignal = 0, alwaysCollapsible = false }) {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(defaultOpen);
-  const isOpen = !isMobile || open;
+  // Desktop normally shows everything open; `alwaysCollapsible` keeps the
+  // tap-to-expand "+" behaviour on every screen size.
+  const isOpen = alwaysCollapsible ? open : !isMobile || open;
 
   // A parent can ask for the section to open (e.g. the dashboard's Settings button).
   useEffect(() => {
@@ -16,7 +18,7 @@ export default function CollapsibleSection({ title, lede, children, defaultOpen 
   }, [openSignal]);
 
   return (
-    <div className="profile-accordion__item">
+    <div className={`profile-accordion__item${alwaysCollapsible ? " profile-accordion__item--always" : ""}`}>
       <button
         type="button"
         className="profile-accordion__header"
@@ -28,7 +30,7 @@ export default function CollapsibleSection({ title, lede, children, defaultOpen 
           {isOpen ? "−" : "+"}
         </span>
       </button>
-      {lede && isMobile && !isOpen ? null : lede ? (
+      {lede && (isMobile || alwaysCollapsible) && !isOpen ? null : lede ? (
         <p className="signin__lede profile-accordion__lede">{lede}</p>
       ) : null}
       {isOpen && <div className="profile-accordion__panel">{children}</div>}

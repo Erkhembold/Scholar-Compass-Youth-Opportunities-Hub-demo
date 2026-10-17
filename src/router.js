@@ -30,6 +30,9 @@ function parseHash(hash) {
   if (parts[0] === "profile" && parts[1] === "progress") {
     return { name: "profile-stats" };
   }
+  if (parts[0] === "settings") {
+    return { name: "settings" };
+  }
   if (parts[0] === "profile") {
     return { name: "profile" };
   }
@@ -148,6 +151,10 @@ export function signInHref() {
 
 export function profileHref() {
   return "#/profile";
+}
+
+export function settingsHref() {
+  return "#/settings";
 }
 
 export function profileStatsHref() {

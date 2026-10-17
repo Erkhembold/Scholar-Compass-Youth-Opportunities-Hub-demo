@@ -10,7 +10,7 @@ import { removeAvatarFile, uploadAvatar } from "../utils/avatar.js";
 import { SAT_QUESTIONS } from "../data/satQuestions.js";
 import { LEAGUE_BY_ID } from "../data/leagues.js";
 import { MIN_SAMPLE } from "../utils/progress.js";
-import { satMathExercisesHref, profileStatsHref, leaderboardHref, publicProfileHref } from "../router.js";
+import { satMathExercisesHref, settingsHref, profileStatsHref, leaderboardHref, publicProfileHref } from "../router.js";
 
 const SAT_RW_TOTAL = Object.values(SAT_QUESTIONS).reduce((n, qs) => n + qs.length, 0);
 const fmt = (n) => (n ?? 0).toLocaleString();
@@ -184,7 +184,7 @@ function FriendsPanel({ onManage }) {
   );
 }
 
-export default function ProfileDashboard({ user, profile, onProfileChange, onSettings, onSignOut, onManageFriends }) {
+export default function ProfileDashboard({ user, profile, onProfileChange, onSignOut, onManageFriends }) {
   const { progress, loading, isSetUp } = useProgressData();
   const streak = useStreak();
   const fileRef = useRef(null);
@@ -224,10 +224,13 @@ export default function ProfileDashboard({ user, profile, onProfileChange, onSet
           <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={onPhoto} />
           <div className="pd-id__text">
             <h1 className="pd-name">{name}</h1>
-            <a className="pd-league" href={leaderboardHref()} data-league={league.id}>
-              <span className="pd-league__dot" style={{ background: league.primary }} aria-hidden="true" />
-              {league.name} league
-            </a>
+            <div className="pd-id__row">
+              <a className="pd-league" href={leaderboardHref()} data-league={league.id}>
+                <span className="pd-league__dot" style={{ background: league.primary }} aria-hidden="true" />
+                {league.name} league
+              </a>
+              <a className="pd-action pd-action--settings" href={settingsHref()}>Settings</a>
+            </div>
           </div>
         </div>
 
@@ -246,7 +249,6 @@ export default function ProfileDashboard({ user, profile, onProfileChange, onSet
         </dl>
 
         <div className="pd-actions">
-          <button type="button" className="pd-action" onClick={onSettings}>Settings</button>
           <button type="button" className="pd-action" onClick={onSignOut}>Sign out</button>
         </div>
       </header>

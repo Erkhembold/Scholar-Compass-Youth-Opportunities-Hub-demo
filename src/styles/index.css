@@ -3935,6 +3935,25 @@ body.nav-open {
   }
 }
 
+/* Same "+" / "-" accordion look as mobile, on every screen size. */
+.profile-accordion__item--always {
+  border-top: 1px solid var(--line);
+  padding: 18px 4px;
+}
+.profile-accordion__item--always .profile-accordion__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--blue-text);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
 /* =========================================================================
    Beginner Lessons component system
    ========================================================================= */
@@ -7382,4 +7401,57 @@ a.roadmap-step:hover {
   .pd-level {
     grid-template-columns: auto minmax(0, 1fr);
   }
+}
+
+.pd-id__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 8px;
+}
+.pd-id__row .pd-league {
+  margin-top: 0;
+}
+.pd-action--settings {
+  padding: 3px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+.pd-action--settings:hover {
+  border-color: var(--blue-solid);
+  text-decoration: none;
+}
+.profile-split--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+.settings-page {
+  padding-top: 32px;
+  padding-bottom: 72px;
+}
+.settings-page__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 var(--pd-gutter, 24px);
+}
+.settings-page__back {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+}
+.settings-page__back a {
+  color: var(--blue-text);
+}
+.settings-page__title {
+  margin: 0 0 20px;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--heading);
+}
+.history-note {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  max-width: 62ch;
 }
