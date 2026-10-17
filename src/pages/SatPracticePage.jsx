@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { SAT_CATEGORIES, SAT_QUESTIONS, SAT_DIFFICULTIES } from "../data/satQuestions.js";
 import { useSatProgress } from "../hooks/useSatProgress.js";
+import ExerciseShell, { XsOption, XsCheck } from "../components/exercise/ExerciseShell.jsx";
+
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
 
 export default function SatPracticePage({ categoryId }) {
   const category = SAT_CATEGORIES.find((c) => c.id === categoryId);
@@ -8,24 +11,20 @@ export default function SatPracticePage({ categoryId }) {
   const { progress, recordAnswer, masteredCount } = useSatProgress();
 
   const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [checked, setChecked] = useState(false);
+  // answers[questionId] = { selected, checked } so going Back keeps what you did
+  const [answers, setAnswers] = useState({});
   const [difficulty, setDifficulty] = useState("all");
   const [skill, setSkill] = useState("all");
 
   // Questions without metadata (the original 80) only show under "All".
   const skills = [...new Set(allQuestions.map((x) => x.skill).filter(Boolean))].sort();
   const questions = allQuestions.filter(
-    (x) =>
-      (difficulty === "all" || x.difficulty === difficulty) &&
-      (skill === "all" || x.skill === skill)
+    (x) => (difficulty === "all" || x.difficulty === difficulty) && (skill === "all" || x.skill === skill),
   );
 
   function changeFilter(setter, value) {
     setter(value);
     setIndex(0);
-    setSelected(null);
-    setChecked(false);
   }
 
   if (!category) {
@@ -41,160 +40,116 @@ export default function SatPracticePage({ categoryId }) {
     );
   }
 
-  const q = questions[index];
-  const isCorrect = q ? selected === q.answer : false;
+  const filters =
+    skills.length > 0 ? (
+      <div className="xs-filters">
+        <label className="xs-filters__field">
+          Difficulty
+          <select value={difficulty} onChange={(e) => changeFilter(setDifficulty, e.target.value)}>
+            <option value="all">All</option>
+            {SAT_DIFFICULTIES.map((d) => (
+              <option key={d} value={d}>
+                {cap(d)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="xs-filters__field">
+          Skill
+          <select value={skill} onChange={(e) => changeFilter(setSkill, e.target.value)}>
+            <option value="all">All</option>
+            {skills.map((sk) => (
+              <option key={sk} value={sk}>
+                {sk}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+    ) : null;
 
-  function selectQuestion(i) {
-    setIndex(i);
-    setSelected(null);
-    setChecked(false);
+  if (questions.length === 0) {
+    return (
+      <section className="section">
+        <div className="section__inner">
+          <a className="detail__back" href="#/category/sat">&larr; Back to SAT</a>
+          <h1 className="section__title">{category.label}</h1>
+          {filters}
+          <p className="section__lede">No questions match these filters.</p>
+        </div>
+      </section>
+    );
   }
 
+  const safeIndex = Math.min(index, questions.length - 1);
+  const q = questions[safeIndex];
+  const a = answers[q.id] || { selected: null, checked: false };
+  const isCorrect = a.selected === q.answer;
+
+  const statuses = questions.map((item) => {
+    const r = answers[item.id];
+    if (r?.checked) return r.selected === item.answer ? "correct" : "incorrect";
+    if (r?.selected) return "answered";
+    return "unanswered";
+  });
+
+  function setSelected(id) {
+    setAnswers((p) => (p[q.id]?.checked ? p : { ...p, [q.id]: { selected: id, checked: false } }));
+  }
   function handleCheck() {
-    if (!selected || checked) return;
-    setChecked(true);
-    recordAnswer(q.id, categoryId, selected === q.answer);
+    if (!a.selected || a.checked) return;
+    setAnswers((p) => ({ ...p, [q.id]: { selected: a.selected, checked: true } }));
+    recordAnswer(q.id, categoryId, a.selected === q.answer);
   }
 
-  function handleNext() {
-    if (index < questions.length - 1) selectQuestion(index + 1);
-  }
+  const hasPassage = !!q.passage;
+  const meta = [q.difficulty ? cap(q.difficulty) : null, q.skill].filter(Boolean).join(" - ");
 
   return (
-    <section className="section sat-workspace">
-      <div className="section__inner">
-        <a className="detail__back" href="#/category/sat">
-          ← Back to SAT
-        </a>
-
-        <div className="sat-workspace__head">
-          <h1 className="section__title">{category.label}</h1>
-          <span className="sat-workspace__progress-label">
-            {masteredCount(categoryId)}/{questions.length} mastered
-          </span>
-        </div>
-
-        {skills.length > 0 ? (
-          <div className="sat-filters">
-            <label className="sat-filters__field">
-              Difficulty
-              <select value={difficulty} onChange={(e) => changeFilter(setDifficulty, e.target.value)}>
-                <option value="all">All</option>
-                {SAT_DIFFICULTIES.map((d) => (
-                  <option key={d} value={d}>
-                    {d[0].toUpperCase() + d.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="sat-filters__field">
-              Skill
-              <select value={skill} onChange={(e) => changeFilter(setSkill, e.target.value)}>
-                <option value="all">All</option>
-                {skills.map((sk) => (
-                  <option key={sk} value={sk}>
-                    {sk}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        ) : null}
-
-        {!q ? (
-          <p className="section__lede">No questions match these filters.</p>
-        ) : (
-        <div className="sat-workspace__layout">
-          <div className="sat-workspace__main">
-            <div className="sat-question-card">
-              <span className="sat-question-card__number">
-                Question {index + 1} of {questions.length}
-                {q.difficulty ? ` · ${q.difficulty[0].toUpperCase() + q.difficulty.slice(1)}` : ""}
-                {q.skill ? ` · ${q.skill}` : ""}
-              </span>
-              <p className="sat-question-card__passage">{q.passage}</p>
-              <p className="sat-question-card__prompt">{q.prompt}</p>
-
-              <div className="sat-question-card__options">
-                {q.options.map((opt) => {
-                  const isSelected = selected === opt.id;
-                  const showCorrect = checked && opt.id === q.answer;
-                  const showWrong = checked && isSelected && opt.id !== q.answer;
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      className={`sat-option ${isSelected ? "sat-option--selected" : ""} ${
-                        showCorrect ? "sat-option--correct" : ""
-                      } ${showWrong ? "sat-option--wrong" : ""}`}
-                      onClick={() => !checked && setSelected(opt.id)}
-                      disabled={checked}
-                    >
-                      <span className="sat-option__id">{opt.id}</span>
-                      <span className="sat-option__text">{opt.text}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {checked ? (
-                <div
-                  className={`sat-question-card__feedback ${
-                    isCorrect ? "sat-question-card__feedback--correct" : "sat-question-card__feedback--wrong"
-                  }`}
-                >
-                  <p className="sat-question-card__verdict">
-                    {isCorrect ? "Correct!" : `Not quite — the correct answer is ${q.answer}.`}
-                  </p>
-                  <p className="sat-question-card__explanation">{q.explanation}</p>
-                  {index < questions.length - 1 ? (
-                    <button type="button" className="btn btn--accent" onClick={handleNext}>
-                      Next question
-                    </button>
-                  ) : (
-                    <p className="sat-question-card__done">
-                      That's the last question in this set —{" "}
-                      <a href="#/category/sat">back to SAT overview</a>.
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn--accent"
-                  disabled={!selected}
-                  onClick={handleCheck}
-                >
-                  Check answer
-                </button>
-              )}
-            </div>
-          </div>
-
-          <aside className="sat-workspace__sidebar" aria-label="Question list">
-            <div className="sat-question-grid">
-              {questions.map((item, i) => {
-                const p = progress[item.id];
-                const state = p?.correct ? "correct" : p?.attempts ? "attempted" : "unanswered";
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={`sat-question-chip sat-question-chip--${state} ${
-                      i === index ? "sat-question-chip--active" : ""
-                    }`}
-                    onClick={() => selectQuestion(i)}
-                    aria-label={`Question ${i + 1}${p?.correct ? ", answered correctly" : ""}`}
-                  >
-                    {p?.correct ? "✓" : i + 1}
-                  </button>
-                );
-              })}
-            </div>
-          </aside>
-        </div>
-        )}
+    <ExerciseShell
+      title={category.label}
+      exitHref="#/category/sat"
+      exitLabel="SAT"
+      directions={
+        <>
+          <p>Read the passage on the left, then answer the question on the right. Choose the best of the four answers and press Check answer to see the explanation.</p>
+          <p>{masteredCount(categoryId)} of {allQuestions.length} questions in this set mastered so far.</p>
+        </>
+      }
+      filters={filters}
+      questionIds={questions.map((x) => x.id)}
+      statuses={statuses}
+      index={safeIndex}
+      onIndexChange={setIndex}
+      passageText={hasPassage ? q.passage : null}
+      passageNode={hasPassage ? null : <p className="xs-stimulus">{q.prompt}</p>}
+    >
+      {meta && <p className="xs-meta">{meta}</p>}
+      {hasPassage && <p className="xs-prompt">{q.prompt}</p>}
+      <div className="xs-options" role="radiogroup" aria-label="Answer choices">
+        {q.options.map((opt) => (
+          <XsOption
+            key={opt.id}
+            letter={opt.id}
+            selected={a.selected === opt.id}
+            correct={a.checked && opt.id === q.answer}
+            wrong={a.checked && a.selected === opt.id && opt.id !== q.answer}
+            disabled={a.checked}
+            onClick={() => setSelected(opt.id)}
+          >
+            {opt.text}
+          </XsOption>
+        ))}
       </div>
-    </section>
+      <XsCheck
+        checked={a.checked}
+        canCheck={!!a.selected}
+        onCheck={handleCheck}
+        correct={isCorrect}
+        verdict={isCorrect ? "Correct" : `Not quite. The correct answer is ${q.answer}.`}
+      >
+        <p className="xs-feedback__text">{q.explanation}</p>
+      </XsCheck>
+    </ExerciseShell>
   );
 }

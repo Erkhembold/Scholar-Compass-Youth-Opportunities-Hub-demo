@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { IELTS_READING_EXERCISES } from "../data/ieltsReadingExercises.js";
 import { IELTS_WRITING_EXERCISES } from "../data/ieltsWritingExercises.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { saveExerciseAttempt } from "../utils/ieltsExerciseHistory.js";
+import ExerciseShell, { XsOption, XsCheck } from "../components/exercise/ExerciseShell.jsx";
 
 const SKILL_META = {
   reading: { label: "Reading", ready: true, exercises: IELTS_READING_EXERCISES },
@@ -57,203 +58,135 @@ export default function IeltsExercisesPage({ skill }) {
   return <ExerciseRunner key={skill} exercises={meta.exercises} label={meta.label} />;
 }
 
-// Shared by Reading and Writing — both use the same `mc` question schema
+// Shared by Reading and Writing: both use the same question schema
 // (see ieltsReadingExercises.js / ieltsWritingExercises.js), so one runner
 // works for either as long as it's told which array and which label to show.
+function emptyAnswer(exercise) {
+  return exercise.type === "tfng" ? Array(exercise.statements.length).fill(null) : null;
+}
+
 function ExerciseRunner({ exercises, label }) {
-  const { t } = useLanguage();
   const { user } = useAuth();
   const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState(null); // mc/matching: string; tfng: array; completion: string
-  const [checked, setChecked] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [answeredCount, setAnsweredCount] = useState(0);
+  // answers[exerciseId] = { selected, checked, correct } (kept when you go Back)
+  const [answers, setAnswers] = useState({});
 
   const exercise = exercises[index];
+  const a = answers[exercise.id] || { selected: emptyAnswer(exercise), checked: false, correct: false };
+  const answeredCount = Object.values(answers).filter((x) => x.checked).length;
+  const correctCount = Object.values(answers).filter((x) => x.checked && x.correct).length;
 
-  const isCorrect = useMemo(() => {
-    if (!checked) return null;
-    return computeCorrect(exercise, selected);
-  }, [checked, exercise, selected]);
+  const statuses = exercises.map((ex) => {
+    const r = answers[ex.id];
+    if (r?.checked) return r.correct ? "correct" : "incorrect";
+    if (r && isAnswered(ex, r.selected)) return "answered";
+    return "unanswered";
+  });
 
-  function resetForExercise() {
-    setSelected(exercise.type === "tfng" ? Array(exercise.statements.length).fill(null) : null);
-    setChecked(false);
-  }
-
-  function goTo(newIndex) {
-    const clamped = Math.max(0, Math.min(exercises.length - 1, newIndex));
-    setIndex(clamped);
-    setSelected(
-      exercises[clamped].type === "tfng"
-        ? Array(exercises[clamped].statements.length).fill(null)
-        : null
-    );
-    setChecked(false);
+  function setSelected(next) {
+    setAnswers((p) => (p[exercise.id]?.checked ? p : { ...p, [exercise.id]: { selected: next, checked: false, correct: false } }));
   }
 
   function handleCheck() {
-    if (checked) return;
-    setChecked(true);
-    setAnsweredCount((c) => c + 1);
-    const correct = computeCorrect(exercise, selected);
-    if (correct) setCorrectCount((c) => c + 1);
+    if (a.checked) return;
+    const correct = computeCorrect(exercise, a.selected);
+    setAnswers((p) => ({ ...p, [exercise.id]: { selected: a.selected, checked: true, correct } }));
     // Signed-in students get this attempt saved to their history (and it
     // counts toward their daily streak). Anonymous visitors practise as before.
-    saveExerciseAttempt(supabase, user?.id, exercise, selected, correct);
+    saveExerciseAttempt(supabase, user?.id, exercise, a.selected, correct);
   }
 
-  return (
-    <section className="section board">
-      <div className="section__inner">
-        <a className="detail__back" href="#/category/ielts">
-          ← {t("Back")} to IELTS
-        </a>
+  const hasPassage = !!exercise.passage;
+  const prompt = exercise.type === "mc" ? exercise.question : exercise.type === "completion" ? exercise.prompt : null;
 
-        <div className="section__head">
-          <h1 className="section__title">IELTS {t(label)} Exercises</h1>
-          <p className="section__lede">
-            Short, targeted practice — one question at a time. Not a timed mock test.
-          </p>
+  return (
+    <ExerciseShell
+      title={`IELTS ${label}`}
+      exitHref="#/category/ielts"
+      exitLabel="IELTS"
+      directions={
+        <>
+          <p>Short, targeted practice, one question at a time. This is not a timed mock test.</p>
           {!user && (
-            <p className="section__lede">
+            <p>
               <a href="#/signin">Sign in</a> to save your exercise history and build a daily streak.
             </p>
           )}
-        </div>
-
-        <div className="exercise-runner">
-          <div className="exercise-runner__meta">
-            <span>
-              Exercise {index + 1} of {exercises.length}
-            </span>
-            <span className={`exercise-runner__difficulty exercise-runner__difficulty--${exercise.difficulty}`}>
-              {DIFFICULTY_LABEL[exercise.difficulty]}
-            </span>
-            {answeredCount > 0 && (
-              <span className="exercise-runner__score">
-                Score: {correctCount}/{answeredCount}
-              </span>
-            )}
-          </div>
-
-          {exercise.passage && <div className="exercise-runner__passage">{exercise.passage}</div>}
-
-          <ExerciseQuestion
-            exercise={exercise}
-            selected={selected}
-            setSelected={setSelected}
-            checked={checked}
-          />
-
-          {checked && (
-            <div
-              className={`exercise-runner__feedback ${
-                isCorrect ? "exercise-runner__feedback--correct" : "exercise-runner__feedback--incorrect"
-              }`}
-            >
-              <strong>{isCorrect ? "Correct" : "Not quite"}</strong>
-              {exercise.explanation && <p>{exercise.explanation}</p>}
-              {!exercise.explanation && exercise.answer && (
-                <p>Correct answer: {formatAnswer(exercise)}</p>
-              )}
-            </div>
-          )}
-
-          <div className="exercise-runner__actions">
-            <button
-              type="button"
-              className="btn btn--ghost"
-              onClick={() => goTo(index - 1)}
-              disabled={index === 0}
-            >
-              Previous
-            </button>
-            {!checked ? (
-              <button
-                type="button"
-                className="btn btn--accent"
-                onClick={handleCheck}
-                disabled={!isAnswered(exercise, selected)}
-              >
-                Check answer
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="btn btn--accent"
-                onClick={() => goTo(index + 1)}
-                disabled={index === exercises.length - 1}
-              >
-                Next exercise
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
+        </>
+      }
+      questionIds={exercises.map((ex) => ex.id)}
+      statuses={statuses}
+      index={index}
+      onIndexChange={setIndex}
+      passageText={hasPassage ? exercise.passage : null}
+      passageNode={prompt ? <p className="xs-stimulus">{prompt}</p> : <p className="xs-stimulus xs-stimulus--muted">Answer the question on the right.</p>}
+    >
+      <p className="xs-meta">
+        Exercise {index + 1} of {exercises.length} - {DIFFICULTY_LABEL[exercise.difficulty] || exercise.difficulty}
+        {answeredCount > 0 ? ` - Score ${correctCount}/${answeredCount}` : ""}
+      </p>
+      {hasPassage && prompt && <p className="xs-prompt">{prompt}</p>}
+      <ExerciseQuestion exercise={exercise} selected={a.selected} setSelected={setSelected} checked={a.checked} />
+      <XsCheck
+        checked={a.checked}
+        canCheck={isAnswered(exercise, a.selected)}
+        onCheck={handleCheck}
+        correct={a.correct}
+        verdict={a.correct ? "Correct" : "Not quite"}
+      >
+        {exercise.explanation && <p className="xs-feedback__text">{exercise.explanation}</p>}
+        {!exercise.explanation && exercise.answer && <p className="xs-feedback__text">Correct answer: {formatAnswer(exercise)}</p>}
+      </XsCheck>
+    </ExerciseShell>
   );
 }
 
 function ExerciseQuestion({ exercise, selected, setSelected, checked }) {
   if (exercise.type === "mc") {
     return (
-      <div className="exercise-runner__question">
-        <p className="exercise-runner__prompt">{exercise.question}</p>
-        <div className="exercise-runner__options">
-          {exercise.options.map((opt) => (
-            <label
-              key={opt.id}
-              className={`exercise-runner__option ${selected === opt.id ? "is-selected" : ""} ${
-                checked && opt.id === exercise.answer ? "is-correct-answer" : ""
-              } ${checked && selected === opt.id && opt.id !== exercise.answer ? "is-wrong-answer" : ""}`}
-            >
-              <input
-                type="radio"
-                name="mc-answer"
-                checked={selected === opt.id}
-                disabled={checked}
-                onChange={() => setSelected(opt.id)}
-              />
-              <span>
-                {opt.id}. {opt.text}
-              </span>
-            </label>
-          ))}
-        </div>
+      <div className="xs-options" role="radiogroup" aria-label="Answer choices">
+        {exercise.options.map((opt) => (
+          <XsOption
+            key={opt.id}
+            letter={opt.id}
+            selected={selected === opt.id}
+            correct={checked && opt.id === exercise.answer}
+            wrong={checked && selected === opt.id && opt.id !== exercise.answer}
+            disabled={checked}
+            onClick={() => setSelected(opt.id)}
+          >
+            {opt.text}
+          </XsOption>
+        ))}
       </div>
     );
   }
 
   if (exercise.type === "tfng") {
     return (
-      <div className="exercise-runner__question">
+      <div>
         {exercise.statements.map((st, i) => (
-          <div key={i} className="exercise-runner__tfng-row">
-            <p className="exercise-runner__prompt">
+          <div key={i} className="xs-tfng">
+            <p className="xs-prompt">
               {i + 1}. {st.text}
             </p>
-            <div className="exercise-runner__options exercise-runner__options--inline">
+            <div className="xs-options xs-options--row" role="radiogroup" aria-label={`Statement ${i + 1}`}>
               {["TRUE", "FALSE", "NOT GIVEN"].map((val) => (
-                <label
+                <XsOption
                   key={val}
-                  className={`exercise-runner__option ${selected?.[i] === val ? "is-selected" : ""} ${
-                    checked && val === st.answer ? "is-correct-answer" : ""
-                  } ${checked && selected?.[i] === val && val !== st.answer ? "is-wrong-answer" : ""}`}
+                  letter={val[0]}
+                  selected={selected?.[i] === val}
+                  correct={checked && val === st.answer}
+                  wrong={checked && selected?.[i] === val && val !== st.answer}
+                  disabled={checked}
+                  onClick={() => {
+                    const next = [...selected];
+                    next[i] = val;
+                    setSelected(next);
+                  }}
                 >
-                  <input
-                    type="radio"
-                    name={`tfng-${i}`}
-                    checked={selected?.[i] === val}
-                    disabled={checked}
-                    onChange={() => {
-                      const next = [...selected];
-                      next[i] = val;
-                      setSelected(next);
-                    }}
-                  />
-                  <span>{val}</span>
-                </label>
+                  {val}
+                </XsOption>
               ))}
             </div>
           </div>
@@ -264,40 +197,35 @@ function ExerciseQuestion({ exercise, selected, setSelected, checked }) {
 
   if (exercise.type === "matching") {
     return (
-      <div className="exercise-runner__question">
-        <p className="exercise-runner__prompt">Choose the correct heading for this paragraph.</p>
-        <div className="exercise-runner__options">
+      <>
+        <p className="xs-prompt">Choose the correct heading for this paragraph.</p>
+        <div className="xs-options" role="radiogroup" aria-label="Headings">
           {exercise.headings.map((h) => (
-            <label
+            <XsOption
               key={h.id}
-              className={`exercise-runner__option ${selected === h.id ? "is-selected" : ""} ${
-                checked && h.id === exercise.answer ? "is-correct-answer" : ""
-              } ${checked && selected === h.id && h.id !== exercise.answer ? "is-wrong-answer" : ""}`}
+              letter={h.id}
+              selected={selected === h.id}
+              correct={checked && h.id === exercise.answer}
+              wrong={checked && selected === h.id && h.id !== exercise.answer}
+              disabled={checked}
+              onClick={() => setSelected(h.id)}
             >
-              <input
-                type="radio"
-                name="matching-answer"
-                checked={selected === h.id}
-                disabled={checked}
-                onChange={() => setSelected(h.id)}
-              />
-              <span>
-                {h.id}. {h.text}
-              </span>
-            </label>
+              {h.text}
+            </XsOption>
           ))}
         </div>
-      </div>
+      </>
     );
   }
 
   // completion
   return (
-    <div className="exercise-runner__question">
-      <p className="exercise-runner__prompt">{exercise.prompt}</p>
+    <div className="xs-spr">
+      <label htmlFor="xs-completion">Your answer</label>
       <input
+        id="xs-completion"
         type="text"
-        className="exercise-runner__text-input"
+        className="xs-input"
         value={selected || ""}
         disabled={checked}
         onChange={(e) => setSelected(e.target.value)}
@@ -308,7 +236,7 @@ function ExerciseQuestion({ exercise, selected, setSelected, checked }) {
 }
 
 function isAnswered(exercise, selected) {
-  if (exercise.type === "tfng") return selected && selected.every((v) => v);
+  if (exercise.type === "tfng") return !!selected && selected.every((v) => v);
   if (exercise.type === "completion") return !!(selected && selected.trim());
   return !!selected;
 }
