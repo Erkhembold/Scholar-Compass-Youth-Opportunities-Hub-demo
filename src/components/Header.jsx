@@ -5,6 +5,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import Avatar from "./Avatar.jsx";
 import { useMyLeagues } from "../hooks/useCustomLeagues.js";
+import { useIsAdmin } from "../hooks/useIsAdmin.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 import TextSizeToggle from "./TextSizeToggle.jsx";
 import LanguageToggle from "./LanguageToggle.jsx";
@@ -20,6 +21,7 @@ export default function Header() {
   const { user, profile, signOut } = useAuth();
   const { invites: leagueInviteList } = useMyLeagues();
   const leagueInvites = user ? leagueInviteList.length : 0;
+  const { isAdmin } = useIsAdmin();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -163,6 +165,16 @@ export default function Header() {
                       </span>
                     )}
                   </a>
+                  {isAdmin && (
+                    <a
+                      className="profile-menu__link"
+                      href="#/admin/reviews"
+                      role="menuitem"
+                      onClick={() => setProfileOpen(false)}
+                    >
+                      Review queue
+                    </a>
+                  )}
                   <button
                     type="button"
                     className="profile-menu__link profile-menu__signout"

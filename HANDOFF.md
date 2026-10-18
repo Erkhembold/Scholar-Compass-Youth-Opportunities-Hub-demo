@@ -1142,3 +1142,24 @@ SAT Reading & Writing practice (`SatPracticePage`), SAT Math exercises (`SatMath
 - Client: page calls the RPC, falls back to a plain update if the RPC isn't installed, validates targets
   (`utils/onboarding.js`, tested), shows errors, keeps answers. Skip only saves the done flag.
   `updateProfile` now reports a save that matched no row; `AuthContext` exposes `refreshProfile`.
+
+## Opportunity completion + admin review + 100 XP
+- New `supabase/opportunity_completions.sql` (UNCONFIRMED — user must run it). Contains: `admins` table (no client
+  access) + `is_admin()`; `opportunity_completions` (one row per student per opportunity, status pending/approved/
+  rejected, stores opportunity id AND title so archived/removed listings keep history); `xp_transactions` ledger with a
+  unique partial index (user, opportunity) for reason `opportunity_completion`; private storage bucket
+  `opportunity-evidence` (5 MB, jpeg/png/webp, own-folder upload, owner-or-admin read, no update/delete);
+  RPCs `submit_opportunity_completion`, `am_i_admin`, `admin_list_completions`, `admin_review_completion`.
+- Tables have NO client insert/update/delete; only the SECURITY DEFINER RPCs write. Approval is one transaction
+  (row lock -> status -> ledger insert -> `_add_xp` 100). Reward amount is the `reward` constant in the function.
+- Admin is whoever is in `public.admins`; seed with the commented statement at the bottom of the SQL (replace email).
+  An admin cannot review their own submission (use a second account to test).
+- Front end: `CompleteAction` on every `OpportunityCard` + detail page; `#/opportunity/<id>/complete`
+  (`OpportunityCompletePage`); `#/admin/reviews` (`AdminReviewPage`), "Review queue" link in the profile menu only for
+  admins (`useIsAdmin`, UI hint only — the DB enforces). Upload uses XHR to Storage REST for progress
+  (`utils/uploadEvidence.js`). `useCompletions` shares one fetch for all cards; event `sc:completions`.
+- XP shows up through the existing `profiles.weekly_xp/lifetime_xp` (levels, leaderboard sync trigger unchanged).
+- Known pre-existing hole (not part of this feature): `profiles` UPDATE RLS has no column limit, so a student can
+  still edit their own XP directly. Fixing it needs `awardXp` moved server-side first.
+- Not done: no email/notification to the student on review; orphaned evidence files from abandoned uploads are not
+  cleaned up; opportunity ids/titles come from the client (admin sees and verifies them).

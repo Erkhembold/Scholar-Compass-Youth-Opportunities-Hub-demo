@@ -12,6 +12,12 @@ function parseHash(hash) {
   if (parts[0] === "category" && parts[1]) {
     return { name: "category", category: parts[1] };
   }
+  if (parts[0] === "opportunity" && parts[1] && parts[2] === "complete") {
+    return { name: "opportunity-complete", id: decodeURIComponent(parts[1]) };
+  }
+  if (parts[0] === "admin" && parts[1] === "reviews") {
+    return { name: "admin-reviews" };
+  }
   if (parts[0] === "opportunity" && parts[1]) {
     return { name: "opportunity", id: decodeURIComponent(parts[1]) };
   }
@@ -131,6 +137,14 @@ export function categoryHref(category) {
 
 export function opportunityHref(id) {
   return `#/opportunity/${encodeURIComponent(id)}`;
+}
+
+export function completeHref(id) {
+  return `#/opportunity/${encodeURIComponent(id)}/complete`;
+}
+
+export function adminReviewsHref() {
+  return "#/admin/reviews";
 }
 
 export function ieltsTestHref(id) {

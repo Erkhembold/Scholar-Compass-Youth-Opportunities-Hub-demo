@@ -2,6 +2,7 @@ import { useState } from "react";
 import PlaceholderArt from "../components/PlaceholderArt.jsx";
 import BookmarkButton from "../components/BookmarkButton.jsx";
 import DeadlineStatus from "../components/DeadlineStatus.jsx";
+import CompleteAction from "../components/CompleteAction.jsx";
 import { RichText } from "../components/RichText.jsx";
 import {
   IconArrowLeft,
@@ -103,6 +104,9 @@ export default function OpportunityDetailPage({ id }) {
             </p>
           )}
           <h1 className="detail__title">{title}</h1>
+          <div className="detail__complete">
+            <CompleteAction opportunityId={opportunity.id} />
+          </div>
         </header>
 
         <div className="detail__columns">

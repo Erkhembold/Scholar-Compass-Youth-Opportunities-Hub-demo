@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
+import OpportunityCompletePage from "./pages/OpportunityCompletePage.jsx";
+import AdminReviewPage from "./pages/AdminReviewPage.jsx";
 import IeltsTestPage from "./pages/IeltsTestPage.jsx";
 import WritingTaskPage from "./pages/WritingTaskPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
@@ -70,6 +72,10 @@ export default function App() {
     page = <CategoryPage category={route.category} />;
   } else if (route.name === "opportunity") {
     page = <OpportunityDetailPage id={route.id} />;
+  } else if (route.name === "opportunity-complete") {
+    page = <OpportunityCompletePage id={route.id} />;
+  } else if (route.name === "admin-reviews") {
+    page = <AdminReviewPage />;
   } else if (route.name === "ielts-test") {
     page = <IeltsTestPage id={route.id} />;
   } else if (route.name === "ielts-writing") {
