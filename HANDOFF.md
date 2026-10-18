@@ -1132,3 +1132,13 @@ SAT Reading & Writing practice (`SatPracticePage`), SAT Math exercises (`SatMath
 - Amounts are the `xp_amount` constants inside the two trigger functions.
 - Optional commented backfill block at the bottom pays XP for old correct answers; run at most once.
 - Tested on local Postgres 16 (first-correct only, repeat-run safe, helper not callable by clients).
+
+## Onboarding save fix
+- Bug: `OnboardingPage` saved all answers in one `profiles` update and ignored the result, so a single failing
+  part (missing column, target score the CHECK rejects, no profile row) lost everything silently and Skip failed too.
+- New `supabase/onboarding_save_fix.sql` (UNCONFIRMED — user must run it): ensures all onboarding columns exist,
+  backfills missing profile rows, adds `complete_onboarding(...)` RPC (validates, upserts, marks done), re-creates
+  `handle_new_user()` (same body as onboarding.sql + `on conflict do nothing` — keep all copies in sync).
+- Client: page calls the RPC, falls back to a plain update if the RPC isn't installed, validates targets
+  (`utils/onboarding.js`, tested), shows errors, keeps answers. Skip only saves the done flag.
+  `updateProfile` now reports a save that matched no row; `AuthContext` exposes `refreshProfile`.

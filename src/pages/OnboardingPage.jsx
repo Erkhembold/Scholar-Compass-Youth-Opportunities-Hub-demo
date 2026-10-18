@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import ToggleGroup from "../components/ToggleGroup.jsx";
+import { supabase } from "../lib/supabaseClient.js";
+import { validateTargets, buildOnboardingArgs, argsToProfileFields } from "../utils/onboarding.js";
 
 const GRADES = ["9", "10", "11", "12", "Not sure yet"];
 const COUNTRIES = ["United States", "United Kingdom", "Canada", "Australia", "Europe", "Mongolia", "Other"];
@@ -16,7 +18,7 @@ const FIELDS = ["Engineering", "Computer Science", "Business", "Medicine", "Soci
 // dashboard, matching "don't force students to enter information they
 // genuinely don't know."
 export default function OnboardingPage() {
-  const { updateProfile } = useAuth();
+  const { updateProfile, refreshProfile } = useAuth();
   const { t } = useLanguage();
   const [grade, setGrade] = useState("");
   const [countries, setCountries] = useState([]);
@@ -26,27 +28,45 @@ export default function OnboardingPage() {
   const [preparingIelts, setPreparingIelts] = useState(null);
   const [ieltsTarget, setIeltsTarget] = useState("");
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   function toggleCountry(c) {
     setCountries((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
   }
 
-  async function finish() {
+  // Saves through the complete_onboarding() database function
+  // (supabase/onboarding_save_fix.sql) so every answer is saved together and
+  // the profile row is created if it was missing. If that function has not
+  // been installed yet, falls back to a plain profile update. Either way a
+  // failure is shown instead of being swallowed, and the form keeps the
+  // answers so the student can try again. `skip` saves nothing but the
+  // "done" flag, so skipping can never fail because of a bad answer.
+  async function finish(skip = false) {
+    setError("");
+    const answers = { grade, countries, field, preparingSat, satTarget, preparingIelts, ieltsTarget };
+    if (!skip) {
+      const problem = validateTargets(answers);
+      if (problem) {
+        setError(t(problem));
+        return;
+      }
+    }
     setSaving(true);
-    await updateProfile({
-      grade: grade || null,
-      intended_countries: countries.length ? countries : null,
-      intended_major: field || null,
-      preparing_for_sat: preparingSat,
-      sat_target_score: preparingSat && satTarget !== "" ? Number(satTarget) : null,
-      preparing_for_ielts: preparingIelts,
-      ielts_target_score: preparingIelts && ieltsTarget !== "" ? Number(ieltsTarget) : null,
-      onboarding_completed: true,
-    });
+    const args = buildOnboardingArgs(skip ? {} : answers);
+    let failure = null;
+    const { error: rpcError } = supabase
+      ? await supabase.rpc("complete_onboarding", args)
+      : { error: { message: "Sign-in isn't configured yet." } };
+    if (rpcError) {
+      const res = await updateProfile(skip ? { onboarding_completed: true } : argsToProfileFields(args));
+      failure = res.error;
+    } else {
+      await refreshProfile();
+    }
     setSaving(false);
-    // The home route re-renders once profile.onboarding_completed flips to
-    // true (updateProfile reloads the profile), landing on the dashboard —
-    // no navigation needed here.
+    if (failure) setError(t("We couldn't save your answers.") + " " + failure);
+    // On success the home route re-renders once profile.onboarding_completed
+    // flips to true, landing on the dashboard — no navigation needed here.
   }
 
   return (
@@ -126,10 +146,16 @@ export default function OnboardingPage() {
             )}
           </div>
 
-          <button type="button" className="btn btn--accent signin__submit" onClick={finish} disabled={saving}>
+          {error && (
+            <p className="friend-note friend-note--error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <button type="button" className="btn btn--accent signin__submit" onClick={() => finish(false)} disabled={saving}>
             {saving ? t("Saving…") : t("Start using ScholarCompass")}
           </button>
-          <button type="button" className="btn btn--ghost onboarding-skip" onClick={finish} disabled={saving}>
+          <button type="button" className="btn btn--ghost onboarding-skip" onClick={() => finish(true)} disabled={saving}>
             {t("Skip for now")}
           </button>
         </div>

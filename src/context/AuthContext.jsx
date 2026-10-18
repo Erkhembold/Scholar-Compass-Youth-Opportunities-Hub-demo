@@ -135,9 +135,20 @@ export function AuthProvider({ children }) {
 
       async updateProfile(fields) {
         if (!supabase || !user) return { error: "Not signed in." };
-        const { error } = await supabase.from("profiles").update(fields).eq("id", user.id);
+        // .select() returns the rows that were really changed, so a save
+        // that matched no row (blocked by RLS, or no profile row yet) is
+        // reported instead of looking like a success.
+        const { data, error } = await supabase.from("profiles").update(fields).eq("id", user.id).select("id");
+        if (!error && (!data || data.length === 0)) {
+          return { error: "Your details could not be saved. Please try again." };
+        }
         if (!error) await loadProfile(user.id);
         return { error: error ? error.message : null };
+      },
+
+      // Re-reads the profile row (used after a database function saved it).
+      async refreshProfile() {
+        if (user) await loadProfile(user.id);
       },
     }),
     [user, profile, loading, profileLoading]
