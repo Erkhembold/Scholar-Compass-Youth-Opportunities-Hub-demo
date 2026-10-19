@@ -21,6 +21,15 @@ export const LEAGUES = [
 
 export const LEAGUE_BY_ID = Object.fromEntries(LEAGUES.map((l) => [l.id, l]));
 
+// Always returns a real league. The database stores the league as plain text,
+// so an unexpected value (different capitalisation, stray spaces, an id this
+// version of the app does not know) must never crash a page: it is matched
+// loosely and otherwise falls back to Bronze.
+export function leagueFor(id) {
+  const key = typeof id === "string" ? id.trim().toLowerCase() : "";
+  return LEAGUE_BY_ID[key] || LEAGUE_BY_ID.bronze;
+}
+
 export function nextLeague(id) {
   const l = LEAGUE_BY_ID[id];
   if (!l) return null;

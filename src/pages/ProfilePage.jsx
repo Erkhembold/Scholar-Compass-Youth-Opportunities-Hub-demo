@@ -14,7 +14,7 @@ import RoadmapCard from "../components/RoadmapCard.jsx";
 import { SatRwHistory, SatMathHistory } from "../components/SatHistory.jsx";
 import FriendsSection from "../components/FriendsSection.jsx";
 import { TYPE_LABELS } from "../utils/ielts.js";
-import { LEAGUE_BY_ID } from "../data/leagues.js";
+import { leagueFor } from "../data/leagues.js";
 import { getWeekInfo, zoneForRank, triggerWeeklyRollover } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
 
@@ -80,7 +80,8 @@ export default function ProfilePage() {
   }, [user]);
 
   const { weekNumber } = getWeekInfo();
-  const myLeagueId = leagueProfile?.current_league || "bronze";
+  const league = leagueFor(leagueProfile?.current_league);
+  const myLeagueId = league.id;
   const meEntry = user ? { id: user.id, name: leagueProfile?.name || "You", xp: leagueProfile?.weekly_xp || 0, avatarPath: leagueProfile?.avatar_path || null } : null;
   const { board, loading: boardLoading } = useLeagueBoard(myLeagueId, meEntry);
 
@@ -111,7 +112,6 @@ export default function ProfilePage() {
     return updateProfile(fields);
   }
 
-  const league = LEAGUE_BY_ID[myLeagueId];
   const myRow = board.find((p) => p.id === user.id);
   const zone = myRow ? zoneForRank(myRow.rank, board.length) : "stay";
   const statusLabel =

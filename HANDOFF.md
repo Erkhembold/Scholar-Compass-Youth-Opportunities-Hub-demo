@@ -1163,3 +1163,17 @@ SAT Reading & Writing practice (`SatPracticePage`), SAT Math exercises (`SatMath
   still edit their own XP directly. Fixing it needs `awardXp` moved server-side first.
 - Not done: no email/notification to the student on review; orphaned evidence files from abandoned uploads are not
   cleaned up; opportunity ids/titles come from the client (admin sees and verifies them).
+
+## White screen on Profile / Leaderboard (league ladder mismatch)
+- Root cause: `supabase/league_promotion.sql` had its own `league_order` ladder (bronze, silver, gold, platinum, diamond,
+  emerald, sapphire, ruby, obsidian, celestial) that did NOT match `src/data/leagues.js` (bronze, silver, gold, sapphire,
+  ruby, emerald, amethyst, pearl, obsidian, diamond). The weekly rollover wrote `platinum` into `profiles.current_league`;
+  `LEAGUE_BY_ID["platinum"]` is undefined, so `league.id` threw on the Profile and Leaderboard pages (blank tab).
+- Fixed in code: `leagueFor(id)` (data/leagues.js) never returns undefined (loose match, falls back to Bronze) and is
+  used by LeaderboardPage, ProfilePage, ProfileDashboard, LeagueBadge. `ErrorBoundary` wraps each page (keyed by route)
+  and the whole app so a crash shows a message + Reload instead of a white tab. Also fixed: LeaderboardPage's rollover
+  effect did not re-run when the profile first loaded without `last_processed_week`.
+- Fixed in SQL: `league_promotion.sql` now uses the real ladder; new `supabase/league_ladder_fix.sql` (UNCONFIRMED — user
+  must run it) rewrites `league_order`, repairs profiles/leaderboard_entries (platinum->sapphire, celestial->diamond,
+  unknown->bronze) and adds CHECK constraints so an unknown league can't be saved again.
+- Keep the ladder in ONE order everywhere: leagues.js, league_order, and the CHECK lists.

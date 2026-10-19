@@ -31,3 +31,12 @@ test("progress cards use real totals", () => {
   assert.equal(c.ielts.latestBand, 6.5);
   assert.equal(buildProgressCards(null, 100), null);
 });
+
+import { leagueFor } from "../src/data/leagues.js";
+test("leagueFor never returns undefined, whatever the database holds", () => {
+  assert.equal(leagueFor("gold").id, "gold");
+  assert.equal(leagueFor(" Gold ").id, "gold");
+  for (const bad of ["platinum", "celestial", "", null, undefined, 42, {}]) {
+    assert.equal(leagueFor(bad).id, "bronze");
+  }
+});

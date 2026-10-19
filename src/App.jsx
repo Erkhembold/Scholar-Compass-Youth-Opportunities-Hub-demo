@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
@@ -170,7 +171,7 @@ export default function App() {
             </section>
           }
         >
-          {page}
+          <ErrorBoundary key={`${route.name}:${route.id || route.category || ""}`}>{page}</ErrorBoundary>
         </Suspense>
       </main>
       <Footer />

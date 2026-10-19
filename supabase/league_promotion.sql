@@ -65,10 +65,12 @@ create table if not exists public.league_order (
   order_num integer not null unique
 );
 
+-- Replace the whole list so a stale or wrong ladder from an earlier run can
+-- never survive (a plain upsert can collide on the unique order_num).
+delete from public.league_order where league_id is not null;
 insert into public.league_order (league_id, order_num) values
-  ('bronze', 0), ('silver', 1), ('gold', 2), ('platinum', 3), ('diamond', 4),
-  ('emerald', 5), ('sapphire', 6), ('ruby', 7), ('obsidian', 8), ('celestial', 9)
-on conflict (league_id) do update set order_num = excluded.order_num;
+  ('bronze', 0), ('silver', 1), ('gold', 2), ('sapphire', 3), ('ruby', 4),
+  ('emerald', 5), ('amethyst', 6), ('pearl', 7), ('obsidian', 8), ('diamond', 9);
 
 -- 3. The rollover itself -----------------------------------------------------
 create or replace function public.run_weekly_league_rollover()

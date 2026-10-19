@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
-import { LEAGUE_BY_ID } from "../data/leagues.js";
+import { leagueFor } from "../data/leagues.js";
 import { zoneForRank, triggerWeeklyRollover, LEAGUE_CAPACITY } from "../utils/leaderboard.js";
 import { useLeagueBoard } from "../hooks/useLeagueBoard.js";
 import { useVerifiedScores } from "../hooks/useVerifiedScores.js";
@@ -34,10 +34,10 @@ export default function LeaderboardPage() {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, profile?.last_processed_week]);
+  }, [user, !!profile, profile?.last_processed_week]);
 
-  const myLeagueId = user ? resolvedProfile?.current_league || "bronze" : null;
-  const league = myLeagueId ? LEAGUE_BY_ID[myLeagueId] : null;
+  const league = user ? leagueFor(resolvedProfile?.current_league) : null;
+  const myLeagueId = league ? league.id : null;
 
   const meEntry = user
     ? { id: user.id, name: resolvedProfile?.name || "You", xp: resolvedProfile?.weekly_xp || 0, avatarPath: resolvedProfile?.avatar_path || null }

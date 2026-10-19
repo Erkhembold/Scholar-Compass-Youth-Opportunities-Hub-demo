@@ -8,7 +8,7 @@ import { levelProgress } from "../utils/levels.js";
 import { buildProgressCards, buildWeakestList, percent } from "../utils/profileDashboard.js";
 import { removeAvatarFile, uploadAvatar } from "../utils/avatar.js";
 import { SAT_QUESTIONS } from "../data/satQuestions.js";
-import { LEAGUE_BY_ID } from "../data/leagues.js";
+import { LEAGUE_BY_ID, leagueFor } from "../data/leagues.js";
 import { MIN_SAMPLE } from "../utils/progress.js";
 import { satMathExercisesHref, settingsHref, profileStatsHref, leaderboardHref, publicProfileHref } from "../router.js";
 
@@ -193,7 +193,7 @@ export default function ProfileDashboard({ user, profile, onProfileChange, onSig
 
   const xp = profile?.lifetime_xp || 0;
   const lv = levelProgress(xp);
-  const league = LEAGUE_BY_ID[profile?.current_league || "bronze"];
+  const league = leagueFor(profile?.current_league);
   const name = profile?.name || "Student";
 
   async function onPhoto(e) {

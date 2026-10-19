@@ -1,11 +1,11 @@
-import { LEAGUE_BY_ID } from "../data/leagues.js";
+import { leagueFor } from "../data/leagues.js";
 
 // A single weekly achievement badge: placement number + the color identity
 // of the league it was earned in. Reusable both in the small "Weekly
 // Achievements" list on the profile and anywhere else a badge needs to
 // render (leaderboard results screen, share cards, etc.).
 export default function LeagueBadge({ placement, badge, leagueId, week, compact = false }) {
-  const league = LEAGUE_BY_ID[leagueId] || LEAGUE_BY_ID.bronze;
+  const league = leagueFor(leagueId);
 
   return (
     <div
