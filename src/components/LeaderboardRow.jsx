@@ -1,6 +1,6 @@
 const ZONE_LABEL = {
   promotion: "Promotion",
-  stay: "Stays",
+  stay: "Safe",
   relegation: "Relegation",
 };
 

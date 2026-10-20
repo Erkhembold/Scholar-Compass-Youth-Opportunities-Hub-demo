@@ -1,6 +1,7 @@
 import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { buildMilestones, milestoneLabel } from "../utils/streakMilestones.js";
+import { IconFlame, IconCheck } from "./icons.jsx";
 
 function formatDayLabel(dateStr) {
   const [y, m, d] = dateStr.split("-").map(Number);
@@ -41,7 +42,7 @@ export default function StreakMilestonesCard() {
 
       <div className="milestones-card__headline">
         <span className="milestones-card__flame" aria-hidden="true">
-          🔥
+          <IconFlame />
         </span>
         <div>
           <p className="milestones-card__current">
@@ -62,7 +63,7 @@ export default function StreakMilestonesCard() {
             }`}
           >
             <span className="milestone-chip__icon" aria-hidden="true">
-              {m.achieved ? "✓" : "🔥"}
+              {m.achieved ? <IconCheck /> : <IconFlame />}
             </span>
             <span className="milestone-chip__text">
               <span className="milestone-chip__label">{t(milestoneLabel(m.days))}</span>

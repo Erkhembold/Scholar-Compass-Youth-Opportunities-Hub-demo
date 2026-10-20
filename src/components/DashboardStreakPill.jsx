@@ -1,6 +1,7 @@
 import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { profileStatsHref } from "../router.js";
+import { IconFlame } from "./icons.jsx";
 
 // A compact "X Day Streak" readout for the dashboard header — just the
 // number and a flame, no week row or milestone messaging (that detail
@@ -16,7 +17,7 @@ export default function DashboardStreakPill() {
   return (
     <a className="dashboard-streak-pill" href={profileStatsHref()}>
       <span className="dashboard-streak-pill__icon" aria-hidden="true">
-        🔥
+        <IconFlame />
       </span>
       <span>
         {current} {t("Day Streak")}

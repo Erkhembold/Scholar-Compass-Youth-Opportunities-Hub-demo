@@ -1,6 +1,7 @@
 import { SAT_CATEGORIES, SAT_QUESTIONS } from "../data/satQuestions.js";
 import { useSatProgress } from "../hooks/useSatProgress.js";
 import { satPracticeHref, satBeginnerGuideHref, satChallengeHref } from "../router.js";
+import { IconBook, IconBolt } from "./icons.jsx";
 
 export default function SatCategoryOverview() {
   const { masteredCount, isSignedIn } = useSatProgress();
@@ -22,7 +23,7 @@ export default function SatCategoryOverview() {
           <div className="category-actions">
             <a href={satBeginnerGuideHref()} className="category-action-card category-action-card--lessons">
               <span className="category-action-icon" aria-hidden="true">
-                📘
+                <IconBook />
               </span>
               <span className="category-action-text">
                 <span className="category-action-title">SAT Lessons</span>
@@ -35,7 +36,7 @@ export default function SatCategoryOverview() {
 
             <a href={satChallengeHref()} className="category-action-card category-action-card--challenge">
               <span className="category-action-icon" aria-hidden="true">
-                ⚡
+                <IconBolt />
               </span>
               <span className="category-action-text">
                 <span className="category-action-title">Reading &amp; Writing 1v1</span>

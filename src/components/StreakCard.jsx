@@ -2,6 +2,7 @@ import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import ProgressRing from "./ProgressRing.jsx";
 import { profileStatsHref } from "../router.js";
+import { IconFlame } from "./icons.jsx";
 
 const MESSAGES = {
   done_today: "Today is done — see you tomorrow to keep it going.",
@@ -42,7 +43,7 @@ export default function StreakCard() {
           label={`${daysActive} of 7 days active this week`}
         >
           <span className="streak-card__ring-flame" aria-hidden="true">
-            🔥
+            <IconFlame />
           </span>
           <span className="streak-card__ring-value">{current}</span>
         </ProgressRing>

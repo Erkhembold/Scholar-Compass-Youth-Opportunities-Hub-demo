@@ -385,7 +385,7 @@ function ResultsView({ match, isHost, onPlayAgain }) {
   const total = (match.question_ids || []).length;
 
   let verdict = "It's a tie!";
-  if (myScore > theirScore) verdict = "You won! 🎉";
+  if (myScore > theirScore) verdict = "You won!";
   else if (myScore < theirScore) verdict = `${theirName} won this one.`;
 
   return (

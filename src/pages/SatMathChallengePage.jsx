@@ -474,7 +474,7 @@ function Results({ m, match, isHost, otherName }) {
   const otherId = isHost ? match.opponent_id : match.host_id;
 
   let verdict = "It's a tie!";
-  if (myScore > theirScore) verdict = "You won! 🎉";
+  if (myScore > theirScore) verdict = "You won!";
   else if (myScore < theirScore) verdict = `${otherName} won this one.`;
 
   const rows = (match.question_ids || []).map((qid, i) => {

@@ -129,3 +129,91 @@ export function IconFlame(props) {
     </svg>
   );
 }
+
+// Icons that replace the decorative emoji the interface used to show.
+export function IconBookOpen(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>
+  );
+}
+
+export function IconBook(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+    </svg>
+  );
+}
+
+export function IconSigma(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M18 7V5a1 1 0 0 0-1-1H6.5a.5.5 0 0 0-.4.8l4.5 6a2 2 0 0 1 0 2.4l-4.5 6a.5.5 0 0 0 .4.8H17a1 1 0 0 0 1-1v-2" />
+    </svg>
+  );
+}
+
+export function IconCalculator(props) {
+  return (
+    <svg {...common} {...props}>
+      <rect width="16" height="20" x="4" y="2" rx="2" />
+      <line x1="8" x2="16" y1="6" y2="6" />
+      <path d="M16 14v4M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01" />
+    </svg>
+  );
+}
+
+export function IconBolt(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+    </svg>
+  );
+}
+
+export function IconGlobe(props) {
+  return (
+    <svg {...common} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+      <path d="M2 12h20" />
+    </svg>
+  );
+}
+
+export function IconPencil(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z" />
+    </svg>
+  );
+}
+
+export function IconCheck(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+export function IconHeadphones(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
+    </svg>
+  );
+}
+
+export function IconMic(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+      <line x1="12" x2="12" y1="19" y2="22" />
+    </svg>
+  );
+}

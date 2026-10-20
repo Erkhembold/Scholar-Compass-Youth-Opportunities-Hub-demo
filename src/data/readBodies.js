@@ -354,7 +354,7 @@ CERTIFICATE-ИЙН ТӨЛӨӨ БҮҮ ХИЙ.
 
 Жишээ нь:
 
-❌ "UN Volunteer"
+Weak: "UN Volunteer"
 
 гэж CV дээр ганц мөр бичихээс илүү:
 
@@ -663,33 +663,33 @@ ScholarCompass дээр үүнийг арай энгийнээр:
 
 Жишээ 1 — Teaching
 
-❌ Helped teach English to younger students.
+Weak: Helped teach English to younger students.
 
-✅ Taught weekly English lessons to 18 Grade 5 students, creating vocabulary and speaking activities.
+Strong: Taught weekly English lessons to 18 Grade 5 students, creating vocabulary and speaking activities.
 
 Хэрэв бодит үр дүн байгаа бол:
 
-✅ Taught weekly English lessons to 18 Grade 5 students, creating vocabulary and speaking activities across a 6-month program.
+Strong: Taught weekly English lessons to 18 Grade 5 students, creating vocabulary and speaking activities across a 6-month program.
 
 Жишээ 2 — Event
 
-❌ Participated in a school charity event.
+Weak: Participated in a school charity event.
 
-✅ Coordinated student volunteers for a school charity drive and managed donation collection.
+Strong: Coordinated student volunteers for a school charity drive and managed donation collection.
 
 Хэрэв тоо байгаа бол:
 
-✅ Coordinated 10 student volunteers and collected 280 donated items during a school charity drive.
+Strong: Coordinated 10 student volunteers and collected 280 donated items during a school charity drive.
 
 Жишээ 3 — Social media
 
-❌ Managed Instagram for a club.
+Weak: Managed Instagram for a club.
 
-✅ Created and scheduled Instagram content for a school club.
+Strong: Created and scheduled Instagram content for a school club.
 
 Илүү тодорхой:
 
-✅ Created 25 Instagram posts and promoted club events through weekly social media campaigns.
+Strong: Created 25 Instagram posts and promoted club events through weekly social media campaigns.
 
 4. "PARTICIPATED" БОЛОН "LED" ХОЁРЫН ХООРОНД МАШ ТОМ ЯЛГАА БИЙ
 
@@ -813,7 +813,7 @@ HELPED
 
 Жишээ:
 
-❌ Helped teachers organize a competition.
+Weak: Helped teachers organize a competition.
 
 Чи юу хийсэн юм?
 
@@ -826,7 +826,7 @@ Scoring?
 
 Тодруул:
 
-✅ Coordinated participant registration and prepared competition materials for a 120-student school event.
+Strong: Coordinated participant registration and prepared competition materials for a 120-student school event.
 
 Одоо уншигч яг юу хийснийг ойлгож чадна.
 
@@ -1129,27 +1129,27 @@ identify
 MIT ч үр дүн нь бүрэн гараагүй research/project дээр хийж гүйцэтгэсэн зүйл болон intended impact-ийг тодорхойлохыг зөвлөдөг.
 
 18. БҮҮ ХИЙ
-❌ "Helped with various activities."
+Weak: "Helped with various activities."
 
 Хэт ерөнхий.
 
-❌ "Was responsible for volunteering."
+Weak: "Was responsible for volunteering."
 
 Үүрэг л хэлсэн, contribution биш.
 
-❌ "Worked with many students."
+Weak: "Worked with many students."
 
 "Many" юу гэсэн үг вэ?
 
-❌ "Made a huge impact."
+Weak: "Made a huge impact."
 
 Impact-аа хэлэлгүй өөрөө дүгнэсэн.
 
-❌ "Volunteer — 150 hours."
+Weak: "Volunteer — 150 hours."
 
 Юу хийсэн нь алга.
 
-❌ БОДИТ БИШ ТОО
+Weak: БОДИТ БИШ ТОО
 
 10 хүн байсан бол:
 
@@ -1159,21 +1159,21 @@ Impact-аа хэлэлгүй өөрөө дүгнэсэн.
 
 100 болгож болохгүй.
 
-❌ TITLE-ЭЭ ХӨӨРӨГДҮҮЛЭХ
+Weak: TITLE-ЭЭ ХӨӨРӨГДҮҮЛЭХ
 
 "International Youth Development Strategist"
 
 гэж нэрлэхээсээ өмнө чи үнэхээр тийм role хийсэн эсэхээ асуу.
 
 19. ОРОНД НЬ ИНГЭ
-❌ "Helped with social media."
-✅ "Created 18 Instagram posts promoting school volunteer initiatives."
-❌ "Tutored students."
-✅ "Tutored 12 Grade 5 students in beginner Chinese through weekly lessons."
-❌ "Participated in environmental activities."
-✅ "Collected and analyzed school waste data to identify major waste sources."
-❌ "Was a volunteer at a nonprofit."
-✅ "Supported the nonprofit's social media campaign by designing 10 awareness graphics."
+Weak: "Helped with social media."
+Strong: "Created 18 Instagram posts promoting school volunteer initiatives."
+Weak: "Tutored students."
+Strong: "Tutored 12 Grade 5 students in beginner Chinese through weekly lessons."
+Weak: "Participated in environmental activities."
+Strong: "Collected and analyzed school waste data to identify major waste sources."
+Weak: "Was a volunteer at a nonprofit."
+Strong: "Supported the nonprofit's social media campaign by designing 10 awareness graphics."
 20. ТУРШЛАГАА БИЧИХЭЭСЭЭ ӨМНӨ 5 АСУУЛТ АСУУ
 
 1. БИ ЯГ ЮУ ХИЙСЭН БЭ?

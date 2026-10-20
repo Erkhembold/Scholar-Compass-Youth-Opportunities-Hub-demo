@@ -2,6 +2,7 @@ import { useProgressData } from "../hooks/useProgressData.js";
 import { satMathExercisesHref } from "../router.js";
 import { SAT_QUESTIONS } from "../data/satQuestions.js";
 import SubjectProgressCard from "./SubjectProgressCard.jsx";
+import { IconBookOpen, IconSigma, IconGlobe } from "./icons.jsx";
 
 const SAT_RW_TOTAL = Object.values(SAT_QUESTIONS).reduce((n, qs) => n + qs.length, 0);
 const SAT_MATH_TOTAL = 40; // SAT_MATH_QUESTIONS — see satMathQuestions.js
@@ -45,7 +46,7 @@ export default function ProgressTracker() {
       <h2 className="progress-tracker__heading">Your progress</h2>
       <div className="subject-card-row">
         <SubjectProgressCard
-          icon="📖"
+          icon={<IconBookOpen />}
           title="SAT Reading & Writing"
           percent={rwPercent}
           color="var(--blue-500)"
@@ -60,7 +61,7 @@ export default function ProgressTracker() {
           href="#/category/sat"
         />
         <SubjectProgressCard
-          icon="➗"
+          icon={<IconSigma />}
           title="SAT Math"
           percent={mathPercent}
           color="var(--streak-active-bg)"
@@ -75,7 +76,7 @@ export default function ProgressTracker() {
           href={satMathExercisesHref()}
         />
         <SubjectProgressCard
-          icon="🌍"
+          icon={<IconGlobe />}
           title="IELTS Reading"
           percent={ieltsPercent}
           color="#a855f7"

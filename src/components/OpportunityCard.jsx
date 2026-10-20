@@ -36,7 +36,7 @@ export default function OpportunityCard({ opportunity }) {
           </span>
         </div>
         <h3 className="opp-card__title">{opportunity.title}</h3>
-        <DeadlineStatus deadline={opportunity.deadline} />
+        <DeadlineStatus deadline={opportunity.deadline} showUnknown />
         <div className="opp-card__footer">
           <CompleteAction opportunityId={opportunity.id} size="sm" />
         </div>

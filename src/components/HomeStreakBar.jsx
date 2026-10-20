@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useStreak } from "../hooks/useStreak.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { profileStatsHref } from "../router.js";
+import { IconFlame } from "./icons.jsx";
 
 const SUB_COPY = {
   done_today: "Nice — you're set for today.",
@@ -63,7 +64,7 @@ export default function HomeStreakBar() {
             className={`home-streak__flame ${isAlive ? "home-streak__flame--lit" : ""}`}
             aria-hidden="true"
           >
-            🔥
+            <IconFlame />
           </span>
           <div className="home-streak__count-block">
             {isAlive && (

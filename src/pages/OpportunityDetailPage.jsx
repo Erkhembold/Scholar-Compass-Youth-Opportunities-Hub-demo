@@ -3,6 +3,7 @@ import PlaceholderArt from "../components/PlaceholderArt.jsx";
 import BookmarkButton from "../components/BookmarkButton.jsx";
 import DeadlineStatus from "../components/DeadlineStatus.jsx";
 import CompleteAction from "../components/CompleteAction.jsx";
+import { opportunityCalendarUrl } from "../utils/calendar.js";
 import { RichText } from "../components/RichText.jsx";
 import {
   IconArrowLeft,
@@ -44,6 +45,10 @@ export default function OpportunityDetailPage({ id }) {
   const { t } = useLanguage();
   const { isSaved, toggleSave } = useSavedOpportunities();
   const opportunity = opportunities.find((op) => op.id === id);
+  const calendarUrl =
+    opportunity && !isOpportunityArchived(opportunity)
+      ? opportunityCalendarUrl(opportunity, window.location.href)
+      : null;
   const isBilingual = opportunity && typeof opportunity.description === "object";
   const [lang, setLang] = useState("mn");
 
@@ -106,6 +111,17 @@ export default function OpportunityDetailPage({ id }) {
           <h1 className="detail__title">{title}</h1>
           <div className="detail__complete">
             <CompleteAction opportunityId={opportunity.id} />
+            {calendarUrl && (
+              <a
+                className="cal-btn"
+                href={calendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconCalendar />
+                {t("Add to Google Calendar")}
+              </a>
+            )}
           </div>
         </header>
 

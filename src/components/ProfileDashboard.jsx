@@ -10,7 +10,7 @@ import { removeAvatarFile, uploadAvatar } from "../utils/avatar.js";
 import { SAT_QUESTIONS } from "../data/satQuestions.js";
 import { LEAGUE_BY_ID, leagueFor } from "../data/leagues.js";
 import { MIN_SAMPLE } from "../utils/progress.js";
-import { satMathExercisesHref, settingsHref, profileStatsHref, leaderboardHref, publicProfileHref } from "../router.js";
+import { satMathExercisesHref, satPracticeHref, ieltsExercisesHref, settingsHref, profileStatsHref, leaderboardHref, publicProfileHref } from "../router.js";
 
 const SAT_RW_TOTAL = Object.values(SAT_QUESTIONS).reduce((n, qs) => n + qs.length, 0);
 const fmt = (n) => (n ?? 0).toLocaleString();
@@ -99,6 +99,16 @@ function ProgressSection({ progress, loading, isSetUp }) {
   );
 }
 
+// Where the "Practice" button for a weak topic goes: straight to practice in
+// that topic, not a menu.
+function practiceHref(practice) {
+  if (!practice) return null;
+  if (practice.kind === "sat-rw") return satPracticeHref(practice.id);
+  if (practice.kind === "sat-math") return satMathExercisesHref(practice.id);
+  if (practice.kind === "ielts-reading") return ieltsExercisesHref("reading");
+  return null;
+}
+
 function WeakSection({ progress, loading, isSetUp }) {
   const list = buildWeakestList(progress, 4);
   return (
@@ -122,6 +132,11 @@ function WeakSection({ progress, loading, isSetUp }) {
               </div>
               <Bar value={r.rate} label={`${percent(r.rate)}% ${r.metric}`} />
               <span className="pd-weak__pct">{percent(r.rate)}%</span>
+              {practiceHref(r.practice) && (
+                <a className="btn btn--ghost btn--small pd-weak__cta" href={practiceHref(r.practice)} aria-label={`Practice ${r.label}`}>
+                  Practice
+                </a>
+              )}
             </li>
           ))}
         </ul>

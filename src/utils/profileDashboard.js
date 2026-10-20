@@ -13,17 +13,17 @@ export function buildWeakestList(progress, limit = 4) {
   const rows = [];
   for (const c of progress.sat.rw.categories) {
     if (c.seen >= MIN_SAMPLE) {
-      rows.push({ key: `rw-${c.id}`, subject: "SAT Reading & Writing", label: c.label, rate: c.mastered / c.seen, sample: c.seen, metric: "mastered" });
+      rows.push({ key: `rw-${c.id}`, subject: "SAT Reading & Writing", label: c.label, rate: c.mastered / c.seen, sample: c.seen, metric: "mastered", practice: { kind: "sat-rw", id: c.id } });
     }
   }
   for (const d of progress.sat.math.domains) {
     if (d.attempted >= MIN_SAMPLE) {
-      rows.push({ key: `math-${d.id}`, subject: "SAT Math", label: d.label, rate: d.correct / d.attempted, sample: d.attempted, metric: "accuracy" });
+      rows.push({ key: `math-${d.id}`, subject: "SAT Math", label: d.label, rate: d.correct / d.attempted, sample: d.attempted, metric: "accuracy", practice: { kind: "sat-math", id: d.id } });
     }
   }
   for (const s of progress.ielts.exercises.skills) {
     if (s.attempted >= MIN_SAMPLE) {
-      rows.push({ key: `ielts-${s.id}`, subject: "IELTS Reading", label: s.label, rate: s.correct / s.attempted, sample: s.attempted, metric: "accuracy" });
+      rows.push({ key: `ielts-${s.id}`, subject: "IELTS Reading", label: s.label, rate: s.correct / s.attempted, sample: s.attempted, metric: "accuracy", practice: { kind: "ielts-reading", id: s.id } });
     }
   }
   return rows.sort((a, b) => a.rate - b.rate || b.sample - a.sample).slice(0, limit);

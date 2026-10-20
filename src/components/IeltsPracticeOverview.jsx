@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { ieltsBeginnerGuideHref, ieltsChallengeHref, ieltsExercisesHref } from "../router.js";
 import { IELTS_READING_EXERCISES } from "../data/ieltsReadingExercises.js";
 import { IELTS_WRITING_EXERCISES } from "../data/ieltsWritingExercises.js";
+import { IconBook, IconBolt } from "./icons.jsx";
 
 // The IELTS page's practice overview: Lessons + 1v1 shortcuts, then the
 // Reading and Writing exercise rows (the way into the exercises) with an
@@ -39,7 +40,7 @@ export default function IeltsPracticeOverview() {
       <div className="category-actions">
         <a href={ieltsBeginnerGuideHref()} className="category-action-card category-action-card--lessons">
           <span className="category-action-icon" aria-hidden="true">
-            📘
+            <IconBook />
           </span>
           <span className="category-action-text">
             <span className="category-action-title">IELTS Lessons</span>
@@ -52,7 +53,7 @@ export default function IeltsPracticeOverview() {
 
         <a href={ieltsChallengeHref()} className="category-action-card category-action-card--challenge">
           <span className="category-action-icon" aria-hidden="true">
-            ⚡
+            <IconBolt />
           </span>
           <span className="category-action-text">
             <span className="category-action-title">1v1 Challenge</span>

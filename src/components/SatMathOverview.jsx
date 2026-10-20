@@ -2,6 +2,7 @@ import { SAT_MATH_QUESTIONS } from "../data/satMathQuestions.js";
 import { useProgressData } from "../hooks/useProgressData.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { satMathExercisesHref, satMathChallengeHref } from "../router.js";
+import { IconSigma, IconCalculator } from "./icons.jsx";
 
 // SAT Math's own overview card — deliberately separate from
 // SatCategoryOverview (SAT English), not nested inside it. Mirrors its
@@ -27,7 +28,7 @@ export default function SatMathOverview() {
           <div className="category-actions">
             <a href={satMathExercisesHref()} className="category-action-card category-action-card--math">
               <span className="category-action-icon" aria-hidden="true">
-                ➗
+                <IconSigma />
               </span>
               <span className="category-action-text">
                 <span className="category-action-title">SAT Math Exercises</span>
@@ -42,7 +43,7 @@ export default function SatMathOverview() {
 
             <a href={satMathChallengeHref()} className="category-action-card category-action-card--math">
               <span className="category-action-icon" aria-hidden="true">
-                🧮
+                <IconCalculator />
               </span>
               <span className="category-action-text">
                 <span className="category-action-title">SAT Math 1v1</span>

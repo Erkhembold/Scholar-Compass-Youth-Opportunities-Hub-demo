@@ -1177,3 +1177,14 @@ SAT Reading & Writing practice (`SatPracticePage`), SAT Math exercises (`SatMath
   must run it) rewrites `league_order`, repairs profiles/leaderboard_entries (platinum->sapphire, celestial->diamond,
   unknown->bronze) and adds CHECK constraints so an unknown league can't be saved again.
 - Keep the ladder in ONE order everywhere: leagues.js, league_order, and the CHECK lists.
+
+## UI/UX pass, calendar button, emoji cleanup (Oct 20)
+No SQL needed. Front-end only.
+- Emoji removed from all UI and data files; replaced with SVG icons in `src/components/icons.jsx`. Typographic glyphs (arrows, check marks) were kept on purpose.
+- Dashboard news cards: cream surface with a thin border (dark-theme override included).
+- Opportunity cards: bolder title, category is a quiet pill. Every card shows a deadline line ("Deadline in N days", hours/minutes in the last 24h, or "No fixed deadline").
+- Detail page: "Add to Google Calendar" (`src/utils/calendar.js`, `createGoogleCalendarUrl` per spec, new tab). Only shown when the opportunity has a `YYYY-MM-DD` deadline and is not archived.
+- Leaderboard: promotion (green), safe (amber, label renamed from "Stays"), relegation (red) rows have tinted background plus a coloured left edge. Note: leagues with fewer than 15 players put everyone in promotion (existing, intentional rule).
+- `/#/category/ielts`: select replaced by action cards (Reading and Writing link; Listening and Speaking are "Coming soon").
+- Profile weak areas: "Practice" button per row (`buildWeakestList` now returns `practice: {kind, id}`).
+- Tests: 61 passing. Verified with Playwright at 1200 light and 390 dark.

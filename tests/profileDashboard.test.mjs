@@ -40,3 +40,11 @@ test("leagueFor never returns undefined, whatever the database holds", () => {
     assert.equal(leagueFor(bad).id, "bronze");
   }
 });
+
+test("weakest rows say where to practise", () => {
+  const list = buildWeakestList(progress);
+  const kinds = Object.fromEntries(list.map((r) => [r.label, r.practice]));
+  assert.deepEqual(kinds["T/F/NG"], { kind: "ielts-reading", id: "tfng" });
+  assert.deepEqual(kinds["Words"], { kind: "sat-rw", id: "a" });
+  assert.deepEqual(kinds["Algebra"], { kind: "sat-math", id: "alg" });
+});

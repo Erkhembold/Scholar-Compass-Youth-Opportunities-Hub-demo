@@ -72,13 +72,13 @@ export function getActiveOpportunities(list, now = Date.now()) {
 //
 // Thresholds live in data/config.js (DEADLINE_STATUS_RULES) so they can be
 // tuned without touching this logic or any component that renders it.
-export function getDeadlineStatus(deadline) {
+export function getDeadlineStatus(deadline, nowMs = Date.now()) {
   const target = getDeadlineInstant(deadline);
   if (!target) {
     return { level: "unknown", label: "No fixed deadline" };
   }
 
-  const now = Date.now();
+  const now = nowMs;
   if (isDeadlinePassed(deadline, now)) {
     return { level: "expired", label: "Deadline passed" };
   }
@@ -94,7 +94,18 @@ export function getDeadlineStatus(deadline) {
   const effectiveDays = isToday ? 0 : daysRemaining;
 
   const dayWord = (n) => `${n} day${n === 1 ? "" : "s"}`;
-  const label = effectiveDays === 0 ? "Deadline today" : `Deadline in ${dayWord(effectiveDays)}`;
+  // Under 24 hours left: count down in hours and minutes instead of "today".
+  const msLeft = target.getTime() - now;
+  const hoursLeft = Math.floor(msLeft / 3600000);
+  const minsLeft = Math.floor((msLeft % 3600000) / 60000);
+  const label =
+    msLeft < msPerDay
+      ? hoursLeft > 0
+        ? `Deadline in ${hoursLeft}h ${minsLeft}m`
+        : `Deadline in ${Math.max(1, minsLeft)}m`
+      : effectiveDays === 0
+      ? "Deadline today"
+      : `Deadline in ${dayWord(effectiveDays)}`;
 
   if (effectiveDays <= DEADLINE_STATUS_RULES.redMaxDays) {
     return { level: "red", label, daysRemaining: effectiveDays };

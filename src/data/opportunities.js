@@ -99,7 +99,7 @@ Register: https://shorturl.at/dSDn3`,
       whoFor: "Gap-year students",
       organizer: "Teach for Mongolia",
     },
-    description: `Нийгэмд хувь нэмрээ оруулах хүсэлтэй завсар жил авч буй залуус та бүхнийг манай багийн нэг хэсэг болохыг урьж байна. ✨✨
+    description: `Нийгэмд хувь нэмрээ оруулах хүсэлтэй завсар жил авч буй залуус та бүхнийг манай багийн нэг хэсэг болохыг урьж байна.
 
 Өргөдөл хүлээж авах эцсийн хугацаа: 2026 оны 9-р сарын 13, 23:59 цаг
 Өргөдөл илгээх форм: https://forms.gle/ZgB3pfVgRPmNvR2G9`,
@@ -121,13 +121,13 @@ Register: https://shorturl.at/dSDn3`,
     },
     description: `Сургуульдаа MoniChat брэндийн дуу хоолой болж, CV-дээ үнэ цэнтэй туршлага нэмэнгээ тэтгэлэг авах боломж нээгдлээ!
 
-Бид идэвхтэй, бүтээлч 4️⃣0️⃣ оюутныг сонгож тэтгэлэгт "Брэнд амбассадор"-оор шалгаруулна.
+Бид идэвхтэй, бүтээлч 40 оюутныг сонгож тэтгэлэгт "Брэнд амбассадор"-оор шалгаруулна.
 
 Ambassador болсноор:
-🎓 Мөнгөн тэтгэлгийн эзэн болох
-🖍 Контент бүтээх болон маркетингийн туршлагатай болох
-📚 Сургалт, менторшипт хамрагдах
-🤝 Арга хэмжээ, уулзалт, нетворкинг хөтөлбөрүүдэд оролцох
+Мөнгөн тэтгэлгийн эзэн болох
+Контент бүтээх болон маркетингийн туршлагатай болох
+Сургалт, менторшипт хамрагдах
+Арга хэмжээ, уулзалт, нетворкинг хөтөлбөрүүдэд оролцох
 
 Хэрхэн оролцох вэ?
 1. MoniChat апп-аа татах: https://onelink.to/dr8ng3
@@ -164,14 +164,14 @@ Ambassador болсноор:
       whoFor: "Open to all",
       organizer: "CleanUp Mongolia",
     },
-    description: `A big thank you to everyone who is joining us in protecting our planet and supporting us in raising awareness about Cleanup Day 💚
+    description: `A big thank you to everyone who is joining us in protecting our planet and supporting us in raising awareness about Cleanup Day
 
-Let's come together to make our city cleaner and our planet greener. 🌱
+Let's come together to make our city cleaner and our planet greener.
 
-📍 Join the Cleanup Day event in Ulaanbaatar!
+Join the Cleanup Day event in Ulaanbaatar!
 Register here: https://forms.gle/jR3FTh7FvWgjmMbP8
 
-Every action counts. Let's clean up together! ♻️✨
+Every action counts. Let's clean up together!
 
 #WorldCleanupDay #CleanupDay #Mongolia #Ulaanbaatar #CleanMongolia`,
     links: [{ label: "Register", href: "https://forms.gle/jR3FTh7FvWgjmMbP8" }],
@@ -190,24 +190,24 @@ Every action counts. Let's clean up together! ♻️✨
       whoFor: "Youth interested in esports & event organizing",
       organizer: "eSports Network (ESN) — MCT East Asia Ulaanbaatar",
     },
-    description: `И-спорт болон арга хэмжээ зохион байгуулалтад сонирхолтой хүүхэд, залуус анхаарлаа хандуулаарай 😎
+    description: `И-спорт болон арга хэмжээ зохион байгуулалтад сонирхолтой хүүхэд, залуус анхаарлаа хандуулаарай
 
 ESN - eSports Network-оос албан ёсны эрхтэй зохион байгуулах гэж буй MCT East Asia Ulaanbaatar тэмцээний сайн дурын ажилтны бүртгэл нээгдлээ.
 
 Ази тивийн шилдэгүүд Улаанбаатар хотноо ирэхэд уулзаж, улсаа төлөөлөх чухал ажлын нэгээхэн хэсэг болмоор байвал энэ боломжийг алдалгүй заавал бүртгүүлээрэй.
 
-👇 Volunteer-д бүртгүүлэх линк BIO дээр байгаа.
+Volunteer-д бүртгүүлэх линк BIO дээр байгаа.
 
 Бүртгэл 2026.10.15 хүртэл үргэлжлэнэ.
 
-Тэмцээний нэг хэсэг болж, танилын хүрээгээ тэлж, сайхан дурсамж бүтээгээрэй ✌🏼`,
+Тэмцээний нэг хэсэг болж, танилын хүрээгээ тэлж, сайхан дурсамж бүтээгээрэй`,
     links: [],
     contactNote:
       "No direct registration link was shared for this one — the organizer says to use the link in their Instagram bio.",
   },
   {
     id: "ssm-mongolia-open-day-2026",
-    title: "🎓 Swiss School of Management Mongolia — OPEN DAY 2026",
+    title: "Swiss School of Management Mongolia — OPEN DAY 2026",
     category: "events",
     image: ssmOpenDayImg,
     pattern: "diagonal",
@@ -219,21 +219,21 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
       whoFor: "Prospective BBA / MBA / DBA students",
       organizer: "Swiss School of Management (SSM) Mongolia, in partnership with Tetgeleg",
     },
-    description: `Швейцарын боловсролыг Монголдоо эзэмших боломж! 🇨🇭🇲🇳
+    description: `Швейцарын боловсролыг Монголдоо эзэмших боломж!
 
 35 жилийн түүхтэй Swiss School of Management (SSM)-ийн Монгол дахь салбарын Нээлттэй өдөрлөгт урьж байна.
 
 Өдөрлөгөөр:
-🎓 BBA | MBA | DBA хөтөлбөрүүд
-💰 Элсэлт, сургалтын төлбөр, тэтгэлгийн мэдээлэл
-🌍 Европ болон олон улсын кампусуудад суралцах боломж
-🚀 Мэргэжил, карьерын зөвлөгөө авах боломжтой.
+BBA | MBA | DBA хөтөлбөрүүд
+Элсэлт, сургалтын төлбөр, тэтгэлгийн мэдээлэл
+Европ болон олон улсын кампусуудад суралцах боломж
+Мэргэжил, карьерын зөвлөгөө авах боломжтой.
 
-📅 9-р сарын 12 | 11:00–16:00
-📍 Люкс Центр, 3-р давхар
-🔗 Бүртгүүлэх: https://forms.cloud.microsoft/r/sDbC6jSMR8
+9-р сарын 12 | 11:00–16:00
+Люкс Центр, 3-р давхар
+Бүртгүүлэх: https://forms.cloud.microsoft/r/sDbC6jSMR8
 
-Өөрийн олон улсын боловсролын боломжоо судлахыг хүсвэл хүрэлцэн ирээрэй! ✨`,
+Өөрийн олон улсын боловсролын боломжоо судлахыг хүсвэл хүрэлцэн ирээрэй!`,
     links: [{ label: "Register", href: "https://forms.cloud.microsoft/r/sDbC6jSMR8" }],
   },
   {
@@ -257,7 +257,7 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
 • Хүмүүстэй зөв боловсон харилцах чадвартай
 • Event зохион байгуулалт сонирхдог
 • Шинэ зүйл сурах, туршлага хуримтлуулах
-хүсэлтэй бол Volunteer багт нэгдээрэй. 🤍
+хүсэлтэй бол Volunteer багт нэгдээрэй.
 
 Бидний зохион байгуулж буй Sound Meditation арга хэмжээ, үзэсгэлэн болон бусад бүтээлч үйл ажиллагаанд оролцож, туршлага хуримтлуулахын зэрэгцээ оролцооны урамшуулал авах боломжтой.
 
@@ -268,7 +268,7 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
 • Gallery орчны бэлтгэлд дэмжлэг үзүүлэх
 • Маркетингийн үйл ажиллагаанд дэмжлэг үзүүлэх
 
-🌀🌀🌀 CV-гээ манай багт илгээнэ үү.`,
+CV-гээ манай багт илгээнэ үү.`,
     links: [{ label: "Email: soundmeditationmongolia@gmail.com", href: "mailto:soundmeditationmongolia@gmail.com" }],
   },
   {
@@ -285,19 +285,19 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
       whoFor: "Students interested in studying in Japan",
       organizer: "Mongolia-Japan Center, with the Japanese Embassy & JASSO",
     },
-    description: `ТА ЯПОНД СУРАЛЦАХЫГ ХҮСЭЖ БАЙНА УУ? 🎓
-Тэгвэл энэ намар таны заавал оролцох арга хэмжээний нэг бол "Японд суралцах тухай мэдээллийн яармаг-2026" юм! ✈️
+    description: `ТА ЯПОНД СУРАЛЦАХЫГ ХҮСЭЖ БАЙНА УУ?
+Тэгвэл энэ намар таны заавал оролцох арга хэмжээний нэг бол "Японд суралцах тухай мэдээллийн яармаг-2026" юм!
 
-✨2026 оны 10-р сарын 3,4-ний өдрүүдэд тус төв нь 17 дахь удаагийн "Японд суралцах тухай мэдээллийн яармаг-2026"-г танхимаар зохион байгуулах гэж байна✨
+2026 оны 10-р сарын 3,4-ний өдрүүдэд тус төв нь 17 дахь удаагийн "Японд суралцах тухай мэдээллийн яармаг-2026"-г танхимаар зохион байгуулах гэж байна
 
 Тус мэдээллийн яармагийн үеэр Японы улсын болоод хувийн их дээд сургуулиудын төлөөлөгчид оролцон, сургуулийнхаа танилцуулгыг хийх бөгөөд та өөрийн сонирхсон сургуулийн танилцуулгыг сонсож, ганцаарчилсан зөвлөгөө авах боломжтой.
 
 Мөн бид дараах үйл ажиллагааг Япон улсад суралцахаар төлөвлөж буй та бүхэнд хүргэх болно.
-📌Тэтгэлэг олгодог албан ёсны байгууллагуудаас тэтгэлгийн талаарх үнэн зөв мэдээлэл авах.
-📌Японд сурсан төгсөгчдөөс Япон улсад хэрхэн суралцах, амьдрах талаарх бодит туршлагыг сонсох.
-📌Япон улсад хувийн зардлаар суралцах шалгалт (EJU) -ын хими, физикт хэрхэн бэлдэх вэ үйл ажиллагаа зэрэг Японд суралцахтай холбоотой цогц мэдээллийг авах боломжтой.
+Тэтгэлэг олгодог албан ёсны байгууллагуудаас тэтгэлгийн талаарх үнэн зөв мэдээлэл авах.
+Японд сурсан төгсөгчдөөс Япон улсад хэрхэн суралцах, амьдрах талаарх бодит туршлагыг сонсох.
+Япон улсад хувийн зардлаар суралцах шалгалт (EJU) -ын хими, физикт хэрхэн бэлдэх вэ үйл ажиллагаа зэрэг Японд суралцахтай холбоотой цогц мэдээллийг авах боломжтой.
 
-🎓 ОРОЛЦОГЧ СУРГУУЛИУД
+ОРОЛЦОГЧ СУРГУУЛИУД
 1. Каназава их сургууль
 2. Кэйо их сургууль
 3. Китами инженер, технологийн их сургууль
@@ -310,23 +310,23 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
 10. Риккёо их сургууль
 11. Яманаши Гакүин их сургууль
 
-📚 МАТЕРИАЛААР ОРОЛЦОХ СУРГУУЛИУД
+МАТЕРИАЛААР ОРОЛЦОХ СУРГУУЛИУД
 12. Киото дэвшилтэт шинжлэх ухааны их сургууль
 13. Ямагата их сургууль
 
-🏢 ОРОЛЦОГЧ БАЙГУУЛЛАГУУД
+ОРОЛЦОГЧ БАЙГУУЛЛАГУУД
 1. Япон улсын Элчин сайдын яам
 2. Японы оюутныг дэмжих байгууллага (JASSO)
 
-📅 2026 оны 10-р сарын 3,4-ний өдрүүдэд
-🏠 Монгол-Японы төвийн байранд
+2026 оны 10-р сарын 3,4-ний өдрүүдэд
+Монгол-Японы төвийн байранд
 ⏰ 11:00–17:00 цаг
-🎟️ ҮНЭ ТӨЛБӨРГҮЙ
-🙅🏻‍♀️ Урьдчилан бүртгүүлэх шаардлагагүй
+ҮНЭ ТӨЛБӨРГҮЙ
+Урьдчилан бүртгүүлэх шаардлагагүй
 
-✨Японд суралцах мөрөөдлөө биелүүлэхэд хэрэгтэй бүх мэдээллээ нэг дороос аваарай!
+Японд суралцах мөрөөдлөө биелүүлэхэд хэрэгтэй бүх мэдээллээ нэг дороос аваарай!
 
-📞 Дэлгэрэнгүй мэдээллийг Монгол-Японы төвийн 7511-0879 (Ext-1), 8065-0879 утсаар холбогдон авах боломжтой.`,
+Дэлгэрэнгүй мэдээллийг Монгол-Японы төвийн 7511-0879 (Ext-1), 8065-0879 утсаар холбогдон авах боломжтой.`,
     links: [
       { label: "Facebook event page", href: "https://www.facebook.com/events/1600404958459625" },
     ],
@@ -345,25 +345,25 @@ ESN - eSports Network-оос албан ёсны эрхтэй зохион ба�
       whoFor: "Volunteers aged 18+",
       organizer: "Night Marathon 2026, Ulaanbaatar",
     },
-    description: `"Night Marathon 2026" сайн дурын ажилтны бүртгэл эхэллээ ✨
+    description: `"Night Marathon 2026" сайн дурын ажилтны бүртгэл эхэллээ
 
-Хотын шөнийн хамгийн онцгой арга хэмжээний нэг хэсэг болж, мянга мянган гүйгчийн урам зориг, эрч хүчийг мэдэрч, мартагдашгүй туршлагыг хамтдаа бүтээхийг хүсэж байна уу? Тэгвэл "Night Marathon 2026" арга хэмжээнд сайн дурын ажилтнаар нэгдээрэй. 🏃‍♀️🏃‍♂️
+Хотын шөнийн хамгийн онцгой арга хэмжээний нэг хэсэг болж, мянга мянган гүйгчийн урам зориг, эрч хүчийг мэдэрч, мартагдашгүй туршлагыг хамтдаа бүтээхийг хүсэж байна уу? Тэгвэл "Night Marathon 2026" арга хэмжээнд сайн дурын ажилтнаар нэгдээрэй.
 
 Та арга хэмжээний өдөр бидэнтэй ажиллаж, UB Night Marathon-ийг амжилттай зохион байгуулахад өөрийн хувь нэмрээ оруулах боломжтой.
 
-🤝 Шинэ хүмүүстэй танилцана
-✨ Томоохон эвент зохион байгуулалтыг амжилттай бүтээх чухал багийн нэг хэсэг болно
-💪 Багаар ажиллаж, харилцааны ур чадвараа хөгжүүлнэ
-🌙 Хотын шөнийн хамгийн онцгой мөчүүдийн нэгийг хамтдаа бүтээнэ
+Шинэ хүмүүстэй танилцана
+Томоохон эвент зохион байгуулалтыг амжилттай бүтээх чухал багийн нэг хэсэг болно
+Багаар ажиллаж, харилцааны ур чадвараа хөгжүүлнэ
+Хотын шөнийн хамгийн онцгой мөчүүдийн нэгийг хамтдаа бүтээнэ
 
 Бүртгэлээ илгээсний дараа манай баг тантай холбогдож, ажлын чиг үүрэг, дэлгэрэнгүй мэдээлэл болон шаардлагатай сургалтыг танилцуулна.
 
-📌 Санамж: Сайн дурын ажилтнаар бүртгүүлэх оролцогч 18 нас хүрсэн байх шаардлагатай.
+Санамж: Сайн дурын ажилтнаар бүртгүүлэх оролцогч 18 нас хүрсэн байх шаардлагатай.
 
-📅 2026.09.26
-📍 Сүхбаатарын талбай
+2026.09.26
+Сүхбаатарын талбай
 
-Run the City. Light the Night. 🌙`,
+Run the City. Light the Night.`,
     links: [{ label: "Register", href: "https://www.nightmarathon.mn/volunteer" }],
   },
   {
@@ -380,24 +380,24 @@ Run the City. Light the Night. 🌙`,
       whoFor: "Students with a flexible schedule, or gap-year students",
       organizer: "LightLab",
     },
-    description: `LightLab-д маань өдөр тутмын борлуулалт болон сошиал медиа хариуцаж ажиллах идэвхтэй, хариуцлагатай, сошиалд сонирхолтой хүн хайж байна. 💡✨
+    description: `LightLab-д маань өдөр тутмын борлуулалт болон сошиал медиа хариуцаж ажиллах идэвхтэй, хариуцлагатай, сошиалд сонирхолтой хүн хайж байна.
 
-👀 Бид хэнийг хайж байна вэ?
-🎓 Хичээлийн хуваарь уян хатан оюутан
-🌱 Эсвэл gap year авч байгаа хүн
-📱 Instagram, Facebook болон сошиал медиа маркетингт сонирхолтой /өмнө нь ажиллаж байсан эсвэл маркетингаар сурдаг бол давуу тал/
-💬 Хүмүүстэй зөв боловсон, найрсаг харилцаж чаддаг
-🧠 Хариуцлагатай, эмх цэгцтэй, бие даан ажиллах чадвартай
-🎨 Interior design, home decoration мөн decor гэрлүүдэд сонирхолтой
-🚗 Жолооны үнэмлэхтэй, өөрийн машинтай бол том давуу тал
-💻 Instagram/Facebook дээр ажиллаж байсан туршлагатай бол давуу тал
+Бид хэнийг хайж байна вэ?
+Хичээлийн хуваарь уян хатан оюутан
+Эсвэл gap year авч байгаа хүн
+Instagram, Facebook болон сошиал медиа маркетингт сонирхолтой /өмнө нь ажиллаж байсан эсвэл маркетингаар сурдаг бол давуу тал/
+Хүмүүстэй зөв боловсон, найрсаг харилцаж чаддаг
+Хариуцлагатай, эмх цэгцтэй, бие даан ажиллах чадвартай
+Interior design, home decoration мөн decor гэрлүүдэд сонирхолтой
+Жолооны үнэмлэхтэй, өөрийн машинтай бол том давуу тал
+Instagram/Facebook дээр ажиллаж байсан туршлагатай бол давуу тал
 
 ⏰ Ажлын цаг:
 Ажлын 3-4 өдөр 12:00 – 19:00
 Мөн амралтын 1-2 өдөр 10:00-19:00
 Оюутан болон gap year-тэй байгаа хүмүүст тохиромжтой уян хатан цагийн хуваарь
 
-CV-гээ илгээнэ үү ☺️💡`,
+CV-гээ илгээнэ үү`,
     links: [
       { label: "Email: narniigereltord@gmail.com", href: "mailto:narniigereltord@gmail.com" },
     ],
@@ -417,24 +417,24 @@ CV-гээ илгээнэ үү ☺️💡`,
       whoFor: "Youth who want to be part of a change, not just a one-off volunteer",
       organizer: "GoodWaves NGO",
     },
-    description: `🌊 Чи зүгээр нэг volunteer биш, өөрчлөлтийн нэг хэсэг болохыг хүсэж байна уу? GoodWaves-ийн шинэ элсэлт явагдаж байна.
+    description: `Чи зүгээр нэг volunteer биш, өөрчлөлтийн нэг хэсэг болохыг хүсэж байна уу? GoodWaves-ийн шинэ элсэлт явагдаж байна.
 
-Сайн дурын ажил гэдэг зөвхөн бусдад туслах тухай биш. Энэ бол өөрийгөө хөгжүүлэх, шинэ зүйл сурах, шинэ хүмүүстэй танилцах, өөрийн санаагаа бодит ажил болгох боломж юм. 🤝
+Сайн дурын ажил гэдэг зөвхөн бусдад туслах тухай биш. Энэ бол өөрийгөө хөгжүүлэх, шинэ зүйл сурах, шинэ хүмүүстэй танилцах, өөрийн санаагаа бодит ажил болгох боломж юм.
 
 Тэгвэл чи volunteer болсноор юу авч болох вэ?
 
 Хэрвээ чи:
-🌱 Нийгэмдээ эерэг өөрчлөлт хийхийг хүсдэг
-💡 Шинэ зүйл туршиж үзэх дуртай
-🤝 Шинэ хүмүүстэй хамтран ажиллахыг хүсдэг
-🔥 Өөрийгөө хөгжүүлэхийг хүсдэг бол
+Нийгэмдээ эерэг өөрчлөлт хийхийг хүсдэг
+Шинэ зүйл туршиж үзэх дуртай
+Шинэ хүмүүстэй хамтран ажиллахыг хүсдэг
+Өөрийгөө хөгжүүлэхийг хүсдэг бол
 
-GoodWaves чамайг хүлээж байна. 🌊
+GoodWaves чамайг хүлээж байна.
 
-📅 Элсэлт: 09.01 – 10.01
+Элсэлт: 09.01 – 10.01
 
 Жижиг үйлдэл. Том нөлөө.
-Чиний давалгаа хаанаас эхлэх вэ? 🌊`,
+Чиний давалгаа хаанаас эхлэх вэ?`,
     links: [],
     contactNote:
       "No direct enrollment link was shared for this one — check the GoodWaves NGO Instagram for the sign-up link.",
@@ -454,21 +454,21 @@ GoodWaves чамайг хүлээж байна. 🌊
         "University students (year 2+) in health/medicine fields in Ulaanbaatar, cumulative GPA 3.2+",
       organizer: "Microcredit NBFI & Zorig Foundation",
     },
-    description: `🎓 Микро Кредит ББСБ × Зориг сангийн ТЭТГЭЛЭГТ ХӨТӨЛБӨР 2026 зарлагдлаа.
+    description: `Микро Кредит ББСБ × Зориг сангийн ТЭТГЭЛЭГТ ХӨТӨЛБӨР 2026 зарлагдлаа.
 
 Эрүүл мэндийн салбарын ирээдүйн боловсон хүчнийг дэмжих зорилгоор Микро Кредит ББСБ болон Зориг сан хамтран тэтгэлэгт хөтөлбөр хэрэгжүүлдэг билээ.
 
-📌 Хэн хамрагдах вэ?
+Хэн хамрагдах вэ?
 Улаанбаатар хотод байрлах эрүүл мэнд, анагаах ухааны чиглэлээр мэргэжилтэн бэлтгэдэг их, дээд сургуулийн 2 болон түүнээс дээш дамжаанд суралцаж буй, нийт суралцсан хугацааны голч дүн 3.2 ба түүнээс дээш оюутнууд хамрагдах боломжтой.
 
-🌱 Тэтгэлэгт хөтөлбөрт хамрагдсанаар:
+Тэтгэлэгт хөтөлбөрт хамрагдсанаар:
 • Сургалтын төлбөрийн тэтгэлэг авах
 • Эрүүл мэнд, нийгмийн салбарт эерэг өөрчлөлт авчрах хүсэл эрмэлзэлтэй залуусын хүрээлэлд нэгдэх боломжтой.
 
-📝 Өргөдөл хүлээн авах эцсийн хугацаа:
+Өргөдөл хүлээн авах эцсийн хугацаа:
 2026 оны 9 дүгээр сарын 27-ны 23:59 цаг
 
-📲 Өргөдлийн маягтыг цахимаар бөглөнө.`,
+Өргөдлийн маягтыг цахимаар бөглөнө.`,
     links: [
       {
         label: "Apply",
@@ -494,14 +494,14 @@ GoodWaves чамайг хүлээж байна. 🌊
     description: {
       mn: `Hack Club бол дэлхийн 100 гаруй орны 140,000 гаруй өсвөр насны залуусыг холбосон олон улсын ашгийн бус нийгэмлэг юм. Бид сурагчдад зориулсан орчныг бүрдүүлж, өөрсдийн санаагаа бодит төсөл болгон хөгжүүлэхэд тусалдаг. Manuul Hack Club нь энэхүү дэлхийн сүлжээний албан ёсны салбар бөгөөд долоо хоног бүр цуглаж хамтдаа суралцаж, код бичиж байна.
 
-📌 Хэзээ: Даваа, Лхагва гараг бүр | 16:30 – 18:30
-📍 Хаана: American Corner Ulaanbaatar
-🔗 Бүртгүүлэх: Профиль дээрх линкээр нэвтрээрэй.`,
+Хэзээ: Даваа, Лхагва гараг бүр | 16:30 – 18:30
+Хаана: American Corner Ulaanbaatar
+Бүртгүүлэх: Профиль дээрх линкээр нэвтрээрэй.`,
       en: `Hack Club is a global non-profit community of over 140,000 teenagers across 100+ countries who code and build projects together. It gives high schoolers total freedom to build real apps, hardware, and websites with direct backing from major tech organizations. Manuul Hack Club is the local chapter right here in Ulaanbaatar.
 
-📌 When: Mondays & Wednesdays | 16:30 – 18:30
-📍 Where: American Corner Ulaanbaatar
-🔗 Register: Link in bio.`,
+When: Mondays & Wednesdays | 16:30 – 18:30
+Where: American Corner Ulaanbaatar
+Register: Link in bio.`,
     },
     links: [],
     contactNote: "Registration link is in the Manuul Hack Club Instagram bio.",
@@ -520,18 +520,18 @@ GoodWaves чамайг хүлээж байна. 🌊
       whoFor: "University students (National University of Mongolia)",
       organizer: "Berkeley Club (МУИС)",
     },
-    description: `Шинэ хичээлийн жилээ өөртөө шинэ боломж нээж эхлүүлээрэй✨🌅
+    description: `Шинэ хичээлийн жилээ өөртөө шинэ боломж нээж эхлүүлээрэй
 • Илтгэх урлаг
 • Парламентын болон шүүхийн мэтгэлцээн
 • Академик сургалт
 • Халуун дулаан хамт олон
 • Өөрийгөө хөгжүүлэх олон боломж
 
-Өөрийгөө сорьж, илтгэх урлаг, мэтгэлцээнээр ур чадвараа хөгжүүлэхийг хүсэж байвал яг одоо бүртгүүлээрэй📝
+Өөрийгөө сорьж, илтгэх урлаг, мэтгэлцээнээр ур чадвараа хөгжүүлэхийг хүсэж байвал яг одоо бүртгүүлээрэй
 
-📌 Бүртгэл: 2026.09.20 хүртэл
-🔗 Online бүртгэлийн LINK IN BIO
-🔗 МУИС-ийн 2 байрны хоёр давхарт элсэлт явагдаж байна.`,
+Бүртгэл: 2026.09.20 хүртэл
+Online бүртгэлийн LINK IN BIO
+МУИС-ийн 2 байрны хоёр давхарт элсэлт явагдаж байна.`,
     links: [],
     contactNote:
       "In-person registration is open at MUIS Building 2, 2nd floor. Online registration link is in the Berkeley Club Instagram bio.",
@@ -602,18 +602,18 @@ GoodWaves чамайг хүлээж байна. 🌊
       whoFor: "All public and private schools in Ulaanbaatar",
       organizer: "Mongolia Without Waste, CFLI/FCIL, TML Plastic, Save",
     },
-    description: `📢 RECYCLE RALLY 2026 is here!
+    description: `RECYCLE RALLY 2026 is here!
 
-UB schools — collect PET-1 plastic bottles and compete for cash prizes + recycling bins 🏆
+UB schools — collect PET-1 plastic bottles and compete for cash prizes + recycling bins
 
-📅 Sep 7 – Dec 4, 2026
-🌱 Open to all public & private schools in Ulaanbaatar
+Sep 7 – Dec 4, 2026
+Open to all public & private schools in Ulaanbaatar
 
 Нийслэлийн ЕБС-уудыг хуванцар цуглуулах аянд нэгдэхийг урьж байна. ЕБС-ийн сурагчдад байгаль орчныг хамгаалах, хог хаягдлыг эх үүсвэр дээр нь ангилах дадал хэвшүүлэх, хуванцар хог хаягдлын хор хөнөөл болон дахин боловсруулах боломжийн талаар мэдлэг олгох зорилготой аян.
 
-🏆 I байр: Сертификат, 2,500,000 төгрөгийн үнийн бүхий шагнал, 850,000 төгрөгийн үнийн бүхий хуванцар ангилах сав.
+I байр: Сертификат, 2,500,000 төгрөгийн үнийн бүхий шагнал, 850,000 төгрөгийн үнийн бүхий хуванцар ангилах сав.
 
-From Waste to Wonder ♻️`,
+From Waste to Wonder`,
     links: [{ label: "Full guidelines", href: "https://shorturl.at/6HwAL" }],
   },
   {
@@ -630,16 +630,16 @@ From Waste to Wonder ♻️`,
       whoFor: "Punctual youth with good communication skills; prior YSC/YP experience an advantage",
       organizer: "Mongol Ecology Center, Youth Sustainability Corps",
     },
-    description: `📖 YSCхНомын баяр 2026 📖
+    description: `YSCхНомын баяр 2026
 
 40 дэхь удаагийн номын баярын арга хэмжээнд Монгол Экологи Төвийн асар дээр хөтөлбөрүүдийг танилцуулах, мэдээлэл өгөх, судалгаа авах зэрэг ажилд оролцох сайн дурын залуусыг бүртгэж байна.
 
 Хэнийг сонгох вэ?
-✅ 9-р сарын 18, 19, 20-ны өдрүүдэд өглөө 10:00-18:00 цаг хүртэл бүтэн эсвэл цагаа тохироод ээлжлээд гарах боломжтой
-✅ Цаг сайн баримталдаг, харилцааны соёлтой
-✅ YSC хөтөлбөрт оролцож байсан болон YP-ийн ЗБ эсвэл сайн дурын ажилтнаар оролцож байсан бол давуу талтай
+9-р сарын 18, 19, 20-ны өдрүүдэд өглөө 10:00-18:00 цаг хүртэл бүтэн эсвэл цагаа тохироод ээлжлээд гарах боломжтой
+Цаг сайн баримталдаг, харилцааны соёлтой
+YSC хөтөлбөрт оролцож байсан болон YP-ийн ЗБ эсвэл сайн дурын ажилтнаар оролцож байсан бол давуу талтай
 
-🎁 Шалгараад амжилттай ажилласан оролцогчдод YSC оноо болон мерч өгөх болно.`,
+Шалгараад амжилттай ажилласан оролцогчдод YSC оноо болон мерч өгөх болно.`,
     links: [],
     contactNote: "Registration link is in the Mongol Ecology Center Instagram bio (@mongolecologycenter).",
   },
@@ -669,10 +669,10 @@ From Waste to Wonder ♻️`,
 • Шийдвэр гаргагчдад нөлөөлөх
 
 Танд ямар боломжууд нээгдэх вэ?
-🌐 Бүрэн онлайн
-🏛️ Хүсэлт хүргүүлэх туршлага
-📜 Сертификат
-🤝 Байгууллагын гишүүнчлэл`,
+Бүрэн онлайн
+Хүсэлт хүргүүлэх туршлага
+Сертификат
+Байгууллагын гишүүнчлэл`,
     links: [{ label: "Register", href: "https://forms.gle/zWrEgEwG2DJPmcgX7" }],
     contactNote: "Contact: itgeliindalavch@gmail.com",
   },
@@ -690,7 +690,7 @@ From Waste to Wonder ♻️`,
       whoFor: "Youth interested in civic tech and AI",
       organizer: "Монгол Улсын Их Хурлын Тамгын газар, The Asia Foundation, Unread Media",
     },
-    description: `"Open Parliament Hackathon" бүртгэл эхэллээ! 🚀
+    description: `"Open Parliament Hackathon" бүртгэл эхэллээ!
 
 Парламентын үйл ажиллагааг иргэдэд илүү нээлттэй, ойлгомжтой, хүртээмжтэй болгох технологийн шийдэл танд байна уу?
 
@@ -720,16 +720,16 @@ From Waste to Wonder ♻️`,
       whoFor: "Students/graduates in biology, ecology, or conservation, able to work in field conditions",
       organizer: "Wildlife Conservation Society (WCS) Mongolia",
     },
-    description: `📢 НЭЭЛТТЭЙ АЖЛЫН БАЙР: Хээрийн судалгаанд оролцох туслах ажилтан 🐾
+    description: `НЭЭЛТТЭЙ АЖЛЫН БАЙР: Хээрийн судалгаанд оролцох туслах ажилтан
 
 WCS Монгол Өмнөговь аймагт цоохор ирвэсийн судалгааны ажилд туслах оюутан эсвэл төгсөгчийг урьж байна!
 
-📍 Байршил: Өмнөговь аймаг (Номгон, Баян-Овоо сум)
-🗓 Ажиллах хугацаа: 2026.10.01 – 2026.10.11
+Байршил: Өмнөговь аймаг (Номгон, Баян-Овоо сум)
+Ажиллах хугацаа: 2026.10.01 – 2026.10.11
 
-📋 Гүйцэтгэх үүрэг: Автомат камерын шалгалт, батарей/SD карт солих, мэдээлэл хуулах болон хээрийн тэмдэглэл хөтлөх
+Гүйцэтгэх үүрэг: Автомат камерын шалгалт, батарей/SD карт солих, мэдээлэл хуулах болон хээрийн тэмдэглэл хөтлөх
 
-🎯 Тавигдах шаардлага: Биологи, экологи, байгаль хамгааллын чиглэлээр суралцдаг/төгссөн, хээрийн нөхцөлд ажиллах боломжтой
+Тавигдах шаардлага: Биологи, экологи, байгаль хамгааллын чиглэлээр суралцдаг/төгссөн, хээрийн нөхцөлд ажиллах боломжтой
 
 Өөрийн туршлага, CV-гээ "Цоохор ирвэс-Хээрийн туслах ажилтан - Овог нэр" гэсэн гарчигтайгаар илгээнэ үү.`,
     links: [
@@ -751,35 +751,35 @@ WCS Монгол Өмнөговь аймагт цоохор ирвэсийн с�
       whoFor: "10th & 11th grade students (English A2+). Not open to 12th graders or gap-year students.",
       organizer: "ARC EDU боловсролын төв",
     },
-    description: `🚀 ИРЭЭДҮЙДЭЭ БЭЛЭН ҮҮ? 🚀
+    description: `ИРЭЭДҮЙДЭЭ БЭЛЭН ҮҮ?
 
-ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагчдад зориулсан МЭРГЭЖИЛ СОНГОЛТ + ИХ СУРГУУЛИЙН БЭЛТГЭЛ + СУДАЛГААНЫ АЖИЛ гэсэн үндсэн хэсгүүдтэй "Teen Researcher" мэргэжил сонголтын цогц хөтөлбөрийнхөө 2 дахь элсэлтийг зарлаж байна! 🎉
+ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагчдад зориулсан МЭРГЭЖИЛ СОНГОЛТ + ИХ СУРГУУЛИЙН БЭЛТГЭЛ + СУДАЛГААНЫ АЖИЛ гэсэн үндсэн хэсгүүдтэй "Teen Researcher" мэргэжил сонголтын цогц хөтөлбөрийнхөө 2 дахь элсэлтийг зарлаж байна!
 
 Хөтөлбөрийн хүрээнд сурагчид:
-✅ 4 мэргэжлийн талбарын 12 төслөөс сонгож, тухайн мэргэжлийн менторын удирдлага дор салбартайгаа гүнзгий танилцана.
-🔬 Салбарын асуудлаар шинжлэх ухааны судалгаа хийж, үр дүн гаргана.
-💡 Судалсан асуудалтай холбоотой төсөл хэрэгжүүлж, шийдэл боловсруулна.
-🎓 Их сургуулийн элсэлтийн цогц сургалтад хамрагдаж, ахлах сургуулийн төлөвлөгөөгөө гаргана (College counseling).
-🗣 Багаар ажиллах, олны өмнө ярих, бусадтай харилцах, асуудал шийдвэрлэх, өөрийгөө илэрхийлэх чадваруудаа хөгжүүлнэ.
-🎯 Мэргэжлийн чиг баримжаагаа олж, ирээдүйн сонголтоо зөв хийх боломжтой болно.
+4 мэргэжлийн талбарын 12 төслөөс сонгож, тухайн мэргэжлийн менторын удирдлага дор салбартайгаа гүнзгий танилцана.
+Салбарын асуудлаар шинжлэх ухааны судалгаа хийж, үр дүн гаргана.
+Судалсан асуудалтай холбоотой төсөл хэрэгжүүлж, шийдэл боловсруулна.
+Их сургуулийн элсэлтийн цогц сургалтад хамрагдаж, ахлах сургуулийн төлөвлөгөөгөө гаргана (College counseling).
+Багаар ажиллах, олны өмнө ярих, бусадтай харилцах, асуудал шийдвэрлэх, өөрийгөө илэрхийлэх чадваруудаа хөгжүүлнэ.
+Мэргэжлийн чиг баримжаагаа олж, ирээдүйн сонголтоо зөв хийх боломжтой болно.
 
 Мэргэжлийн 4 чиглэл:
-📌 Нийгмийн ухаан: Нийгэм, хүмүүнлэг, социологи, сэтгүүл зүй, олон улс харилцаа, хууль, иргэний нийгэм салбарын 2 төсөл
-📈 Санхүү эдийн засаг: Хөрөнгө оруулалт, татвар, эдийн засаг салбарын 2 төсөл
-💻 Технологи: Хиймэл оюун, мэдээллийн аюулгүй байдал салбарын 2 төсөл
-🧪 Байгалийн ШУ ба инженерчлэл: Хими (анагаах), биологи, хүрээлэн буй орчин, физикийн салбарын тус бүр 1 төсөл
+Нийгмийн ухаан: Нийгэм, хүмүүнлэг, социологи, сэтгүүл зүй, олон улс харилцаа, хууль, иргэний нийгэм салбарын 2 төсөл
+Санхүү эдийн засаг: Хөрөнгө оруулалт, татвар, эдийн засаг салбарын 2 төсөл
+Технологи: Хиймэл оюун, мэдээллийн аюулгүй байдал салбарын 2 төсөл
+Байгалийн ШУ ба инженерчлэл: Хими (анагаах), биологи, хүрээлэн буй орчин, физикийн салбарын тус бүр 1 төсөл
 
 (Менторуудын танилцуулга тун удахгүй тавигдана)
 
-🗓 Хэрэгжих хугацаа: 2026.10.31-11.15
-🏫 Танхимын сургалт: 2026.10.31-11.07
-⚙️ Төсөл: 2026.11.09-13
-🎓 Хөтөлбөрийн төгсөлт: 2026.11.14-15
+Хэрэгжих хугацаа: 2026.10.31-11.15
+Танхимын сургалт: 2026.10.31-11.07
+Төсөл: 2026.11.09-13
+Хөтөлбөрийн төгсөлт: 2026.11.14-15
 
-📍 Байршил: EduPark төв 609 тоот
-🙋‍♀️ Хэнд тохиромжтой вэ: Мэргэжлээ сонгосон ч бүрэн итгэлтэй биш байгаа, өөрийгөө олж нээх, хөгжүүлэх сонирхолтой 10, 11-р ангийн сурагчдад. (Англи хэлний А2-с дээш түвшинтэй байх).
-⚠️ 12-р анги ба өнжих жил авсан сурагчид хамрагдах боломжгүй болно.
-💵 Төлбөр: 2,500,000₮ /Төлбөрт 10 хоногийн өдрийн хоол, оройн цай, сургалт, аялал, ашиглагдах материал багтсан болно/`,
+Байршил: EduPark төв 609 тоот
+Хэнд тохиромжтой вэ: Мэргэжлээ сонгосон ч бүрэн итгэлтэй биш байгаа, өөрийгөө олж нээх, хөгжүүлэх сонирхолтой 10, 11-р ангийн сурагчдад. (Англи хэлний А2-с дээш түвшинтэй байх).
+12-р анги ба өнжих жил авсан сурагчид хамрагдах боломжгүй болно.
+Төлбөр: 2,500,000₮ /Төлбөрт 10 хоногийн өдрийн хоол, оройн цай, сургалт, аялал, ашиглагдах материал багтсан болно/`,
     links: [{ label: "Register", href: "https://forms.gle/qjPCH4cRvMEETDcH7" }],
   },
   {
@@ -798,13 +798,13 @@ ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагч�
     },
     description: `Монголын уран зургийн галерейн "УРАН ЗУРГИЙН СУРГАЛТ"-даа элсэлт авч байна.
 
-📌 Суралцах агуулга:
+Суралцах агуулга:
 • Хар зураг, өнгө судлал, зохиомж
 • Их сургуульд элсэх ур чадварын шалгалтад бэлтгэх
 • Мэргэжлийн зураачийн заах хичээлүүд анхан шатнаас ахисан түвшин хүртэл явагдана.
 
-📍 Хаяг: СБД, 8-р хороо, Соёлын төв өргөө, B корпус – Монголын Уран Зургийн Галерей
-📞 Холбогдох утас: 11327177, 99598735`,
+Хаяг: СБД, 8-р хороо, Соёлын төв өргөө, B корпус – Монголын Уран Зургийн Галерей
+Холбогдох утас: 11327177, 99598735`,
     links: [],
     contactNote: "Утас: 11327177, 99598735",
   },
@@ -824,23 +824,23 @@ ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагч�
       whoFor: "Intermediate/advanced English speakers. Under-18s may assist as teaching helpers with a signed parental consent form.",
       organizer: "Sean English Academy (Hurteemj)",
     },
-    description: `Манай анхны сайн дурын ажил зарлагдлаа! 🎉
+    description: `Манай анхны сайн дурын ажил зарлагдлаа!
 
-📚 Sean academy-д хүүхдүүдэд англи хэл заах
-📍 Улаанчулуутын хогийн цэгийн ойролцоо
-🗓 10-р сарын 10 – 12-р сарын 20, долоо хоногт 3 удаа, удаадаа 1.5 цаг
-👥 6 хүн авна (+,-)
+Sean academy-д хүүхдүүдэд англи хэл заах
+Улаанчулуутын хогийн цэгийн ойролцоо
+10-р сарын 10 – 12-р сарын 20, долоо хоногт 3 удаа, удаадаа 1.5 цаг
+6 хүн авна (+,-)
 
 Сонгинохайрхан дүүргийн хүүхдүүдэд англи хэл заах сайн дурын ажилтан хайж байна. Англи хэлний дунд, ахисан түвшний хүмүүс бүгд тавтай морилно уу.
 
-🎁 Сайн дурынханд:
-✅ Унааны мөнгө
-✅ Recommendation letter
-✅ Гадаадад суралцах зөвлөгөө
+Сайн дурынханд:
+Унааны мөнгө
+Recommendation letter
+Гадаадад суралцах зөвлөгөө
 
-⚠️ Утасны дугаараа үнэн зөв оруулаарай, баталгаажсан хүмүүстэй бид утсаар ярина. 18-аас доош насныхан туслах багшаар ажиллаж болох ч эцэг эхийн зөвшөөрлийн хуудас заавал шаардлагатай.
+Утасны дугаараа үнэн зөв оруулаарай, баталгаажсан хүмүүстэй бид утсаар ярина. 18-аас доош насныхан туслах багшаар ажиллаж болох ч эцэг эхийн зөвшөөрлийн хуудас заавал шаардлагатай.
 
-Бүртгүүлэх заавар 2-р зурагт 👉 hurteemj.github.io/.mn
+Бүртгүүлэх заавар 2-р зурагт hurteemj.github.io/.mn
 
 #Hurteemj #volunteermongolia #English #songinhairhan`,
     links: [
@@ -863,18 +863,18 @@ ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагч�
       whoFor: "Prospective master's students interested in law, security, peace and sustainability",
       organizer: "ILSPSD consortium (Leuphana, IBEI Barcelona + Glasgow / ULB / NOVA Lisbon / Tartu)",
     },
-    description: `📣 Applications for entry to the ILSPSD programme in September 2027, including Erasmus Mundus Scholarship applications, are now open!
+    description: `Applications for entry to the ILSPSD programme in September 2027, including Erasmus Mundus Scholarship applications, are now open!
 
-🌏 Study at Leuphana in semester 1, IBEI Barcelona in semester 2, and your choice of a third, world-class university in year two:
+Study at Leuphana in semester 1, IBEI Barcelona in semester 2, and your choice of a third, world-class university in year two:
 
-🏴󠁧󠁢󠁳󠁣󠁴󠁿 University of Glasgow — focus on International Law and International Security
-🇧🇪 Université libre de Bruxelles — focus on Security and Conflict
-🇵🇹 Universidade NOVA de Lisboa — focus on Globalization, Law and Security
-🇪🇪 University of Tartu — focus on International Law and Human Rights
+󠁧󠁢󠁳󠁣󠁴󠁿 University of Glasgow — focus on International Law and International Security
+Université libre de Bruxelles — focus on Security and Conflict
+Universidade NOVA de Lisboa — focus on Globalization, Law and Security
+University of Tartu — focus on International Law and Human Rights
 
 With its focus on the nexus of law, security, peace and sustainability, ILSPSD equips you to address the defining challenges of the 21st century — and to become part of the solutions shaping our global future.
 
-👉 Visit the ILSPSD website for all the information you need to know about the programme.
+Visit the ILSPSD website for all the information you need to know about the programme.
 
 #ILSPSD #ErasmusMundus #EMJM #InternationalMasters`,
     links: [
@@ -897,19 +897,19 @@ With its focus on the nexus of law, security, peace and sustainability, ILSPSD e
     },
     description: `БАЙГАЛЬД ЭЭЛТЭЙ ЗАЛУУСЫН ИХ ХУРАЛДАЙН ЦАГ ИРЛЭЭ!
 
-🤩 Монгол орны дөрвөн зүг, найман зовхист оршин суугаа 9-12-р ангийн сурагчдын анхааралд!🙌🏻
+Монгол орны дөрвөн зүг, найман зовхист оршин суугаа 9-12-р ангийн сурагчдын анхааралд!
 
-🌱 Монгол Экологи Төв НҮТББ-аас Европын Холбооны хамтын санхүүжилтээр хэрэгжүүлдэг "YSC" буюу "Залуучуудын Тогтвортой Хөгжлийн Корпус" хөтөлбөрийн хүрээнд ТАВ дахь жилдээ зохион байгуулж буй "TEEN ХУРАЛДАЙ 2026" Байгальд ээлтэй залуусын чуулга уулзалтын оролцогчдыг сонгон шалгаруулах өргөдөл намрын дунд сард ийнхүү нээгдлээ.🤩
+Монгол Экологи Төв НҮТББ-аас Европын Холбооны хамтын санхүүжилтээр хэрэгжүүлдэг "YSC" буюу "Залуучуудын Тогтвортой Хөгжлийн Корпус" хөтөлбөрийн хүрээнд ТАВ дахь жилдээ зохион байгуулж буй "TEEN ХУРАЛДАЙ 2026" Байгальд ээлтэй залуусын чуулга уулзалтын оролцогчдыг сонгон шалгаруулах өргөдөл намрын дунд сард ийнхүү нээгдлээ.
 
-📨 Та био хэсэг дэх холбоосоор нэвтэрч өргөдлөө илгээгээрэй.📭
+Та био хэсэг дэх холбоосоор нэвтэрч өргөдлөө илгээгээрэй.
 
 ⏰ Өргөдөл хүлээн авах холбоос 10 дугаар сарын 14-ны 23:45 цагт хаагдах болно. (Улаанбаатар хотын цагаар)
 
-‼️ Өргөдлийг зөвхөн холбоосоор нэвтэрч илгээх ба имэйл хаяг, бусад хэлбэрээр болон хоцорч илгээсэн тохиолдолд хүлээн авахгүйг анхаарна уу.
+‼ Өргөдлийг зөвхөн холбоосоор нэвтэрч илгээх ба имэйл хаяг, бусад хэлбэрээр болон хоцорч илгээсэн тохиолдолд хүлээн авахгүйг анхаарна уу.
 
-✅ Хөтөлбөрт арга хэмжээний үеэр байрлах газар, хоол, мөн орон нутгаас оролцох оролцогчдын хот хоорондын тээврийн зардал багтсан болно.
+Хөтөлбөрт арга хэмжээний үеэр байрлах газар, хоол, мөн орон нутгаас оролцох оролцогчдын хот хоорондын тээврийн зардал багтсан болно.
 
-🇲🇳 Өргөдлөө илгээж буй байгальд ээлтэй залуу манлайлагч танд амжилт хүсье. Тун удахгүй уулзах өлзийтэй сайхан ерөөлийг өргөн дэвшүүлье.🫶🏻`,
+Өргөдлөө илгээж буй байгальд ээлтэй залуу манлайлагч танд амжилт хүсье. Тун удахгүй уулзах өлзийтэй сайхан ерөөлийг өргөн дэвшүүлье.`,
     links: [
       { label: "Apply", href: "https://form.jotform.com/262721959731465" },
     ],
@@ -935,22 +935,22 @@ The Independent Research Institute of Mongolia (IRIM) invites students intereste
 The program runs for four weeks (27 Oct – 20 Nov).
 
 By participating in the program, you will:
-🎯 Learn research methodology and how to work with data through a dedicated researcher training program.
-🎯 Gain foundational knowledge of research methods, the effective use of artificial intelligence, and the research sector.
-🎯 Strengthen your research and personal skills and receive support in writing research papers.
-🎯 Explore opportunities to collaborate with IRIM.
-🎯 Work and learn alongside your peers.
-🎯 Share research findings on digital transformation.
-🎯 Gain practical experience through research projects.
+Learn research methodology and how to work with data through a dedicated researcher training program.
+Gain foundational knowledge of research methods, the effective use of artificial intelligence, and the research sector.
+Strengthen your research and personal skills and receive support in writing research papers.
+Explore opportunities to collaborate with IRIM.
+Work and learn alongside your peers.
+Share research findings on digital transformation.
+Gain practical experience through research projects.
 
 Eligibility requirements:
-✅ Have an interest in research and analysis.
-✅ Have a GPA above 3.0.
-✅ Be studying social sciences, humanities, natural sciences, or business.
-✅ Be a third-year student or above.
-✅ Be able to commit 4–8 hours per week throughout the program.
+Have an interest in research and analysis.
+Have a GPA above 3.0.
+Be studying social sciences, humanities, natural sciences, or business.
+Be a third-year student or above.
+Be able to commit 4–8 hours per week throughout the program.
 
-🕓 Application deadline: 20 October 2026 at 23:59. Late applications will not be considered.
+Application deadline: 20 October 2026 at 23:59. Late applications will not be considered.
 
 For more information about the program, please visit IRIM's website or call 8670-6007.`,
     links: [{ label: "Application form", href: "https://forms.gle/nCvqUsBxW91J5D8b7" }],
@@ -970,30 +970,30 @@ For more information about the program, please visit IRIM's website or call 8670
       whoFor: "Young innovators interested in SDG 4, 8, 9, 11 and 13",
       organizer: "Youth Break the Boundaries (YBB) with Puspresnas",
     },
-    description: `YOUR IDEAS DESERVE A GLOBAL STAGE. 🇯🇵✨
+    description: `YOUR IDEAS DESERVE A GLOBAL STAGE.
 
 What if your next big idea could help shape a better world?
 
 At the Japan Youth Summit 2027, young innovators come together to explore bold ideas, exchange global perspectives, and develop youth-led solutions for a more sustainable future.
 
-And now, the door is OPEN! 🔥
+And now, the door is OPEN!
 
-🎓 FULLY FUNDED REGISTRATION IS AVAILABLE!
+FULLY FUNDED REGISTRATION IS AVAILABLE!
 
-💡 Theme: Youth Innovation for a World Without Limits
+Theme: Youth Innovation for a World Without Limits
 
-🌍 Turn your passion into purpose with:
-📚 SDG 4 — Quality Education
-💼 SDG 8 — Decent Work & Economic Growth
-🏗️ SDG 9 — Industry, Innovation & Infrastructure
-🏙️ SDG 11 — Sustainable Cities & Communities
-🌱 SDG 13 — Climate Action
+Turn your passion into purpose with:
+SDG 4 — Quality Education
+SDG 8 — Decent Work & Economic Growth
+SDG 9 — Industry, Innovation & Infrastructure
+SDG 11 — Sustainable Cities & Communities
+SDG 13 — Climate Action
 
-📍 Osaka, Japan
-📅 May 10–13, 2027
-🗓️ Application Deadline: December 20, 2026
+Osaka, Japan
+May 10–13, 2027
+Application Deadline: December 20, 2026
 
-Your ideas matter. Your voice matters. And your journey toward global impact can start TODAY. 🌟
+Your ideas matter. Your voice matters. And your journey toward global impact can start TODAY.
 
 #JapanYouthSummit2027 #YouthForChange #GlobalLeadership #YouthInnovation #SustainableDevelopment`,
     links: [],
