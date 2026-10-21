@@ -1188,3 +1188,6 @@ No SQL needed. Front-end only.
 - `/#/category/ielts`: select replaced by action cards (Reading and Writing link; Listening and Speaking are "Coming soon").
 - Profile weak areas: "Practice" button per row (`buildWeakestList` now returns `practice: {kind, id}`).
 - Tests: 61 passing. Verified with Playwright at 1200 light and 390 dark.
+
+## Design refactor (Oct 21)
+Front-end only, no SQL. CSS in `src/styles/index.css`: tokens reset (slate neutrals, single blue accent, radii 6/10/12, soft shadows), no uppercase transforms, hover lifts and decorative gradients removed, rem root 92.5% for a compact scale, cards separated by shadow instead of outlines (controls such as inputs/chips keep a faint border), dense auto-fill opportunity grid, neutral league/news cards, slimmer header and heroes. A final "DESIGN REFACTOR LAYER" block at the end of the file holds the overrides; the original backup of the pre-refactor stylesheet is not committed (use git history).
