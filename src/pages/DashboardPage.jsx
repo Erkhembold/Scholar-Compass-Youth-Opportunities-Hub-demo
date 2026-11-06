@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import LevelCard from "../components/LevelCard.jsx";
-import ProgressTracker from "../components/ProgressTracker.jsx";
+import StudyPlannerSection from "../components/StudyPlannerSection.jsx";
 import DashboardStreakPill from "../components/DashboardStreakPill.jsx";
 import NewsSection from "../components/NewsSection.jsx";
 import OpportunityBoard from "../components/OpportunityBoard.jsx";
@@ -10,7 +10,7 @@ import OpportunityBoard from "../components/OpportunityBoard.jsx";
 // the public homepage (gated in App.jsx's "home" route — see
 // supabase/onboarding.sql for how new vs. existing users are told apart).
 // Kept deliberately lean: a greeting + streak readout up top, then just
-// Level progress and Your progress, centered. Weak-area diagnosis and the
+// Level progress; the Personal Study Planner (which replaced the "Your progress" tracker here) follows as its own section. The underlying progress data and the Profile page statistics are unchanged. Weak-area diagnosis and the
 // roadmap stay one click away on the Profile page rather than living here
 // too — this page is the daily at-a-glance check-in, not the full
 // dashboard. The Opportunity board underneath is the exact same full
@@ -22,7 +22,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <section className="section dashboard">
+      <section className="section dashboard dashboard--top">
         <div className="section__inner">
           <div className="dashboard__header">
             <h1 className="dashboard__greeting">
@@ -30,10 +30,14 @@ export default function DashboardPage() {
             </h1>
             <DashboardStreakPill />
           </div>
+        </div>
+      </section>
+      <StudyPlannerSection />
+      <section className="section dashboard dashboard--secondary">
+        <div className="section__inner">
           <div className="dashboard__layout">
             <div className="dashboard__cards dashboard__cards--centered">
               <LevelCard />
-              <ProgressTracker />
             </div>
             <NewsSection />
           </div>

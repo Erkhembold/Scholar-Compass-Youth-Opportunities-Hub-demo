@@ -99,6 +99,12 @@ function parseHash(hash) {
   if (parts[0] === "news") {
     return { name: "news" };
   }
+  if (parts[0] === "planner" && parts[1] === "setup") {
+    return { name: "planner-setup" };
+  }
+  if (parts[0] === "planner") {
+    return { name: "planner" };
+  }
   if (parts[0] === "leaderboard") {
     return { name: "leaderboard" };
   }
@@ -193,6 +199,14 @@ export function satChallengeHref() {
 
 export function satChallengeMatchHref(matchId) {
   return `#/sat/challenge/${encodeURIComponent(matchId)}`;
+}
+
+export function plannerHref() {
+  return "#/planner";
+}
+
+export function plannerSetupHref() {
+  return "#/planner/setup";
 }
 
 export function leaderboardHref() {

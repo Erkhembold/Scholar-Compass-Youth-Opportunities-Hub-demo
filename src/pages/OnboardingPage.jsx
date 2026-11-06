@@ -64,9 +64,15 @@ export default function OnboardingPage() {
       await refreshProfile();
     }
     setSaving(false);
-    if (failure) setError(t("We couldn't save your answers.") + " " + failure);
-    // On success the home route re-renders once profile.onboarding_completed
-    // flips to true, landing on the dashboard — no navigation needed here.
+    if (failure) {
+      setError(t("We couldn't save your answers.") + " " + failure);
+      return;
+    }
+    // New accounts continue straight into the study-plan setup. Skipping
+    // goes to the dashboard, where the setup invitation stays available.
+    if (!skip) window.location.hash = "#/planner/setup";
+    // Otherwise the home route re-renders once profile.onboarding_completed
+    // flips to true, landing on the dashboard.
   }
 
   return (
@@ -153,7 +159,7 @@ export default function OnboardingPage() {
           )}
 
           <button type="button" className="btn btn--accent signin__submit" onClick={() => finish(false)} disabled={saving}>
-            {saving ? t("Saving…") : t("Start using ScholarCompass")}
+            {saving ? t("Saving…") : t("Continue")}
           </button>
           <button type="button" className="btn btn--ghost onboarding-skip" onClick={() => finish(true)} disabled={saving}>
             {t("Skip for now")}

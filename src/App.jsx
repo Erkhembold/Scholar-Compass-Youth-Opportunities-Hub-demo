@@ -17,6 +17,8 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
 import ProfileStatsPage from "./pages/ProfileStatsPage.jsx";
 import PublicProfilePage from "./pages/PublicProfilePage.jsx";
+import StudyPlannerPage from "./pages/StudyPlannerPage.jsx";
+import StudyPlanSetupPage from "./pages/StudyPlanSetupPage.jsx";
 import LeaderboardPage from "./pages/LeaderboardPage.jsx";
 import LeaguesPage from "./pages/LeaguesPage.jsx";
 import LeagueCreatePage from "./pages/LeagueCreatePage.jsx";
@@ -121,6 +123,10 @@ export default function App() {
     page = <SatWritingLesson01Page />;
   } else if (route.name === "sat-lessons-writing-transitions") {
     page = <SatWritingLesson02Page />;
+  } else if (route.name === "planner") {
+    page = <StudyPlannerPage />;
+  } else if (route.name === "planner-setup") {
+    page = <StudyPlanSetupPage />;
   } else if (route.name === "leaderboard") {
     page = <LeaderboardPage />;
   } else if (route.name === "leagues") {
