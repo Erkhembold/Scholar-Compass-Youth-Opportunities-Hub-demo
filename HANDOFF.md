@@ -1191,3 +1191,6 @@ No SQL needed. Front-end only.
 
 ## Design refactor (Oct 21)
 Front-end only, no SQL. CSS in `src/styles/index.css`: tokens reset (slate neutrals, single blue accent, radii 6/10/12, soft shadows), no uppercase transforms, hover lifts and decorative gradients removed, rem root 92.5% for a compact scale, cards separated by shadow instead of outlines (controls such as inputs/chips keep a faint border), dense auto-fill opportunity grid, neutral league/news cards, slimmer header and heroes. A final "DESIGN REFACTOR LAYER" block at the end of the file holds the overrides; the original backup of the pre-refactor stylesheet is not committed (use git history).
+
+## Hero video (Nov 6)
+Front-end only, no SQL. Signed-out hero now shows `src/components/HeroVideo.jsx` (autoplay, muted, loop, playsInline; reduced-motion users get the poster with controls) instead of the 3D tilt image. Files: `public/media/scholarcompass-launch.mp4` (720p, 30fps, no audio, ~2.5 MB, re-encoded from the 1080p60 original) and `-poster.jpg`. The "Scholar Compass News" block was removed from the signed-out hero (still on the signed-in dashboard and `#/news`). `TiltImage.jsx` and `student-raising-hand.png` deleted. Ghost buttons on the dark hero fixed (were unreadable after the design refactor).

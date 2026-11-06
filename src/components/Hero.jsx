@@ -1,8 +1,6 @@
-import TiltImage from "./TiltImage.jsx";
-import NewsSection from "./NewsSection.jsx";
+import HeroVideo from "./HeroVideo.jsx";
 import HoverText from "./HoverText.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
-import heroImage from "../assets/student-raising-hand.png";
 
 const CATEGORIES = [
   "Scholarships",
@@ -48,13 +46,9 @@ export default function Hero() {
         </div>
 
         <div className="hero__visual">
-          <TiltImage
-            src={heroImage}
-            alt="A student raises their hand to ask a question during a classroom presentation."
-          />
+          <HeroVideo />
         </div>
       </div>
-      <NewsSection onDark />
       </div>
     </section>
   );
