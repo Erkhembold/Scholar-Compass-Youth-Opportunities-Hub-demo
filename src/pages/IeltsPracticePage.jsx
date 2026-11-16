@@ -2,6 +2,7 @@ import MockTestCard from "../components/MockTestCard.jsx";
 import WritingTaskCard from "../components/WritingTaskCard.jsx";
 import { TESTS } from "../data/ieltsTests.js";
 import { WRITING_TASKS } from "../data/writingTasks.js";
+import { writingAssessmentsHref } from "../router.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 const SKILL_META = {
@@ -17,7 +18,7 @@ const SKILL_META = {
     label: "Writing",
     ready: true,
     lede:
-      "Write a full Task 2 essay and get an AI-evaluated band score across all four official criteria, with specific feedback.",
+      "Write an Academic Task 1 or Task 2 response and get an AI-estimated band across all four IELTS criteria, with detailed feedback in Mongolian.",
   },
 };
 
@@ -70,13 +71,25 @@ export default function IeltsPracticePage({ skill }) {
         )}
 
         {meta.ready && skill === "writing" && (
-          <div className="opp-grid" role="list">
-            {WRITING_TASKS.map((task) => (
-              <div role="listitem" key={task.id}>
-                <WritingTaskCard task={task} />
+          <>
+            <p className="wr-page__history-link">
+              <a href={writingAssessmentsHref()}>{t("My writing assessments")} →</a>
+            </p>
+            {["task1", "task2"].map((type) => (
+              <div key={type}>
+                <h2 className="wr-group-title">
+                  {type === "task1" ? "Academic Task 1 — " + t("Describe data") : "Academic Task 2 — " + t("Essay")}
+                </h2>
+                <div className="opp-grid" role="list">
+                  {WRITING_TASKS.filter((task) => task.type === type).map((task) => (
+                    <div role="listitem" key={task.id}>
+                      <WritingTaskCard task={task} />
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
-          </div>
+          </>
         )}
       </div>
     </section>

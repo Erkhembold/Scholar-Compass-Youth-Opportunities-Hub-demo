@@ -24,6 +24,12 @@ function parseHash(hash) {
   if (parts[0] === "ielts" && parts[1] === "test" && parts[2]) {
     return { name: "ielts-test", id: decodeURIComponent(parts[2]) };
   }
+  if (parts[0] === "ielts" && parts[1] === "writing-assessments" && parts[2]) {
+    return { name: "ielts-writing-assessment", id: decodeURIComponent(parts[2]) };
+  }
+  if (parts[0] === "ielts" && parts[1] === "writing-assessments") {
+    return { name: "ielts-writing-assessments" };
+  }
   if (parts[0] === "ielts" && parts[1] === "writing" && parts[2]) {
     return { name: "ielts-writing", id: decodeURIComponent(parts[2]) };
   }
@@ -159,6 +165,14 @@ export function ieltsTestHref(id) {
 
 export function writingTaskHref(id) {
   return `#/ielts/writing/${encodeURIComponent(id)}`;
+}
+
+export function writingAssessmentsHref() {
+  return "#/ielts/writing-assessments";
+}
+
+export function writingAssessmentHref(id) {
+  return `#/ielts/writing-assessments/${encodeURIComponent(id)}`;
 }
 
 export function readHref(id) {

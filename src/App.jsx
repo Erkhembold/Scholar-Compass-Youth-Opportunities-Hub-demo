@@ -10,6 +10,8 @@ import OpportunityDetailPage from "./pages/OpportunityDetailPage.jsx";
 import OpportunityCompletePage from "./pages/OpportunityCompletePage.jsx";
 import AdminReviewPage from "./pages/AdminReviewPage.jsx";
 import IeltsTestPage from "./pages/IeltsTestPage.jsx";
+import WritingHistoryPage from "./pages/WritingHistoryPage.jsx";
+import WritingAssessmentPage from "./pages/WritingAssessmentPage.jsx";
 import WritingTaskPage from "./pages/WritingTaskPage.jsx";
 import ReadDetailPage from "./pages/ReadDetailPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
@@ -81,6 +83,10 @@ export default function App() {
     page = <AdminReviewPage />;
   } else if (route.name === "ielts-test") {
     page = <IeltsTestPage id={route.id} />;
+  } else if (route.name === "ielts-writing-assessments") {
+    page = <WritingHistoryPage />;
+  } else if (route.name === "ielts-writing-assessment") {
+    page = <WritingAssessmentPage id={route.id} />;
   } else if (route.name === "ielts-writing") {
     page = <WritingTaskPage id={route.id} />;
   } else if (route.name === "read") {

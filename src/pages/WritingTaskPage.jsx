@@ -1,63 +1,69 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import { supabase } from "../lib/supabaseClient.js";
 import { WRITING_TASKS } from "../data/writingTasks.js";
 import { WRITING_DAILY_LIMIT } from "../data/config.js";
 import { recordActivity } from "../utils/streak.js";
+import { submitEssay, fetchMyAssessments, countRecentEvaluations } from "../utils/writingAssessments.js";
+import { writingAssessmentHref, writingAssessmentsHref } from "../router.js";
+import WritingAssessmentView from "../components/WritingAssessmentView.jsx";
 
-const CRITERIA_LABELS = {
-  taskResponse: "Task Response",
-  coherenceCohesion: "Coherence & Cohesion",
-  lexicalResource: "Lexical Resource",
-  grammar: "Grammar",
-};
+const MIN_TO_SUBMIT = 50;
 
 function wordCount(text) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
-function startOfTodayIso() {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString();
+function fmtClock(sec) {
+  const neg = sec < 0;
+  const a = Math.abs(sec);
+  return `${neg ? "−" : ""}${Math.floor(a / 60)}:${String(a % 60).padStart(2, "0")}`;
 }
 
 export default function WritingTaskPage({ id }) {
+  const { t } = useLanguage();
   const { user, loading: authLoading } = useAuth();
-  const task = useMemo(() => WRITING_TASKS.find((t) => t.id === id), [id]);
+  const task = useMemo(() => WRITING_TASKS.find((x) => x.id === id), [id]);
 
   const [essay, setEssay] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const [result, setResult] = useState(null);
-  const [remainingToday, setRemainingToday] = useState(null);
+  const [assessment, setAssessment] = useState(null);
+  const [used, setUsed] = useState(null);
+  const [past, setPast] = useState([]);
+
+  // Optional timer: counts down from the suggested time and keeps counting
+  // (negative) past zero. It never blocks writing or submitting.
+  const [timerOn, setTimerOn] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    if (!timerOn) return undefined;
+    const iv = setInterval(() => setElapsed((e) => e + 1), 1000);
+    return () => clearInterval(iv);
+  }, [timerOn]);
+
+  // One request id per distinct essay: retrying the same text is safe (the
+  // server returns the stored result instead of paying for a second AI call).
+  const requestRef = useRef({ essay: null, id: null });
 
   useEffect(() => {
     let cancelled = false;
-    if (!user || !supabase) {
-      setRemainingToday(null);
-      return;
-    }
-    supabase
-      .from("writing_attempts")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", user.id)
-      .gte("completed_at", startOfTodayIso())
-      .then(({ count }) => {
-        if (!cancelled) setRemainingToday(Math.max(0, WRITING_DAILY_LIMIT - (count || 0)));
-      });
+    if (!user || !supabase || !task) return undefined;
+    countRecentEvaluations(user.id).then((n) => !cancelled && setUsed(n)).catch(() => {});
+    fetchMyAssessments(user.id, { taskId: task.id, limit: 10 }).then((r) => !cancelled && setPast(r)).catch(() => {});
     return () => {
       cancelled = true;
     };
-  }, [user]);
+  }, [user, task]);
 
   if (!task) {
     return (
       <section className="section">
         <div className="section__inner">
-          <h1 className="section__title">Task not found</h1>
+          <h1 className="section__title">{t("Task not found")}</h1>
           <p className="section__lede">
-            <a href="#/category/ielts">Back to IELTS</a>
+            <a href="#/category/ielts">{t("Back to IELTS")}</a>
           </p>
         </div>
       </section>
@@ -66,34 +72,28 @@ export default function WritingTaskPage({ id }) {
 
   const words = wordCount(essay);
   const underLimit = words > 0 && words < task.minWords;
-  const canSubmit =
-    !!user && !submitting && words >= 30 && (remainingToday === null || remainingToday > 0);
+  const left = used === null ? null : Math.max(0, WRITING_DAILY_LIMIT - used);
+  const canSubmit = !!user && !submitting && words >= MIN_TO_SUBMIT && (left === null || left > 0);
+  const secondsLeft = task.suggestedMinutes * 60 - elapsed;
 
   async function handleSubmit() {
     setError(null);
     setSubmitting(true);
+    if (requestRef.current.essay !== essay) {
+      requestRef.current = { essay, id: crypto.randomUUID() };
+    }
     try {
-      const { data, error: fnError } = await supabase.functions.invoke("evaluate-essay", {
-        body: { taskPrompt: task.prompt, essayText: essay },
+      const a = await submitEssay({
+        task,
+        essayText: essay,
+        requestId: requestRef.current.id,
+        durationSeconds: timerOn ? elapsed : undefined,
       });
-
-      if (fnError) throw new Error(fnError.message || "Evaluation failed.");
-      if (data?.error) throw new Error(data.error);
-
-      setResult(data);
-
-      const { error: saveError } = await supabase.from("writing_attempts").insert({
-        user_id: user.id,
-        task_id: task.id,
-        task_title: task.title,
-        essay_text: essay,
-        word_count: words,
-        overall_band: data.overallBand,
-        result: data,
-      });
-      if (!saveError) recordActivity("ielts_writing", task.id);
-
-      setRemainingToday((r) => (r === null ? null : Math.max(0, r - 1)));
+      setAssessment(a);
+      setTimerOn(false);
+      recordActivity("ielts_writing", task.id);
+      setUsed((u) => (u === null ? u : u + 1));
+      fetchMyAssessments(user.id, { taskId: task.id, limit: 10 }).then(setPast).catch(() => {});
     } catch (err) {
       setError(err.message || "Something went wrong. Try again.");
     } finally {
@@ -101,128 +101,119 @@ export default function WritingTaskPage({ id }) {
     }
   }
 
+  function reset() {
+    setAssessment(null);
+    setEssay("");
+    setElapsed(0);
+    setTimerOn(false);
+    setError(null);
+  }
+
   return (
     <section className="section">
-      <div className="section__inner">
+      <div className="section__inner wr-page">
         <a href="#/category/ielts" className="detail__back">
-          ← Back to IELTS
+          ← {t("Back to IELTS")}
         </a>
-
-        <h1 className="section__title" style={{ marginTop: 16 }}>
-          {task.title}
-        </h1>
-        <p className="section__lede" style={{ maxWidth: "70ch" }}>
-          {task.prompt}
+        <p className="wr-page__kicker">
+          {task.type === "task1" ? "Academic Task 1" : "Academic Task 2"} · {task.minWords}+ {t("words")} · ~{task.suggestedMinutes} {t("min")}
         </p>
+        <h1 className="section__title">{task.title}</h1>
+        <p className="section__lede wr-page__prompt">{task.prompt}</p>
+
+        {task.dataTable && (
+          <div className="wr-table-wrap">
+            <table className="wr-table">
+              <caption>{task.dataTable.caption}</caption>
+              <thead>
+                <tr>{task.dataTable.columns.map((c) => <th key={c}>{c}</th>)}</tr>
+              </thead>
+              <tbody>
+                {task.dataTable.rows.map((r) => (
+                  <tr key={r[0]}>{r.map((cell, i) => (i === 0 ? <th key={i} scope="row">{cell}</th> : <td key={i}>{cell}</td>))}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {authLoading ? null : !user ? (
           <p className="leaderboard-page__signin-note">
-            <a href="#/signin">Sign in</a> to write and submit an essay for evaluation.
+            <a href="#/signin">{t("Sign in")}</a> {t("to write an essay and get an AI assessment.")}
           </p>
-        ) : remainingToday === 0 ? (
+        ) : left === 0 ? (
           <p className="leaderboard-page__signin-note">
-            You've used all {WRITING_DAILY_LIMIT} of today's evaluations — come back tomorrow for more.
+            {t("You have used all of your AI assessments for the last 24 hours. Try again later.")}
           </p>
         ) : null}
 
-        {!result && (
-          <div style={{ marginTop: 24 }}>
+        {!assessment && (
+          <div className="wr-editor">
+            <div className="wr-editor__bar">
+              <button type="button" className="btn btn--ghost" onClick={() => setTimerOn((v) => !v)}>
+                {timerOn ? t("Pause timer") : elapsed > 0 ? t("Resume timer") : t("Start timer")}
+              </button>
+              {(timerOn || elapsed > 0) && (
+                <span className={`wr-timer ${secondsLeft < 0 ? "wr-timer--over" : ""}`} aria-live="off">
+                  {fmtClock(secondsLeft)}
+                </span>
+              )}
+            </div>
+
             <textarea
+              className="wr-editor__text"
               value={essay}
               onChange={(e) => setEssay(e.target.value)}
               disabled={!user || submitting}
-              rows={16}
-              placeholder="Write your essay here…"
-              style={{
-                width: "100%",
-                maxWidth: 760,
-                padding: 16,
-                fontSize: 15,
-                lineHeight: 1.6,
-                borderRadius: 10,
-                border: "1px solid var(--line, #ddd)",
-                fontFamily: "inherit",
-              }}
+              rows={18}
+              maxLength={6500}
+              placeholder={t("Write your essay here…")}
+              aria-label={t("Essay")}
             />
-            <p style={{ fontSize: 13, color: underLimit ? "#d69a00" : "var(--ink-soft, #666)" }}>
-              {words} words {task.minWords ? `(minimum ${task.minWords})` : ""}
-              {remainingToday !== null && user
-                ? ` · ${remainingToday} evaluation${remainingToday === 1 ? "" : "s"} left today`
-                : ""}
+            <p className={`wr-editor__count ${underLimit ? "wr-editor__count--warn" : ""}`}>
+              {words} {t("words")} ({t("minimum")} {task.minWords}
+              {words > 0 && words < MIN_TO_SUBMIT ? `, ${t("at least")} ${MIN_TO_SUBMIT} ${t("to submit")}` : ""})
+              {left !== null && user ? ` · ${left} ${t("AI assessments left (24 h)")}` : ""}
             </p>
 
-            {error && <p style={{ color: "#d7373f", fontSize: 14 }}>{error}</p>}
+            {error && <p className="wr-error" role="alert">{error}</p>}
 
-            <button
-              type="button"
-              className="btn btn--accent"
-              disabled={!canSubmit}
-              onClick={handleSubmit}
-            >
-              {submitting ? "Evaluating…" : "Submit for evaluation"}
+            <button type="button" className="btn btn--accent" disabled={!canSubmit} onClick={handleSubmit}>
+              {submitting ? t("Assessing… this takes up to a minute") : t("Submit for assessment")}
             </button>
           </div>
         )}
 
-        {result && <WritingResult result={result} onWriteAnother={() => { setResult(null); setEssay(""); }} />}
-      </div>
-    </section>
-  );
-}
+        {assessment && (
+          <>
+            <WritingAssessmentView
+              result={assessment.result}
+              taskType={task.type}
+              wordCount={assessment.wordCount}
+              essayText={essay}
+            />
+            <button type="button" className="btn btn--ghost" style={{ marginTop: 24 }} onClick={reset}>
+              {t("Write another attempt")}
+            </button>
+          </>
+        )}
 
-function WritingResult({ result, onWriteAnother }) {
-  return (
-    <div style={{ marginTop: 32 }}>
-      <div
-        style={{
-          background: "var(--navy-950, #061A3A)",
-          color: "#fff",
-          borderRadius: 16,
-          padding: "32px 24px",
-          textAlign: "center",
-        }}
-      >
-        <p style={{ opacity: 0.7, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>
-          Your band score
-        </p>
-        <p style={{ fontSize: 44, fontWeight: 800, color: "var(--blue-300, #5AC8FA)", margin: "4px 0" }}>
-          Band {result.overallBand}
-        </p>
-        {result.wordCount && <p style={{ opacity: 0.6, fontSize: 13 }}>{result.wordCount} words</p>}
-      </div>
-
-      {result.summary && (
-        <p style={{ marginTop: 16, fontSize: 15, color: "var(--ink-soft, #555)" }}>{result.summary}</p>
-      )}
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: 16,
-          marginTop: 24,
-        }}
-      >
-        {Object.entries(result.criteria || {}).map(([key, c]) => (
-          <div key={key} style={{ border: "1px solid var(--line, #ddd)", borderRadius: 12, padding: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-              <strong>{CRITERIA_LABELS[key] || key}</strong>
-              <span>Band {c.band}</span>
-            </div>
-            <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13.5, color: "var(--ink-soft, #555)" }}>
-              {(c.notes || []).map((note, i) => (
-                <li key={i} style={{ marginBottom: 4 }}>
-                  {note}
+        {user && past.length > 0 && (
+          <section className="wr-past">
+            <h2>{t("Your previous attempts on this task")}</h2>
+            <ul>
+              {past.map((a) => (
+                <li key={a.id}>
+                  <a href={writingAssessmentHref(a.id)}>
+                    {new Date(a.created_at).toLocaleDateString()} · {a.word_count} {t("words")} · <strong>{Number(a.overall_band).toFixed(1)}</strong>
+                  </a>
                 </li>
               ))}
             </ul>
-          </div>
-        ))}
+            <p><a href={writingAssessmentsHref()}>{t("All my writing assessments")} →</a></p>
+          </section>
+        )}
       </div>
-
-      <button type="button" className="btn btn--ghost" style={{ marginTop: 24 }} onClick={onWriteAnother}>
-        Write another attempt
-      </button>
-    </div>
+    </section>
   );
 }
