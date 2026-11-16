@@ -7,9 +7,9 @@
 //   3. ask the AI for a structured assessment 6. return it; reopening never calls the AI again
 //
 // Secrets (Supabase dashboard -> Edge Functions -> Secrets):
-//   AI_PROVIDER        "anthropic" (default) or "openai"
+//   AI_PROVIDER        "anthropic" (default), "openai" or "gemini" (free tier, no card)
 //   AI_MODEL           optional; defaults below
-//   ANTHROPIC_API_KEY  or  OPENAI_API_KEY
+//   ANTHROPIC_API_KEY  or  OPENAI_API_KEY  or  GEMINI_API_KEY
 //   WRITING_DAILY_LIMIT  optional, default 3 evaluations per rolling 24 h
 //   AI_PRICE_IN_PER_M / AI_PRICE_OUT_PER_M  optional USD per 1M tokens, for cost logging
 //
@@ -18,7 +18,8 @@
 // unit-tested in Node (tests/writingEvaluator.test.mjs).
 
 export const PROMPT_VERSION = "wr-v1";
-export const DEFAULT_MODELS = { anthropic: "claude-sonnet-5-5", openai: "gpt-4o" };
+export const DEFAULT_MODELS = { anthropic: "claude-sonnet-5-5", openai: "gpt-4o", gemini: "gemini-2.5-flash" };
+export const KEY_NAMES = { anthropic: "ANTHROPIC_API_KEY", openai: "OPENAI_API_KEY", gemini: "GEMINI_API_KEY" };
 export const LIMITS = { minWords: 50, maxWords: 800, maxChars: 6500, maxPromptChars: 1500, maxDataChars: 2500 };
 const STALE_PENDING_MS = 3 * 60 * 1000;
 
@@ -443,15 +444,40 @@ async function callOpenAI({ apiKey, model, system, user }) {
   };
 }
 
+export async function callGemini({ apiKey, model, system, user }) {
+  const generationConfig = { temperature: 0.2, maxOutputTokens: 8192, responseMimeType: "application/json" };
+  // Flash models can skip "thinking" (keeps the JSON from being cut short and saves quota).
+  if (/flash/i.test(model)) generationConfig.thinkingConfig = { thinkingBudget: 0 };
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: system }] },
+      contents: [{ role: "user", parts: [{ text: user }] }],
+      generationConfig,
+    }),
+  });
+  if (!res.ok) throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const data = await res.json();
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  return {
+    text: parts.map((p) => p.text || "").join(""),
+    inputTokens: data.usageMetadata?.promptTokenCount || 0,
+    outputTokens: (data.usageMetadata?.candidatesTokenCount || 0) + (data.usageMetadata?.thoughtsTokenCount || 0),
+    model: data.modelVersion || model,
+    provider: "gemini",
+  };
+}
+
 async function makeRealDeps() {
   const { createClient } = await import("npm:@supabase/supabase-js@2");
   const url = Deno.env.get("SUPABASE_URL");
   const admin = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"), { auth: { persistSession: false } });
 
   const provider = (Deno.env.get("AI_PROVIDER") || "anthropic").toLowerCase();
-  if (provider !== "anthropic" && provider !== "openai") throw new Error("AI_PROVIDER must be anthropic or openai");
-  const apiKey = Deno.env.get(provider === "openai" ? "OPENAI_API_KEY" : "ANTHROPIC_API_KEY");
-  if (!apiKey) throw new Error(`missing ${provider === "openai" ? "OPENAI_API_KEY" : "ANTHROPIC_API_KEY"}`);
+  if (!KEY_NAMES[provider]) throw new Error("AI_PROVIDER must be anthropic, openai or gemini");
+  const apiKey = Deno.env.get(KEY_NAMES[provider]);
+  if (!apiKey) throw new Error(`missing ${KEY_NAMES[provider]}`);
   const model = Deno.env.get("AI_MODEL") || DEFAULT_MODELS[provider];
 
   const T = "writing_assessments";
@@ -469,7 +495,11 @@ async function makeRealDeps() {
     },
     ai: {
       complete: ({ system, user }) =>
-        provider === "openai" ? callOpenAI({ apiKey, model, system, user }) : callAnthropic({ apiKey, model, system, user }),
+        provider === "openai"
+          ? callOpenAI({ apiKey, model, system, user })
+          : provider === "gemini"
+            ? callGemini({ apiKey, model, system, user })
+            : callAnthropic({ apiKey, model, system, user }),
     },
     db: {
       async failStalePending(userId, beforeIso) {
