@@ -18,7 +18,7 @@
 // unit-tested in Node (tests/writingEvaluator.test.mjs).
 
 export const PROMPT_VERSION = "wr-v1";
-export const DEFAULT_MODELS = { anthropic: "claude-sonnet-5-5", openai: "gpt-4o", gemini: "gemini-2.5-flash" };
+export const DEFAULT_MODELS = { anthropic: "claude-sonnet-5-5", openai: "gpt-4o", gemini: "gemini-3.8-flash" };
 export const KEY_NAMES = { anthropic: "ANTHROPIC_API_KEY", openai: "OPENAI_API_KEY", gemini: "GEMINI_API_KEY" };
 export const LIMITS = { minWords: 50, maxWords: 800, maxChars: 6500, maxPromptChars: 1500, maxDataChars: 2500 };
 const STALE_PENDING_MS = 3 * 60 * 1000;
@@ -348,10 +348,13 @@ export async function evaluateEssay({ token, body }, deps) {
   let provider = deps.config.provider;
   let validated = null;
   let lastReason = "";
+  const deadline = started + 110000; // Supabase kills functions at ~150 s; always answer before that
 
   try {
     for (let attempt = 0; attempt < 2 && !validated; attempt++) {
+      if (attempt > 0 && Date.now() > started + 60000) break; // no time left for a second try
       const reply = await deps.ai.complete({
+        deadline,
         system: SYSTEM_PROMPT,
         user: attempt === 0 ? userMessage : `${userMessage}\n\nYour previous reply was rejected (${lastReason}). Return ONLY the JSON object, exact quotes from the essay, and all feedback in Mongolian Cyrillic.`,
       });
@@ -407,9 +410,10 @@ function jsonResponse(body, status) {
   return new Response(JSON.stringify(body), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 }
 
-async function callAnthropic({ apiKey, model, system, user }) {
+async function callAnthropic({ apiKey, model, system, user, deadline }) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
+    signal: AbortSignal.timeout(Math.max(5000, (deadline || Date.now() + 100000) - Date.now())),
     headers: { "content-type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01" },
     body: JSON.stringify({ model, max_tokens: 6000, temperature: 0.2, system, messages: [{ role: "user", content: user }] }),
   });
@@ -424,9 +428,10 @@ async function callAnthropic({ apiKey, model, system, user }) {
   };
 }
 
-async function callOpenAI({ apiKey, model, system, user }) {
+async function callOpenAI({ apiKey, model, system, user, deadline }) {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
+    signal: AbortSignal.timeout(Math.max(5000, (deadline || Date.now() + 100000) - Date.now())),
     headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
       model,
@@ -447,58 +452,73 @@ async function callOpenAI({ apiKey, model, system, user }) {
   };
 }
 
-async function pickGeminiModel(apiKey) {
-  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", { headers: { "x-goog-api-key": apiKey } });
-  if (!res.ok) return null;
+// Newest-first list of Gemini Flash models this key can use (Google retires models
+// often, so we never rely on one hard-coded name).
+async function listGeminiFlashModels(apiKey) {
+  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", {
+    headers: { "x-goog-api-key": apiKey },
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!res.ok) return [];
   const data = await res.json();
-  const ok = (data.models || [])
-    .filter((m) => (m.supportedGenerationMethods || []).includes("generateContent") && /gemini-[\d.]+-flash$/.test(m.name || ""))
+  const ver = (n) => parseFloat((n.match(/gemini-([\d.]+)/) || [0, "0"])[1]);
+  return (data.models || [])
+    .filter((m) => (m.supportedGenerationMethods || []).includes("generateContent") && /^models\/gemini-[\d.]+-flash(-lite)?$/.test(m.name || ""))
     .map((m) => m.name.replace(/^models\//, ""))
-    .sort((a, b) => parseFloat(b.match(/[\d.]+/)[0]) - parseFloat(a.match(/[\d.]+/)[0]));
-  return ok[0] || null;
+    .sort((x, y) => ver(y) - ver(x) || (x.endsWith("-lite") ? 1 : -1));
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const RETRYABLE = /Gemini (404|429|500|503|504)|timeout|aborted/i;
 
-// Google's free tier often answers 503 (busy) / 429 (rate limit): retry a few times.
-export async function callGemini(args) {
-  const delays = args._delays || [2000, 6000, 12000];
+// Google's free tier is often busy (503/429) and retires models (404). Try the
+// configured model, then other Flash models, all inside a hard time budget so the
+// function always answers before Supabase's ~150 s limit.
+export async function callGemini({ apiKey, model, system, user, deadline, _delays }) {
+  const end = deadline || Date.now() + 100000;
+  const backoff = _delays || [1000, 2500, 4000, 6000];
+  let candidates = [model];
+  let ci = 0;
   let lastErr;
-  for (let i = 0; i <= delays.length; i++) {
+  for (let i = 0; i <= backoff.length; i++) {
+    const remaining = end - Date.now();
+    if (i > 0 && remaining < 10000) break;
     try {
-      return await callGeminiOnce(args);
+      return await callGeminiOnce({ apiKey, model: candidates[ci], system, user, timeoutMs: Math.max(5000, Math.min(45000, remaining)) });
     } catch (e) {
       lastErr = e;
-      if (!/Gemini (429|500|503|504)/.test(String(e.message)) || i === delays.length) throw e;
-      await sleep(delays[i]);
+      if (!RETRYABLE.test(String(e.message)) || i === backoff.length) throw e;
+      if (candidates.length === 1) {
+        const others = await listGeminiFlashModels(apiKey).catch(() => []);
+        candidates = /Gemini 404/.test(String(e.message)) ? others.filter((m) => m !== model) : [model, ...others.filter((m) => m !== model)];
+        if (!candidates.length) throw e;
+        ci = /Gemini 404/.test(String(e.message)) ? 0 : Math.min(1, candidates.length - 1);
+      } else {
+        ci = (ci + 1) % candidates.length;
+      }
+      if (end - Date.now() - backoff[i] < 10000) throw e;
+      await sleep(backoff[i]);
     }
   }
   throw lastErr;
 }
 
-async function callGeminiOnce({ apiKey, model, system, user, _retried = false }) {
-  const generationConfig = { temperature: 0.2, maxOutputTokens: 8192, responseMimeType: "application/json" };
-  // Flash models can skip "thinking" (keeps the JSON from being cut short and saves quota).
-  if (/flash/i.test(model)) generationConfig.thinkingConfig = { thinkingBudget: 0 };
+async function callGeminiOnce({ apiKey, model, system, user, timeoutMs }) {
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
     method: "POST",
     headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
+    signal: AbortSignal.timeout(timeoutMs),
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: system }] },
       contents: [{ role: "user", parts: [{ text: user }] }],
-      generationConfig,
+      generationConfig: { temperature: 0.2, maxOutputTokens: 16000, responseMimeType: "application/json" },
     }),
   });
-  if (res.status === 404 && !_retried) {
-    // The configured model may have been retired: fall back to the newest available Flash model.
-    const alt = await pickGeminiModel(apiKey);
-    if (alt && alt !== model) return callGeminiOnce({ apiKey, model: alt, system, user, _retried: true });
-  }
   if (!res.ok) throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data = await res.json();
   const parts = data.candidates?.[0]?.content?.parts || [];
   return {
-    text: parts.map((p) => p.text || "").join(""),
+    text: parts.filter((p) => !p.thought).map((p) => p.text || "").join(""),
     inputTokens: data.usageMetadata?.promptTokenCount || 0,
     outputTokens: (data.usageMetadata?.candidatesTokenCount || 0) + (data.usageMetadata?.thoughtsTokenCount || 0),
     model: data.modelVersion || model,
@@ -531,12 +551,12 @@ async function makeRealDeps() {
       return error || !data?.user ? null : { id: data.user.id };
     },
     ai: {
-      complete: ({ system, user }) =>
+      complete: ({ system, user, deadline }) =>
         provider === "openai"
-          ? callOpenAI({ apiKey, model, system, user })
+          ? callOpenAI({ apiKey, model, system, user, deadline })
           : provider === "gemini"
-            ? callGemini({ apiKey, model, system, user })
-            : callAnthropic({ apiKey, model, system, user }),
+            ? callGemini({ apiKey, model, system, user, deadline })
+            : callAnthropic({ apiKey, model, system, user, deadline }),
     },
     db: {
       async failStalePending(userId, beforeIso) {

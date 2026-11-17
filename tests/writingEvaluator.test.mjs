@@ -207,7 +207,7 @@ test("validateRequest limits", () => {
 
 test("gemini adapter: request shape, parsing, token accounting (mocked fetch)", async () => {
   const { callGemini, DEFAULT_MODELS, KEY_NAMES } = await import("../supabase/functions/evaluate-essay/index.ts");
-  assert.equal(DEFAULT_MODELS.gemini, "gemini-2.5-flash");
+  assert.equal(DEFAULT_MODELS.gemini, "gemini-3.8-flash");
   assert.equal(KEY_NAMES.gemini, "GEMINI_API_KEY");
   let seen;
   const realFetch = globalThis.fetch;
@@ -216,16 +216,17 @@ test("gemini adapter: request shape, parsing, token accounting (mocked fetch)", 
     return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: '{"a":' }, { text: "1}" }] } }], usageMetadata: { promptTokenCount: 10, candidatesTokenCount: 20, thoughtsTokenCount: 5 }, modelVersion: "gemini-x" }), { status: 200 });
   };
   try {
-    const r = await callGemini({ apiKey: "K", model: "gemini-2.5-flash", system: "S", user: "U" });
+    const r = await callGemini({ apiKey: "K", model: "gemini-3.8-flash", system: "S", user: "U" });
     assert.equal(r.text, '{"a":1}');
     assert.equal(r.inputTokens, 10);
     assert.equal(r.outputTokens, 25);
     assert.equal(r.provider, "gemini");
-    assert.match(seen.url, /models\/gemini-2\.5-flash:generateContent$/);
+    assert.match(seen.url, /models\/gemini-3\.8-flash:generateContent$/);
     assert.equal(seen.init.headers["x-goog-api-key"], "K");
     assert.ok(!seen.url.includes("K"), "key must not be in the URL");
     const body = JSON.parse(seen.init.body);
     assert.equal(body.generationConfig.responseMimeType, "application/json");
+    assert.ok(!body.generationConfig.thinkingConfig);
     assert.equal(body.systemInstruction.parts[0].text, "S");
     globalThis.fetch = async () => new Response("quota", { status: 429 });
     await assert.rejects(() => callGemini({ apiKey: "K", model: "m", system: "S", user: "U" }), /Gemini 429/);
@@ -283,5 +284,31 @@ test("gemini: 503 busy is retried, then succeeds", async () => {
     assert.equal(n, 3);
     n = -10;
     await assert.rejects(() => callGemini({ apiKey: "K", model: "m", system: "S", user: "U", _delays: [1, 1] }), /Gemini 503/);
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test("gemini: busy model (503) switches to another flash model; stays inside the time budget", async () => {
+  const { callGemini } = await import("../supabase/functions/evaluate-essay/index.ts");
+  const urls = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    const u = String(url);
+    urls.push(u);
+    if (u.includes("/models?")) return new Response(JSON.stringify({ models: [
+      { name: "models/gemini-3.8-flash", supportedGenerationMethods: ["generateContent"] },
+      { name: "models/gemini-3.5-flash", supportedGenerationMethods: ["generateContent"] },
+      { name: "models/gemini-3.8-flash-lite", supportedGenerationMethods: ["generateContent"] } ] }), { status: 200 });
+    if (u.includes("gemini-3.8-flash:generateContent")) return new Response("busy", { status: 503 });
+    return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: "{}" }] } }], usageMetadata: {} }), { status: 200 });
+  };
+  try {
+    const r = await callGemini({ apiKey: "K", model: "gemini-3.8-flash", system: "S", user: "U", _delays: [1, 1, 1] });
+    assert.equal(r.text, "{}");
+    assert.ok(urls.at(-1).includes("gemini-3.5-flash:generateContent") || urls.at(-1).includes("gemini-3.8-flash-lite:generateContent"));
+    // an already-expired deadline must not loop
+    globalThis.fetch = async () => new Response("busy", { status: 503 });
+    const t0 = Date.now();
+    await assert.rejects(() => callGemini({ apiKey: "K", model: "m", system: "S", user: "U", deadline: Date.now() + 1000, _delays: [5000, 5000] }), /Gemini 503/);
+    assert.ok(Date.now() - t0 < 4000);
   } finally { globalThis.fetch = realFetch; }
 });
