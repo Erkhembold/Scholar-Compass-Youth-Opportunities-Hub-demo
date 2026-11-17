@@ -95,7 +95,7 @@ export default function WritingTaskPage({ id }) {
       setUsed((u) => (u === null ? u : u + 1));
       fetchMyAssessments(user.id, { taskId: task.id, limit: 10 }).then(setPast).catch(() => {});
     } catch (err) {
-      setError(err.message || "Something went wrong. Try again.");
+      setError({ message: err.message || "Something went wrong. Try again.", detail: err.detail || "" });
     } finally {
       setSubmitting(false);
     }
@@ -176,7 +176,12 @@ export default function WritingTaskPage({ id }) {
               {left !== null && user ? ` · ${left} ${t("AI assessments left (24 h)")}` : ""}
             </p>
 
-            {error && <p className="wr-error" role="alert">{error}</p>}
+            {error && (
+              <p className="wr-error" role="alert">
+                {error.message}
+                {error.detail ? <small style={{ display: "block", opacity: 0.8 }}>{error.detail}</small> : null}
+              </p>
+            )}
 
             <button type="button" className="btn btn--accent" disabled={!canSubmit} onClick={handleSubmit}>
               {submitting ? t("Assessing… this takes up to a minute") : t("Submit for assessment")}

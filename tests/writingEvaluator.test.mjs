@@ -43,7 +43,7 @@ function makeDeps({ aiReplies, dailyLimit = 3, user = { id: "u1" } } = {}) {
       countRecent: async (uid) => rows.filter((r) => r.user_id === uid && ["completed", "pending"].includes(r.status)).length,
       countRecentFailed: async (uid) => rows.filter((r) => r.user_id === uid && r.status === "failed").length,
       insertPending: async (row) => {
-        if (rows.some((r) => r.user_id === row.user_id && r.status === "pending")) return { id: null };
+        if (rows.some((r) => r.user_id === row.user_id && r.status === "pending")) return { id: null, conflict: true };
         const r = { ...row, id: "id" + (rows.length + 1), status: "pending", created_at: new Date().toISOString() };
         rows.push(r); return { id: r.id };
       },
@@ -232,4 +232,42 @@ test("gemini adapter: request shape, parsing, token accounting (mocked fetch)", 
   } finally {
     globalThis.fetch = realFetch;
   }
+});
+
+test("gemini: retired model (404) falls back to newest available flash model", async () => {
+  const { callGemini } = await import("../supabase/functions/evaluate-essay/index.ts");
+  const urls = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    urls.push(String(url));
+    if (String(url).includes("gemini-2.5-flash:generateContent")) return new Response("gone", { status: 404 });
+    if (String(url).includes("/models?")) return new Response(JSON.stringify({ models: [
+      { name: "models/gemini-2.5-flash", supportedGenerationMethods: ["generateContent"] },
+      { name: "models/gemini-3.0-flash", supportedGenerationMethods: ["generateContent"] },
+      { name: "models/gemini-3.0-flash-lite", supportedGenerationMethods: ["generateContent"] },
+      { name: "models/embedding-001", supportedGenerationMethods: ["embedContent"] } ] }), { status: 200 });
+    return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: "{}" }] } }], usageMetadata: {} }), { status: 200 });
+  };
+  try {
+    const r = await callGemini({ apiKey: "K", model: "gemini-2.5-flash", system: "S", user: "U" });
+    assert.equal(r.text, "{}");
+    assert.ok(urls.at(-1).includes("gemini-3.0-flash:generateContent"));
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test("missing table / db failure is reported as db_error, not 'in progress'", async () => {
+  const d = makeDeps({ aiReplies: [] });
+  d.db.insertPending = async () => ({ id: null, error: 'relation "writing_assessments" does not exist', conflict: false });
+  const r = await submit(d, STRONG);
+  assert.equal(r.status, 500);
+  assert.equal(r.body.code, "db_error");
+  assert.match(r.body.detail, /does not exist/);
+  assert.equal(d.aiCalls, 0);
+});
+
+test("provider errors expose a short detail for the owner", async () => {
+  const d = makeDeps({ aiReplies: [new Error("Gemini 400: API key not valid")] });
+  const r = await submit(d, STRONG);
+  assert.equal(r.body.code, "provider_error");
+  assert.match(r.body.detail, /API key not valid/);
 });

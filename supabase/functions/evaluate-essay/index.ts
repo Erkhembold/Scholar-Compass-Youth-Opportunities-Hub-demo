@@ -335,7 +335,10 @@ export async function evaluateEssay({ token, body }, deps) {
   };
   // A failed attempt with the same request id is re-opened (safe retry), not duplicated.
   const ins = same && same.status === "failed" ? await db.reopen(same.id, pendingRow) : await db.insertPending(pendingRow);
-  if (!ins.id) return out({ error: "Өмнөх үнэлгээ дуусаагүй байна. Түр хүлээнэ үү.", code: "in_progress" }, 409);
+  if (!ins.id) {
+    if (ins.conflict) return out({ error: "Өмнөх үнэлгээ дуусаагүй байна. Түр хүлээнэ үү.", code: "in_progress" }, 409);
+    return out({ error: "Мэдээллийн санд хадгалж чадсангүй.", code: "db_error", detail: String(ins.error || "").slice(0, 200) }, 500);
+  }
 
   const started = Date.now();
   const userMessage = buildUserMessage(req);
@@ -367,7 +370,7 @@ export async function evaluateEssay({ token, body }, deps) {
     const msg = String((err && err.message) || err).slice(0, 500);
     await db.fail(ins.id, msg);
     await db.logUsage({ user_id: user.id, feature: "writing", provider, model, input_tokens: usageIn, output_tokens: usageOut, est_cost_usd: null, latency_ms: Date.now() - started, status: "provider_error", error: msg });
-    return out({ error: "AI үнэлгээний үйлчилгээ түр ажиллахгүй байна. Эссе тань хадгалагдсан тул дахин оролдоно уу.", code: "provider_error" }, 502);
+    return out({ error: "AI үнэлгээний үйлчилгээ түр ажиллахгүй байна. Эссе тань хадгалагдсан тул дахин оролдоно уу.", code: "provider_error", detail: msg.slice(0, 200) }, 502);
   }
 
   const latency = Date.now() - started;
@@ -444,7 +447,18 @@ async function callOpenAI({ apiKey, model, system, user }) {
   };
 }
 
-export async function callGemini({ apiKey, model, system, user }) {
+async function pickGeminiModel(apiKey) {
+  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", { headers: { "x-goog-api-key": apiKey } });
+  if (!res.ok) return null;
+  const data = await res.json();
+  const ok = (data.models || [])
+    .filter((m) => (m.supportedGenerationMethods || []).includes("generateContent") && /gemini-[\d.]+-flash$/.test(m.name || ""))
+    .map((m) => m.name.replace(/^models\//, ""))
+    .sort((a, b) => parseFloat(b.match(/[\d.]+/)[0]) - parseFloat(a.match(/[\d.]+/)[0]));
+  return ok[0] || null;
+}
+
+export async function callGemini({ apiKey, model, system, user, _retried = false }) {
   const generationConfig = { temperature: 0.2, maxOutputTokens: 8192, responseMimeType: "application/json" };
   // Flash models can skip "thinking" (keeps the JSON from being cut short and saves quota).
   if (/flash/i.test(model)) generationConfig.thinkingConfig = { thinkingBudget: 0 };
@@ -457,6 +471,11 @@ export async function callGemini({ apiKey, model, system, user }) {
       generationConfig,
     }),
   });
+  if (res.status === 404 && !_retried) {
+    // The configured model may have been retired: fall back to the newest available Flash model.
+    const alt = await pickGeminiModel(apiKey);
+    if (alt && alt !== model) return callGemini({ apiKey, model: alt, system, user, _retried: true });
+  }
   if (!res.ok) throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data = await res.json();
   const parts = data.candidates?.[0]?.content?.parts || [];
@@ -527,7 +546,7 @@ async function makeRealDeps() {
       },
       async insertPending(row) {
         const { data, error } = await admin.from(T).insert({ ...row, status: "pending" }).select("id").single();
-        return error ? { id: null, error: error.message } : { id: data.id };
+        return error ? { id: null, error: error.message, conflict: error.code === "23505" } : { id: data.id };
       },
       async complete(id, patch) {
         const { data, error } = await admin.from(T).update({ ...patch, status: "completed", completed_at: new Date().toISOString() }).eq("id", id).select("*").single();

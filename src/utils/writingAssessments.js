@@ -24,16 +24,19 @@ export async function submitEssay({ task, essayText, requestId, durationSeconds 
   if (error) {
     let message = "Алдаа гарлаа. Дахин оролдоно уу.";
     let code = "unknown";
+    let detail = "";
     try {
       const body = await error.context.json();
       if (body?.error) message = body.error;
       if (body?.code) code = body.code;
+      if (body?.detail) detail = body.detail;
     } catch (_e) {
       /* function unreachable / not deployed */
       message = "Үнэлгээний үйлчилгээнд холбогдож чадсангүй. Дахин оролдоно уу.";
     }
     const err = new Error(message);
     err.code = code;
+    err.detail = detail;
     throw err;
   }
   if (data?.error) throw new Error(data.error);
