@@ -458,7 +458,25 @@ async function pickGeminiModel(apiKey) {
   return ok[0] || null;
 }
 
-export async function callGemini({ apiKey, model, system, user, _retried = false }) {
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Google's free tier often answers 503 (busy) / 429 (rate limit): retry a few times.
+export async function callGemini(args) {
+  const delays = args._delays || [2000, 6000, 12000];
+  let lastErr;
+  for (let i = 0; i <= delays.length; i++) {
+    try {
+      return await callGeminiOnce(args);
+    } catch (e) {
+      lastErr = e;
+      if (!/Gemini (429|500|503|504)/.test(String(e.message)) || i === delays.length) throw e;
+      await sleep(delays[i]);
+    }
+  }
+  throw lastErr;
+}
+
+async function callGeminiOnce({ apiKey, model, system, user, _retried = false }) {
   const generationConfig = { temperature: 0.2, maxOutputTokens: 8192, responseMimeType: "application/json" };
   // Flash models can skip "thinking" (keeps the JSON from being cut short and saves quota).
   if (/flash/i.test(model)) generationConfig.thinkingConfig = { thinkingBudget: 0 };
@@ -474,7 +492,7 @@ export async function callGemini({ apiKey, model, system, user, _retried = false
   if (res.status === 404 && !_retried) {
     // The configured model may have been retired: fall back to the newest available Flash model.
     const alt = await pickGeminiModel(apiKey);
-    if (alt && alt !== model) return callGemini({ apiKey, model: alt, system, user, _retried: true });
+    if (alt && alt !== model) return callGeminiOnce({ apiKey, model: alt, system, user, _retried: true });
   }
   if (!res.ok) throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data = await res.json();

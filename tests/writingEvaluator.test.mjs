@@ -271,3 +271,17 @@ test("provider errors expose a short detail for the owner", async () => {
   assert.equal(r.body.code, "provider_error");
   assert.match(r.body.detail, /API key not valid/);
 });
+
+test("gemini: 503 busy is retried, then succeeds", async () => {
+  const { callGemini } = await import("../supabase/functions/evaluate-essay/index.ts");
+  let n = 0;
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async () => (++n < 3 ? new Response("busy", { status: 503 }) : new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: "{}" }] } }], usageMetadata: {} }), { status: 200 }));
+  try {
+    const r = await callGemini({ apiKey: "K", model: "m", system: "S", user: "U", _delays: [1, 1, 1] });
+    assert.equal(r.text, "{}");
+    assert.equal(n, 3);
+    n = -10;
+    await assert.rejects(() => callGemini({ apiKey: "K", model: "m", system: "S", user: "U", _delays: [1, 1] }), /Gemini 503/);
+  } finally { globalThis.fetch = realFetch; }
+});
