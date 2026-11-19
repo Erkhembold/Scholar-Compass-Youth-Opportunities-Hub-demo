@@ -1,3 +1,4 @@
+import { bandTier } from "../utils/bandColor.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 const LABELS = {
@@ -22,7 +23,7 @@ export default function WritingAssessmentView({ result, taskType, wordCount, ess
     <div className="wr-result">
       <div className="wr-result__banner">
         <p className="wr-result__eyebrow">{t("AI-estimated band")}</p>
-        <p className="wr-result__band">{result.overallBand.toFixed(1)}</p>
+        <p className={`wr-result__band wr-tier--${bandTier(result.overallBand)}`}>{result.overallBand.toFixed(1)}</p>
         <p className="wr-result__meta">
           {wordCount ? `${wordCount} ${t("words")} · ` : ""}
           {t("AI estimate — not an official IELTS result")}
@@ -42,7 +43,7 @@ export default function WritingAssessmentView({ result, taskType, wordCount, ess
             <section key={key} className="wr-criterion">
               <header>
                 <strong>{labels[key]}</strong>
-                <span className="wr-criterion__band">{c.band.toFixed(1)}</span>
+                <span className={`wr-criterion__band wr-tier--${bandTier(c.band)}`}>{c.band.toFixed(1)}</span>
               </header>
               {c.strengths.length > 0 && (
                 <>

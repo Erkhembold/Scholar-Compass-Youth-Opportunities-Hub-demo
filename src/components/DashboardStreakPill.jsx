@@ -15,13 +15,11 @@ export default function DashboardStreakPill() {
   if (!isSetUp) return null;
 
   return (
-    <a className="dashboard-streak-pill" href={profileStatsHref()}>
+    <a className="dashboard-streak-pill" href={profileStatsHref()} aria-label={`${current} ${t("Day Streak")}`} title={`${current} ${t("Day Streak")}`}>
       <span className="dashboard-streak-pill__icon" aria-hidden="true">
         <IconFlame />
       </span>
-      <span>
-        {current} {t("Day Streak")}
-      </span>
+      <span aria-hidden="true">{current}</span>
     </a>
   );
 }

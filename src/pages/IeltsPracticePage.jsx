@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
+import { supabase } from "../lib/supabaseClient.js";
+import { fetchMyAssessments } from "../utils/writingAssessments.js";
 import MockTestCard from "../components/MockTestCard.jsx";
 import WritingTaskCard from "../components/WritingTaskCard.jsx";
 import { TESTS } from "../data/ieltsTests.js";
@@ -25,6 +29,24 @@ const SKILL_META = {
 export default function IeltsPracticePage({ skill }) {
   const { t } = useLanguage();
   const meta = SKILL_META[skill];
+  const { user } = useAuth();
+  const [bestBands, setBestBands] = useState({});
+  useEffect(() => {
+    if (skill !== "writing" || !user || !supabase) return undefined;
+    let off = false;
+    fetchMyAssessments(user.id, { limit: 300 })
+      .then((rows) => {
+        if (off) return;
+        const m = {};
+        for (const r of rows) {
+          const b = Number(r.overall_band);
+          if (!(m[r.task_id] >= b)) m[r.task_id] = b;
+        }
+        setBestBands(m);
+      })
+      .catch(() => {});
+    return () => { off = true; };
+  }, [skill, user]);
 
   if (!meta) {
     return (
@@ -50,8 +72,13 @@ export default function IeltsPracticePage({ skill }) {
           <h1 className="section__title">
             IELTS {t(meta.label)} {t("Practice")}
           </h1>
+          {skill === "writing" && meta.ready && (
+            <p className="wr-page__history-link">
+              <a href={writingAssessmentsHref()}>{t("My writing history")} →</a>
+            </p>
+          )}
           {meta.ready ? (
-            <p className="section__lede">{t(meta.lede)}</p>
+            skill === "writing" ? null : <p className="section__lede">{t(meta.lede)}</p>
           ) : (
             <p className="section__lede">
               {t(meta.label)} practice isn't available yet — it's next on the list. In the
@@ -72,18 +99,15 @@ export default function IeltsPracticePage({ skill }) {
 
         {meta.ready && skill === "writing" && (
           <>
-            <p className="wr-page__history-link">
-              <a href={writingAssessmentsHref()}>{t("My writing assessments")} →</a>
-            </p>
             {["task1", "task2"].map((type) => (
               <div key={type}>
                 <h2 className="wr-group-title">
                   {type === "task1" ? "Academic Task 1 — " + t("Describe data") : "Academic Task 2 — " + t("Essay")}
                 </h2>
-                <div className="opp-grid" role="list">
+                <div className="wr-hub-grid" role="list">
                   {WRITING_TASKS.filter((task) => task.type === type).map((task) => (
                     <div role="listitem" key={task.id}>
-                      <WritingTaskCard task={task} />
+                      <WritingTaskCard task={task} band={bestBands[task.id]} />
                     </div>
                   ))}
                 </div>

@@ -1,3 +1,4 @@
+import { bandTier } from "../utils/bandColor.js";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -48,7 +49,7 @@ export default function WritingHistoryPage() {
               {rows.map((a) => (
                 <li key={a.id}>
                   <a href={writingAssessmentHref(a.id)}>
-                    <span className="wr-history__band">{Number(a.overall_band).toFixed(1)}</span>
+                    <span className={`wr-history__band wr-tier--${bandTier(a.overall_band)}`}>{Number(a.overall_band).toFixed(1)}</span>
                     <span className="wr-history__main">
                       <strong>{a.task_title || a.task_id}</strong>
                       <small>

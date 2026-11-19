@@ -32,11 +32,11 @@ export default function DashboardPage() {
           </div>
         </div>
       </section>
-      <StudyPlannerSection />
       <section className="section dashboard dashboard--secondary">
         <div className="section__inner">
-          <div className="dashboard__layout">
-            <div className="dashboard__cards dashboard__cards--centered">
+          <div className="dashboard__layout dashboard__layout--home">
+            <div className="dashboard__left">
+              <StudyPlannerSection embedded />
               <LevelCard />
             </div>
             <NewsSection />

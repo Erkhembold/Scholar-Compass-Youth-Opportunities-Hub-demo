@@ -7,6 +7,7 @@ import { WRITING_DAILY_LIMIT } from "../data/config.js";
 import { recordActivity } from "../utils/streak.js";
 import { submitEssay, fetchMyAssessments, countRecentEvaluations } from "../utils/writingAssessments.js";
 import { writingAssessmentHref, writingAssessmentsHref } from "../router.js";
+import WritingLivePanel from "../components/WritingLivePanel.jsx";
 import WritingAssessmentView from "../components/WritingAssessmentView.jsx";
 
 const MIN_TO_SUBMIT = 50;
@@ -111,7 +112,7 @@ export default function WritingTaskPage({ id }) {
 
   return (
     <section className="section">
-      <div className="section__inner wr-page">
+      <div className="section__inner wr-page wr-page--wide">
         <a href="#/category/ielts" className="detail__back">
           ← {t("Back to IELTS")}
         </a>
@@ -147,10 +148,10 @@ export default function WritingTaskPage({ id }) {
           </p>
         ) : null}
 
-        {!assessment && (
+        <div className="wr-split">
           <div className="wr-editor">
             <div className="wr-editor__bar">
-              <button type="button" className="btn btn--ghost" onClick={() => setTimerOn((v) => !v)}>
+              <button type="button" className="btn btn--ghost" onClick={() => setTimerOn((v) => !v)} disabled={!!assessment}>
                 {timerOn ? t("Pause timer") : elapsed > 0 ? t("Resume timer") : t("Start timer")}
               </button>
               {(timerOn || elapsed > 0) && (
@@ -164,8 +165,8 @@ export default function WritingTaskPage({ id }) {
               className="wr-editor__text"
               value={essay}
               onChange={(e) => setEssay(e.target.value)}
-              disabled={!user || submitting}
-              rows={18}
+              disabled={!user || submitting || !!assessment}
+              rows={20}
               maxLength={6500}
               placeholder={t("Write your essay here…")}
               aria-label={t("Essay")}
@@ -176,31 +177,35 @@ export default function WritingTaskPage({ id }) {
               {left !== null && user ? ` · ${left} ${t("AI assessments left (24 h)")}` : ""}
             </p>
 
-            {error && (
-              <p className="wr-error" role="alert">
-                {error.message}
-                {error.detail ? <small style={{ display: "block", opacity: 0.8 }}>{error.detail}</small> : null}
-              </p>
+            {!assessment ? (
+              <button type="button" className="btn btn--accent" disabled={!canSubmit} onClick={handleSubmit}>
+                {submitting ? t("Assessing…") : t("Submit for assessment")}
+              </button>
+            ) : (
+              <button type="button" className="btn btn--ghost" onClick={reset}>
+                {t("Write another attempt")}
+              </button>
             )}
-
-            <button type="button" className="btn btn--accent" disabled={!canSubmit} onClick={handleSubmit}>
-              {submitting ? t("Assessing… this takes up to a minute") : t("Submit for assessment")}
-            </button>
           </div>
-        )}
+
+          <WritingLivePanel
+            status={assessment ? "done" : submitting ? "working" : error ? "error" : "idle"}
+            result={assessment?.result}
+            taskType={task.type}
+            error={error}
+          />
+        </div>
 
         {assessment && (
-          <>
+          <div style={{ marginTop: 28 }}>
+            <h2 className="wr-group-title">{t("Detailed feedback")}</h2>
             <WritingAssessmentView
               result={assessment.result}
               taskType={task.type}
               wordCount={assessment.wordCount}
               essayText={essay}
             />
-            <button type="button" className="btn btn--ghost" style={{ marginTop: 24 }} onClick={reset}>
-              {t("Write another attempt")}
-            </button>
-          </>
+          </div>
         )}
 
         {user && past.length > 0 && (
