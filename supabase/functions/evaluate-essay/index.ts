@@ -469,7 +469,7 @@ async function listGeminiFlashModels(apiKey) {
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const RETRYABLE = /Gemini (404|429|500|503|504)|timeout|aborted/i;
+const RETRYABLE = /Gemini (404|429|500|503|504)|time ?out|timed out|abort/i;
 
 // Google's free tier is often busy (503/429) and retires models (404). Try the
 // configured model, then other Flash models, all inside a hard time budget so the
@@ -484,7 +484,7 @@ export async function callGemini({ apiKey, model, system, user, deadline, _delay
     const remaining = end - Date.now();
     if (i > 0 && remaining < 10000) break;
     try {
-      return await callGeminiOnce({ apiKey, model: candidates[ci], system, user, timeoutMs: Math.max(5000, Math.min(45000, remaining)) });
+      return await callGeminiOnce({ apiKey, model: candidates[ci], system, user, timeoutMs: Math.max(5000, Math.min(32000, remaining)) });
     } catch (e) {
       lastErr = e;
       if (!RETRYABLE.test(String(e.message)) || i === backoff.length) throw e;
@@ -504,16 +504,22 @@ export async function callGemini({ apiKey, model, system, user, deadline, _delay
 }
 
 async function callGeminiOnce({ apiKey, model, system, user, timeoutMs }) {
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
-    signal: AbortSignal.timeout(timeoutMs),
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: system }] },
-      contents: [{ role: "user", parts: [{ text: user }] }],
-      generationConfig: { temperature: 0.2, maxOutputTokens: 16000, responseMimeType: "application/json" },
-    }),
-  });
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+  const send = (thinking) =>
+    fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
+      signal: AbortSignal.timeout(timeoutMs),
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents: [{ role: "user", parts: [{ text: user }] }],
+        generationConfig: { temperature: 0.2, maxOutputTokens: 8192, responseMimeType: "application/json", ...(thinking ? { thinkingConfig: thinking } : {}) },
+      }),
+    });
+  // "Thinking" makes Gemini slow (40-50 s). Turn it down; if a model rejects the setting, retry without it.
+  let res = await send({ thinkingLevel: "low" });
+  if (res.status === 400) res = await send({ thinkingBudget: 0 });
+  if (res.status === 400) res = await send(null);
   if (!res.ok) throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data = await res.json();
   const parts = data.candidates?.[0]?.content?.parts || [];

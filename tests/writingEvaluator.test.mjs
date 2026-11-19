@@ -226,7 +226,7 @@ test("gemini adapter: request shape, parsing, token accounting (mocked fetch)", 
     assert.ok(!seen.url.includes("K"), "key must not be in the URL");
     const body = JSON.parse(seen.init.body);
     assert.equal(body.generationConfig.responseMimeType, "application/json");
-    assert.ok(!body.generationConfig.thinkingConfig);
+    assert.equal(body.generationConfig.thinkingConfig.thinkingLevel, "low");
     assert.equal(body.systemInstruction.parts[0].text, "S");
     globalThis.fetch = async () => new Response("quota", { status: 429 });
     await assert.rejects(() => callGemini({ apiKey: "K", model: "m", system: "S", user: "U" }), /Gemini 429/);
@@ -310,5 +310,25 @@ test("gemini: busy model (503) switches to another flash model; stays inside the
     const t0 = Date.now();
     await assert.rejects(() => callGemini({ apiKey: "K", model: "m", system: "S", user: "U", deadline: Date.now() + 1000, _delays: [5000, 5000] }), /Gemini 503/);
     assert.ok(Date.now() - t0 < 4000);
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test("gemini: 'Signal timed out' on one model falls back to another model", async () => {
+  const { callGemini } = await import("../supabase/functions/evaluate-essay/index.ts");
+  const realFetch = globalThis.fetch;
+  const used = [];
+  globalThis.fetch = async (url) => {
+    const u = String(url);
+    if (u.includes("/models?")) return new Response(JSON.stringify({ models: [
+      { name: "models/gemini-3.8-flash", supportedGenerationMethods: ["generateContent"] },
+      { name: "models/gemini-3.6-flash", supportedGenerationMethods: ["generateContent"] } ] }), { status: 200 });
+    used.push(u);
+    if (u.includes("3.8-flash")) throw new Error("Signal timed out.");
+    return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: "{}" }] } }], usageMetadata: {} }), { status: 200 });
+  };
+  try {
+    const r = await callGemini({ apiKey: "K", model: "gemini-3.8-flash", system: "S", user: "U", _delays: [1, 1, 1] });
+    assert.equal(r.text, "{}");
+    assert.ok(used.at(-1).includes("3.6-flash"));
   } finally { globalThis.fetch = realFetch; }
 });
