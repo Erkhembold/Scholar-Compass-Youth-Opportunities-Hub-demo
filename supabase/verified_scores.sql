@@ -43,3 +43,11 @@ on conflict (user_id, test_type) do update
 -- Check: should list 2 rows (one per person).
 select p.name, p.email, v.test_type, v.score
 from public.verified_scores v join public.profiles p on p.id = v.user_id;
+
+-- Nomin -> IELTS 8.0 (real test result).
+insert into public.verified_scores (user_id, test_type, score, label, sublabel)
+select p.id, 'IELTS', '8.0', 'Real IELTS Score', 'IELTS Overall'
+from public.profiles p
+where p.name = 'Nomin'
+on conflict (user_id, test_type) do update
+  set score = excluded.score, label = excluded.label, sublabel = excluded.sublabel;
