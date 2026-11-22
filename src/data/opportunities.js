@@ -41,6 +41,8 @@ import irimResearcherImg from "../assets/opportunities/irim-student-researcher-2
 import japanYouthSummitImg from "../assets/opportunities/japan-youth-summit-2027.png";
 import imagineArtImg from "../assets/opportunities/imagine-art-festival-tosool-2026.png";
 import youthChangemakersImg from "../assets/opportunities/youth-changemakers-summit-2026.png";
+import dataQuestImg from "../assets/opportunities/data-quest-2026.png";
+import ypgMentorshipImg from "../assets/opportunities/ypg-mentorship-2026-2027.png";
 
 export const FILTERS = [
   { id: "all", label: "All" },
@@ -1054,5 +1056,76 @@ Deadline: 11 October 2026
 
 #YCS2026 #FullyFunded #YouthOpportunities #InternationalConference #Budapest2026`,
     links: [{ label: "Apply", href: "https://www.thegiic.org" }],
+  },
+  {
+    id: "data-quest-2026",
+    title: "DATA QUEST судалгааны уралдаан — 92,000,000₮-ийн шагналын сантай",
+    category: "competitions",
+    image: dataQuestImg,
+    pattern: "grid",
+    deadline: { date: "2026-12-10", time: "23:59" },
+    essential: {
+      duration: "Registration until December 10, 2026, 23:59",
+      cost: "Free to enter · 92,000,000₮ prize pool for research funding",
+      participants: "Teams (5 teams are selected)",
+      whoFor: "Bachelor's and master's students in Mongolia",
+      organizer: "DATA QUEST (see Posted.mn for details)",
+    },
+    description: `DATA QUEST судалгааны уралдааны бүртгэл эхэлсэн байна.
+
+Бакалавр, магистрын түвшний оюутнуудад зориулсан тус уралдаан нь Монголын залуусын амьдралын хэв маяг, боловсрол, хөдөлмөр эрхлэлт, нийгмийн оролцоо зэрэг асуудлыг бодит өгөгдөлд тулгуурлан судлах боломж олгож буйгаараа онцлог юм.
+
+Уралдааны хүрээнд шалгарсан таван баг судалгаагаа хэрэгжүүлэх санхүүжилтээс гадна мэргэжлийн зөвлөгөө, менторын дэмжлэг авах боломжтой.
+
+Бүртгэл: 2026.12.10-ны 23:59 цаг хүртэл
+
+Уралдааны шалгаруулалт, судалгааны шаардлага, санхүүжилтийн нөхцөлийн талаар дэлгэрэнгүйг Posted.mn-ээс уншаарай.`,
+    links: [{ label: "Posted.mn", href: "https://posted.mn" }],
+    contactNote: "Registration link: search “DATA QUEST | залуу судлаачдад грант олгох төсөл” on Posted.mn.",
+  },
+  {
+    id: "ypg-mentorship-2026-2027",
+    title: "YPG менторшип хөтөлбөр 2026–2027 — бүртгэл эхэллээ",
+    category: "internships",
+    image: ypgMentorshipImg,
+    pattern: "radial",
+    deadline: { date: "2026-11-30", time: "23:59" },
+    essential: {
+      duration: "1 year (11th year of the programme, running since 2015)",
+      cost: "Free",
+      participants: "Not specified",
+      whoFor: "Young professionals up to age 30 (born after Jan 1, 1996), living in Ulaanbaatar, with 2+ years of work experience",
+      organizer: "Young Professionals' Group (YPG) NGO",
+    },
+    description: `2015 оноос хойш 11 дэх жилдээ хэрэгжиж буй Залуу мэргэжилтнүүдийн холбоо (YPG)-ны менторшип хөтөлбөр нь 30 хүртэлх насны залуу мэргэжилтнүүдийг салбар бүрийн тэргүүлэгчидтэй холбож, нэг жилийн хугацаанд ментороосоо суралцах, карьер болон манлайллын ур чадвараа хөгжүүлэх боломжийг олгодог.
+
+Тавигдах шаардлага:
+✔️ Улаанбаатар хотод оршин суудаг байх
+✔️ 30 хүртэлх настай (1996.01.01-нээс хойш төрсөн)
+✔️ 2 ба түүнээс дээш жилийн ажлын туршлагатай байх
+
+Өргөдөл хүлээн авах хугацаа: 2026.11.30-ны 23:59 хүртэл
+
+Өргөдөл гаргах заавар:
+
+1. Worki.mn дээр бүртгүүлж, профайлаа үүсгэн YPG менторшип 2026–2027 ажлын зарын мэдээлэлтэй танилцана.
+
+2. Эсээ болон видео танилцуулгаа бэлтгэнэ.
+• Эсээ: YPG-ээс өгсөн 3 асуултад хариулж, Google Docs дээр бэлтгэн, Anyone with the link – Viewer тохиргоотойгоор Worki профайлын “Холбоос” хэсэгт Essay нэрээр оруулна.
+• Видео: 2 минут хүртэлх видео танилцуулгаа YouTube-д Unlisted тохиргоотой байршуулж, холбоосыг мөн Worki профайлын “Холбоос” хэсэгт нэмнэ.
+
+Эсээний асуултуудыг ажлын зарын “Нэмэлт мэдээлэл” хэсгээс харна уу.
+
+3. Материалаа бүрэн оруулсны дараа ажлын зар руу буцаж “CV илгээх” товчийг дарж өргөдлөө баталгаажуулна.
+
+Google Docs болон YouTube холбоосууд нээлттэй эсэхийг шалгаарай.
+
+Зохион байгуулагч: Залуу Мэргэжилтнүүдийн Холбоо (YPG) ТББ
+Ерөнхий ивээн тэтгэгч: MSM Group
+Дэмжигч байгууллага: Mongolian Talent Network | Worki`,
+    links: [
+      { label: "Send CV on Worki", href: "https://worki.mn/job/85011955327651" },
+      { label: "YPG Instagram", href: "https://www.instagram.com/globalshapersub/" },
+    ],
   },
 ];

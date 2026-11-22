@@ -5,6 +5,8 @@ import StudyPlannerSection from "../components/StudyPlannerSection.jsx";
 import DashboardStreakPill from "../components/DashboardStreakPill.jsx";
 import NewsSection from "../components/NewsSection.jsx";
 import OpportunityBoard from "../components/OpportunityBoard.jsx";
+import SuggestedReads from "../components/SuggestedReads.jsx";
+import SubmitOpportunitySection from "../components/SubmitOpportunitySection.jsx";
 
 // The personalized homepage a signed-in, onboarded user sees instead of
 // the public homepage (gated in App.jsx's "home" route — see
@@ -44,6 +46,8 @@ export default function DashboardPage() {
         </div>
       </section>
       <OpportunityBoard />
+      <SuggestedReads initialCount={3} />
+      <SubmitOpportunitySection />
     </>
   );
 }
