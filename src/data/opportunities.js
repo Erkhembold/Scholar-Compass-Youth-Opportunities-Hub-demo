@@ -158,7 +158,7 @@ Ambassador болсноор:
     category: "volunteering",
     image: cleanupDayImg,
     pattern: "diagonal",
-    deadline: { label: "Rolling until event day" },
+    deadline: { label: "Rolling until event day", archiveDate: "2026-11-21" },
     essential: {
       duration: "Rolling until event day",
       cost: "Free",
@@ -244,7 +244,7 @@ BBA | MBA | DBA хөтөлбөрүүд
     category: "volunteering",
     image: soundMeditationImg,
     pattern: "radial",
-    deadline: { label: "Rolling / not specified" },
+    deadline: { label: "Rolling / not specified", archiveDate: "2026-11-21" },
     essential: {
       duration: "Rolling / not specified",
       cost: "Free",
@@ -374,7 +374,7 @@ Run the City. Light the Night.`,
     category: "internships",
     image: lightlabHiringImg,
     pattern: "dots",
-    deadline: { label: "Rolling — apply anytime" },
+    deadline: { label: "Rolling — apply anytime", archiveDate: "2026-11-21" },
     essential: {
       duration: "3–4 weekdays 12:00–19:00, plus 1–2 weekend days 10:00–19:00",
       cost: "Not specified",
@@ -411,7 +411,7 @@ CV-гээ илгээнэ үү`,
     category: "volunteering",
     image: goodwavesImg,
     pattern: "radial",
-    deadline: { label: "Enrollment: Sep 1 – Oct 1, 2026" },
+    deadline: { label: "Enrollment: Sep 1 – Oct 1, 2026", archiveDate: "2026-11-21" },
     essential: {
       duration: "Enrollment window Sep 1 – Oct 1, 2026",
       cost: "Free",
@@ -485,7 +485,7 @@ GoodWaves чамайг хүлээж байна.
     category: "events",
     image: manuulHackClubImg,
     pattern: "dots",
-    deadline: { label: "Ongoing — Mondays & Wednesdays, 16:30–18:30" },
+    deadline: { label: "Ongoing — Mondays & Wednesdays, 16:30–18:30", archiveDate: "2026-11-21" },
     essential: {
       duration: "Recurring, Mon & Wed, 16:30–18:30",
       cost: "Free",
@@ -572,7 +572,7 @@ Online бүртгэлийн LINK IN BIO
     category: "volunteering",
     image: aoMockTrialImg,
     pattern: "stripe",
-    deadline: { label: "Rolling — register via the form" },
+    deadline: { label: "Rolling — register via the form", archiveDate: "2026-11-21" },
     essential: {
       duration: "Not specified",
       cost: "Free",
@@ -790,7 +790,7 @@ ARC EDU боловсролын төвөөс 10, 11-р ангийн сурагч�
     category: "events",
     image: artGalleryPaintingCourseImg,
     pattern: "grid",
-    deadline: { label: "Rolling enrollment" },
+    deadline: { label: "Rolling enrollment", archiveDate: "2026-11-21" },
     essential: {
       duration: "Beginner through advanced levels",
       cost: "Not specified",
@@ -857,7 +857,7 @@ Recommendation letter
     category: "scholarships",
     image: ilspsdErasmusImg,
     pattern: "radial",
-    deadline: { label: "Applications open — see programme website for dates" },
+    deadline: { label: "Applications open — see programme website for dates", archiveDate: "2026-11-21" },
     essential: {
       duration: "2-year joint master's programme (entry September 2027)",
       cost: "Erasmus Mundus scholarship applications included",
@@ -1007,7 +1007,7 @@ Your ideas matter. Your voice matters. And your journey toward global impact can
     category: "competitions",
     image: imagineArtImg,
     pattern: "diagonal",
-    deadline: { label: "See the programme guidelines for the submission date" },
+    deadline: { label: "See the programme guidelines for the submission date", archiveDate: "2026-11-21" },
     essential: {
       duration: "Held as part of IMAGINE ART FESTIVAL 2026 at AIC Steppe Arena",
       cost: "Free",
