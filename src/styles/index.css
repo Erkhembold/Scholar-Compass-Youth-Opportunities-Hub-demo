@@ -9245,3 +9245,6 @@ a.skill-action:hover { transform: none; box-shadow: none; background: color-mix(
 @media (max-width: 900px) { .wr-hub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .wr-hub-grid { grid-template-columns: 1fr; } }
 .wr-page--wide .leaderboard-page__signin-note { margin-top: 16px; }
+
+.news-qa__q { margin: 1.4em 0 .4em; font-size: 1.05rem; line-height: 1.4; color: var(--heading); }
+.news-article__figure img { object-position: center 12%; }

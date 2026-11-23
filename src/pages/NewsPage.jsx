@@ -30,7 +30,7 @@ export default function NewsPage() {
                   <div>
                     <span className="opp-card__category">{item.scoreTag}</span>
                     <span className="news-page-card__meta">
-                      {item.authorName} · {item.gradeClass}, {item.school}
+                      {[item.authorName, item.gradeClass, item.school].filter(Boolean).join(" · ")}
                     </span>
                   </div>
                 </div>

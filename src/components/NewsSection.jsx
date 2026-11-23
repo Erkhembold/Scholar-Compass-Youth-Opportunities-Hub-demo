@@ -1,4 +1,4 @@
-import { NEWS } from "../data/news.js";
+import { NEWS, HOME_NEWS_COUNT } from "../data/news.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { newsHref, newsArticleHref } from "../router.js";
 
@@ -23,7 +23,7 @@ export default function NewsSection({ onDark = false }) {
         {t("Scholar Compass News")}
       </h2>
       <div className="news-sidebar__list">
-        {NEWS.map((item) => (
+        {NEWS.slice(0, HOME_NEWS_COUNT).map((item) => (
           <a key={item.id} className="news-card" href={newsArticleHref(item.id)}>
             <span className="news-card__who">
               <NewsAvatar item={item} />

@@ -22,8 +22,9 @@ export default function NewsArticlePage({ id }) {
     );
   }
 
+  const affiliation = [item.gradeClass, item.school].filter(Boolean).join(", ");
   const more = NEWS.filter((n) => n.id !== item.id);
-  const isQuote = /^[“"]/.test(item.quoteOrStory[0]);
+  const isQuote = typeof item.quoteOrStory[0] === "string" && /^[“"]/.test(item.quoteOrStory[0]);
 
   return (
     <article className="section news-article">
@@ -39,9 +40,7 @@ export default function NewsArticlePage({ id }) {
           <NewsAvatar item={item} size={48} />
           <div>
             <strong>{item.authorName}</strong>
-            <span>
-              {item.gradeClass}, {item.school}
-            </span>
+            {affiliation && <span>{affiliation}</span>}
           </div>
         </div>
         <p className="news-article__date">
@@ -53,14 +52,19 @@ export default function NewsArticlePage({ id }) {
           <figure className="news-article__figure">
             <img className="no-dim" src={item.imageUrl} alt={item.authorName} />
             <figcaption>
-              {item.authorName}, {item.gradeClass}, {item.school}
+              {[item.authorName, affiliation].filter(Boolean).join(", ")}
             </figcaption>
           </figure>
         ) : null}
 
         <div className="news-article__body">
           {item.quoteOrStory.map((para, i) =>
-            isQuote ? (
+            typeof para === "object" ? (
+              <div key={i} className="news-qa">
+                <h3 className="news-qa__q">{i + 1}. {para.q}</h3>
+                <p>{para.a}</p>
+              </div>
+            ) : isQuote ? (
               <blockquote key={i}>{para}</blockquote>
             ) : (
               <p key={i}>{para}</p>
