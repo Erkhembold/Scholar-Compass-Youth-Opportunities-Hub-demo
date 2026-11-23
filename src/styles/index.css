@@ -9247,4 +9247,6 @@ a.skill-action:hover { transform: none; box-shadow: none; background: color-mix(
 .wr-page--wide .leaderboard-page__signin-note { margin-top: 16px; }
 
 .news-qa__q { margin: 1.4em 0 .4em; font-size: 1.05rem; line-height: 1.4; color: var(--heading); }
-.news-article__figure img { object-position: center 12%; }
+.news-article__figure { text-align: center; }
+.news-article__figure img { width: auto; max-width: 100%; max-height: 520px; object-fit: contain; margin: 0 auto; }
+.news-article__figure figcaption { text-align: left; }
