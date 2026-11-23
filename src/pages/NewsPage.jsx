@@ -5,7 +5,10 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 
 // All Scholar Compass News, laid out like the Opportunity Board (same section,
 // heading and bordered card grid).
-const excerpt = (s) => (s.length > 170 ? s.slice(0, 170).replace(/\s+\S*$/, "") + "…" : s);
+const excerpt = (first) => {
+  const s = typeof first === "string" ? first : first?.a || "";
+  return s.length > 170 ? s.slice(0, 170).replace(/\s+\S*$/, "") + "…" : s;
+};
 
 export default function NewsPage() {
   const { t } = useLanguage();
